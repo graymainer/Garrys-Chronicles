@@ -1,0 +1,7 @@
+"DecalModulate"
+{
+	"$decal" 1
+	"$basetexture" "gctextures/decals/impact/crater03"
+	"$decalscale" 0.80
+	"%keywords" "gc"
+}

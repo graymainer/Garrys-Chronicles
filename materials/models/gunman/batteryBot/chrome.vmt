@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+	//"$basetexture" "models/gunman/batteryBot/chrome"
+	//"$color2" "[0.1 0.1 0.1]"
+	"$surfaceprop" "metal_solid"
+	"$envmap" "models/gunman/batterybot/chrome"
+	//"$multipass" 1
+	"$envmaptint" "[ 0.15 0.15 0.10 ]"
+	//"$envmapmode" 155
+	//"$envmapmask" "models/gunman/batteryBot/chrome_env"
+}

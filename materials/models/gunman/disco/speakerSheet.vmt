@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/gunman/disco/speakerSheet_d"
+	//"$envmap" "env_cubemap"
+	//"$envmaptint" "[1 1 1]"
+}

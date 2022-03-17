@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gctextures/gc_monitor04a"
+	"$surfaceprop" "Glass"
+	"%keywords" "gc"
+	"$nodecal" 1
+}

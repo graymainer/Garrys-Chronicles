@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gc_counter/red5"
+	"$selfillum" 1
+	"$nodecal" 1
+}

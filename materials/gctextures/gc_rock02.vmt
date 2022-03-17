@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gc_rock02"
+	"$surfaceprop" "Concrete"
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_rock01"
+	"$detailscale" "2"
+}

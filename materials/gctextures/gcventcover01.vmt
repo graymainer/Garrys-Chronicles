@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcventcover01"
+	"$surfaceprop" "MetalVent"
+	"%keywords" "gc"
+	"$alphatest" 1
+	"$nodecals" 1
+}

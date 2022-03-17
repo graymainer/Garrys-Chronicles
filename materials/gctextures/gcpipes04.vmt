@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcpipes04"
+	"$surfaceprop" "metal"
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "2"
+
+}

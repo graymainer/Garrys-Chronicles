@@ -1,0 +1,7 @@
+"DecalModulate"
+{
+	"$decal" 1
+	"$basetexture" "gctextures/decals/impact/crashship"
+	"$decalscale" 0.85
+	"%keywords" "gc"
+}

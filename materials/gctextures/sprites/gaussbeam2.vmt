@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gctextures/sprites/gaussbeam2"
+	"$surfaceprop" "Flesh"
+	"%keywords" "gc"
+	"$nodecal" 1
+	"$translucent" 1
+}

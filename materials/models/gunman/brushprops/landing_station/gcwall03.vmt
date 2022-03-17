@@ -1,0 +1,9 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "gctextures/gcwall03"
+	"$surfaceprop" "concrete"
+	"%keywords" "gc"
+//detail
+	"$detail" "gctextures/detail/gcde_concrete01"
+	"$detailscale" "3"
+}

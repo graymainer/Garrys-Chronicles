@@ -1,0 +1,8 @@
+"lightmappedgeneric"
+{
+	"$basetexture" "gctextures/decals/impact/break2"
+	"%keywords" "gc"
+	"$translucent" 1
+	"$decal" 1
+	"$decalscale" "0.75"
+}

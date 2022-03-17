@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gclight07"
+	"$selfillum" 1
+	"$surfaceprop" "glass"
+	"$reflectivity" "[0 0 0]"
+	"$nodecal" "1"
+	"%keywords" "gc"
+}

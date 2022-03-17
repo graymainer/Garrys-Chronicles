@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/rustykey"
+	"%keywords" "sogoingtoremovethis"
+	"$alphatest" 1
+	"$nodecal" 1
+	"$translucent" 1
+}

@@ -1,0 +1,15 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcglobe"
+	"%keywords" "gc"
+	"$surfaceprop" "glass"
+	"Proxies" 
+		{ 
+		"AnimatedTexture" 
+		{ 
+			"animatedTextureVar" "$basetexture" 
+			"animatedTextureFrameNumVar" "$frame" 
+			"animatedTextureFrameRate" "12" 
+}
+
+

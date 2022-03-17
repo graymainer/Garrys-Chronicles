@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcladder01"
+	"$surfaceprop" "Porcelain"
+	"%keywords" "gc"
+	"$translucent" 1
+	"$nodecal" "1"
+	"$alphatest" 1
+}

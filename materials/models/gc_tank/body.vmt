@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gc_tank/body"
+	"$bumpmap" "models/gc_tank/body_normal"
+	"$normalmap" "models/gc_tank/body_normal"
+}

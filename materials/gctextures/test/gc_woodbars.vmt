@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/gc_woodbars"
+	"$surfaceprop" "Wood_Solid"
+	"%keywords" "gc"
+	"$nodecal" 1
+	"$translucent" 1
+}

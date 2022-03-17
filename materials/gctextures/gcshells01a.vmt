@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcshells01a"
+	"$surfaceprop" "Metal_Box"
+	"%keywords" "gc"
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$color" "[180 180 180]"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[1 1 1]"
+}

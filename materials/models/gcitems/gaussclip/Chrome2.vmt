@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcitems/gaussclip/Chrome2"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/gcitems/gaussclip/Chrome2_spec"
+}

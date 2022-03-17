@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/decals/signs/ammunition"
+	"%keywords" "gc"
+	"$translucent" 1
+	"$decalscale" 1.10
+}

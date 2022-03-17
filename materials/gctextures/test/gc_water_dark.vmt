@@ -1,0 +1,43 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/gc_water_dark"
+	"$surfaceprop" "Water"
+	"%compilewater" 1
+	"$alpha" 0.9
+	"$normalmap" "gctextures/test/gc_water_normal"
+
+	"$envmap" "env_cubemap"
+	"$envmapmask" "gctextures/test/gc_water_dark_spec"
+
+
+//Fog Params
+	"$fogenable" 1
+	"$fogcolor" "{22 20 10}"
+	"$fogstart" 0.00
+	"$fogend" 20.00
+
+	"proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$Envmapmasktransform"
+			"texturescrollrate" 0.025
+			"texturescrollangle" 300
+		}
+		"TextureScroll"
+		{
+			"texturescrollvar" "$bumpTransform"
+			"texturescrollrate" 0.025
+			"texturescrollangle" 300
+		}
+		"TextureScroll"
+		{
+			"Texturescrollvar" "$Basetexturetransform"
+			"Texturescrollrate" "0.025"
+			"texturescrollangle" "300"
+		}
+
+	}
+
+
+}

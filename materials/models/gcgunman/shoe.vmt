@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcgunman/shoe"
+//Detail
+	"$detail" "gctextures/detail/gcde_leather"
+	"$detailscale" "2"
+}

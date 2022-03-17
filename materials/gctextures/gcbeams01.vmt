@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcbeams01"
+	"$surfaceprop" "MetalGrate"
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "2"
+}

@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcfloor15"
+	"$surfaceprop" "metalgrate"
+	"%keywords" "gc"
+	"$nodecal" 1
+	"$AlphaTest" "1"
+	"$AlphaTestReference" "0.70"
+	"%compilepassbullets" 1
+}
+

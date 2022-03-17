@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gchealthcharger01a"
+	"$surfaceprop" "Computer"
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+}

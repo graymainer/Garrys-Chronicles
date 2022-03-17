@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/decals/impact/bigbreak"
+	"$translucent" 1
+}

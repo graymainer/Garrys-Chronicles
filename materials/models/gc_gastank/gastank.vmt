@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gc_gastank/gastank"
+	"$surfaceprop" "Metal_Barrel"
+}

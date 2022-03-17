@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcdropship/bottemhull"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "2"
+}

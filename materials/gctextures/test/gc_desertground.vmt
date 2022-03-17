@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/gc_desertground"
+	"$normalmap" "gctextures/test/gc_desertground_normalmap"
+	"$surfaceprop" "Dirt"
+	"%keywords" "gc"
+}

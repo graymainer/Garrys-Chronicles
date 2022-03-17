@@ -1,0 +1,16 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gctextures/gc_forcefield01"
+	"$surfaceprop" "flesh"
+	"%keywords" "gc"
+	"$additive" 1
+	"$nodecal" 1
+	"Proxies" 
+		{ 
+		"AnimatedTexture" 
+		{ 
+			"animatedTextureVar" "$basetexture" 
+			"animatedTextureFrameNumVar" "$frame" 
+			"animatedTextureFrameRate" "12" 
+}
+}

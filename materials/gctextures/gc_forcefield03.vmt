@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gctextures/gc_forcefield03"
+	"$surfaceprop" "flesh"
+	"%keywords" "gc"
+	"$additive" 1
+	"$nodecal" 1
+}

@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcsign01a"
+	"$surfaceprop" "metalvent"
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+
+}

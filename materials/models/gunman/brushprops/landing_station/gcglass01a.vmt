@@ -1,0 +1,10 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "gctextures/gcglass01a"
+	"$surfaceprop" "glass"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "gctextures/gcglass_spec"
+	"%keywords" "gc"
+	"$additive" 1
+	"$alpha" 0.5
+}

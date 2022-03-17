@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$abovewater" 0	
+	"$basetexture" "gctextures/test/gc_water_dark"
+	"$alpha" 0.9
+	"$surfaceprop" "Water"
+	"%compilewater" 1
+}

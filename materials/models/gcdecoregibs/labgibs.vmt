@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcdecoregibs/labgibs"
+	"$surfaceprop" "metal"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "0.50"
+}

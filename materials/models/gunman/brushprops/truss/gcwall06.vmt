@@ -1,0 +1,9 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "gctextures/gcwall06"
+	"$surfaceprop" "metalpanel"
+	"%keywords" "gc"
+//detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "2"
+}

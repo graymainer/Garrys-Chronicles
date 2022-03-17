@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/minerwriting01"
+	"$translucent" 1
+}

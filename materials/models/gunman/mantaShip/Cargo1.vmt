@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/mantaship/Cargo1"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/gunman/mantaship/Cargo1_spec"
+	
+//Detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "2"
+}

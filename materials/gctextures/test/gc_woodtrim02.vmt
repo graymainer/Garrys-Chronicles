@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/gc_woodtrim02"
+	"$surfaceprop" "Wood_Solid"
+	"%keywords" "gc"
+}

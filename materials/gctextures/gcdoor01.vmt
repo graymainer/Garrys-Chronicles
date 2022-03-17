@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gcdoor01"
+	"$surfaceprop" "MetalGrate"
+	"%keywords" "gc"
+	"$alphatest" 1
+	"$nodecal" 1
+}

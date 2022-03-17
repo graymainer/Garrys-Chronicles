@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gccouch01"
+	"$surfaceprop" "Sand"
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_leather"
+	"$detailscale" "2"
+}

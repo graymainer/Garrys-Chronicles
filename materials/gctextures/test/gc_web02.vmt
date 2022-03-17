@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/gc_web02"
+	"$surfaceprop" "Dirt"
+	"%keywords" "gc"
+	"$additive" 1
+	"$nodecal" 1
+}

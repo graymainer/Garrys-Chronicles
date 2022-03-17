@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gctextures/gclight03"
+	"$selfillum" 1
+	"$surfaceprop" "glass"
+	"%keywords" "gc"
+}

@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcitems/mechaclip/ammoclip"
+//Detail
+	"$detail" "models/gcweapons/misc/metal2"
+	"$detailscale" "1"
+}

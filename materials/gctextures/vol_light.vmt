@@ -1,0 +1,22 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gctextures/vol_light_01"
+	"$additive" "1"
+	"$translucent" "1"
+	"$no_fullbright" 1
+	"%keywords" "gc"
+
+	"Proxies"
+	{
+
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 0.20
+			"texturescrollangle" -45
+		}
+
+
+	}
+
+}

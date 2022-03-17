@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/decals/misc/bp2mp"
+	"%keywords" "gc"
+	"$translucent" 1
+	"$alpha" 0.9
+}

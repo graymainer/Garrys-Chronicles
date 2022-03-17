@@ -1,0 +1,6 @@
+"unlitgeneric"
+{
+	$model 1 	"$basetexture" "gctextures/gclight06"
+	"$surfaceprop" "glass"
+	"%keywords" "gc"
+}

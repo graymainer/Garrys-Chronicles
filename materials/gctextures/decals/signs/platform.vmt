@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/decals/signs/platform"
+	"%keywords" "gc"
+	"$translucent" 1
+	"$decal" 1
+	"$decalscale" "1.05"
+}

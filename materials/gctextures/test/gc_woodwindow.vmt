@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/gc_woodwindow"
+	"$surfaceprop" "Wood_Furniture"
+	"%keywords" "gc"
+	"$nodecal" 1
+}

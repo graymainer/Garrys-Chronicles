@@ -1,0 +1,8 @@
+"lightmappedgeneric"
+{
+	"$translucent" 1
+	"$basetexture" "gctextures/decals/impact/blood05"
+	"$decal" 1
+	"$decalscale" 0.45
+	"%keywords" "gc"
+}

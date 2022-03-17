@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcweapons/misc/newarm3"
+	"$bumpmap" "models/gcweapons/misc/newarm3_normal"
+	"$normalmap" "models/gcweapons/misc/newarm3_normal"
+}

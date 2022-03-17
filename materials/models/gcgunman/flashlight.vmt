@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcgunman/flashlight"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "1"
+}

@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gc_crane2"
+	"$surfaceprop" "Metal"
+	"%keywords" "gc"
+	"$additive" 1
+	"$nodecal" 1
+//Detail
+	"$detail" "gctextures/detail/gcde_metal01"
+	"$detailscale" "2"
+}

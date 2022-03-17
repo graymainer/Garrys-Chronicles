@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/test/gc_desertcliff"
+	"$normalmap" "gctextures/test/gc_desertcliff_normalmap"
+	"$surfaceprop" "Concrete"
+	"%keywords" "gc"
+//Detail
+	"$detail" "detail/rock_detail_01"
+	"$detailscale" "2"
+}

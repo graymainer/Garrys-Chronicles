@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/WaterSource/Ice_Reflections/ice1"
+	"$surfaceprop" "ice"
+	"$bumpmap" "gctextures/WaterSource/Ice_Reflections/ice1_nrm"
+	"$translucent" "1"
+}

@@ -1,0 +1,10 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gctextures/gc_sunflare"
+	"$additive" "1"
+	"$translucent" "1"
+	"$vertexcolor" "1"
+	"$ignorez" "1"
+	"%keywords" "gc"
+}
+

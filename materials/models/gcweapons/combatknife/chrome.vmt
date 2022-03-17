@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gcweapons/combatknife/chrome"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/gcweapons/combatknife/chrome_env"
+}

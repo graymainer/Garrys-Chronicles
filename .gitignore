@@ -1,0 +1,14 @@
+#ignore all source files.
+
+*.png
+*.psd
+*.tga
+*.jpg
+*.jpeg
+*.bmp
+*.qci
+*.qc
+*.smd
+*.blend
+modelsrc/
+materialssrc/
