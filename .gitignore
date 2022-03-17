@@ -13,6 +13,7 @@
 #modelsrc/
 #materialssrc/
 
+*.vmf_autosave
 *.log
 *.prt
 *.lin
