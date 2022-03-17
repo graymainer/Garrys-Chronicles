@@ -1,0 +1,171 @@
+//$controller 4 "Bone01" XR 0 30
+//$controller 0 "Bip02 Head" XR -40 40
+
+$poseparameter "mouth" 0 90 loop 0
+$poseparameter "XR" -50 50 loop 0
+$poseparameter "head_yaw" -90 90 loop 0
+
+$weightlist "weights_gunman_mouth" {
+	 "Bip02" 0
+	 "Bip02 Pelvis" 0
+	 "Bip02 L Leg" 0
+	 "Bip02 L Leg1" 0
+	 "Bip02 L Foot" 0
+	 "Bip02 R Leg" 0
+	 "Bip02 R Leg1" 0
+	 "Bip02 R Foot" 0
+	 "Bip02 Spine" 0
+	 "Bip02 Spine1" 0
+	 "Bip02 Spine2" 0
+	 "Bip02 Neck" 0
+	 "Bip02 Head" 0
+	 "Bip02 L Arm" 0
+	 "Bip02 L Arm1" 0
+	 "Bip02 L Arm2" 0
+	 "Bip02 L Hand" 0
+	 "Bip02 R Arm" 0
+	 "Bip02 R Arm1" 0
+	 "Bip02 R Arm2" 0
+	 "Bip02 R Hand" 0
+	 "Bone01" 1
+}
+
+$weightlist "weights_gunman_neckturn" {
+	 "Bip02" 0
+	 "Bip02 Pelvis" 0
+	 "Bip02 L Leg" 0
+	 "Bip02 L Leg1" 0
+	 "Bip02 L Foot" 0
+	 "Bip02 R Leg" 0
+	 "Bip02 R Leg1" 0
+	 "Bip02 R Foot" 0
+	 "Bip02 Spine" 0
+	 "Bip02 Spine1" 0
+	 "Bip02 Spine2" 0
+	 "Bip02 Neck" 0
+	 "Bip02 Head" 1
+	 "Bip02 L Arm" 0
+	 "Bip02 L Arm1" 0
+	 "Bip02 L Arm2" 0
+	 "Bip02 L Hand" 0
+	 "Bip02 R Arm" 0
+	 "Bip02 R Arm1" 0
+	 "Bip02 R Arm2" 0
+	 "Bip02 R Hand" 0
+	 "Bone01" 1
+}
+
+$animation "mouth_corrective_animation" "gunman_anims\mouth_corrective.smd"{
+}
+
+$animation "neck_corrective_animation" "gunman_anims\neck_corrective.smd" {
+}
+
+$animation "neck_right" "gunman_anims\neck_right.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "neck_corrective_animation" 0
+	weightlist "weights_gunman_neckturn"
+}
+
+$animation "neck_center" "gunman_anims\neck_center.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "neck_corrective_animation" 0
+	weightlist "weights_gunman_neckturn"
+}
+
+$animation "neck_left" "gunman_anims\neck_left.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "neck_corrective_animation" 0
+	weightlist "weights_gunman_neckturn"
+}
+
+$animation "mouth_open" "gunman_anims\mouth_open.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "mouth_corrective_animation" 0
+	weightlist "weights_gunman_mouth"
+}
+
+$animation "mouth_close" "gunman_anims\mouth_close.smd" {
+	fps 30
+	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
+	subtract "mouth_corrective_animation" 0
+	weightlist "weights_gunman_mouth"
+}
+
+/* $animation "a_aim_neutral" "male_shared_anims\a_aim_neutral.smd" {
+	fps 30
+}
+
+$animation "a_run_aim_down_right" "male_shared_anims\a_run_aim_down_right.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_down_center" "male_shared_anims\a_run_aim_down_center.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_down_left" "male_shared_anims\a_run_aim_down_left.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_mid_right" "male_shared_anims\a_run_aim_mid_right.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_mid_center" "male_shared_anims\a_run_aim_mid_center.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_mid_left" "male_shared_anims\a_run_aim_mid_left.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_up_right" "male_shared_anims\a_run_aim_up_right.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_up_center" "male_shared_anims\a_run_aim_up_center.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_up_left" "male_shared_anims\a_run_aim_up_left.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+}
+
+$animation "a_run_aim_straight_up" "male_shared_anims\a_run_aim_straight_up.smd" {
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+} */

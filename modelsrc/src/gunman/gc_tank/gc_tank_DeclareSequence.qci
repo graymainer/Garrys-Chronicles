@@ -1,0 +1,14 @@
+// Created by Crowbar 0.49.0.0
+
+$declaresequence "offline"
+$declaresequence "engine"
+$declaresequence "bumpfront"
+$declaresequence "bumpback"
+$declaresequence "bumpleft"
+$declaresequence "bumpright"
+$declaresequence "bumpfrontleft"
+$declaresequence "bumpfrontright"
+$declaresequence "bumpbackleft"
+$declaresequence "bumpbackright"
+$declaresequence "minguns"
+$declaresequence "turret"

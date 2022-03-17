@@ -1,0 +1,4 @@
+$cdmaterials "models/gunman/dropShip/"
+
+$surfaceprop "metalvehicle"
+$contents "solid"

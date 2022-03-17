@@ -1,0 +1,8 @@
+version 1
+nodes
+  0 "Bone01" -1
+end
+skeleton
+  time 0
+    0 -0.308603 NaN -2.415520 0.000000 -1.029744 0.000000
+end

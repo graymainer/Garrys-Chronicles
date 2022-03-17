@@ -1,0 +1,75 @@
+$jigglebone "jiggle.Wire1" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "jiggle.Wire2" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "jiggle.Wire3" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "jiggle.Wire4" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "jiggle.Wire5" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}

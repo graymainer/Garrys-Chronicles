@@ -1,0 +1,241 @@
+$jigglebone "hose.L End" {
+	is_rigid {
+		tip_mass 25
+		length 0.25
+		angle_constraint 1 
+	}
+	
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -1 1
+		up_constraint -1 1
+		forward_constraint -3 3
+	}
+}
+$jigglebone "hose.L Seg6" {
+	is_rigid {
+		tip_mass 10
+		length 0.75
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -3 3
+		up_constraint -3 3
+		forward_constraint -4 4
+	}
+}
+$jigglebone "hose.L Seg5" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.L Seg4" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.L Seg3" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.L Seg2" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.L Seg1" {
+	is_rigid {
+		tip_mass 10
+		length 0.75
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -3 3
+		up_constraint -3 3
+		forward_constraint -4 4
+	}
+}
+$jigglebone "hose.L Start" {
+	is_rigid {
+		tip_mass 25
+		length 0.25
+		angle_constraint 1
+	}
+	
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -1 1
+		up_constraint -1 1
+		forward_constraint -3 3
+	}
+}
+
+$jigglebone "hose.R End" {
+	is_rigid {
+		tip_mass 25
+		length 0.25
+		angle_constraint 1 
+	}
+	
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -1 1
+		up_constraint -1 1
+		forward_constraint -3 3
+	}
+}
+$jigglebone "hose.R Seg6" {
+	is_rigid {
+		tip_mass 10
+		length 0.75
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -3 3
+		up_constraint -3 3
+		forward_constraint -4 4
+	}
+}
+$jigglebone "hose.R Seg5" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.R Seg4" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.R Seg3" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.R Seg2" {
+	is_rigid {
+		tip_mass 5
+		length 1
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -5 5
+		up_constraint -5 5
+		forward_constraint -5 5
+	}
+}
+$jigglebone "hose.R Seg1" {
+	is_rigid {
+		tip_mass 10
+		length 0.75
+		angle_constraint 2 
+	}
+
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -3 3
+		up_constraint -3 3
+		forward_constraint -4 4
+	}
+}
+$jigglebone "hose.R Start" {
+	is_rigid {
+		tip_mass 25
+		length 0.25
+		angle_constraint 1
+	}
+	
+	has_base_spring {
+		stiffness 78 
+		damping 10
+		left_constraint -1 1
+		up_constraint -1 1
+		forward_constraint -3 3
+	}
+}

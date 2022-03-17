@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/radarDish/wire"
+//Detail
+	"$detail" "gctextures/detail/gcde_cloth"
+	"$detailscale" "0.5"
+}

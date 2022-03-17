@@ -1,0 +1,736 @@
+$include "inc/sequencesMisc.qci"
+
+
+$sequence "idle" {
+	"gunman_anims\idle.smd"
+	activity "ACT_IDLE" 1
+	fadein 0.2
+	fadeout 0.2
+	fps 20
+	loop
+}
+
+$sequence "walk" {
+	"gunman_anims\walk_N.smd"
+	activity "ACT_WALK" 1
+	{ event 1004 5 "NPC.Gunman_Step1" }
+	{ event 1004 20 "NPC.Gunman_Step2" }
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+	loop
+	walkframe 30 LX
+}
+
+$sequence "run" {
+	"gunman_anims\run.smd"
+	activity "ACT_RUN" 1
+	{ event 1004 8 "NPC.Gunman_Step1" }
+	{ event 1004 16 "NPC.Gunman_Step2" }
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+	loop
+	walkframe 17 LX
+}
+
+$sequence "diesimple" {
+	"gunman_anims\diesimple.smd"
+	activity "ACT_DIESIMPLE" 10
+	{ event 1004 0 "gcsfx/npc/gunman/die1.wav" }
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	fps 39
+}
+
+$sequence "dieviolent" {
+	"gunman_anims\dieviolent.smd"
+	activity "ACT_DIESIMPLE" 10
+	{ event 1004 0 "gcsfx/npc/gunman/die2.wav" }
+	{ event 11 12 "" }
+	{ event 2001 19 "" }
+	{ event 1100 27 "event_dropdead" }
+	fadein 0.2
+	fadeout 0.2
+	LX
+	fps 22
+}
+
+$sequence "injured_idle" {
+	"gunman_anims\injured#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+}
+
+$sequence "injured" {
+	"gunman_anims\injured#fine.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "falling" {
+	"gunman_anims\falling.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	LZ
+	fps 5
+}
+$sequence "mayanFalling" {
+	"gunman_anims\mayanfalling#fall"
+	LX
+	LY
+	LZ
+	fps 20
+}
+$sequence "mayanFalling_idle" {
+	"gunman_anims\mayanfalling#idle"
+	fps 1
+}
+
+$sequence "dead_idle" {
+	"gunman_anims\dead#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+	loop
+}
+
+$sequence "wallUp_idle" {
+	"gunman_anims\wallup#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+	loop
+}
+
+$sequence "wallDown_idle" {
+	"gunman_anims\walldown#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+	loop
+}
+
+$sequence "salute_idle" {
+	"gunman_anims\salute#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+	loop
+}
+
+$sequence "salute" {
+	"gunman_anims\salute.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+}
+
+$sequence "floating" {
+	"gunman_anims\floating#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+	loop
+}
+
+$sequence "sitRelax_idle" {
+	"gunman_anims\sitrelax#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+	loop
+}
+
+$sequence "sitRelax_act" {
+	"gunman_anims\sitrelax#wave.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+
+}
+
+$sequence "sitType_idle" {
+	"gunman_anims\sittype#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+	loop
+}
+
+$sequence "sitType_act" {
+	"gunman_anims\sittype#look.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+
+}
+
+$sequence "crawl" {
+	"gunman_anims\crawl.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	fps 30
+}
+
+$sequence "jump" {
+	"gunman_anims\jump.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	LZ
+	fps 40
+}
+$sequence "jumpDown" {
+	"gunman_anims\jumpdown.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	LZ
+	fps 30
+}
+$sequence "jumpDropship" {
+	"gunman_anims\jumpdropship"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	LZ
+	fps 41
+}
+$sequence "ladder" {
+	"gunman_anims\ladder#looking.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "ladder_idle" {
+	"gunman_anims\ladder#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+	loop
+}
+
+$sequence "ladder_to_idle" {
+	"gunman_anims\laddertoidle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "mouseCrash_idle" {
+	"gunman_anims\mousecrash#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+	loop
+}
+
+$sequence "mouseCrash" {
+	"gunman_anims\mousecrashpoint.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 12
+}
+
+$sequence "followMe" {
+	"gunman_anims\followme.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+}
+
+$sequence "repair_from_idle" {
+	"gunman_anims\repair#fromidle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 25
+}
+
+$sequence "repair_idle" {
+	"gunman_anims\repair#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+	loop
+}
+
+$sequence "repair_to_idle" {
+	"gunman_anims\reapingtoidle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 25
+}
+
+$sequence "wondering" {
+	"gunman_anims\wondering.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "cower_idle" {
+	"gunman_anims\cower#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+	loop
+}
+
+$sequence "space" {
+	"gunman_anims\space#death.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	LZ
+	fps 28
+}
+
+$sequence "space_idle" {
+	"gunman_anims\space#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+	loop
+}
+
+$sequence "flashlight_idle" {
+	"gunman_anims\flashlight#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+	loop
+}
+
+$sequence "couch_idle" {
+	"gunman_anims\couch#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+	loop
+}
+
+$sequence "couchStand" {
+	"gunman_anims\couchstand.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+}
+
+$sequence "shrug" {
+	"gunman_anims\shrug.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "gesture" {
+	"gunman_anims\gesture.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "pressButton" {
+	"gunman_anims\pressbutton.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 18
+}
+
+$sequence "shouting" {
+	"gunman_anims\shouting.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 12
+}
+
+
+
+$sequence "pointStatue" {
+	"gunman_anims\pointstatue.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "pointPlayer" {
+	"gunman_anims\pointplayer.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "wallToWall" {
+	"gunman_anims\wall#towall.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+}
+
+$sequence "wall_idle" {
+	"gunman_anims\wall#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "wall_to_idle" {
+	"gunman_anims\walltoidle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 15
+}
+
+$sequence "talk" {
+	"gunman_anims\talk.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+	loop
+}
+
+$sequence "talk2" {
+	"gunman_anims\talk2.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 10
+	loop
+}
+
+$sequence "study" {
+	"gunman_anims\study.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 12
+}
+
+$sequence "sideways_idle" {
+	"gunman_anims\sideways#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 12
+}
+
+$sequence "aboutFace" {
+	"gunman_anims\aboutface.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 20
+}
+
+$sequence "IdleShotgun1" {
+	"gunman_anims\shotgunidle"
+	ACT_IDLE_SHOTGUN_RELAXED 6
+	fps 20
+	loop
+}
+$sequence "IdleShotgun2" {
+	"gunman_anims\shotgunidle_2"
+	ACT_IDLE_SHOTGUN_RELAXED 1
+	fps 20
+	loop
+}
+$sequence "walkShotgun1" {
+	"gunman_anims\shotgunwalk"
+	ACT_WALK_AIM_SHOTGUN 5
+	//{ event 1004 5 "NPC.Gunman_Step1" } //need frames
+	//{ event 1004 20 "NPC.Gunman_Step2" }
+	fps 25
+	loop
+	LX
+}
+$sequence "walkShotgun2" {
+	"gunman_anims\shotgunwalk_2"
+	ACT_WALK_AIM_SHOTGUN 1
+	//{ event 1004 5 "NPC.Gunman_Step1" } //need frames
+	//{ event 1004 20 "NPC.Gunman_Step2" }
+	fps 25
+	loop
+	LX
+}
+$sequence "runShotgun" {
+	"gunman_anims\shotgunrun"
+	ACT_RUN_AIM_SHOTGUN 1
+	//{ event 1004 5 "NPC.Gunman_Step1" } //need frames
+	//{ event 1004 20 "NPC.Gunman_Step2" }
+	fps 30
+	loop
+	LX
+}
+
+/* $sequence "layer_Aim_all" { //if we want a new aimspace for gunman, then this would be it.
+	"a_run_aim_straight_up"
+	"a_run_aim_straight_up"
+	"a_run_aim_straight_up"
+	"a_run_aim_up_right"
+	"a_run_aim_up_center"
+	"a_run_aim_up_left"
+	"a_run_aim_mid_right"
+	"a_run_aim_mid_center"
+	"a_run_aim_mid_left"
+	"a_run_aim_down_right"
+	"a_run_aim_down_center"
+	"a_run_aim_down_left"
+	blend "aim_yaw" -43.95304 44.2895
+	blend "aim_pitch" -87.6306 44.95227
+	blendwidth 3
+	delta
+	fadein 0.2
+	fadeout 0.2
+	hidden
+	iklock "rfoot" 1 0
+	iklock "lfoot" 1 0
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	subtract "a_WalkS" 0
+	weightlist "weights_layer_Aim_all"
+} */
+
+ $sequence "shooting" {
+	"gunman_anims\shooting_blend01"
+	"gunman_anims\shooting_blend02"
+	ACT_RANGE_ATTACK1 1
+	blend XR -45 45 //xr is a weird name for a blendspace for aiming up-down.
+	{ event 1 0 }
+	{ event 5001 0 "51" }
+	fps 25
+}
+$sequence "petting_idle" {
+	"gunman_anims\petting#idle"
+	fps 15
+	loop
+}
+$sequence "petting_stop" {
+	"gunman_anims\pettingstop"
+	fps 30
+}
+$sequence "whatWasThat" {
+	"gunman_anims\whatwasthat"
+	fps 15
+}
+$sequence "yikes" {
+	"gunman_anims\yikes"
+	fps 15
+}
+$sequence "getOut" {
+	"gunman_anims\getout"
+	fps 30
+}
+$sequence "comeHere" {
+	"gunman_anims\comehere"
+	fps 20
+}
+$sequence "duckComeHere" {
+	"gunman_anims\duck#comehere"
+	fps 20
+}
+$sequence "duck_idle" {
+	"gunman_anims\duck#idle"
+	fps 20
+}
+$sequence "duck_to_idle" {
+	"gunman_anims\ducktoidle"
+	fps 15
+}
+$sequence "point" {
+	"gunman_anims\point"
+	fps 20
+}
+$sequence "radioDeath" {
+	"gunman_anims\radiodeath#death"
+	LX
+	LY
+	LZ
+	fps 50
+}
+$sequence "radioDeath_idle" {
+	"gunman_anims\radiodeath#idle"
+	fps 10
+	loop
+}
+$sequence "onGround_idle" {
+	"gunman_anims\onground#idle"
+	fps 15
+	loop
+}
+$sequence "raptorChomp" {
+	"gunman_anims\raptorchomp"
+	LX
+	LY
+	LZ
+	fps 24
+}
+$sequence "pointForward" {
+	"gunman_anims\pointforward"
+	fps 20
+}
+
+//stuff from sidewayswalker. doesn't work because rewolf for some reason decided to animate the position using some other random bone called "Dummy01" instead of Bip02. 
+//So we cant use it without reanimating a bunch of garbage. I compiled it into a seperate model as a result. Disabled.
+
+$sequence "sideWaysWalk1" {
+	"gunman_anims\walkup#walk.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 25
+}
+
+$sequence "sideWaysWalk1_idle" {
+	"gunman_anims\walkup#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 25
+	loop
+}
+
+$sequence "sideWaysWalk2" {
+	"gunman_anims\walkdown#walk.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 25
+}
+
+$sequence "sideWaysWalk2_idle" {
+	"gunman_anims\walkdown#idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 25
+	loop
+}
+
+//secret rave party stuff
+$sequence "Disco01" {
+	"gunman_anims\disco1.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco02" {
+	"gunman_anims\disco2.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	fps 24
+	loop
+}
+$sequence "Disco03" {
+	"gunman_anims\disco3.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco04" {
+	"gunman_anims\disco4.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco05" {
+	"gunman_anims\disco5.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	fps 24
+	loop
+}
+$sequence "Disco06" {
+	"gunman_anims\disco6.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco07a" {
+	"gunman_anims\disco7a.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	fps 24
+	loop
+}
+$sequence "Disco07b" {
+	"gunman_anims\disco7b.smd"
+	fadein 0.2
+	fadeout 0.2
+	LX
+	LY
+	fps 24
+	loop
+}
+$sequence "Disco08" {
+	"gunman_anims\disco8.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco09" {
+	"gunman_anims\disco9.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco10" {
+	"gunman_anims\disco10.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco11" {
+	"gunman_anims\disco11.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco12" {
+	"gunman_anims\disco12.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+
+$sequence "Disco_Cook1" {
+	"gunman_anims\disco_cook1.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+$sequence "Disco_Cook2" {
+	"gunman_anims\disco_cook2.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}
+
+$sequence "Disco_DJ" {
+	"gunman_anims\disco_dj.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 24
+	loop
+}

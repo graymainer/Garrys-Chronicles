@@ -1,0 +1,1081 @@
+//TITLES FOR Gunman
+// Position command $position x y 
+// x & y are from 0 to 1 to be screen resolution independent
+// -1 means center in each dimension
+// Effect command $effect <effect number>
+// effect 0 is fade in/fade out
+// effect 1 is flickery credits
+// effect 2 is write out (training room)
+// Text color r g b command $color
+// fadein time fadeout time / hold time
+// $fadein (message fade in time - per character in effect 2)
+// $fadeout (message fade out time)
+// $holdtime (stay on the screen for this long)
+
+// Test values -- JAY
+$position -1 0.65
+// Scan-out text effect
+$effect 2
+// This is the final color
+$color 0 255 0
+// This is the highlight color
+$color2 0 200 50
+// This is the time it takes to fade each character
+$fadein 0.005
+// This is the amount of time the highlight lags behind the leading edge of the text
+$fxtime 0.5
+// How long to hold the message on the screen (after it scans out)
+$holdtime 3.5
+// How long it takes to fade out the message after holding
+$fadeout 1.5
+
+//Gunman Intro sequence
+$color 0 128 0
+$color2 0 255 0
+$fadein 0.05
+$fxtime 0.2
+$holdtime 2
+$fadeout .5
+
+TITLE
+{
+GUNMAN CHRONICLES
+}
+
+$position .8 .8 
+
+BC1
+{
+Rewolf
+}
+
+BC2
+{
+Mary Allred
+}
+
+BC3
+{ 
+Steve Baier
+}
+
+BC4
+{
+Adrian Banninga
+}
+
+BC5
+{
+Renier Banninga
+}
+
+BC6
+{
+Brian Bazyk
+}
+
+BC7
+{
+Steve Blevin
+}
+
+BC8
+{
+Dale Broadbent
+}
+
+BC9
+{
+Herbert Flower
+}
+
+BC10
+{
+Rodney Houle
+}
+
+BC11
+{
+Miriam Howes
+}
+
+BC12
+{
+Peter Immarco
+}
+
+BC13
+{
+Christopher Izatt
+}
+
+BC14
+{
+Joe Kennebec
+}
+
+BC15
+{
+Jeff Lane
+}
+
+BC16
+{
+Brian Legge
+}
+
+BC17
+{
+Cris Liesch
+}
+
+BC18
+{
+Bill Lovan
+}
+
+BC19
+{
+Christopher McArthur
+}
+
+BC20
+{
+Tomaz Zagar
+}
+
+BC21
+{
+Special Thanks To:
+
+Erik Johnson
+Marc Laidlaw
+Doug Lombardi
+}
+
+$fxtime 0.3
+$color 0 128 0
+
+BC22
+{
+Intro Music: British Audio - www.britishaudio.com
+Intro Music: Instant Access Music - www.iamusic.com
+}
+
+BC23
+{
+Intro Music: Sound Ideas - www.sound-ideas.com
+Intro Music: Peter Immarco - ultralink.tzo.com
+}
+
+$position -1 -1
+$fxtime 0.5
+$color 0 255 0
+
+SKYBASE1
+{
+Location : 
+
+Spiral Galaxy M51 (NGC 5194),
+at the border to the Xenome infested territory
+}
+
+SKYBASE2
+{
+Federal Gunmen Starbase "Aeronautica"
+
+- Crew Section
+}
+
+ValvePresents
+{
+ValveSoftware Presents
+}
+
+RewolfGame
+{
+A Rewolf Software Game
+}
+
+Gunman
+{
+GUNMAN
+}
+
+//Level Load Messages
+// Lower left
+$position 1 1
+$effect 0
+// Final fade-in color
+$color 66 66 255 
+// This is the highlight/flash color
+$color2 64 227 55 
+$fadein 0.07
+$fadeout 1
+$holdtime 2
+
+Hours Later
+{
+Several hours later . . .
+}
+
+//red stuff
+// All centered for now
+$position -1 -1
+$effect 0
+// This is the final color
+$color 200 0 0
+// This is the highlight color
+$color2 200 0 0
+// This is the time it takes to fade each character
+$fadein 0.01
+// This is the amount of time the highlight lags behind the leading edge of the text
+$fxtime 0.25
+// How long to hold the message on the screen (after it scans out)
+$holdtime 5
+// How long it takes to fade out the message after holding
+$fadeout .5
+
+HOURSLATER
+{
+THREE HOURS LATER...
+}
+
+KILLGUNMAN
+{
+YOU HAVE BEEN FOUND
+GUILTY OF HIGH TREASON !
+
+
+DO NOT HARM FELLOW GUNMEN
+}
+
+TANKWITHPLAYER
+{
+YOU HAVE BEEN TELEPORTED
+INTO KATA-SPACE !
+}
+
+TANKNOPLAYER
+{
+YOU NEED THE TANK TO
+DESTROY THE KATA-CANNON !
+}
+
+KATAHITGUNNER
+{
+YOU NEED THE MAINFRAME'S DRONE
+TO DESTROY THE GENERAL'S WAR DRONE !
+}
+
+//INTRO TITLES
+// All centered for now
+$position 0.8 0.8
+$effect 0
+// This is the final color
+$color 0 255 255
+// This is the highlight color
+$color2 255 255 255
+// This is the time it takes to fade each character
+$fadein 0.01
+// This is the amount of time the highlight lags behind the leading edge of the text
+$fxtime 0.25
+// How long to hold the message on the screen (after it scans out)
+$holdtime 6
+// How long it takes to fade out the message after holding
+$fadeout 3
+
+
+
+//ENDMAP
+// All centered for now
+$position 0.8 0.8
+$effect 0
+// This is the final color
+$color 0 255 255
+// This is the highlight color
+$color2 255 255 255
+// This is the time it takes to fade each character
+$fadein 0.01
+// This is the amount of time the highlight lags behind the leading edge of the text
+$fxtime 0.25
+// How long to hold the message on the screen (after it scans out)
+$holdtime 6
+// How long it takes to fade out the message after holding
+$fadeout 3
+
+
+BC1X
+{
+PROJECT LEADER 
+
+Herbert Flower
+}
+
+BC2X
+{
+PROGRAMMING
+
+Brian Legge-
+(lead programmer)
+
+Christopher McArthur 
+Brian Bazyk (vehicles)
+}
+
+BC3X
+{
+FOLEY TECHNICIAN/SOUND
+
+Peter Immarco-
+(lead sound engineer)
+
+Steve Blevin
+}
+
+BC4X
+{
+LEVEL DESIGN
+
+Steven Baier-
+(lead level designer)
+
+Herbert Flower 
+Tomaz Zagar
+Rodney Houle
+Reid Kimball
+Dale Broadbent
+}
+
+BC5X
+{
+MODELS
+
+Renier Banninga- 
+(lead 3D artist)
+
+Christopher Izatt
+Adrian Banninga
+}
+
+BC6X
+{
+TEXTURES and SKINS
+
+Mary Allred-
+(lead 2D artist)
+
+Herbert Flower
+Renier Banninga
+Miriam Howes
+}
+
+BC7X
+{
+RENDERED CINEMATIC
+
+Adrian Banninga
+}
+
+BC8X
+{
+MUSIC
+
+Steve Blevin
+Chris Liesch
+Anthony Brown
+Chris Jensen
+}
+
+BC9X
+{
+SPECIAL THANKS TO
+
+Aaron Stackpole
+David Eckblad
+Everyone at VALVE
+and SIERRA
+}
+
+BC10X
+{
+Animal Sounds courtesy of the following companies:
+
+Naturesongs - www.naturesongs.com
+The Australian Broadcasting Company - www.abc.net.au
+Hollywood Sound Factory - www.hollywoodsoundfactory.com
+}
+
+BC11X
+{
+Cinematic Music by British Audio - www.britishaudio.com 
+Cinematic Music by Instant Access Music - www.iamusic.com
+Cinematic Music by Sound Ideas - www.sound-ideas.com
+Cinematic Music by Peter Immarco - ultralink.tzo.com
+Vocal Samples courtesy of Spectrasonics' "Symphony of Voices"
+} 
+
+BC12X
+{
+PLAYTESTERS:
+John Largis - Stephen Musch
+Jared Guthrie - Rick Gusa
+Dave Thomas - Marc Nagel
+Jon Pulling - Niko Simonson
+Craig Bradford
+}
+
+BC13X
+{
+VOICES:
+Bill Lovan -- the "Bandit"
+Cynthia Jones -- Mainframe AI
+Mary Kae Irvin -- Intro announcer
+Eric Snellman -- as "The General"
+Dex Manley -- Gunman soldier
+Jim French -- The scientist
+Peter Immarco -- Misc.
+}
+
+
+
+// In-Game messages
+$position -1 0.65
+$effect 2
+// This is the final color
+$color 100 100 100
+// This is the highlight color
+$color2 240 110 0
+// This is the time it takes to fade each character
+$fadein 0.01
+// This is the amount of time the highlight lags behind the leading edge of the text
+$fxtime 0.25
+// How long to hold the message on the screen (after it scans out)
+$holdtime 2.0
+// How long it takes to fade out the message after holding
+$fadeout 0.5
+
+GAMESAVED
+{
+Saved...
+}
+
+//HAZARD COURSE TEXT
+
+// Test values -- JAY
+$position -1 0.65
+// Scan-out text effect
+$effect 2
+// This is the final color
+$color 0 255 0
+// This is the highlight color
+$color2 0 200 50
+// This is the time it takes to fade each character
+$fadein 0.005
+// This is the amount of time the highlight lags behind the leading edge of the text
+$fxtime 0.5
+// How long to hold the message on the screen (after it scans out)
+$holdtime 3.5
+// How long it takes to fade out the message after holding
+$fadeout 1.5
+
+
+ENDBOSS1
+{
+DESTROY THE GENERAL'S
+KATA-CANNON
+}
+
+ENDBOSS2
+{
+KATA-CANNON DESTROYED
+}
+
+ENDBOSS3
+{
+LURE THE GENERAL TO THE
+MAINFRAME'S HEAVY DRONE
+}
+
+ENDBOSS4
+{
+PROTECT THE MAINFRAME'S 
+DRONE FROM THE XENOMES
+}
+
+ENDBOSS5
+{
+THE MAINFRAME'S DRONE 
+HAS BEEN DESTROYED!
+}
+
+
+$position -1 0.65
+$holdtime 6
+
+TEACH0
+{
+MOVE FORWARD BY PRESSING FORWARD KEY
+MOVE BACKWARD BY PRESSING BACKWARD KEY
+MOVE LEFT BY PRESSING MOVELEFT
+MOVE RIGHT BY PRESSING MOVERIGHT
+}
+
+
+TEACH2
+{
+PRESS FORWARD KEY TO RUN FORWARD
+PRESS DUCK KEY TO DUCK
+PRESS FORWARD + DUCK KEYS TOGETHER 
+TO MOVE IN STEALTH MODE
+}
+
+TEACH3
+{
+PRESS FORWARD KEY TO RUN FORWARD
+PRESS JUMP KEY TO JUMP
+}
+
+TEACH4
+{
+PRESS FORWARD KEY TO MOVE UP LADDERS
+PRESS BACKWARD KEY TO MOVE DOWN LADDERS
+}
+
+TEACH5
+{
+PRESS FORWARD KEY TO RUN FORWARD
+PRESS JUMP KEY TO JUMP
+}
+
+TEACH6
+{
+ACTIVATE BUTTONS
+BY PRESSING THE USE KEY
+}
+
+TEACH7
+{
+MOVE UP TO KNIFE
+PRESS ATTACK1 KEY TO BREAK OBJECTS
+}
+
+TEACH8
+{
+USE MEDICAL STATIONS BY HOLDING DOWN
+THE USE KEY UNTIL HEALTH IS AT 100
+OR KIT IS DEPLETED
+}
+
+TEACH9
+{
+PRESS FORWARD KEY TO MOVE AGAINST BOX
+KEEP PRESSING FORWARD TO PUSH BOX
+}
+
+TEACH9b
+{
+TO PULL THE BOX BACKWARD
+PRESS USE + BACKWARD KEYS TOGETHER
+}
+
+TEACH10
+{
+TO JUMP OVER THE BOX
+PRESS FORWARD + JUMP TOGETHER,
+THEN THE DUCK KEY WHILE JUMPING
+}
+
+RANGE1
+{
+RETURN YOUR WEAPON
+TO THE RED RECEPTACLE
+}
+
+RANGE3
+{
+PICK UP THE STANDARD-ISSUE PISTOL
+AND GATHER AMMUNITION.
+}
+
+RANGE4
+{
+PRESS YOUR WEAPON CUSTOMIZATION KEY
+TO ACTIVATE YOUR CUSTOMIZING MENU.
+PRESS YOUR NEXT OR PREVIOUS WEAPON
+KEYS TO SELECT RAPID FIRE MODE.
+}
+
+RANGE5
+{
+PICK UP THE SNIPER-KIT AND USE YOUR
+WEAPON CUSTOMIZATION KEY TO SELECT
+SNIPER MODE.  HOLD DOWN YOUR FIRE
+KEY TO ZOOM-IN.  RELEASE TO FIRE
+}
+
+RANGE6
+{
+PRESS YOUR WEAPON CUSTOMIZATION KEY
+TO ACTIVATE YOUR CUSTOMIZING MENU.
+PRESS YOUR NEXT OR PREVIOUS WEAPON
+KEYS TO SELECT CHARGE MODE.
+}
+
+RANGE7
+{
+DO 400 DAMAGE POINTS TO THE
+HOLOGRAM TARGET BEFORE IT RESETS.
+}
+
+RANGE11
+{
+PICK UP THE SHOTGUN AND
+GATHER AMMUNITION.
+}
+
+RANGE12
+{
+DO 300 DAMAGE POINTS TO THE HOLOGRAM
+TARGET WITHIN THE TIME LIMIT.
+}
+
+RANGE13
+{
+PRESS YOUR WEAPON CUSTOMIZATION KEY
+TO ACTIVATE YOUR CUSTOMIZING MENU.
+PRESS YOUR NEXT OR PREVIOUS WEAPON
+KEYS TO ADJUST THE SHELL-COUNT.
+}
+
+RANGE14
+{
+FIRING FOUR SHELLS AT ONCE WILL
+INCREASE YOUR SHOTGUN'S FIREPOWER.
+}
+
+RANGE17
+{
+DO 500 DAMAGE POINTS TO THE HOLOGRAM
+TARGET WITHIN THE TIME LIMIT.
+}
+
+RANGE18
+{
+SOME WEAPONS CAN OVERHEAT
+CAUSING MALFUNCTIONS.
+}
+
+RANGE19
+{
+PICK UP THE MULTIPLE-UNIT-LAUNCH-ENGINE
+}
+
+RANGE22
+{
+MULTIPLE-UNIT-LAUNCH-ENGINE (M.U.L.E.)
+AMMUNITION MAY BE USED LIKE GRENADES.
+}
+
+RANGE23
+{
+THROW THE GRENADE OVER THE BARRIER
+TOWARDS THE HOLOGRAM TARGET.
+}
+
+RANGE24
+{
+PRESS YOUR WEAPON CUSTOMIZATION KEY
+TO ACTIVATE YOUR CUSTOMIZING MENU.
+PRESS YOUR NEXT OR PREVIOUS WEAPON
+KEYS TO SELECT "TRIGGER TIMED" MODE.
+}
+RANGE25
+{
+PRESS YOUR WEAPON CUSTOMIZATION KEY
+TO ACTIVATE YOUR CUSTOMIZING MENU.
+PRESS IT AGAIN TO HIGHLIGHT "PAYLOAD".
+PRESS YOUR NEXT OR PREVIOUS WEAPON
+KEYS TO SELECT "CLUSTER" MODE.
+}
+
+TANK2
+{
+TO ENTER THE TANK, WALK UP TO THE
+SIDE AND PRESS YOUR "USE" KEY.
+}
+
+TANK3
+{
+USE YOUR STRAFE KEYS TO TURN THE TANK.
+THE TURRET HAS INDEPENDENT CONTROLS.
+}
+
+TANK5
+{
+PRESS YOUR JUMP KEY TO EXIT THE TANK.
+}
+
+TANK6
+{
+PRESS YOUR CROUCH KEY TO FIRE THE
+MACHINE GUNS.  THE OTHER WEAPONS HAVE
+BEEN TEMPORARILY DISABLED.
+}
+
+TANK7
+{
+PARK THE TANK NEXT TO THE PLATFORM EDGE
+AND JUMP OUT.  YOU CAN USE THE TANK'S
+BODY TO HELP YOU JUMP ONTO THE PLATFORM.
+}
+
+TANK9
+{
+A RAMP TO THE PLATFORM HAS BEEN LOWERED.
+}
+
+ROCKET1
+{
+TARGET DRONES WILL BE RELEASED
+INSIDE THE CAVERN.
+}
+
+ROCKET2
+{
+PRESS YOUR WEAPON CUSTOMIZATION KEY
+TO ACTIVATE YOUR CUSTOMIZING MENU.
+PRESSING IT REPEATEDLY WILL CYCLE
+THROUGH THE MENU CATEGORIES.
+}
+
+ROCKET3
+{
+PRESS YOUR NEXT OR PREVIOUS WEAPON
+KEYS TO CHANGE SETTINGS.
+}
+
+ROCKET10
+{
+ENTER THE ELEVATOR TO EXIT THE TRAINING
+COURSE.  YOU MAY CONTINUE TO PRACTICE
+WITH THE M.U.L.E. OR OTHER WEAPONS.
+}
+
+FLASH1
+{
+PRESS YOUR FLASHLIGHT KEY TO 
+HELP YOU SEE BETTER IN THE DARK.
+}
+
+//map names
+
+city1a
+{
+Tram Part 1
+}
+
+city1b
+{
+Tram Part 2
+}
+
+city2a
+{
+Briefing room
+}
+
+city2b
+{
+Movement Training
+}
+
+city3a
+{
+Firing Range
+}
+
+city3b
+{
+Landing Bay
+}
+
+mayan0a
+{
+Landing Zone
+}
+
+mayan0b
+{
+War Zone
+}
+
+mayan1
+{
+Anti Aircraft Site
+}
+
+mayan3a
+{
+The Renesaur
+}
+
+mayan4
+{
+The General Returns
+}
+
+mayan6
+{
+Outlaw Camp
+}
+
+mayan8
+{
+Jungle Runway
+}
+
+//Rust
+
+rust1
+{
+Ferrin Moon Landing
+}
+
+rust2a
+{
+Outpost Section A
+}
+
+rust2b
+{
+Outpost Section B
+}
+
+rust3a
+{
+Plasma Transit Station
+}
+
+rust4a
+{
+Shield Tower Maintenance
+}
+
+rust4b
+{
+Shield Tower
+}
+
+rust4c
+{
+Shield Tower Cinematic
+}
+
+rust5a
+{
+Subterranean Encounter
+}
+
+rust6a
+{
+Pumping Station A
+}
+
+rust6b
+{
+Plasma Exhaust Station
+}
+
+rust6c
+{
+Laser Research Labs
+}
+
+rust6d
+{
+Surface Section 6D
+}
+
+rust7a
+{
+Surface Sector 7A
+}
+
+rust7e
+{
+Tram Loading Station
+}
+
+rust7b
+{
+Surface Sector 7B
+}
+
+rust7c
+{
+Mainframe Data Storage
+}
+
+rust7d
+{
+Mainframe Core
+}
+
+rust8a
+{
+Pumping Station B
+}
+
+rust9a
+{
+Unstable Sector
+}
+
+
+//West
+
+west1
+{
+Icnus Crash Site
+}
+
+west2
+{
+Icnus Cliffside
+}
+
+west3a
+{
+Icnus Bombing Run
+}
+
+west3b
+{
+Icnus Sandstone Caves
+}
+
+west4a
+{
+Icnus Outpost One
+}
+
+west4b
+{
+Icnus Outpost Two
+}
+
+west5b
+{
+Icnus Motorpool
+}
+
+west6a
+{
+Icnus Dam
+}
+
+west6b
+{
+Icnus Rock Crusher
+}
+
+west6c
+{
+Icnus Outpost Three
+}
+
+west6d
+{
+Icnus Refinery
+}
+
+west6e
+{
+Icnus Outlaw Fortress
+}
+
+rebar0a
+{
+The Facility Entrance
+}
+  
+rebar0b
+{
+Elevator Ambush
+}
+
+rebar2a
+{
+Deck A
+}
+
+rebar2b
+{
+Deck B
+}
+
+rebar3e
+{
+Deck B: Surface
+}
+
+rebar2c
+{
+Deck C
+}
+
+rebar2g
+{
+Deck C: Beak-Birther
+}
+
+rebar2j
+{
+Deck D: Genetic Labs
+}
+
+rebar2d
+{
+Deck D: No Way Back
+}
+
+rebar2e
+{
+Deck E
+}
+
+rebar2h
+{
+Deck E: The Mainframe
+}
+
+rebar2k
+{
+The new order
+}
+
+rebar2l
+{
+Reinforcements
+}
+
+rebar2i
+{
+Obvious Changes
+}
+
+rebar2f
+{
+Cold War
+}
+
+rebar3b
+{
+The Descent
+}
+
+rebar3d
+{
+Unusual Pathways
+}

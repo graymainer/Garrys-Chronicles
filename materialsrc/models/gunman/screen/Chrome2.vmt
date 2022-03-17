@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/gunman/screen/chromeTex"
+	//"$color2" "[0.5 0.5 0.5]"
+	"$envmap" "models/gunman/screen/Chrome2"
+	"$envmaptint" "[ 0.15 0.15 0.12 ]" //the only way to control the intensity of the chrome effect. chrome reflections are always fullbright unless it belongs to an active viewmodel.
+	"$surfaceprop" "glass"
+}

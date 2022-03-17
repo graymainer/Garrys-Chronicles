@@ -1,0 +1,116 @@
+
+
+32
+
+A1 (100%)
+
+A2 (100%)
+
+A3 (90%)
+
+Overall (95%)
+--------A1--------
+
+ADD: Support for hl2 weapons (ADDED)
+FIX: Item spawning issues (FIXED)
+FIX: Items at spawn have issues (FIXED)
+ADD: Make gunmen invincible (ADDED)
+ADD: Text (ADDED)
+FIX: Disarm text holds for too long (FIXED)
+FIX: Weapons falling through plate becoming unobtainable (FIXED)
+FIX: Badly aligned textures for the wpnplates (FIXED)
+FIX: Badly aligned textures for the wpnplate floordoors (FIXED)
+FIX: Spawn weapons are too close to strip trigger (FIXED)
+FIX: Wpnplate floordoors sticking up out of ground (FIXED)
+
+--------A2--------
+
+FIX: Temp spawnpoint needs to be removed after completion (FIXED)
+FIX: Item spawning issues (FIXED)
+REMOVE: Sound playing at fusebox (REMOVED)
+FIX: Mecha clips falling over near their spawner (FIXED)
+ADD: Text (ADDED)
+FIX: Tunnel textures (FIXED)
+ADD: Make gunman invincible (ADDED)
+ADD: Support for hl2 weapons (ADDED)
+FIX: Flashlightdude_textb wasn't being triggered (FIXED)
+FIX: Disarm text holds for too long (FIXED)
+FIX: Weapons falling through plate becoming unobtainable (FIXED)
+FIX: Badly aligned textures for the wpnplates (FIXED)
+FIX: Badly aligned textures for the wpnplate floordoors (FIXED)
+FIX: Unobtainable healthkit (FIXED)
+ADD: Tut msg on how to pick up mecha-gun (ADDED)
+FIX: Outside of map is visible (FIXED)
+ADD: Clip on top of the middle fence (ADDED)
+
+--------A3--------
+
+TWEAK: Rocket angles (TWEAKED)
+TWEAK: a3_tankseq_vo1 spawnflag "Play everywhere" (TWEAKED)
+FIX: Ramps (FIXED)
+FIX: Ramp button (FIXED)
+FIX: VO too quiet (FIXED)
+FIX: Explosive breakables too quiet (FIXED)
+FIX: Explosive breakables have too much hp (FIXED)
+FIX: Explosive breakables deal too much dmg (FIXED)
+FIX: Robo body flying the wrong dir (FIXED)
+FIX: Correct some textures on the "robodoors" (FIXED)
+FIX: Robo die sound too quiet (FIXED)
+FIX: Missing decals (FIXED)
+FIX: Holodisplay sound too quiet (FIXED)
+FIX: Target activaton sounds too quiet (FIXED)
+FIX: Robodoors has no open/close sound (FIXED)
+FIX: Ambient_generic plays at the incorrect location (FIXED)
+FIX: AVO not stopsounding when destroying a target (FIXED)
+ADD: Text (ADDED)
+FIX: Item spawn issues (FIXED)
+FIX: Tunnel textures (FIXED)
+FIX: Plate textures need corrected (FIXED)
+FIX: Death pit triggerhurt only deals dmg to client (FIXED)
+FIX: a3_tankseq_vo1 doesn't play everywhere (FIXED)
+ADD: Support for default hl2 weapons (ADDED)
+ADD: hurt sound to death pit triggerhurt (ADDED)
+ADD: sound to death pit in exprange (ADDED)
+ADD: Cubemaps (ADDED)
+ADD: AI nodes (ADDED)
+ADD: Clipping to keep player from entering exprange without hitting trigger (ADDED)
+FIX: Remove A3's Info_player_start (FIXED)
+FIX: Barrier has no open sound (FIXED)
+FIX: a3_tankseq_seq13 triggering when player gets on top of platform (FIXED)
+FIX: Clipping textures in deathpit (FIXED)
+FIX: Height pos for a3_rangeseq_txt02e (FIXED)
+FIX: Delay of activaton for a3_tanktrigger03 (FIXED)
+FIX: Delay of display for a3_rangeseq_txt06 entities (FIXED)
+FIX: Channel on a3_rangeseq_txt07c (FIXED)
+ADD: Targetname to deathpit sounds (ADDED)
+ADD: Stopsound to deathpit sounds when entering elevator (ADDED)
+FIX: a3_tankseq_vo6 playing after player is on platform (FIXED)
+ADD: Make gunmen invincible (ADDED)
+FIX: Tank leftside arrow decal (FIXED)
+FIX: Instructor saying praise from far away (FIXED)
+FIX: Light to bright above elevator (FIXED)
+FIX: VO overlap after destroying robo too quickly (FIXED)
+FIX: Stop text from displaying after robo dies (FIXED)
+FIX: Decrease delay for a3_rangeseq_txt02e (FIXED)
+FIX: a3_tankseq_seq01a is too close to the edge (FIXED)
+ADD: Automatically open ramps ()
+FIX: Weapons falling through plate becoming unobtainable (FIXED)
+FIX: Badly aligned texture in gaurdroom (FIXED)
+FIX: Instructor praising player before getting on platform (FIXED)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIX:  ()
+ADD:  ()
+TWEAK:  ()

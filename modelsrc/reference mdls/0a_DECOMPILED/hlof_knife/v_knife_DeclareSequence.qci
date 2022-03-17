@@ -1,0 +1,15 @@
+// Created by Crowbar 0.49.0.0
+
+$declaresequence "idle1"
+$declaresequence "draw"
+$declaresequence "holster"
+$declaresequence "attack1"
+$declaresequence "attack1miss"
+$declaresequence "attack2"
+$declaresequence "attack2hit"
+$declaresequence "attack3"
+$declaresequence "attack3hit"
+$declaresequence "idle2"
+$declaresequence "idle3"
+$declaresequence "charge"
+$declaresequence "stab"

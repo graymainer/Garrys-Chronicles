@@ -1,0 +1,47 @@
+$surfaceprop "rubber"
+$contents "solid"
+
+$collisionjoints "fuelPipe_phys.smd"
+{
+	$mass 4300
+	$inertia 7.00
+	$damping 0.01
+	$rotdamping 1.50
+
+	$rootbone "Bone01"
+	
+	$jointmerge "Bone01" "Bone02"
+	
+	$jointconstrain "Bone02" x limit -15 15 1.00
+	$jointconstrain "Bone02" y limit -25 25 1.00
+	$jointconstrain "Bone02" z limit -25 25 1.00
+
+	$jointconstrain "Bone03" x limit -15 15 1.00
+	$jointconstrain "Bone03" y limit -25 25 1.00
+	$jointconstrain "Bone03" z limit -25 25 1.00
+	
+	$jointconstrain "Bone04" x limit -15 15 1.00
+	$jointconstrain "Bone04" y limit -25 25 1.00
+	$jointconstrain "Bone04" z limit -25 25 1.00
+	
+	$jointconstrain "Bone05" x limit -15 15 1.00
+	$jointconstrain "Bone05" y limit -25 25 1.00
+	$jointconstrain "Bone05" z limit -25 25 1.00
+	
+	$jointconstrain "Bone06" x limit -15 15 1.00
+	$jointconstrain "Bone06" y limit -25 25 1.00
+	$jointconstrain "Bone06" z limit -25 25 1.00
+	
+	$jointconstrain "Bone07" x limit -15 15 1.00
+	$jointconstrain "Bone07" y limit -25 25 1.00
+	$jointconstrain "Bone07" z limit -25 25 1.00
+	
+	$jointconstrain "Bone08" x limit -15 15 1.00
+	$jointconstrain "Bone08" y limit -25 25 1.00
+	$jointconstrain "Bone08" z limit -25 25 1.00
+	
+	$jointconstrain "Bone09" x limit -15 15 1.00
+	$jointconstrain "Bone09" y limit -25 25 1.00
+	$jointconstrain "Bone09" z limit -25 25 1.00
+
+}

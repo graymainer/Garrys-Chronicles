@@ -1,0 +1,3 @@
+$cdmaterials "models/gunman/radarDish/"
+$surfaceprop "metalvent"
+$contents "solid"

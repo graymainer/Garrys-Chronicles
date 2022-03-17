@@ -1,0 +1,80 @@
+$sequence "tipping#tipping" {
+	"dropship_anims\tipping#tipping"
+	fps 30
+}
+$sequence "tipping#idle" {
+	"dropship_anims\tipping#idle"
+	fps 10
+	loop
+}
+$sequence "crash#idle" {
+	"dropship_anims\crash#idle"
+	fps 30
+}
+$sequence "crash#crash" {
+	"dropship_anims\crash#crash"
+	fps 30
+}
+$sequence "crashed#idle" {
+	"dropship_anims\crashed#idle"
+	fps 20
+}
+$sequence "flyover" {
+	"dropship_anims\flyover"
+	fps 90
+}
+$sequence "hanger1" {
+	"dropship_anims\hanger1"
+	fps 30
+}
+$sequence "hanger2" {
+	"dropship_anims\hanger2"
+	fps 30
+}
+$sequence "rebar#land" {
+	"dropship_anims\rebar#land"
+	fps 20
+}
+$sequence "rebar#idle" {
+	"dropship_anims\rebar#idle"
+	fps 10
+}
+$sequence "cin#idle" {
+	"dropship_anims\cin#idle"
+	fps 10
+	loop
+}
+
+//hollow variant
+
+$sequence "doorclosed#idle" {
+	"dropship_anims\doorclosed#idle"
+	fps 30
+}
+$sequence "landing#idle" {
+	"dropship_anims\landing#idle"
+	fps 10
+	loop
+}
+$sequence "landing#open" {
+	"dropship_anims\landing#open"
+	fps 10
+}
+$sequence "landing#landing" {
+	"dropship_anims\landing#landing"
+	fps 20
+}
+$sequence "hovering#idle" {
+	"dropship_anims\hovering#idle"
+	fps 15
+	loop
+}
+$sequence "hover#close" {
+	"dropship_anims\hover#close"
+	fps 15
+}
+$sequence "hover#idle" {
+	"dropship_anims\hover#idle"
+	fps 15
+	loop
+}

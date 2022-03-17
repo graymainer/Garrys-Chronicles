@@ -1,0 +1,22 @@
+$sequence "gunman_mouth" {
+	"mouth_close"
+	"mouth_open"
+	autoplay
+	blend "mouth" 0 90
+	blendwidth 2
+	delta
+	fadein 0.2
+	fadeout 0.2
+}
+
+ $sequence "gunman_neckturn" {
+	"neck_right"
+	"neck_center"
+	"neck_left"
+	autoplay
+	blend "head_yaw" -90 90
+	blendwidth 3
+	delta
+	fadein 0.2
+	fadeout 0.2
+}

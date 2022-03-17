@@ -1,0 +1,136 @@
+versioninfo
+{
+	"editorversion" "400"
+	"editorbuild" "8860"
+	"mapversion" "527"
+	"formatversion" "100"
+	"prefab" "1"
+}
+world
+{
+	"id" "214887"
+	"mapversion" "527"
+	"classname" "worldspawn"
+	"detailmaterial" "detail/detailsprites"
+	"detailvbsp" "detail.vbsp"
+	"maxpropscreenwidth" "-1"
+	"skyname" "sky_day01_01"
+	solid
+	{
+		"id" "214888"
+		side
+		{
+			"id" "86861"
+			"plane" "(20 -820 276) (20 -820 -20.002) (20 -1148 -20.002)"
+			vertices_plus
+			{
+				"v" "20 -820 276"
+				"v" "20 -820 -20.002"
+				"v" "20 -1148 -20.002"
+				"v" "20 -1148 276"
+			}
+			"material" "GCTEXTURES/GCFLOOR05"
+			"uaxis" "[0 -1 0 -78] 2"
+			"vaxis" "[0 0 1 -34] 2"
+			"rotation" "180"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "86860"
+			"plane" "(-300 -1148 276) (-300 -1148 -20.002) (-300 -820 -20.002)"
+			vertices_plus
+			{
+				"v" "-300 -1148 276"
+				"v" "-300 -1148 -20.002"
+				"v" "-300 -820 -20.002"
+				"v" "-300 -820 276"
+			}
+			"material" "GCTEXTURES/GCFLOOR05"
+			"uaxis" "[0 -1 0 -78] 2"
+			"vaxis" "[0 0 1 -34] 2"
+			"rotation" "180"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "86859"
+			"plane" "(-300 -820 276) (-300 -820 -20.002) (20 -820 -20.002)"
+			vertices_plus
+			{
+				"v" "-300 -820 276"
+				"v" "-300 -820 -20.002"
+				"v" "20 -820 -20.002"
+				"v" "20 -820 276"
+			}
+			"material" "GCTEXTURES/GCFLOOR05"
+			"uaxis" "[-1 0 0 -78] 2"
+			"vaxis" "[0 0 1 -34] 2"
+			"rotation" "180"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "86858"
+			"plane" "(20 -1148 276) (20 -1148 -20.002) (-300 -1148 -20.002)"
+			vertices_plus
+			{
+				"v" "20 -1148 276"
+				"v" "20 -1148 -20.002"
+				"v" "-300 -1148 -20.002"
+				"v" "-300 -1148 276"
+			}
+			"material" "GCTEXTURES/GCFLOOR05"
+			"uaxis" "[-1 0 0 -78] 2"
+			"vaxis" "[0 0 1 -34] 2"
+			"rotation" "180"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "86857"
+			"plane" "(-300 -1148 276) (-300 -820 276) (20 -820 276)"
+			vertices_plus
+			{
+				"v" "-300 -1148 276"
+				"v" "-300 -820 276"
+				"v" "20 -820 276"
+				"v" "20 -1148 276"
+			}
+			"material" "GCTEXTURES/GCFLOOR05"
+			"uaxis" "[-1 0 0 -78] 2"
+			"vaxis" "[0 1 0 46] 2"
+			"rotation" "180"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		side
+		{
+			"id" "86856"
+			"plane" "(-300 -820 -20.002) (-300 -1148 -20.002) (20 -1148 -20.002)"
+			vertices_plus
+			{
+				"v" "-300 -820 -20.002"
+				"v" "-300 -1148 -20.002"
+				"v" "20 -1148 -20.002"
+				"v" "20 -820 -20.002"
+			}
+			"material" "GCTEXTURES/GCFLOOR05"
+			"uaxis" "[-1 0 0 -78] 2"
+			"vaxis" "[0 1 0 46] 2"
+			"rotation" "180"
+			"lightmapscale" "16"
+			"smoothing_groups" "0"
+		}
+		editor
+		{
+			"color" "0 180 0"
+			"visgroupshown" "1"
+			"visgroupautoshown" "1"
+		}
+	}
+}

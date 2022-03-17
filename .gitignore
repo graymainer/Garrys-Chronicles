@@ -1,14 +1,20 @@
 #ignore all source files.
 
-*.png
-*.psd
-*.tga
-*.jpg
-*.jpeg
-*.bmp
-*.qci
-*.qc
-*.smd
-*.blend
-modelsrc/
-materialssrc/
+#*.png
+#*.psd
+#*.tga
+#*.jpg
+#*.jpeg
+#*.bmp
+#*.qci
+#*.qc
+#*.smd
+#*.blend
+#modelsrc/
+#materialssrc/
+
+*.log
+*.prt
+*.lin
+*.bsp
+!maps/*.bsp

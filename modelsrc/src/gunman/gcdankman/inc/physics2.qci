@@ -1,0 +1,71 @@
+$contents "solid"
+$surfaceprop "flesh"
+
+$collisionjoints "gunman_phys.smd" {
+
+	$mass 25
+	$inertia 2
+	$damping 0.11
+	$rotdamping 0.11
+	$rootbone "Bip02"
+	
+	$jointmerge "Bip02" "Bip02 Pelvis"
+	$jointmerge "Bip02" "Bip02 Spine" //fixes stretchy garbage.
+	
+	$jointconstrain "Bip02 spine1" x limit -48.00 48.00 1.00
+	$jointconstrain "Bip02 spine1" y limit -25.00 25.00 1.00
+	$jointconstrain "Bip02 spine1" z limit -25.00 50.00 1.00
+	
+	$jointconstrain "Bip02 head" x free -40.00 40.00 1.00
+	$jointconstrain "Bip02 head" y free -25.00 25.00 1.00
+	$jointconstrain "Bip02 head" z free -30.00 30.00 1.00
+	
+	$jointconstrain "Bip02 r leg" x free -45.00 75.00 1.00
+	$jointconstrain "Bip02 r leg" y free -75.00 20.00 1.00
+	$jointconstrain "Bip02 r leg" z free -30.00 95.00 1.00
+
+	$jointconstrain "Bip02 r leg1" x free 0.00 0.00 1.00
+	$jointconstrain "Bip02 r leg1" y free 0.00 0.00 1.00
+	$jointconstrain "Bip02 r leg1" z free -126.00 1.00 1.00
+	
+	$jointconstrain "Bip02 r foot" x free 0.00 0.00 1.00
+	$jointconstrain "Bip02 r foot" y free -19.00 19.00 1.00
+	$jointconstrain "Bip02 r foot" z free -35.00 15.00 1.00
+
+	$jointconstrain "Bip02 l leg" x free -75.00 45.00 1.00
+	$jointconstrain "Bip02 l leg" y free -20.00 75.00 1.00
+	$jointconstrain "Bip02 l leg" z free -30.00 95.00 1.00
+
+	$jointconstrain "Bip02 l leg1" x free 0.00 0.00 1.00
+	$jointconstrain "Bip02 l leg1" y free 0.00 0.00 1.00
+	$jointconstrain "Bip02 l leg1" z free -126.00 1.00 1.00
+
+	$jointconstrain "Bip02 l foot" x free -1.00 -1.00 1.00
+	$jointconstrain "Bip02 l foot" y free -19.00 19.00 1.00
+	$jointconstrain "Bip02 l foot" z free -35.00 15.00 1.00
+
+	$jointconstrain "Bip02 r arm1" x free -120.00 120.00 1.00
+	$jointconstrain "Bip02 r arm1" y free -57.00 102.00 1.00
+	$jointconstrain "Bip02 r arm1" z free -93.00 30.00 1.00
+
+	$jointconstrain "Bip02 r arm2" x free 0.00 0.00 1.00
+	$jointconstrain "Bip02 r arm2" y free -120.00 0.00 1.00
+	$jointconstrain "Bip02 r arm2" z free -120.00 4.00 0.00
+
+	$jointconstrain "Bip02 r hand" x free -120.00 120.00 1.00
+	$jointconstrain "Bip02 r hand" y free 0.00 0.00 0.00
+	$jointconstrain "Bip02 r hand" z free -57.00 70.00 1.00
+
+	$jointconstrain "Bip02 l arm1" x free -120.00 120.00 1.00
+	$jointconstrain "Bip02 l arm1" y free -102.00 57.00 1.00
+	$jointconstrain "Bip02 l arm1" z free -93.00 30.00 1.00
+
+	$jointconstrain "Bip02 l arm2" x free 0.00 0.00 1.00
+	$jointconstrain "Bip02 l arm2" y free 0.00 120.00 0.00
+	$jointconstrain "Bip02 l arm2" z free -120.00 4.00 1.00
+
+	$jointconstrain "Bip02 l hand" x free -120.00 120.00 1.00
+	$jointconstrain "Bip02 l hand" y free 0.00 0.00 1.00
+	$jointconstrain "Bip02 l hand" z free -57.00 70.00 1.00
+
+}
