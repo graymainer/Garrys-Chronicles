@@ -373,7 +373,7 @@ $sequence "pointPlayer" {
 	fps 15
 }
 
-$sequence "wallToWall" {
+$sequence "wall_from_idle" {
 	"gunman_anims\wall#towall.smd"
 	fadein 0.2
 	fadeout 0.2
