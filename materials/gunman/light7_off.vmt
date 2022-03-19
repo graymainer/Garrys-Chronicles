@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gctextures/gclight07"
+	"$surfaceprop" "glass"
+	"$reflectivity" "[0 0 0]"
+	"%keywords" "gc"
+}
