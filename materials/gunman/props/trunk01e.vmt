@@ -1,0 +1,13 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/props/trunk01e_diff"
+	"$surfaceprop" "computer"
+	"%keywords" "gc, gunman"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+	
+	"$envmap" "env_cubemap"
+	"$envmapmask" "gunman/props/trunk01e_mask"
+	"$envmaptint" "[0.05 0.05 0.05]"
+}
