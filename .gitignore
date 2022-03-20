@@ -13,6 +13,7 @@
 #modelsrc/
 #materialssrc/
 
+release/
 *.blend1
 *.vmf_autosave
 *.log
