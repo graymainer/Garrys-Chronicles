@@ -9,7 +9,7 @@ $sequence "gunman_mouth" {
 	fadeout 0.2
 }
 
- $sequence "gunman_neckturn" {
+/*$sequence "gunman_neckturn" {
 	"neck_right"
 	"neck_center"
 	"neck_left"
@@ -19,4 +19,72 @@ $sequence "gunman_mouth" {
 	delta
 	fadein 0.2
 	fadeout 0.2
+} */
+
+$sequence "neck_trans_x" {
+	"a_neck_up"
+	"a_neck_ct"
+	"a_neck_dn"
+	autoplay
+	blend "neck_trans" -0.178728 0.214179
+	blendwidth 3
+	delta
+	fadein 0.2
+	fadeout 0.2
+	hidden
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	//subtract "a_WalkS" 0
+	weightlist "weights_gunman_spine"
+}
+
+$sequence "head_rot_z" { //left, right
+	"a_head_lt"
+	"a_head_ct"
+	"a_head_rt"
+	autoplay
+	blend "head_yaw" 66.7055 -66.70586
+	blendwidth 3
+	delta
+	fadein 0.2
+	fadeout 0.2
+	hidden
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	//subtract "walk" 0
+	weightlist "weights_gunman_spine"
+}
+
+$sequence "head_rot_y" { //up, down
+	"a_head_dn_ct"
+	"a_head_ct"
+	"a_head_up_ct"
+	autoplay
+	blend "head_pitch" 25.37099 -34.84618
+	blendwidth 3
+	delta
+	fadein 0.2
+	fadeout 0.2
+	hidden
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	//subtract "walk" 0
+	weightlist "weights_gunman_spine"
+}
+
+$sequence "head_rot_x" { //tilt right, tilt left
+	"a_head_roll_lt"
+	"a_head_ct"
+	"a_head_roll_rt"
+	autoplay
+	blend "head_roll" -10.93142 10.85306
+	blendwidth 3
+	delta
+	fadein 0.2
+	fadeout 0.2
+	hidden
+	fps 30
+	// This subtract line guesses the animation name and frame index. There is no way to determine which $animation and which frame was used. Change as needed.
+	//subtract "walk" 0
+	weightlist "weights_gunman_spine"
 }

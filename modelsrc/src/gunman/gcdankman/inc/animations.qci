@@ -3,7 +3,15 @@
 
 $poseparameter "mouth" 0 90 loop 0
 $poseparameter "XR" -50 50 loop 0
-$poseparameter "head_yaw" -90 90 loop 0
+
+//$poseparameter "head_yaw" -90 90 loop 0
+
+
+$poseparameter "neck_trans" -0.178728 0.214179 0
+$poseparameter "head_yaw" -66.70586 66.7055 0
+$poseparameter "head_pitch" -34.84618 25.37099 0
+$poseparameter "head_roll" -10.93142 10.85306 0
+
 
 $weightlist "weights_gunman_mouth" {
 	 "Bip02" 0
@@ -30,7 +38,7 @@ $weightlist "weights_gunman_mouth" {
 	 "Bone01" 1
 }
 
-$weightlist "weights_gunman_neckturn" {
+$weightlist "weights_gunman_head" {
 	 "Bip02" 0
 	 "Bip02 Pelvis" 0
 	 "Bip02 L Leg" 0
@@ -55,13 +63,65 @@ $weightlist "weights_gunman_neckturn" {
 	 "Bone01" 1
 }
 
-$animation "mouth_corrective_animation" "gunman_anims\mouth_corrective.smd"{
+$weightlist "weights_gunman_neck" {
+	 "Bip02" 0
+	 "Bip02 Pelvis" 0
+	 "Bip02 L Leg" 0
+	 "Bip02 L Leg1" 0
+	 "Bip02 L Foot" 0
+	 "Bip02 R Leg" 0
+	 "Bip02 R Leg1" 0
+	 "Bip02 R Foot" 0
+	 "Bip02 Spine" 0
+	 "Bip02 Spine1" 0
+	 "Bip02 Spine2" 0
+	 "Bip02 Neck" 1
+	 "Bip02 Head" 1
+	 "Bip02 L Arm" 0
+	 "Bip02 L Arm1" 0
+	 "Bip02 L Arm2" 0
+	 "Bip02 L Hand" 0
+	 "Bip02 R Arm" 0
+	 "Bip02 R Arm1" 0
+	 "Bip02 R Arm2" 0
+	 "Bip02 R Hand" 0
+	 "Bone01" 1
 }
 
-$animation "neck_corrective_animation" "gunman_anims\neck_corrective.smd" {
+$weightlist "weights_gunman_spine" {
+	 "Bip02" 1
+	 "Bip02 Pelvis" 1
+	 "Bip02 L Leg" 0
+	 "Bip02 L Leg1" 0
+	 "Bip02 L Foot" 0
+	 "Bip02 R Leg" 0
+	 "Bip02 R Leg1" 0
+	 "Bip02 R Foot" 0
+	 "Bip02 Spine" 1
+	 "Bip02 Spine1" 1
+	 "Bip02 Spine2" 1
+	 "Bip02 Neck" 1
+	 "Bip02 Head" 1
+	 "Bip02 L Arm" 0
+	 "Bip02 L Arm1" 0
+	 "Bip02 L Arm2" 0
+	 "Bip02 L Hand" 0
+	 "Bip02 R Arm" 0
+	 "Bip02 R Arm1" 0
+	 "Bip02 R Arm2" 0
+	 "Bip02 R Hand" 0
+	 "Bone01" 1
 }
 
-$animation "neck_right" "gunman_anims\neck_right.smd" {
+$animation "a_mouth_correct" "gunman_anims\mouth_corrective.smd"{
+}
+
+$animation "a_neck_correct" "gunman_anims\neck_corrective.smd" {
+}
+
+$animation "a_head_correct" "gunman_anims\head_corrective.smd"
+
+/* $animation "neck_right" "gunman_anims\neck_right.smd" {
 	fps 30
 	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
 	subtract "neck_corrective_animation" 0
@@ -80,21 +140,111 @@ $animation "neck_left" "gunman_anims\neck_left.smd" {
 	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
 	subtract "neck_corrective_animation" 0
 	weightlist "weights_gunman_neckturn"
+} */
+
+
+$animation "a_head_rt" "gunman_anims\head_rt.smd" { //
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_lt" "gunman_anims\head_lt.smd" { //
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_ct" "gunman_anims\head_ct.smd" { //
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_dn_rt" "gunman_anims\head_dn_rt.smd" {
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_dn_lt" "gunman_anims\head_dn_lt.smd" {
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_dn_ct" "gunman_anims\head_dn_ct.smd" { //
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_roll_rt" "gunman_anims\head_roll_rt.smd" {
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_roll_lt" "gunman_anims\head_roll_lt.smd" {
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_head_up_ct" "gunman_anims\head_up_ct.smd" { //
+	fps 30
+	
+	subtract "a_head_correct" 0
+	weightlist "weights_gunman_head"
+}
+
+$animation "a_neck_up" "gunman_anims\neck_up.smd" {
+
+	fps 30
+	
+	subtract "a_neck_correct" 0
+	weightlist "weights_gunman_neck"
+}
+
+$animation "a_neck_dn" "gunman_anims\neck_dn.smd" {
+
+	fps 30
+	
+	subtract "a_neck_correct" 0
+	weightlist "weights_gunman_neck"
+}
+
+$animation "a_neck_ct" "gunman_anims\neck_ct.smd" {
+
+	fps 30
+	
+	subtract "a_neck_correct" 0
+	weightlist "weights_gunman_neck"
 }
 
 $animation "mouth_open" "gunman_anims\mouth_open.smd" {
 	fps 30
+	
 	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
-	subtract "mouth_corrective_animation" 0
+	subtract "a_mouth_correct" 0
 	weightlist "weights_gunman_mouth"
 }
 
 $animation "mouth_close" "gunman_anims\mouth_close.smd" {
 	fps 30
 	// Crowbar writes this subtract option to prevent jigglebone and poseparameter problems when delta sequences are recompiled.
-	subtract "mouth_corrective_animation" 0
+	subtract "a_mouth_correct" 0
 	weightlist "weights_gunman_mouth"
 }
+
 
 /* $animation "a_aim_neutral" "male_shared_anims\a_aim_neutral.smd" {
 	fps 30
