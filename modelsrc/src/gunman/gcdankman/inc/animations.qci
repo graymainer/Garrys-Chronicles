@@ -8,9 +8,9 @@ $poseparameter "XR" -50 50 loop 0
 
 
 $poseparameter "neck_trans" -0.178728 0.214179 0
-$poseparameter "head_yaw" -66.70586 66.7055 0
-$poseparameter "head_pitch" -34.84618 25.37099 0
-$poseparameter "head_roll" -10.93142 10.85306 0
+$poseparameter "head_yaw" -180.0 180.0 90
+$poseparameter "head_pitch" -180.0 180.0 90
+$poseparameter "head_roll" -180.0 180.0 90
 
 
 $weightlist "weights_gunman_mouth" {
