@@ -40,14 +40,16 @@ $bodygroup "Equipment"
 
 $include "inc/misc.qci"
 
+$include "inc/animations.qci"
+
+$include "inc/sequencesMisc.qci"
+
+
 $sequence "ragdoll" {
 	"gunman_anims\reference.smd"
 	activity ACT_DIERAGDOLL 1
 	fps 30
 }
-
-
-$include "inc/animations.qci"
 
 $include "inc/sequences.qci"
 

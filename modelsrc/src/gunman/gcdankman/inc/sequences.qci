@@ -1,6 +1,3 @@
-$include "inc/sequencesMisc.qci"
-
-
 $sequence "idle" {
 	"gunman_anims\idle.smd"
 	activity "ACT_IDLE" 1
@@ -501,9 +498,9 @@ $sequence "runShotgun" {
 
  $sequence "shooting" {
 	"gunman_anims\shooting_blend01"
-	"gunman_anims\shooting_blend02"
+	//"gunman_anims\shooting_blend02"
 	ACT_RANGE_ATTACK1 1
-	blend XR -45 45 //xr is a weird name for a blendspace for aiming up-down.
+	//blend XR -45 45 //xr is a weird name for a blendspace for aiming up-down.
 	{ event 1 0 }
 	{ event 5001 0 "51" }
 	fps 25
