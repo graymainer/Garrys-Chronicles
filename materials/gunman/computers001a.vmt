@@ -1,0 +1,14 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/computers001a"
+	"$surfaceprop" "Computer"
+	"$bumpmap" "gunman/computers001a_normal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.15 0.15 0.15]"
+	"$normalmapalphaenvmapmask" 1
+	
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+}

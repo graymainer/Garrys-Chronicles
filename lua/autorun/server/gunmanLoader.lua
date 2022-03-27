@@ -1,8 +1,9 @@
 --loads the sentence file for gctgm.
 
-print("GCTGM: Loading gunman...")
+--print("GCTGM: Loading gunman...")
 
-PrecacheSentenceFile("data/gunman/sentences-gunman.txt")
+PrecacheSentenceFile("data/gunman/sentences_gunman.json")
+
 
 --loads some soundscript entries for npc footsteps.
 
@@ -33,3 +34,8 @@ sound.Add( {
 		}
 	}
 )
+
+
+
+--include("gunman/soundLib.lua")
+

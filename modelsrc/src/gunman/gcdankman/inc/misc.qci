@@ -2,16 +2,6 @@ $eyeposition 0 -5.66433 56.1824
 
 //$maxeyedeflection 90
 
-$attachment "anim_attachment_RH" "Bip02 R Hand" 2.50 -0.25 0.00 rotate 0 0 0
-$attachment "anim_attachment_LH" "Bip02 L Hand" 1.70 -0.25 -0.15 rotate 0 0 0
-$attachment "anim_attachment_head" "Bip02 Head" 0 0 0 rotate -90 -90 0
-
-
-$attachment "eyes" "Bip02 Head" 4.00 7.00 0.00 rotate 0 90.1 90
-$attachment "mouth" "Bip02 Head" 0.50 7.00 -0.00 rotate 0 90 -90
-$attachment "chest" "Bip02 Spine2" 4.00 7.00 -0.00 rotate -0 90 90
-$attachment "forward" "Bip02 Head" 6.00 8.00 -0.00 rotate -0 90 0
-
 $cdmaterials "models\gunman\gunman\"
 
 

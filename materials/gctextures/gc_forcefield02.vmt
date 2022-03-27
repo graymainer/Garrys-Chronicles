@@ -4,12 +4,15 @@
 	"%keywords" "gc"
 	"$surfaceprop" "flesh"
 	"$nodecal" 1
+	
 	"Proxies" 
-		{ 
+	{ 
 		"AnimatedTexture" 
 		{ 
 			"animatedTextureVar" "$basetexture" 
 			"animatedTextureFrameNumVar" "$frame" 
 			"animatedTextureFrameRate" "12" 
+		}
+	}
 }
 

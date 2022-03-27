@@ -18,5 +18,8 @@ gctextures/gccomputers03 0 225 225 65 //blue screens, in graviton
 
 gctextures/gcmonitor03 0 255 64 120
 gctextures/gcmonitor02 0 255 64 120
-gctextures/gc_forcefield01 0 255 96 500
+
+gunman/forcefieldlite01a 0 255 96 35
+
 gctextures/gclight08 0 255 128 50
+

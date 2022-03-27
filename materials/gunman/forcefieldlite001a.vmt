@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/forcefieldlite001a"
+	//"$selfillum" "1"
+	"$detail" "gunman/forcefieldlite001a_illum"
+	"$detailscale" 1
+	"$detailblendmode" 6
+	"$surfaceprop" "Computer"
+	"%keywords" "gc"
+}

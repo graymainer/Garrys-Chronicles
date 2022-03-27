@@ -3,7 +3,7 @@
 	"$basetexture" "gctextures/gcglass02"
 	"$surfaceprop" "glass"
 	"$envmap" "env_cubemap"
-	"$envmapmask" "gctextures/gcglass_spec"
+	//"$envmapmask" "gctextures/gcglass_spec"
 	"%keywords" "gc"
 	"$additive" 1
 	"$alpha" 0.8
