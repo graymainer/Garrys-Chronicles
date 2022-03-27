@@ -14,7 +14,7 @@
 #materialssrc/
 
 release/
-*.ink
+*.lnk
 *.blend1
 *.vmf_autosave
 *.log
