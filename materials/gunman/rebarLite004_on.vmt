@@ -1,0 +1,12 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/rebarLite004a"
+	"$selfillum" 1
+	"$selfillummask" "gunman/rebarLite004_mask"
+	"$surfaceprop" "glass"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "gunman/rebarLite004_mask"
+	
+	"$envmaptint" "[0.15 0.15 0.15]"
+	"%keywords" "gunman, light"
+}

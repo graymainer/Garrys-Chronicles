@@ -27,7 +27,7 @@
 	"playlooping"
 	{
 		"volume"	"0.25"
-		"wave"		")gunman/atmosphere/cityhall.wav"
+		"wave"		"gunman/atmosphere/cityhall.wav"
 		"pitch"		"100"
 		"attenuation"	"0"
 	}
@@ -81,7 +81,235 @@
 
 		}
 	}
+}
 
+"Gunman.Club"
+{
+	"dsp" "20"
+	"dsp_volume" "3"
+
+	"playlooping"
+	{
+		"volume"	"0.05"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+}
+
+"Gunman.ClubSpawn"
+{
+	"playsoundscape"
+	{
+		"volume"	"0.45
+		"name" "Gunman.City1"
+		
+	}
+}
+
+"Gunman.ClubOther"
+{
+	"dsp" "3"
+	"dsp_volume" "2"
+
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+}
+
+"Gunman.ClubRestrooms"
+{
+	"dsp" "11"
+	"dsp_volume" "5"
+
+	"playsoundscape"
+	{
+		"volume"	"0.25
+		"name" "Gunman.City1"
+		
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.08"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.05"
+		"wave"		"ambient/water/corridor_water.wav"
+		"pitch"		"90, 95"
+		"attenuation"	"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/water/drip_loop1.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"wave"		")ambient/levels/canals/waterleak_loop1.wav"
+		"pitch"		"90, 95"
+		"soundlevel"	"SNDLVL_30dB"
+		"position" "2, 3"
+		"attenuation"	"0"
+	}
+	
+	"playrandom" //drips from sinks
+	{
+		"time"		"1, 15"
+		"volume"	"0.05, 0.45"
+		"pitch"		"95,105"
+		"position"	"2, 3"
+		"soundlevel"	"SNDLVL_30dB"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/canals/drip1.wav"
+			"wave"	"ambient/levels/canals/drip2.wav"
+			"wave"	"ambient/levels/canals/drip3.wav"
+			"wave"	"ambient/levels/canals/drip4.wav"
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+			"wave"	"ambient/water/rain_drip1.wav"
+			"wave"	"ambient/water/rain_drip2.wav"
+			"wave"	"ambient/water/rain_drip3.wav"
+			"wave"	"ambient/water/rain_drip4.wav"
+			"wave"	"ambient/weather/drip1.wav"
+			"wave"	"ambient/weather/drip2.wav"
+			"wave"	"ambient/weather/drip3.wav"
+			"wave"	"ambient/weather/drip4.wav"
+
+		}
+	}
+	
+	"playrandom" //drips
+	{
+		"time"		"1, 15"
+		"volume"	"0.05, 0.45"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_30dB"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/canals/drip1.wav"
+			"wave"	"ambient/levels/canals/drip2.wav"
+			"wave"	"ambient/levels/canals/drip3.wav"
+			"wave"	"ambient/levels/canals/drip4.wav"
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+			"wave"	"ambient/water/rain_drip1.wav"
+			"wave"	"ambient/water/rain_drip2.wav"
+			"wave"	"ambient/water/rain_drip3.wav"
+			"wave"	"ambient/water/rain_drip4.wav"
+			"wave"	"ambient/weather/drip1.wav"
+			"wave"	"ambient/weather/drip2.wav"
+			"wave"	"ambient/weather/drip3.wav"
+			"wave"	"ambient/weather/drip4.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+	
+	"playrandom" //flushes
+	{
+		"time"		"15, 125"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"0, 1"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/machines/usetoilet_flush1.wav"
+			"wave"	"ambient/materials/flush1.wav"
+			"wave"	"ambient/materials/flush2.wav"
+
+		}
+	}
+	
+	"playrandom" //rats & flies
+	{
+		"time"		"5, 88"
+		"volume"	"0.05 0.22"
+		"pitch"		"90,110"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_20dB"
+		"rndwave"
+		{
+			"wave"	"ambient\creatures\flies1.wav"
+			"wave"	"ambient\creatures\flies2.wav"
+			"wave"	"ambient\creatures\flies3.wav"
+			"wave"	"ambient\creatures\flies4.wav"
+			"wave"	"ambient\creatures\flies5.wav"
+			"wave"	"ambient\creatures\rats1.wav"
+			"wave"	"ambient\creatures\rats2.wav"
+			"wave"	"ambient\creatures\rats3.wav"
+			"wave"	"ambient\creatures\rats4.wav"
+		}
+	}
+	
+	"playrandom" //groans
+	{
+		"time"		"3, 96"
+		"volume"	"0.05 0.32"
+		"pitch"		"90,110"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_30dB"
+		"rndwave"
+		{
+			"wave"	"ambient\materials\rustypipes1.wav"
+			"wave"	"ambient\materials\rustypipes2.wav"
+			"wave"	"ambient\materials\rustypipes3.wav"
+		}
+	}
+	
+	"playrandom" //that drunk dude in the corner
+	{
+		"time"		"65, 225"
+		"volume"	"0.1 0.62"
+		"pitch"		"98,102"
+		"position"	"4"
+		"soundlevel"	"SNDLVL_25dB"
+		"rndwave"
+		{
+			"wave"	"vo\npc\male01\moan01.wav"
+			"wave"	"vo\npc\male01\moan02.wav"
+			"wave"	"vo\npc\male01\moan03.wav"
+			"wave"	"vo\npc\male01\moan04.wav"
+			"wave"	"vo\npc\male01\moan05.wav"
+
+		}
+	}
 	
 }
 

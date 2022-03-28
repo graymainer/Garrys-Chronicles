@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/rebarLite004b"
+	"$surfaceprop" "glass"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "gunman/rebarLite004_mask"
+	
+	"$envmaptint" "[0.35 0.35 0.35]"
+	"%keywords" "gunman, light"
+}
