@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gunman/scren02"
+	"$surfaceprop" "glass"
+	"%keywords" "gc"
+}

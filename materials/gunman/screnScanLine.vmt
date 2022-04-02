@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gunman/screnScanLine"
+	"%keywords" "gc"
+	"$additive" 1
+	"$nodecal" 1
+}

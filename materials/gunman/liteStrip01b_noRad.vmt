@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gunman/liteStrip01b"
+	"$selfillum" 1
+	"$surfaceprop" "glass"
+	"%keywords" "gc"
+}

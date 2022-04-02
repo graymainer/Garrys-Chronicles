@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8860"
-	"mapversion" "507"
+	"mapversion" "508"
 	"formatversion" "100"
 	"prefab" "1"
 }
@@ -69,7 +69,7 @@ bgimages_plus
 world
 {
 	"id" "129169"
-	"mapversion" "507"
+	"mapversion" "508"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -143,7 +143,7 @@ world
 				"v" "-54 -100.5 620"
 				"v" "-54 -118.5 620"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-0 0 1 80] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "90"
@@ -345,7 +345,7 @@ world
 				"v" "-54 -100.5 684"
 				"v" "-54 -118.5 684"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[1 0 0 216] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "0"
@@ -702,7 +702,7 @@ world
 				"v" "-54 -100.5 428"
 				"v" "-54 -118.5 428"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[1 0 0 216] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "0"
@@ -720,7 +720,7 @@ world
 				"v" "10 -118.5 620"
 				"v" "-54 -118.5 620"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-1 0 -0 -216] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "0"
@@ -857,7 +857,7 @@ world
 				"v" "-54 -100.5 364"
 				"v" "-54 -118.5 364"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-0 0 1 80] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "0"
@@ -940,7 +940,7 @@ world
 				"v" "10 -118.5 364"
 				"v" "-54 -118.5 364"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-1 0 -0 -216] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "0"
@@ -1077,7 +1077,7 @@ world
 				"v" "10 -118.5 428"
 				"v" "10 -118.5 364"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-0 0 1 80] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "0"
@@ -1315,7 +1315,7 @@ world
 				"v" "10 -100.5 620"
 				"v" "10 -100.5 684"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-0 0 1 80] 0.25"
 			"vaxis" "[0 -1 0 -18] 0.25"
 			"rotation" "0"
@@ -2368,7 +2368,7 @@ world
 				"v" "10 83.5 428"
 				"v" "10 118.5 428"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[1 0 0 216] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "0"
@@ -2386,7 +2386,7 @@ world
 				"v" "10 83.5 620"
 				"v" "-54 83.5 620"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-1 0 0 -216] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "0"
@@ -2642,7 +2642,7 @@ world
 				"v" "-54 83.5 684"
 				"v" "-54 118.5 684"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[0 0 1 80] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "90"
@@ -2743,7 +2743,7 @@ world
 				"v" "10 118.5 620"
 				"v" "10 118.5 684"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[0 0 1 80] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "0"
@@ -2844,7 +2844,7 @@ world
 				"v" "10 83.5 684"
 				"v" "10 118.5 684"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[1 0 0 216] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "0"
@@ -3219,7 +3219,7 @@ world
 				"v" "10 83.5 428"
 				"v" "10 83.5 364"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[0 0 1 80] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "0"
@@ -3475,7 +3475,7 @@ world
 				"v" "-54 83.5 428"
 				"v" "-54 118.5 428"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[0 0 1 80] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "0"
@@ -3558,7 +3558,7 @@ world
 				"v" "10 83.5 364"
 				"v" "-54 83.5 364"
 			}
-			"material" "GCTEXTURES/GCLIGHT07"
+			"material" "GUNMAN/REBARLITE004_ON"
 			"uaxis" "[-1 0 0 -216] 0.25"
 			"vaxis" "[0 1 0 50] 0.25"
 			"rotation" "0"
@@ -3917,7 +3917,7 @@ entity
 	"PerformanceMode" "0"
 	"pressuredelay" "0"
 	"RandomAnimation" "0"
-	"renderamt" "200"
+	"renderamt" "125"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
 	"rendermode" "2"
@@ -3959,7 +3959,7 @@ entity
 	"PerformanceMode" "0"
 	"pressuredelay" "0"
 	"RandomAnimation" "0"
-	"renderamt" "200"
+	"renderamt" "125"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
 	"rendermode" "2"
@@ -4001,7 +4001,7 @@ entity
 	"PerformanceMode" "0"
 	"pressuredelay" "0"
 	"RandomAnimation" "0"
-	"renderamt" "200"
+	"renderamt" "125"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
 	"rendermode" "2"
@@ -4043,7 +4043,7 @@ entity
 	"PerformanceMode" "0"
 	"pressuredelay" "0"
 	"RandomAnimation" "0"
-	"renderamt" "200"
+	"renderamt" "125"
 	"rendercolor" "255 255 255"
 	"renderfx" "0"
 	"rendermode" "2"

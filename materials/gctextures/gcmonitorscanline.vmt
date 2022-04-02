@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "gctextures/gcmonitorscanline"
-	"%keywords" "gc"
-	"$additive" 1
-	"$nodecal" 1
-}

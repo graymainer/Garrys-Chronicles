@@ -1,7 +1,0 @@
-"UnlitGeneric"
-{
-	"$basetexture" "gctextures/gclight10"
-	"$selfillum" 1
-	"$surfaceprop" "glass"
-	"%keywords" "gc"
-}
