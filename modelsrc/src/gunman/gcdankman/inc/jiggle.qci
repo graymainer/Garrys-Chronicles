@@ -1,0 +1,19 @@
+$jigglebone "jig.hat" {
+	has_base_spring {
+		stiffness 400 
+		damping 11
+		left_constraint -1 1 //is actually up in our case
+		up_constraint -0 0
+		forward_constraint -1 1 //is actually left
+	}
+}
+
+$jigglebone "jig.backpack" {
+	has_base_spring {
+		stiffness 400 
+		damping 7
+		left_constraint -5 5 //is actually up in our case
+		up_constraint -2 2
+		forward_constraint -5 5 //is actually left
+	}
+}

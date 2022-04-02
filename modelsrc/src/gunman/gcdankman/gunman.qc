@@ -3,8 +3,6 @@
 sort out movement animations. either we go back to goldsrc style, or animate our own directional ones.
 figure out what to do with equipment. Should we keep? or replace with traditional source attachments?
 playermodels? npcs?
-test mouth animation.
-find a way to use neck turn animation?
 add jiggle bones?
 
 **********************************************************************/
@@ -42,9 +40,6 @@ $include "inc/misc.qci"
 
 $include "inc/animations.qci"
 
-$include "inc/sequencesMisc.qci"
-
-
 $sequence "ragdoll" {
 	"gunman_anims\reference.smd"
 	activity ACT_DIERAGDOLL 1
@@ -53,4 +48,8 @@ $sequence "ragdoll" {
 
 $include "inc/sequences.qci"
 
+$include "inc/sequencesMisc.qci"
+
 $include "inc/physics.qci"
+
+$include "inc/jiggle.qci"
