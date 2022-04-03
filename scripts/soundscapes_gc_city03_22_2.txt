@@ -18,6 +18,26 @@
 	}
 }
 
+"Gunman.Announcements_NonPositional"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"98,103"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_90db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
+
 
 "Gunman.City1"
 {
@@ -83,14 +103,78 @@
 	}
 }
 
-"Gunman.Club"
+"Gunman.City1b"
 {
-	"dsp" "20"
-	"dsp_volume" "3"
+	"dsp" "8"
+	"dsp_volume" "4"
 
 	"playlooping"
 	{
-		"volume"	"0.05"
+		"volume"	"0.25"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"volume"	"0.8,1.4"
+		"name" "Gunman.Announcements_NonPositional"
+		
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_metalstress"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"1, 15"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/metallic2.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}
+
+"Gunman.Club"
+{
+	"dsp" "0"
+	"dsp_volume" "0"
+
+	"playlooping"
+	{
+		"volume"	"0.1"
 		"wave"		"gunman/atmosphere/cityhall.wav"
 		"pitch"		"100"
 		"attenuation"	"0"
@@ -101,8 +185,8 @@
 {
 	"playsoundscape"
 	{
-		"volume"	"0.45
-		"name" "Gunman.City1"
+		"volume"	"2"
+		"name" "Gunman.City1b"
 		
 	}
 }
@@ -114,7 +198,7 @@
 
 	"playlooping"
 	{
-		"volume"	"0.15"
+		"volume"	"0.25"
 		"wave"		"gunman/atmosphere/cityhall.wav"
 		"pitch"		"100"
 		"attenuation"	"0"
@@ -123,19 +207,12 @@
 
 "Gunman.ClubRestrooms"
 {
-	"dsp" "11"
-	"dsp_volume" "5"
-
-	"playsoundscape"
-	{
-		"volume"	"0.25
-		"name" "Gunman.City1"
-		
-	}
+	"dsp" "12"
+	"dsp_volume" "1.5"
 	
 	"playlooping"
 	{
-		"volume"	"0.08"
+		"volume"	"0.13"
 		"wave"		"gunman/atmosphere/cityhall.wav"
 		"pitch"		"100"
 		"attenuation"	"0"

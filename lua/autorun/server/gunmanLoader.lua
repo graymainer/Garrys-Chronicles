@@ -35,7 +35,7 @@ sound.Add( {
 	}
 )
 
-
+include("gunman/club.lua")
 
 --include("gunman/soundLib.lua")
 
