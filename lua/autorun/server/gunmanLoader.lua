@@ -2,8 +2,11 @@
 
 --print("GCTGM: Loading gunman...")
 
-PrecacheSentenceFile("data/gunman/sentences_gunman.json")
 
+if ( !string.StartWith(game.GetMap(), "gc_") and !string.StartWith(game.GetMap(), "gunman_")) then return end
+
+
+PrecacheSentenceFile("data/gunman/sentences_gunman.json")
 
 --loads some soundscript entries for npc footsteps.
 
@@ -35,7 +38,6 @@ sound.Add( {
 	}
 )
 
-include("gunman/club.lua")
-
+include("gunman/gunmanPuzzleMan.lua")
 --include("gunman/soundLib.lua")
 
