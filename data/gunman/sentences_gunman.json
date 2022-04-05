@@ -18,6 +18,7 @@ GNMN_GUARD_USE gcsfx/vo/city03/gateguard/nag {Len 1.13}
 //dude fixing the computer. i think its a computer
 GNMN_ENGINEER gcsfx/vo/city03/repairguy/line {Len 4.226}
 GNMN_ENGINEER_USE gcsfx/vo/city03/repairguy/nag {Len 2.725}
+GNMN_ENGINEER_CALLOUT gunman/club/puz/youcrazy {Len 1.00}
 
 //dont forget your armor
 GNMN_ARMOR1 gcsfx/vo/gunman/armor1 {Len 2.214}
