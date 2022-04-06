@@ -165,6 +165,113 @@ sound.Add({
 
 })
 
+local nSeq = 0
+bNearComputer = false
+local bProcessing = false
+local bCredentials = false
+local bQuestions = false
+local user = nil
+local pass = nil
+local a1 = nil
+local a2 = nil
+local a3 = nil
+
+
+hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat) 
+	if (!bNearComputer) then return end
+	
+	sound.Play("enter", computerPos)
+	timer.Simple(2, function() 
+		sound.Play("loading", computerPos)
+		timer.Simple(2, function() 
+			
+		end)
+	end)
+	
+	
+	
+	if (bCredentials) then
+		if (user != nil and pass != nil) then
+			bProcessing = true
+			sound.Play("enter", computerPos)
+				timer.Simple(2, function() 
+					sound.Play("loading", computerPos)
+					timer.Simple(2, function() 
+						if (processCredentials(user, pass)) then
+							login()
+							timer.Simple(9, function() 
+								sound.Play("loading", computerPos)
+							
+								timer.Simple(1, function() 
+									createNETmail1() --send daily news
+									timer.Simple(3, function() 
+										sound.Play("loading", computerPos)
+									
+										timer.Simple(1, function() 
+											createNETmail3() --send instructions for questions
+											
+											bCredentials = false
+											timer.Simple(2, function() bProcessing = false bQuestions = true end)
+										
+										end)
+									end)
+								end)
+							end)
+						else
+							bProcessing = false
+							user = nil --reset the creds
+							pass = nil
+						end
+					end)
+				end)
+			else
+				nSeq = nSeq + 1 --all of this should probably be done before the check.
+				if (nSeq == 1) then
+					user = text
+				else if (nSeq == 2) then
+					nSeq = 0
+					pass = text
+				else
+					nSeq = 0
+				end
+				
+				sound.Play("typing", computerPos)
+				
+			end
+		end
+	elseif (bQuestions) then
+		if (a1 != nil and a2 != nil and a3 != nil) then
+			bProcessing = true
+			
+			sound.Play("enter", computerPos)
+			timer.Simple(2, function() 
+				sound.Play("loading", computerPos)
+				timer.Simple(2, function() 
+					if (processAnswers()) then
+						--do victory things here
+						bQuestions = false
+						
+						timer.Simple(2, function() bProcessing = false end)
+					end
+				end)
+			end)
+		else
+			nSeq = nSeq + 1
+			if (nSeq == 1) then
+				a1 = text
+			elseif (nSeq == 2) then
+				a2 = text
+			elseif (nSeq == 3) then
+				a3 = text
+			else
+				nSeq = 0 --fail safe
+			end
+			
+			sound.Play("typing", computerPos)
+		end
+		
+	end
+end)
 
 local bCanPress = false
 local nPresses = 1 --needs to be one to start press loop.
@@ -218,8 +325,8 @@ function computerPressed() --let us fax on over that succulent information.
 	if (!bCanPress) then return end --control the input
 
 
-	if (nPresses == 1) then
-		nPresses = nPresses + 1
+	-- if (nPresses == 1) then
+		-- nPresses = nPresses + 1
 		bCanPress = false --keep ourselves from being spammed, shut the door so to speak
 		sound.Play("typing", computerPos)
 		
@@ -247,55 +354,47 @@ function computerPressed() --let us fax on over that succulent information.
 					timer.Simple(26, function() heat:Fire("TurnOff") end)
 					timer.Simple(24, function() 
 						createNETmail0()
+						bCredentials = true
 						
-						timer.Simple(3, function() 
-							bCanPress = true
-						end)
+						-- timer.Simple(3, function() 
+							-- bCanPress = true
+						-- end)
 					end)
 				end)
 			end)
 		end)
-	elseif (nPresses == 2) then
-		nPresses = nPresses + 1
-		bCanPress = false
-		sound.Play("typing", computerPos)
+	-- elseif (nPresses == 2) then
+		-- nPresses = nPresses + 1
+		-- bCanPress = false
+		-- sound.Play("typing", computerPos)
 		
-		timer.Simple(1, function() 
-			sound.Play("enter", computerPos)
-			timer.Simple(2, function() 
-				sound.Play("loading", computerPos)
-				timer.Simple(2, function() 
-					createNETmail1()
+		-- timer.Simple(1, function() 
+			-- sound.Play("enter", computerPos)
+			-- timer.Simple(2, function() 
+				-- sound.Play("loading", computerPos)
+				-- timer.Simple(2, function() 
+					-- createNETmail1()
 					
-					timer.Simple(2, function() bCanPress = true end)
-				end)
-			end)
-		end)
+					-- timer.Simple(2, function() bCredentials = true end)
+				-- end)
+			-- end)
+		-- end)
 		
-	elseif (nPresses == 3) then
-		bCanPress = false
-		sound.Play("typing", computerPos)
+	-- elseif (nPresses == 3) then
+		-- bCanPress = false
 		
-		timer.Simple(1, function() 
-			sound.Play("enter", computerPos)
-			timer.Simple(2, function() 
-				sound.Play("loading", computerPos)
-				
-				timer.Simple(2, function() 
-					if (processCredentials()) then
-						nPresses = nPresses + 1 -- so we can progress
-						login()
-						
-						timer.Simple(2, function() bCanPress = true end)
-					else
-						timer.Simple(2, function() bCanPress = true end)
-					end
-				end)
-			end)
-		end)
-	else
-		print("GUNMAN: ~ERROR~ Computer was pressed, but we dont have an event to trigger for it!")
-	end
+		-- if	(processAnswers()) then
+		
+			-- nPresses = nPresses + 1
+			-- timer.Simple(2, function() bCanPress = true end)
+			-- --do we won things
+		-- else
+			
+			-- timer.Simple(2, function() bCanPress = true end)
+		-- end
+	-- else
+		-- print("GUNMAN: ~ERROR~ Computer was pressed, but we dont have an event to trigger for it!")
+	-- end
 
 end
 
@@ -303,18 +402,7 @@ function login()
 	
 	sound.Play("login", computerPos)
 	PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Hello, and welcome back spaceconfederate2000, to Hyper-Cast™!")
-	
-	timer.Simple(9, function() 
-		sound.Play("loading", computerPos)
-	
-		timer.Simple(1, function() 
-			
-			
-		
-		end)
-	
-	end)
-	
+
 end
 
 function netMailNotify()
@@ -352,7 +440,7 @@ function createFooter(fileHandle)
 	if (fileHandle == nil) then print("GUNMAN: createFooter() was given a bad handle!") return end
 
 	fileHandle:Write("\n\n\n\n\n\n\n\n\n\n\nThis letter is copyrighted material of HYper-caST Inc. Hyper-Cast and the HYper-caST NETworks logo are registered trademarks of Hyper-Cast Networks Inc.")
-	fileHandle:Write("\nCopyright all rights reserved© 1996")
+	fileHandle:Write("\nCopyright all rights reserved© 2022")
 	
 end
 
@@ -383,15 +471,13 @@ function createNETmail0() --creates the NETmail from hyper-cast regarding your r
 	
 	msg:Write("\n\n\nYou can start by simply logging into your HYper-caST™ account using any nearby computer terminal capable of NETscape travel.")
 	
-	msg:Write("\n\nWe'll send you a NETmail with instructions on logging in.")
+	msg:Write("\n\nSimply type your credentials into the chat box field.")
 	
-	msg:Write("\n\n\nThen once you've logged in, we'll ask you a few security questions.")
+	msg:Write("\n\n\nThen once you've logged in, we'll ask you only a few security questions.")
 	
 	
 	msg:Write("\n\nAfter that, we'll evaluate your request for passage.")
-	
-	msg:Write("\n\n\n\nHold on while we connect you with one of our log-in agents!")
-	
+		
 	
 	msg:Write("\n\n\n\nSincerely, ")
 	
@@ -410,54 +496,8 @@ function createNETmail0() --creates the NETmail from hyper-cast regarding your r
 
 end
 
-function createNETmail1() --maybe add the text and audio notifications of getting mail into here instead?
 
-	local page = file.Open("gunman/inbox/HYper-caST Log Into your HYper-caST Account.txt", "w", "DATA")
-	
-	if (page == nil) then print("GUNMAN: ~ERROR~ couldn't create the text file!") return end
-
-	
-	local name = createHeader(page, "kennoreply-login_dept@HYper-caST-NET.sgn", "Log into your HYper-caST Account")
-	
-	if (name == nil or name == "" or name == " ") then print("GUNMAN: Couldn't create page, name wasn't valid. createHeader() might've failed.") return end
-
-
-
-
-
-
-
-	page:Write("\n\n\n\n\n\n\n\nHello, " .. name .. "!")
-	
-	page:Write("\n\n\nTo Log-In, simply input your credentials into the respective fields below.")
-	
-	page:Write("\n\n\n\n\nUSERNAME: ")
-	page:Write("\n\n\nPASSWORD: ")
-	
-	page:Write("\n\n\n\n\nThen forward this NETmail back to us and if your credentials are correct, we'll log you in.")
-	page:Write("\nHowever, if your username or password was incorrect, we'll resend you this NETmail asking you to correct the ones which were wrong.")
-	
-	page:Write("\n\n\n\nKind regards,")
-	
-	page:Write("\n\nKen Botsworth - Senior Log-In Manager")
-	page:Write("\nFrom HYper-caST™ NETworks")
-	
-	page:Write("\n\n\n\n\nDO NOT MODIFY THIS NETMAIL IN ANY OTHER WAY THAN INSTRUCTED!")
-	page:Write("\nVIOLATION COULD RESULT IN UP TO 5 YEARS IN PRISON.")
-	
-	createFooter(page)
-	
-	
-	page:Flush()
-	
-	page:Close()
-	
-	
-	netMailNotify()
-	
-end
-
-function createNETmail2() --a daily news article for the player to read some lore. it also contains hints to security questions.
+function createNETmail1() --a daily news article for the player to read some lore. it also contains hints to security questions.
 
 	local page = file.Open("gunman/inbox/HYper-caST Daily Hyper-Cast News.txt", "w", "DATA")
 	
@@ -469,9 +509,7 @@ function createNETmail2() --a daily news article for the player to read some lor
 	if (name == nil or name == "" or name == " ") then print("GUNMAN: Couldn't create page, name wasn't valid. createHeader() might've failed.") return end
 
 	
-	page:Write("\n\n\nHello, spaceconfederate2000! It's good to see you again.")
-	
-	page:Write("\n\nI've got your daily news right here.")
+	page:Write("\n\n\nHello, spaceconfederate2000! I've got your personalized news right here!")
 	
 	
 	
@@ -556,7 +594,7 @@ function createNETmail2() --a daily news article for the player to read some lor
 	
 	
 	
-	page:Write("\n\n\n\n\nNot since we established Hyper-Cast™ have we had developments this interesting, so stay tuned for more, or you'll regret missing out!")
+	page:Write("\n\n\n\n\nNot since we established Hyper-Cast™ at the turn of the millennium have we had developments this interesting, so stay tuned for more or you'll regret missing out!")
 	
 	
 	
@@ -578,48 +616,163 @@ function createNETmail2() --a daily news article for the player to read some lor
 	
 end
 
-function processCredentials()
-	if (!file.Exists("gunman/inbox/HYper-caST Log Into your HYper-caST Account.txt", "DATA")) then 
-		print("GUNMAN: ~ERROR~ couldn't find the file. Was it moved or renamed? recreating...")
-		createNETmail1()
-	return false end
-	
-	local netmail = file.Open("gunman/inbox/HYper-caST Log Into your HYper-caST Account.txt", "r", "DATA")
-	
-	if (netmail == nil) then print("GUNMAN: ~ERROR~ couldn't open the text file!") return false end
-	
-	netmail:Seek(256)
-	
-	local user = netmail:Read(48)
-	
-	netmail:Seek(300)
-	local pass = netmail:Read(64)
-	
-	if (!string.match(user, "USERNAME:") 
-		or !string.match(pass, "PASSWORD:") 
-			and !string.match(pass, "USERNAME:") 
-				and !string.match(user, "PASSWORD:")) then 
-		createNETmail1()
-		complain(0)
-	return false end --this'll protect us from corruption. for the most part
-	
-	
-	
-	
-	
-	if (!string.match(user, "spaceconfederate2000")) then --these are too loose!
-		complain(1)
-	return false end
-	
-	if (!string.match(pass, "fuckxenomes")) then
-		complain(2)
-	return false end
+function createNETmail2() --the security questions
 
+	local page = file.Open("gunman/inbox/HYper-caST Verify Identity.txt", "w", "DATA")
+	
+	if (page == nil) then print("GUNMAN: ~ERROR~ couldn't create the text file!") return end
+
+	
+	local name = createHeader(page, "logannoreply-security@HYper-caST-NET.sgn", "Verify Identity by Answering Questions")
+	
+	if (name == nil or name == "" or name == " ") then print("GUNMAN: Couldn't create page, name wasn't valid. createHeader() might've failed.") return end
+
+
+
+
+
+
+
+	page:Write("\n\n\n\n\n\n\n\nHello, spaceconfederate2000!")
+	
+	page:Write("\n\n\nVerifying your identity is easy. All you need to do is answer the given questions set by (hopefully) yourself.")
+	
+	page:Write("\n\n\nSimply shoot us a NETmail answering the questions below in the same order!")
+	
+	page:Write("\n\n\n\nThe questions are as follows:")
+	
+	page:Write("\n\n\n\n\n1.	In what year was HYper-caST™ NETworks established?")
+	
+	page:Write("\n\n2.	'I DEMAND AN INVESTIGATION, BY A NEUTRAL PARTY; OF ALL RECORDS RELATED TO THE INFESTATION, INCLUDING A COMPLETE REVIEW OF DOCUMENTS I BELIEVE UNLAWFULLY SURPRESSED BY THE DEPARTMENT OF COLONISATION!' were some of the words of what man?")
+	
+	page:Write("\n\n3.	What was the name of the original modification of Quake that would later become Gunman Chronicles?")
+	
+	page:Write("\n\n\n\nWe're waiting to hear back from you!")
+	
+	page:Write("\n\n\n\n\n\nLogan Identithef - Expert Identification Verification Agent")
+	page:Write("\nFrom HYper-caST™ NETworks")
+	
+	createFooter(page)
+	
+	
+	page:Flush()
+	
+	page:Close()
+	
+	
+	netMailNotify()
+	
+end
+
+
+
+
+--old data processors
+
+
+-- function processCredentials()
+	-- if (!file.Exists("gunman/inbox/HYper-caST Log Into your HYper-caST Account.txt", "DATA")) then 
+		-- print("GUNMAN: ~ERROR~ couldn't find the file. Was it moved or renamed? recreating...")
+		-- createNETmail1()
+	-- return false end
+	
+	-- local netmail = file.Open("gunman/inbox/HYper-caST Log Into your HYper-caST Account.txt", "r", "DATA")
+	
+	-- if (netmail == nil) then print("GUNMAN: ~ERROR~ couldn't open the text file!") return false end
+	
+	-- netmail:Seek(860)
+	
+	-- local user = netmail:Read(512)
+	
+	-- netmail:Seek(300)
+	-- local pass = netmail:Read(64)
+	
+	-- print(user)
+	
+	-- -- if (!string.match(user, "USERNAME:") 
+		-- -- or !string.match(pass, "PASSWORD:") 
+			-- -- and !string.match(pass, "USERNAME:") 
+				-- -- and !string.match(user, "PASSWORD:")) then 
+		-- -- createNETmail1()
+		-- -- complain(0)
+	-- -- return false end --this'll protect us from corruption. for the most part
+	
+	
+	
+	
+	
+	-- -- if (!string.match(user, "spaceconfederate2000")) then --these are too loose!
+		-- -- complain(1)
+	-- -- return false end
+	
+	-- -- if (!string.match(pass, "fuckxenomes")) then
+		-- -- complain(2)
+	-- -- return false end
+
+
+
+-- return true end
+
+-- function processAnswers() --doing it this way, we'll know which question was wrong
+	-- if (!file.Exists("gunman/inbox/hyper-cast verify identity.txt", "DATA")) then 
+		-- print("GUNMAN: ~ERROR~ couldn't find the file. Was it moved or renamed? recreating...")
+		-- createNETmail3()
+	-- return false end
+	
+	-- local netmail = file.Open("gunman/inbox/hyper-cast verify identity.txt", "r", "DATA")
+	
+	-- if (netmail == nil) then print("GUNMAN: ~ERROR~ couldn't open the text file!") return false end
+	
+	-- netmail:Seek(1250)
+	
+	-- local q1 = netmail:Read(256)
+	
+	-- netmail:Seek(1310)
+	-- local q2 = netmail:Read(256)
+
+	-- netmail:Seek(1320)
+	-- local q3 = netmail:Read(256)
+			-- print(q1)
+
+	
+	-- if (!string.match(q1, "Q1:") 
+		-- or !string.match(q2, "Q2:") 
+			-- or !string.match(q2, "Q3:")) then 
+		-- createnetmail3()
+		-- complain(0) --make generic corrupted netmail complaint
+	-- return false end --this'll protect us from corruption. for the most part
+	
+	
+	
+	
+	
+	-- if (!string.match(q1, "2000")) then --these are too loose!
+		-- complain(3)
+	-- return false end
+	
+	-- if (!string.match(q2, "Vargas Kalhorian")) then
+		-- complain(4)
+	-- return false end
+
+	-- if (!string.match(q3, "Gunmanship 101")) then
+		-- complain(5)
+	-- return false end
+
+-- return true end
+
+function processCredentials(user, pass)
+
+
+	if (user != "spaceconfederate2000" or pass != "fuckxenomes") then return false end
 
 
 return true end
 
+function processAnswers(ans1, ans2, ans3)
 
+	if (ans1 != "2000" or ans2 != "Vargas Kalhorian" or ans3 != "Gunmanship 101") then return end
+
+return true end
 
 
 function complain(issue)
@@ -628,11 +781,17 @@ function complain(issue)
 		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but your username was incorrect.")
 	elseif (issue == 2) then
 		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but your password was incorrect.")
+	elseif issue == 3 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, question 1 wasn't quite right.")
+	elseif issue == 4 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, question 2 was incorrect.")
+	elseif issue == 5 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but question 3 wasn't it.")
 	else
 		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but the NETmail was detected as corrupted. Resending.")
 	end
 	
-	sound.Play("error", computerPos)
+	sound.Play("error", computerPos) --play that lovely 98 error sound
 	
 end
 
