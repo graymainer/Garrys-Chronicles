@@ -1,6 +1,16 @@
 "UnlitGeneric"
 {
-	"$basetexture" "gunman/scren03b"
+	"$basetexture" "gunman/scren03"
 	"$surfaceprop" "glass"
 	"%keywords" "gc"
+
+	Proxies
+	{
+		TextureScroll
+		{
+			textureScrollVar $basetexturetransform
+			textureScrollRate 2
+			textureScrollAngle 0
+		}
+	}
 }

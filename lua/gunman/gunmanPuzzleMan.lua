@@ -56,6 +56,8 @@ local computer = ents.FindByName("justinspc")[1]--attempts to load a reference, 
 
 local computerPos
 
+
+
 if (IsValid(computer)) then --attempt to get it now
 
 	computerPos = computer:GetPos()
@@ -165,39 +167,191 @@ sound.Add({
 
 })
 
-local nSeq = 0
+sound.Add({
+
+	name = "smoking2",
+	channel = CHAN_STATIC,
+	volume = 0.45,
+	pitch = 95,
+	sound = "gcsfx/steamjet1.wav"
+
+
+})
+
+sound.Add({
+
+	name = "smoking3",
+	channel = CHAN_STATIC,
+	volume = 0.45,
+	pitch = 95,
+	sound = "ambient/gas/cannister_loop.wav"
+
+
+})
+
+sound.Add({
+
+	name = "cheer",
+	channel = CHAN_VOICE,
+	volume = 5.77,
+	pitch = 100,
+	sound = "gunman/club/puz/dying.wav"
+
+
+})
+
+sound.Add({
+
+	name = "break",
+	channel = CHAN_STATIC,
+	volume = {.76, 1.24},
+	pitch = {94, 104},
+	sound = {
+		"physics/metal/metal_box_break1.wav",
+		"physics/metal/metal_box_break2.wav"
+	}
+
+
+})
+
+sound.Add({
+
+	name = "fire",
+	channel = CHAN_STATIC,
+	volume = 1.255,
+	pitch = 94,
+	sound = "ambient/fire/fire_big_loop1.wav"
+
+
+})
+
+sound.Add({
+
+	name = "ignition",
+	channel = CHAN_STATIC,
+	volume = 1.255,
+	pitch = 94,
+	sound = "ambient/fire/ignite.wav"
+
+
+})
+
+sound.Add({
+
+	name = "strain",
+	channel = CHAN_STATIC,
+	volume = {0.76, 1.44},
+	pitch = {92, 105},
+	sound = {
+		"physics/metal/metal_solid_strain1.wav",
+		"physics/metal/metal_solid_strain2.wav",
+		"physics/metal/metal_solid_strain3.wav",
+		"physics/metal/metal_solid_strain4.wav",
+		"physics/metal/metal_solid_strain5.wav",
+		"physics/metal/metal_box_strain1.wav",
+		"physics/metal/metal_box_strain2.wav",
+		"physics/metal/metal_box_strain3.wav",
+		"physics/metal/metal_box_strain4.wav"
+	
+	}
+
+
+})
+
+sound.Add({
+
+	name = "malfunction",
+	channel = CHAN_STATIC,
+	volume = 1,
+	pitch = 95,
+	sound = ")ambient/levels/labs/teleport_malfunctioning.wav"
+
+
+})
+
+sound.Add({
+
+	name = "whiningUp",
+	channel = CHAN_STATIC,
+	volume = 1,
+	pitch = 98,
+	sound = ")ambient/levels/citadel/teleport_windup_loop1.wav"
+
+
+})
+
+sound.Add({
+
+	name = "powerOff",
+	channel = CHAN_STATIC,
+	volume = 5,
+	pitch = 90,
+	sound = "ambient/energy/powerdown2.wav"
+
+
+})
+
+sound.Add({
+
+	name = "weirdPowerNoise",
+	channel = CHAN_STATIC,
+	volume = 3.2,
+	pitch = 90,
+	sound = "gcsfx/hl2btasfx/power_machine1.wav"
+
+
+})
+
+nSeq = 0 --should be local when fin
 bNearComputer = false
-local bProcessing = false
-local bCredentials = false
-local bQuestions = false
+bProcessing = false --should be local when fin
+bCredentials = false --should be local when fin
+bQuestions = false --should be local when fin
 local user = nil
 local pass = nil
 local a1 = nil
 local a2 = nil
 local a3 = nil
 
+function closeEnoughToType(ply)	
+	local dist = computerPos:DistToSqr(ply:GetPos()) / 10000
+	
+	if (dist >= 2.0) then return false end
+	
+	
+return true end
 
 hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat) 
-	if (!bNearComputer) then return end
+	if (bProcessing) then return end
+	if (!bCredentials and !bQuestions) then return end
+	if (!closeEnoughToType(sender)) then return end
+	
+	
 	
 	sound.Play("enter", computerPos)
-	timer.Simple(2, function() 
-		sound.Play("loading", computerPos)
-		timer.Simple(2, function() 
-			
-		end)
-	end)
 	
 	
 	
 	if (bCredentials) then
-		if (user != nil and pass != nil) then
+		nSeq = nSeq + 1 --all of this should probably be done before the check.
+		if (nSeq == 1) then
+			user = text
+		else if (nSeq == 2) then
+			pass = text
+		else
+			nSeq = 0
+		end
+		
+		if (nSeq == 2) then
+			nSeq = 0
 			bProcessing = true
 			sound.Play("enter", computerPos)
 				timer.Simple(2, function() 
 					sound.Play("loading", computerPos)
 					timer.Simple(2, function() 
 						if (processCredentials(user, pass)) then
+							bCredentials = false
+							bQuestions = true
 							login()
 							timer.Simple(9, function() 
 								sound.Play("loading", computerPos)
@@ -208,10 +362,10 @@ hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat)
 										sound.Play("loading", computerPos)
 									
 										timer.Simple(1, function() 
-											createNETmail3() --send instructions for questions
+											createNETmail2() --send instructions for questions
 											
-											bCredentials = false
-											timer.Simple(2, function() bProcessing = false bQuestions = true end)
+											
+											timer.Simple(2, function() bProcessing = false end)
 										
 										end)
 									end)
@@ -224,56 +378,45 @@ hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat)
 						end
 					end)
 				end)
-			else
-				nSeq = nSeq + 1 --all of this should probably be done before the check.
-				if (nSeq == 1) then
-					user = text
-				else if (nSeq == 2) then
-					nSeq = 0
-					pass = text
-				else
-					nSeq = 0
-				end
-				
-				sound.Play("typing", computerPos)
-				
 			end
 		end
 	elseif (bQuestions) then
-		if (a1 != nil and a2 != nil and a3 != nil) then
+		nSeq = nSeq + 1 --all of this should probably be done before the check.
+		
+		if (nSeq == 1) then
+			a1 = text
+		elseif (nSeq == 2) then
+			a2 = text
+		elseif (nSeq == 3) then
+			a3 = text
+		else
+			nSeq = 0 --fail safe
+		end
+		
+		if (nSeq == 3) then
 			bProcessing = true
-			
-			sound.Play("enter", computerPos)
+			nSeq = 0			
 			timer.Simple(2, function() 
 				sound.Play("loading", computerPos)
 				timer.Simple(2, function() 
-					if (processAnswers()) then
+					if (processAnswers(a1, a2, a3)) then
 						--do victory things here
 						bQuestions = false
-						
-						timer.Simple(2, function() bProcessing = false end)
+						verify()
+						--we will be eternally processing this one..
+					else
+						a1 = nil
+						a2 = nil
+						a3 = nil
+						bProcessing = false
 					end
 				end)
 			end)
-		else
-			nSeq = nSeq + 1
-			if (nSeq == 1) then
-				a1 = text
-			elseif (nSeq == 2) then
-				a2 = text
-			elseif (nSeq == 3) then
-				a3 = text
-			else
-				nSeq = 0 --fail safe
-			end
-			
-			sound.Play("typing", computerPos)
 		end
-		
 	end
 end)
 
-local bCanPress = false
+bCanPress = false --should be local when fin
 local nPresses = 1 --needs to be one to start press loop.
 
 --our entry point, where it all begins
@@ -325,76 +468,256 @@ function computerPressed() --let us fax on over that succulent information.
 	if (!bCanPress) then return end --control the input
 
 
-	-- if (nPresses == 1) then
-		-- nPresses = nPresses + 1
-		bCanPress = false --keep ourselves from being spammed, shut the door so to speak
+
+	bCanPress = false --keep ourselves from being spammed, shut the door so to speak
+	sound.Play("typing", computerPos)
+	
+	local smoke = ents.FindByName("compsmok")
+	if (!IsValid(smoke[1])) then print("GUNMAN: ~ERROR~ smoke reference was nil!") return end
+	
+	local heat = ents.FindByName("compheat")[1]
+	if (!IsValid(heat)) then print("GUNMAN: ~ERROR~ heat reference was nil!") return end
+	
+	local smokeSound = CreateSound(heat, "smoking") -- at heat entity
+	
+	
+	
+	--nested timers galore
+	timer.Simple(1, function() 
 		sound.Play("typing", computerPos)
-		
-		local smoke = ents.FindByName("compsmok")
-		if (!IsValid(smoke[1])) then print("GUNMAN: ~ERROR~ smoke reference was nil!") return end
-		
-		local heat = ents.FindByName("compheat")[1]
-		if (!IsValid(heat)) then print("GUNMAN: ~ERROR~ heat reference was nil!") return end
-		
-		local smokeSound = CreateSound(heat, "smoking")
-		
-		
-		
-		--nested timers galore
 		timer.Simple(1, function() 
-			sound.Play("typing", computerPos)
-			timer.Simple(1, function() 
-				sound.Play("enter", computerPos)
-				timer.Simple(3, function() 
-					timer.Simple(16, function() smoke[1]:Fire("TurnOn") smoke[2]:Fire("TurnOn") smokeSound:Play()  end)
-					timer.Simple(5, function() heat:Fire("TurnOn") end)
-					sound.Play("faxing", computerPos)
+			sound.Play("enter", computerPos)
+			timer.Simple(3, function() 
+				timer.Simple(16, function() smoke[1]:Fire("TurnOn") smoke[2]:Fire("TurnOn") smokeSound:Play()  end)
+				timer.Simple(5, function() heat:Fire("TurnOn") end)
+				sound.Play("faxing", computerPos)
+				
+				timer.Simple(23, function() smoke[1]:Fire("TurnOff") smoke[2]:Fire("TurnOff") smokeSound:Stop() end)
+				timer.Simple(26, function() heat:Fire("TurnOff") end)
+				timer.Simple(24, function() 
+					createNETmail0()
+					bCredentials = true
 					
-					timer.Simple(23, function() smoke[1]:Fire("TurnOff") smoke[2]:Fire("TurnOff") smokeSound:Stop() end)
-					timer.Simple(26, function() heat:Fire("TurnOff") end)
-					timer.Simple(24, function() 
-						createNETmail0()
-						bCredentials = true
-						
-						-- timer.Simple(3, function() 
-							-- bCanPress = true
-						-- end)
-					end)
+					-- timer.Simple(3, function() 
+						-- bCanPress = true
+					-- end)
 				end)
 			end)
 		end)
-	-- elseif (nPresses == 2) then
-		-- nPresses = nPresses + 1
-		-- bCanPress = false
-		-- sound.Play("typing", computerPos)
-		
-		-- timer.Simple(1, function() 
-			-- sound.Play("enter", computerPos)
-			-- timer.Simple(2, function() 
-				-- sound.Play("loading", computerPos)
-				-- timer.Simple(2, function() 
-					-- createNETmail1()
+	end)
+end
+
+function verify() --finally, the end!
+
+	local bBad = false
+
+	
+
+	
+	
+	if (bBad) then return end
+	
+	local smoke2 = ents.FindByName("compsmok2")
+	
+	for i = 1, table.maxn(smoke2), 1 do
+	
+		if (!IsValid(smoke2[i])) then bBad = true print("GUNMAN: ~ERROR~ a smoke2 reference was nil!") break end
+
+	
+	end
+	
+	if (bBad) then return end
+	
+	local smoke1 = ents.FindByName("compsmok")	
+	for i = 1, table.maxn(smoke1), 1 do
+	
+		if (!IsValid(smoke1[i])) then bBad = true print("GUNMAN: ~ERROR~ a smoke1 reference was nil!") break end
+
+	
+	end
+	
+	if (bBad) then return end
+	
+	local gibShooters = ents.FindByName("compgibs")
+	for i = 1, table.maxn(gibShooters), 1 do
+	
+		if (!IsValid(gibShooters[i])) then bBad = true print("GUNMAN: ~ERROR~ a gibShooters reference was nil!") break end
+
+	
+	end
+	
+	if (bBad) then return end
+	
+	local electricFires = ents.FindByName("compfire")
+	for i = 1, table.maxn(electricFires), 1 do
+	
+		if (!IsValid(electricFires[i])) then bBad = true print("GUNMAN: ~ERROR~ an electricFires reference was nil!") break end
+
+	
+	end
+	
+	if (bBad) then return end
+	
+	--need new way to obtain these ents since lua is fucking stupid and decides it should grab these at random order instead of sorted alphabetically.
+	local screens = ents.FindByName("compscren*")	
+	for i = 1, table.maxn(screens), 1 do
+	
+		if (!IsValid(screens[i])) then bBad = true print("GUNMAN: ~ERROR~ a screen reference was nil!") break end 
+
+	
+	end
+	
+	if (bBad) then return end
+	
+	local repairGuySequences = ents.FindByName("repairguy_seq*")
+	for i = 1, table.maxn(repairGuySequences), 1 do
+	
+		if (!IsValid(repairGuySequences[i])) then bBad = true print("GUNMAN: ~ERROR~ a repairGuySequences reference was nil!") break end
+	
+	end
+	if (bBad) then return end
+	
+	local repairGuySentences = ents.FindByName("repairguy_line2*")
+	for i = 1, table.maxn(repairGuySentences), 1 do
+	
+		if (!IsValid(repairGuySentences[i])) then bBad = true print("GUNMAN: ~ERROR~ a repairGuySentences reference was nil!") break end
+	
+	end	
+	
+	if (bBad) then return end
+
+	
+	local heat = ents.FindByName("compheat")[1]
+	if (!IsValid(heat)) then print("GUNMAN: ~ERROR~ heat reference was nil!") return end
+	
+	local smoke1Sound = CreateSound(heat, "smoking") -- at heat entity
+	local smoke2Sound = CreateSound(heat, "smoking2") -- at heat entity
+	local smoke3Sound = CreateSound(heat, "smoking3") -- at heat entity
+	
+	local fireSound = CreateSound(heat, "fire")
+	
+	local compAmb = ents.FindByName("compsnd")[1]
+	if (!IsValid(compAmb)) then print("GUNMAN: ~ERROR~ compAmb reference was nil!") return end
+
+	local compLite = ents.FindByName("complite")[1]
+	if (!IsValid(compLite)) then print("GUNMAN: ~ERROR~ compLite reference was nil!") return end
+
+	local explosion = ents.FindByName("compexplode")[1]
+	if (!IsValid(explosion)) then print("GUNMAN: ~ERROR~ explosion reference was nil!") return end
+	
+	local sparker = ents.FindByName("compspark")[1]
+	if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
+	
+	local chargeUpSound = CreateSound(computer, "whiningUp")
+	local fuckshit = CreateSound(computer, "malfunction")
+	local weirdPower = CreateSound(computer, "weirdPowerNoise")
+	
+	sound.Play("loading", computerPos)
+	timer.Simple(1, function() heat:Fire("TurnOn") end)
+	
+	timer.Simple(2, function() 
+		sound.Play("loading", computerPos)
+		timer.Simple(1, function() smoke1Sound:Play() smoke1[1]:Fire("TurnOn") smoke1[2]:Fire("TurnOn") end)
+		sound.Play("strain", computerPos)
+		timer.Simple(1, function() sound.Play("strain", computerPos) end)
+		timer.Simple(4, function() 
+			sound.Play("loading", computerPos)
+			smoke2Sound:Play()
+			sound.Play("strain", computerPos)
+			timer.Simple(3, function() sound.Play("strain", computerPos) end)
+			timer.Simple(10, function() smoke3Sound:Play() smoke2[1]:Fire("TurnOn") smoke2[2]:Fire("TurnOn") sparker:Fire("SparkOnce") repairGuySequences[3]:Fire("CancelSequence") repairGuySequences[4]:Fire("BeginSequence") repairGuySentences[4]:Fire("BeginSentence") end)
+			timer.Simple(11, function() 
+				sound.Play("cheer", computerPos)
+				timer.Simple(0.24, function() smoke1[1]:Fire("TurnOff") smoke1[2]:Fire("TurnOff") end)
+				
+				--screen goes hay-wire
+				timer.Simple(1.92, function() screens[1]:Fire("Disable") screens[2]:Fire("Enable") end)
+				timer.Simple(2.07, function() screens[2]:Fire("Disable") screens[1]:Fire("Enable") end)
+				timer.Simple(2.98, function() screens[1]:Fire("Disable") screens[3]:Fire("Enable") end)
+				timer.Simple(3.14, function() screens[3]:Fire("Disable") screens[2]:Fire("Enable") end)
+				timer.Simple(3.37, function() screens[2]:Fire("Disable") screens[3]:Fire("Enable") end)
+				timer.Simple(3.64, function() screens[3]:Fire("Disable") screens[1]:Fire("Enable") end)
+				timer.Simple(4.00, function() screens[1]:Fire("Disable") screens[4]:Fire("Enable") end)
+				timer.Simple(4.15, function() screens[4]:Fire("Disable") screens[3]:Fire("Enable") end)
+				timer.Simple(4.21, function() screens[3]:Fire("Disable") screens[1]:Fire("Enable") end)
+				timer.Simple(4.52, function() screens[1]:Fire("Disable") screens[2]:Fire("Enable") end)
+				timer.Simple(5.05, function() screens[2]:Fire("Disable") screens[1]:Fire("Enable") end)
+				timer.Simple(5.15, function() screens[1]:Fire("Disable") screens[4]:Fire("Enable") end)
+				timer.Simple(5.26, function() screens[4]:Fire("Disable") screens[1]:Fire("Enable") end)
+				timer.Simple(5.60, function() screens[1]:Fire("Disable") screens[3]:Fire("Enable") end)
+				timer.Simple(5.90, function() screens[3]:Fire("Disable") screens[1]:Fire("Enable") end)
+				timer.Simple(6.39, function() screens[1]:Fire("Disable") screens[2]:Fire("Enable") end)
+				timer.Simple(6.70, function() screens[2]:Fire("Disable") screens[3]:Fire("Enable") end)
+				timer.Simple(6.98, function() screens[3]:Fire("Disable") screens[1]:Fire("Enable") end)
+				timer.Simple(7.45, function() screens[1]:Fire("Disable") screens[4]:Fire("Enable") end)
+				timer.Simple(8.43, function() screens[4]:Fire("Disable") screens[5]:Fire("Enable") end)
+				timer.Simple(8.86, function() screens[5]:Fire("Disable") screens[4]:Fire("Enable") end)
+				timer.Simple(8.96, function() screens[4]:Fire("Disable") screens[5]:Fire("Enable") end)
+				timer.Simple(9.15, function() screens[5]:Fire("Disable") screens[4]:Fire("Enable") end)
+				timer.Simple(12.51, function() screens[4]:Fire("Disable") screens[3]:Fire("Enable") end)
+				timer.Simple(12.51, function() screens[3]:Fire("Disable") screens[5]:Fire("Enable") end)
+				
+				--computer dies
+				timer.Simple(20.489, function() 
+					screens[5]:Fire("Disable") 
+					compLite:Fire("TurnOff")
+					compAmb:Fire("StopSound")
+					explosion:Fire("Explode")
+					sparker:Fire("SparkOnce")
+					sparker:Fire("SparkOnce")
+					sparker:Fire("SparkOnce")
+					sparker:Fire("SparkOnce")
+					sparker:Fire("SparkOnce")
+					sparker:Fire("SparkOnce")
+					gibShooters[1]:Fire("Shoot")
+					gibShooters[2]:Fire("Shoot")
+					gibShooters[3]:Fire("Shoot")
+					gibShooters[4]:Fire("Shoot")
+					weirdPower:Stop()
+					sound:Play("powerOff", computerPos)
+					chargeUpSound:Stop()
+					electricFires[1]:Fire("StartFire")
+					sound.Play("ignition", computerPos)
 					
-					-- timer.Simple(2, function() bCredentials = true end)
-				-- end)
-			-- end)
-		-- end)
+					timer.Simple(5, function() 
+						repairGuySequences[2]:Fire("BeginSequence")
+						repairGuySentences[4]:Fire("BeginSentence")
+					end)
+					
+				end)
+				
+				--other events
+				
+				timer.Simple(2.43, function() sparker:Fire("SparkOnce") end)
+				timer.Simple(2.63, function() sparker:Fire("SparkOnce") end)
+				timer.Simple(3.63, function() sparker:Fire("SparkOnce") end)
+				timer.Simple(8.43, function() 
+					sparker:Fire("SparkOnce")
+					sound.Play("ignition", computerPos)
+					sound.Play("break", computerPos)
+					fireSound:Play()
+					repairGuySequences[3]:Fire("CancelSequence")
+					repairGuySequences[4]:Fire("BeginSequence")
+					repairGuySentences[2]:Fire("BeginSentence")
+					timer.Simple(1.5, function() repairGuySentences[3]:Fire("BeginSentence") end)
+					chargeUpSound:Play()
+					electricFires[2]:Fire("StartFire")
+					
+				
+				end)
+				--timer.Simple("")
+				timer.Simple(16, function() weirdPower:Play() end)
+				
+				
+				
+
+				
+			end)
+		end)
 		
-	-- elseif (nPresses == 3) then
-		-- bCanPress = false
 		
-		-- if	(processAnswers()) then
-		
-			-- nPresses = nPresses + 1
-			-- timer.Simple(2, function() bCanPress = true end)
-			-- --do we won things
-		-- else
-			
-			-- timer.Simple(2, function() bCanPress = true end)
-		-- end
-	-- else
-		-- print("GUNMAN: ~ERROR~ Computer was pressed, but we dont have an event to trigger for it!")
-	-- end
+	end)
+	
 
 end
 
@@ -762,33 +1085,56 @@ end
 
 function processCredentials(user, pass)
 
-
-	if (user != "spaceconfederate2000" or pass != "fuckxenomes") then return false end
+	if (user != "spaceconfederate2000" and pass != "fuckxenomes") then complain(3) return false end
+	if (user != "spaceconfederate2000") then complain(1) return false end
+	if (pass != "fuckxenomes") then complain(2) return false end
 
 
 return true end
 
 function processAnswers(ans1, ans2, ans3)
 
-	if (ans1 != "2000" or ans2 != "Vargas Kalhorian" or ans3 != "Gunmanship 101") then return end
+	if (ans1 != "2000" and ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian" and ans3 != "Gunmanship 101") then complain(7) return false end
+
+	if (ans1 != "2000" and ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian") then complain(8) return false end
+	
+	if (ans1 != "2000" and ans3 != "Gunmanship 101")  then complain(9) return false end
+	
+	if (ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian" and ans3 != "Gunmanship 101") then complain(10) return false end
+
+	if (ans1 != "2000") then complain(4) return false end
+	if (ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian") then complain(5) return false end
+	if (ans3 != "Gunmanship 101") then complain(6) return false end
+
 
 return true end
 
 
 function complain(issue)
-
-	if (issue == 1) then
+	if (issue == 0) then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but the NETmail was detected as corrupted. Resending.")
+	elseif (issue == 1) then
 		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but your username was incorrect.")
 	elseif (issue == 2) then
 		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but your password was incorrect.")
-	elseif issue == 3 then
-		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, question 1 wasn't quite right.")
+	elseif (issue == 3) then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but both your username and password were wrong.")
 	elseif issue == 4 then
-		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, question 2 was incorrect.")
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but your answer to question 1 wasn't quite right.")
 	elseif issue == 5 then
-		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but question 3 wasn't it.")
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but your answer to question 2 was incorrect.")
+	elseif issue == 6 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but your answer to question 3 wasn't it.")
+	elseif issue == 7 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but all answers were wrong.")
+	elseif issue == 8 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but answers 1 and 2 were wrong.")
+	elseif issue == 9 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but answers 1 and 3 were wrong.")
+	elseif issue == 10 then
+		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but answers 2 and 3 were wrong.")
 	else
-		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but the NETmail was detected as corrupted. Resending.")
+		print("complain() recieved an unknown complaint.")
 	end
 	
 	sound.Play("error", computerPos) --play that lovely 98 error sound

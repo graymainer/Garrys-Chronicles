@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "gunman/scren03"
+	"$surfaceprop" "glass"
+	"%keywords" "gc"
+	$basetexturetransform "center .67 .155 scale .25 2 rotate 0 translate 0 0"
+
+}
