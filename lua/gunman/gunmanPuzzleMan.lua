@@ -66,7 +66,7 @@ end
 
 file.CreateDir("gunman/inbox") --create us our inbox
 
-sound.Add({
+sound.Add({ --actually overwrites a default error entry, lol!
 
 	name = "error",
 	channel = CHAN_VOICE,
@@ -273,7 +273,7 @@ sound.Add({
 
 	name = "powerOff",
 	channel = CHAN_STATIC,
-	volume = 5,
+	volume = 10,
 	pitch = 90,
 	sound = "ambient/energy/powerdown2.wav"
 
@@ -291,16 +291,55 @@ sound.Add({
 
 })
 
-nSeq = 0 --should be local when fin
-bNearComputer = false
-bProcessing = false --should be local when fin
-bCredentials = false --should be local when fin
-bQuestions = false --should be local when fin
+sound.Add({ --this way! --these might need adjusted..
+
+	name = "overhere0",
+	channel = CHAN_VOICE,
+	volume = 5,
+	level = SNDLVL_300dB,
+	pitch = 100,
+	sound = "gunman/club/puz/vo/thisway.wav"
+
+
+})
+
+sound.Add({ --up here!
+
+	name = "overhere1",
+	channel = CHAN_VOICE,
+	volume = 5,
+	level = SNDLVL_300dB,
+	pitch = 100,
+	sound = "gcsfx/city04/vo/gunman/scene02/line1.wav"
+
+
+})
+
+sound.Add({ --up here!
+
+	name = "firebell",
+	channel = CHAN_STATIC,
+	volume = 1,
+	level = 150,
+	pitch = 100,
+	sound = "ambient/alarms/city_firebell_loop1.wav"
+
+
+})
+
+
+local nSeq = 0 
+local bProcessing = false 
+local bCredentials = false 
+local bQuestions = false 
 local user = nil
 local pass = nil
 local a1 = nil
 local a2 = nil
 local a3 = nil
+local bNearTeleport = false
+local bCompDone = false
+local bDisableNoclip = false
 
 function closeEnoughToType(ply)	
 	local dist = computerPos:DistToSqr(ply:GetPos()) / 10000
@@ -322,7 +361,7 @@ hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat)
 	
 	
 	if (bCredentials) then
-		nSeq = nSeq + 1 --all of this should probably be done before the check.
+		nSeq = nSeq + 1 
 		if (nSeq == 1) then
 			user = text
 		else if (nSeq == 2) then
@@ -370,7 +409,7 @@ hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat)
 			end
 		end
 	elseif (bQuestions) then
-		nSeq = nSeq + 1 --all of this should probably be done before the check.
+		nSeq = nSeq + 1 
 		
 		if (nSeq == 1) then
 			a1 = text
@@ -405,9 +444,8 @@ hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat)
 	end
 end)
 
-bCanPress = false --should be local when fin
+local bCanPress = false
 local nPresses = 1 --needs to be one to start press loop.
-
 --our entry point, where it all begins
 CreateConVar( "its_high_noon_in_deep_space", 0, FCVAR_GAMEDLL, "Hyper-Cast would be happy to make all arrangements.", 0, 1 )
 
@@ -447,6 +485,15 @@ function init(newValue)
 	repairGuySequence:Fire("BeginSequence") --tell that lazy schmuck to get moving
 		
 	bCanPress = true
+	
+	
+	cvars.AddChangeCallback("noclip", function(convar, oldValue, newValue) 
+		print("checking for bDisableNoclip")
+		if (!bDisableNoclip) then return end
+		
+		GetConVar("noclip"):Revert()
+		print("noclip call")
+	end)
 
 end
 
@@ -486,10 +533,6 @@ function computerPressed() --let us fax on over that succulent information.
 				timer.Simple(24, function() 
 					createNETmail0()
 					bCredentials = true
-					
-					-- timer.Simple(3, function() 
-						-- bCanPress = true
-					-- end)
 				end)
 			end)
 		end)
@@ -497,6 +540,8 @@ function computerPressed() --let us fax on over that succulent information.
 end
 
 function verify() --finally, the end!
+
+	bDisableNoclip = true
 
 	local bBad = false
 
@@ -547,7 +592,6 @@ function verify() --finally, the end!
 	
 	if (bBad) then return end
 	
-	--need new way to obtain these ents since lua is fucking stupid and decides it should grab these at random order instead of sorted alphabetically.
 	local screens = {
 		ents.FindByName("compscrena")[1],
 		ents.FindByName("compscrenb")[1],
@@ -569,7 +613,8 @@ function verify() --finally, the end!
 		ents.FindByName("repairguy_seqd")[1],
 		ents.FindByName("repairguy_seqe")[1],
 		ents.FindByName("repairguy_seqe2")[1],
-		ents.FindByName("repairguy_seqf")[1]
+		ents.FindByName("repairguy_seqf")[1],
+		ents.FindByName("repairguy_seqg")[1]
 	
 	}
 	for i = 1, table.maxn(repairGuySequences), 1 do
@@ -628,6 +673,11 @@ function verify() --finally, the end!
 	
 	local chargeUpSound = CreateSound(soundPositions[5], "whiningUp")
 	local weirdPower = CreateSound(soundPositions[7], "weirdPowerNoise")
+	
+	local alarm = ents.FindByName("alarm")[1]
+	if (!IsValid(alarm)) then print("GUNMAN: ~ERROR~ alarm reference was nil!") return end
+	
+	local fireAlarm = CreateSound(alarm, "firebell")
 	
 	sound.Play("loading", computerPos)
 	timer.Simple(1, function() heat:Fire("TurnOn") end)
@@ -702,7 +752,27 @@ function verify() --finally, the end!
 					end)
 					
 					timer.Simple(10, function() electricFires[1]:Fire("Extinguish") electricFires[2]:Fire("Extinguish") heat:Fire("TurnOff") fireSound:Stop() sound.Play("extinguish", computerPos) end)
+					timer.Simple(12, function() fireAlarm:Stop() end)
 					
+					local tpPos = ents.FindByName("exit")[1]
+					if (!IsValid(tpPos)) then print("GUNMAN: ~ERROR~ tpPos reference was nil!") return end
+					
+					bCompDone = true
+					
+					--give the player an audio clue
+					if (!bNearTeleport) then
+						timer.Simple(5, function() 
+							sound.Play("overhere0", tpPos:GetPos())
+							if (!bNearTeleport) then
+								timer.Simple(5, function() 
+									sound.Play("overhere0", tpPos:GetPos())
+									if (!bNearTeleport) then
+										timer.Simple(5, function() sound.Play("overhere0", tpPos:GetPos()) end)
+									end
+								end)
+							end
+						end)
+					end
 				end)
 				
 				--other events
@@ -711,29 +781,78 @@ function verify() --finally, the end!
 				timer.Simple(2.63, function() sparker:Fire("SparkOnce") end)
 				timer.Simple(3.63, function() sparker:Fire("SparkOnce") end)
 				timer.Simple(16.63, function() weirdPower:Play() end)
+				timer.Simple(14.65, function() repairGuySequences[5]:Fire("BeginSequence") end)
 				timer.Simple(8.43, function() 
 					sparker:Fire("SparkOnce")
 					sound.Play("ignition", computerPos)
 					sound.Play("break", computerPos)
 					fireSound:Play()
 					repairGuySentences[2]:Fire("BeginSentence")
-					repairGuySequences[5]:Fire("BeginSequence")
+					repairGuySequences[6]:Fire("BeginSequence")
 					timer.Simple(1.5, function() repairGuySentences[3]:Fire("BeginSentence") end)
 					chargeUpSound:Play()
 					electricFires[2]:Fire("StartFire")
-				end)
-				
-				
-				
-				
-
-				
+					timer.Simple(2, function() fireAlarm:Play() end)
+				end)				
 			end)
 		end)
-		
-		
 	end)
 	
+	
+	--glitches timeline
+	-- 1.92 // start of glitch
+	-- 2.07 // end
+	
+	--2.98
+	
+	--3.14
+	
+	--3.37
+	--3.64
+	
+	--4.0
+	
+	--4.07
+	
+	--4.15
+	
+	--4.21
+	--4.52
+	
+	--5.05
+	
+	--5.15
+	
+	--5.26
+	
+	--5.6
+	--5.90
+	
+	--6.39
+	
+	--6.70
+	--6.98
+	
+	--7.45
+	--8.50
+	
+	--8.43 //stuttering begins
+	--8.86
+	
+	--8.96
+	
+	--9.15
+	
+	--12.51
+	--13.46 //really starts screeching around here
+	
+	--15.62
+	--16.11
+	
+	--16.84
+	--19.76
+	
+	--20.489 //dies
 
 end
 
@@ -1060,15 +1179,455 @@ function complain(issue)
 	
 end
 
+function isNearTeleport()
+	if (!bCompDone) then return end
+	
+	local bBad = false
+	
+	local tpPos = ents.FindByName("exit")[1]
+	if (!IsValid(tpPos)) then print("GUNMAN: ~ERROR~ tpPos reference was nil!") return end
+	
+	sound.Play("overhere1", tpPos:GetPos())
+	
+	local soundscapeNormal = ents.FindByName("tproom_soundscape0")[1]
+	if (!IsValid(soundscapeNormal)) then print("GUNMAN: ~ERROR~ soundscapeNormal reference was nil!") return end
+	
+	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
+	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
+	
+	soundscapeNormal:Fire("Disable")
+	
+	soundscapeWeird:Fire("Enable")
+	
+	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
+	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
+	
+	local tpLites = ents.FindByName("tplite")
+	for i = 1, table.maxn(tpLites), 1 do
+	
+		if (!IsValid(tpLites[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpLites reference was nil!") break end
+	
+	end	
+	
+	local tpAmbs = ents.FindByName("tpamb")
+	for i = 1, table.maxn(tpLites), 1 do
+	
+		if (!IsValid(tpLites[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpLites reference was nil!") break end
+	
+	end	
+	
+	local tpGlows = ents.FindByName("tpglow")
+	for i = 1, table.maxn(tpGlows), 1 do
+	
+		if (!IsValid(tpGlows[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpGlows reference was nil!") break end
+	
+	end		
+
+	if (bBad) then return end
+	
+	for i = 1, table.maxn(tpLites), 1 do
+		
+		tpLites[i]:Fire("TurnOn")
+		tpLites[i]:Fire("ShowSprite")
+	
+	end
+	
+	for i = 1, table.maxn(tpGlows), 1 do
+		
+		tpGlows[i]:Fire("ShowSprite")
+	
+	end
+	
+	for i = 1, table.maxn(tpAmbs), 1 do
+		
+		tpAmbs[i]:Fire("PlaySound")
+	
+	end
+end
+
+sound.Add({
+
+	name = "teleport_thunder",
+	channel = CHAN_STATIC,
+	volume = 10,
+	pitch = 100,
+	sound = "ambient/levels/labs/teleport_postblast_thunder1.wav"
+
+
+})
+
+sound.Add({
+
+	name = "teleport0",
+	channel = CHAN_VOICE,
+	volume = 10,
+	pitch = 100,
+	sound = "@gunman/club/puz/teleport.wav"
+
+
+})
+
+sound.Add({
+
+	name = "teleport1",
+	channel = CHAN_VOICE,
+	volume = 50,
+	pitch = 100,
+	sound = "@ambient/machines/teleport4.wav"
+
+
+})
+
+
+local bLegit = false
+
+function completedParkour()
+	if (!bCompDone) then return end
+	bLegit = true
+
+end
+
+local guardOldPos
+
 function createTeleport()
+	if (!bCompDone) then return end
+	
+	ents.FindByName("tpnear")[1]:Fire("Kill")
+	ents.FindByName("pkc")[1]:Fire("Enable")
+	
+	bNearTeleport = true
+	
+	local bBad = false	
+	
+	local steps = {
+		ents.FindByName("wall_steps0")[1],
+		ents.FindByName("wall_steps1")[1],
+		ents.FindByName("wall_steps2")[1],
+		ents.FindByName("wall_steps3")[1],
+	}
+	for i = 1, table.maxn(steps), 1 do
+	
+		if (!IsValid(steps[i])) then bBad = true print("GUNMAN: ~ERROR~ a steps reference was nil!") break end
+	
+	end	
+	if (bBad) then return end
+	
+	local tpLites = ents.FindByName("tplite")
+	for i = 1, table.maxn(tpLites), 1 do
+	
+		if (!IsValid(tpLites[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpLites reference was nil!") break end
+	
+	end	
+	if (bBad) then return end
+	
+	local tpGlows = ents.FindByName("tpglow")
+	for i = 1, table.maxn(tpGlows), 1 do
+	
+		if (!IsValid(tpGlows[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpGlows reference was nil!") break end
+	
+	end		
+
+	if (bBad) then return end
+
+	local guard = ents.FindByName("guardguy")[1]
+	if (!IsValid(guard)) then print("GUNMAN: ~ERROR~ guard reference was nil!") return end
+
+	local guardTpPos = ents.FindByName("guardguy")[1]
+	if (!IsValid(guardTpPos)) then print("GUNMAN: ~ERROR~ guardTpPos reference was nil!") return end
+
+	local guardSpark = ents.FindByName("guardguy_sparks")[1]
+	if (!IsValid(guardSpark)) then print("GUNMAN: ~ERROR~ guardSpark reference was nil!") return end
+	
+	local stopAll = ents.FindByName("stop")[1]
+	if (!IsValid(stopAll)) then print("GUNMAN: ~ERROR~ stopAll reference was nil!") return end
+	
+	local shake = ents.FindByName("tpshake")[1]
+	if (!IsValid(shake)) then print("GUNMAN: ~ERROR~ shake reference was nil!") return end
+	
+	shake:Fire("StartShake")
+	
+	stopAll:Fire("Enable")
+	stopAll:Fire("Trigger")
+	stopAll:Fire("Kill")
+
+	
+	guardOldPos = guard:GetPos()
+	
+	guardSpark:SetPos(guard:GetPos())
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	guardSpark:Fire("SparkOnce")
+	
+	guard:SetPos(Vector(0, 0, 0))
+	--need to acommodate player parties
+	Entity(1):ScreenFade(SCREENFADE.IN, color_white, 0.65, 0.12)
+		
+	CreateSound(Entity(1), "teleport0"):Play()
+	timer.Simple(1, function() CreateSound(Entity(1), "teleport_thunder"):Play() end)
+
+	
+
+	local tpPos = ents.FindByName("exit")[1]
+	if (!IsValid(tpPos)) then print("GUNMAN: ~ERROR~ tpPos reference was nil!") return end
+	
+	sound.Play("overhere1", tpPos:GetPos())
+	
+	local soundscapesNormal = ents.FindByName("tproom_soundscape0")
+	for i = 1, table.maxn(soundscapesNormal), 1 do
+	
+		if (!IsValid(soundscapesNormal[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesNormal reference was nil!") break end
+	
+	end
+	
+	if (bBad) then return end
+	
+	for i = 1, table.maxn(soundscapesNormal), 1 do
+	
+		soundscapesNormal[i]:Fire("Disable")
+	
+	end
+	
+	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
+	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
+	
+	
+	soundscapeWeird:Fire("Enable")	
+	
+	
+	for i = 1, table.maxn(tpLites), 1 do
+		
+		tpLites[i]:Fire("TurnOn")
+	
+	end
+	
+	for i = 1, table.maxn(tpGlows), 1 do
+		
+		tpGlows[i]:Fire("ShowSprite")
+	
+	end
+	
+	for i = 1, table.maxn(steps), 1 do
+		
+		steps[i]:Fire("Unlock")
+	end
+	
+	timer.Simple(3, function()
+		if (!IsValid(steps[1])) then return end
+		steps[1]:Fire("Open")
+		timer.Simple(2, function()
+			if (!IsValid(steps[1])) then return end
+			steps[2]:Fire("Open")
+			timer.Simple(2, function()
+				if (!IsValid(steps[1])) then return end
+				steps[3]:Fire("Open")
+				timer.Simple(2, function()
+					if (!IsValid(steps[1])) then return end
+					steps[4]:Fire("Open") 
+				end)
+			end)
+		end)
+	end)
 
 end
 
 function teleportToReality()
+	if (!bCompDone) then return end
+	
+	local bBad = false
+	
+	local steps = {
+		ents.FindByName("wall_steps0")[1],
+		ents.FindByName("wall_steps1")[1],
+		ents.FindByName("wall_steps2")[1],
+		ents.FindByName("wall_steps3")[1],
+	}
+	for i = 1, table.maxn(steps), 1 do
+	
+		if (!IsValid(steps[i])) then bBad = true print("GUNMAN: ~ERROR~ a steps reference was nil!") break end
+	
+	end	
+	
+	if (bBad) then return end
+	
+	for i = 1, table.maxn(steps), 1 do
+	
+		steps[i]:Fire("Kill")
+	
+	end	
+	
+	local guard = ents.FindByName("guardguy")[1]
+	if (!IsValid(guard)) then print("GUNMAN: ~ERROR~ guard reference was nil!") return end
+	
+	guard:SetPos(guardOldPos)
+	
+
+	local sparker0 = ents.FindByName("exitsparks")[1]
+	if (!IsValid(sparker0)) then print("GUNMAN: ~ERROR~ sparker0 reference was nil!") return end
+	
+	local sparker1 = ents.FindByName("entrysparks")[1]
+	if (!IsValid(sparker1)) then print("GUNMAN: ~ERROR~ sparker1 reference was nil!") return end
+	
+	local shake = ents.FindByName("tpshake")[1]
+	if (!IsValid(shake)) then print("GUNMAN: ~ERROR~ shake reference was nil!") return end
+	
+	local tpLites = ents.FindByName("tplite")
+	for i = 1, table.maxn(tpLites), 1 do
+	
+		if (!IsValid(tpLites[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpLites reference was nil!") break end
+	
+	end	
+	if (bBad) then return end
+	
+	local tpGlows = ents.FindByName("tpglow")
+	for i = 1, table.maxn(tpGlows), 1 do
+	
+		if (!IsValid(tpGlows[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpGlows reference was nil!") break end
+	
+	end		
+
+	if (bBad) then return end
+	
+	for i = 1, table.maxn(tpLites), 1 do
+		
+		tpLites[i]:Fire("TurnOff")
+	
+	end
+	
+	for i = 1, table.maxn(tpGlows), 1 do
+		
+		tpGlows[i]:Fire("HideSprite")
+	
+	end
+	
+	local soundscapesNormal = ents.FindByName("tproom_soundscape0")
+	for i = 1, table.maxn(soundscapesNormal), 1 do
+	
+		if (!IsValid(soundscapesNormal[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesNormal reference was nil!") break end
+	
+	end
+	
+	if (bBad) then return end
+	
+	for i = 1, table.maxn(soundscapesNormal), 1 do
+	
+		soundscapesNormal[i]:Fire("Enable")
+	
+	end
+	
+	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
+	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
+	
+	soundscapeWeird:Fire("Disable")	
+	
+	local stopClub = ents.FindByName("club_stop")[1]
+	if (!IsValid(stopClub)) then print("GUNMAN: ~ERROR~ stopClub reference was nil!") return end
+
+	stopClub:Fire("Trigger")
+	
+	local startAll = ents.FindByName("start")[1]
+	if (!IsValid(startAll)) then print("GUNMAN: ~ERROR~ startAll reference was nil!") return end
+
+	startAll:Fire("Enable")
+	startAll:Fire("Trigger")
+	startAll:Fire("Kill")
+	
+	local tpTo = ents.FindByName("exit")[1]
+	if (!IsValid(tpTo)) then print("GUNMAN: ~ERROR~ tpTo reference was nil!") return end
+	
+	
+	local dest = tpTo:GetPos()
+	Entity(1):SetPos(dest)
+	Entity(1):ScreenFade(SCREENFADE.IN, color_white, 0.65, 1.0)
+	shake:Fire("StartShake")
+	
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	
+	
+
+	CreateSound(Entity(1), "teleport1"):Play()
+	timer.Simple(1, function() CreateSound(Entity(1), "teleport_thunder"):Play() end)
 
 end
 
 function teleportToDankRoom()
+	if (!bCompDone or !bLegit) then return end
+	
+	local tpTo = ents.FindByName("entry")[1]
+	if (!IsValid(tpTo)) then print("GUNMAN: ~ERROR~ tpTo reference was nil!") return end
+	
+	local sparker0 = ents.FindByName("exitsparks")[1]
+	if (!IsValid(sparker0)) then print("GUNMAN: ~ERROR~ sparker0 reference was nil!") return end
+	
+	local sparker1 = ents.FindByName("entrysparks")[1]
+	if (!IsValid(sparker1)) then print("GUNMAN: ~ERROR~ sparker1 reference was nil!") return end
+	
+	local shake = ents.FindByName("tpshake")[1]
+	if (!IsValid(shake)) then print("GUNMAN: ~ERROR~ shake reference was nil!") return end
+	
+	
+	local dest = tpTo:GetPos()
+	Entity(1):SetPos(dest)
+	Entity(1):ScreenFade(SCREENFADE.IN, color_white, 0.65, 1.0)
+	shake:Fire("StartShake")
+	
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	sparker0:Fire("SparkOnce")
+	sparker1:Fire("SparkOnce")
+	
+	
+
+	CreateSound(Entity(1), "teleport1"):Play()
+	timer.Simple(1, function() CreateSound(Entity(1), "teleport_thunder"):Play() end)
 
 end
 

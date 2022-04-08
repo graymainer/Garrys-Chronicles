@@ -1,3 +1,23 @@
+
+"Gunman.Announcements_weird"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"35,65"
+		"position"	"4, 7"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
 "Gunman.Announcements"
 {
 
@@ -7,7 +27,7 @@
 		"volume"	"1"
 		"pitch"		"98,103"
 		"position"	"0, 7"
-		"soundlevel"	"SNDLVL_90db"
+		"soundlevel"	"SNDLVL_140db"
 		"rndwave"
 		{
 			"wave"	"gunman/atmosphere/pa1.wav"
@@ -27,7 +47,7 @@
 		"volume"	"1"
 		"pitch"		"98,103"
 		"position"	"random"
-		"soundlevel"	"SNDLVL_90db"
+		"soundlevel"	"SNDLVL_140db"
 		"rndwave"
 		{
 			"wave"	"gunman/atmosphere/pa1.wav"
@@ -54,20 +74,20 @@
 
 	"playsoundscape"
 	{
-		"volume"	"0.8,1.4"
+		"volume"	"1.0"
 		"name" "Gunman.Announcements"
 		
 	}
 	
 	"playsoundscape"
 	{
-		"volume" "0.45, 0.85"
+		"volume" "1.0"
 		"name" "coast.util_metalstress"
 	}
 	
 	"playsoundscape"
 	{
-		"volume" "0.45, 0.85"
+		"volume" "1.0"
 		"name" "coast.util_shackmetal"
 	}
 	
@@ -166,6 +186,63 @@
 		}
 	}
 }
+
+"Gunman.City1c"
+{
+	"dsp" "28"
+	"dsp_volume" "7"
+	
+	"playsoundscape"
+	{
+		"volume"	"0.4,1.0"
+		"name" "Gunman.Announcements_weird"
+		
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_metalstress"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"1, 15"
+		"volume"	"0.25, 0.6"
+		"pitch"		"25,64"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/metallic2.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"36,64"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}
+
 
 "Gunman.Club"
 {
@@ -413,5 +490,92 @@
 		"volume"	"1.0"
 		"name" "Gunman.City1"
 		
+	}
+}
+
+"Gunman.util_weird_hits"
+{
+	"playrandom"
+	{
+		"time"		"8, 30"
+		"volume"	"0.5,0.75"
+		"pitch"		"90,110"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"0, 3"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/citadel/strange_talk1.wav"
+			"wave"	"ambient/levels/citadel/strange_talk3.wav"
+			"wave"	"ambient/levels/citadel/strange_talk4.wav"
+			"wave"	"ambient/levels/citadel/strange_talk5.wav"
+			"wave"	"ambient/levels/citadel/strange_talk6.wav"
+			"wave"	"ambient/levels/citadel/strange_talk7.wav"
+			"wave"	"ambient/levels/citadel/strange_talk8.wav"
+			"wave"	"ambient/levels/citadel/strange_talk9.wav"
+			"wave"	"ambient/levels/citadel/strange_talk10.wav"
+			"wave"	"ambient/levels/citadel/strange_talk11.wav"
+
+		}
+	}
+}
+
+"Gunman.City1_ForceFieldRoom_Weird"
+{
+	"dsp" "28"
+	"dsp_volume" "7"
+
+	"playsoundscape"
+	{
+		"volume"	"1.25"
+		"name" "Gunman.City1c"
+		
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.75"
+		"name" "Gunman.util_weird_hits"
+	}
+	
+	"playlooping"
+	{
+	
+		"volume"	"5.76"
+		"wave"		")ambient/levels/citadel/citadel_drone_loop1.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_100dB"
+	
+	}
+	"playlooping"
+	{
+	
+		"volume"	"10.87"
+		"wave"		")ambient/levels/citadel/citadel_drone_loop3.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_75dB"
+	
+	}
+	"playlooping"
+	{
+	
+		"volume"	"10.75"
+		"wave"		")ambient/machines/wall_ambient_loop1.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_75dB"
+	
+	}
+	
+	"playlooping"
+	{
+	
+		"volume"	"1.54"
+		"wave"		"gunman\club\puz\teleport_amb.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_200dB"
+	
 	}
 }
