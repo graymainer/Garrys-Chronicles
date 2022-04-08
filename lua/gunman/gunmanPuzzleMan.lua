@@ -63,17 +63,6 @@ if (IsValid(computer)) then --attempt to get it now
 	computerPos = computer:GetPos()
 end
 
--- util.AddNetworkString("net_gunman_playsound")
-
--- function gunmanPlaySound(sound)
-
-	-- net.Start("net_gunman_playsound")
-	
-	-- net.WriteString(sound)
-	
-	-- net.Broadcast()
-
--- end
 
 file.CreateDir("gunman/inbox") --create us our inbox
 
@@ -220,7 +209,18 @@ sound.Add({
 	channel = CHAN_STATIC,
 	volume = 1.255,
 	pitch = 94,
-	sound = "ambient/fire/fire_big_loop1.wav"
+	sound = "ambient/fire/fire_med_loop1.wav"
+
+
+})
+
+sound.Add({
+
+	name = "extinguish",
+	channel = CHAN_STATIC,
+	volume = 1.255,
+	pitch = 94,
+	sound = "ambient/fire/mtov_flame2.wav"
 
 
 })
@@ -254,17 +254,6 @@ sound.Add({
 		"physics/metal/metal_box_strain4.wav"
 	
 	}
-
-
-})
-
-sound.Add({
-
-	name = "malfunction",
-	channel = CHAN_STATIC,
-	volume = 1,
-	pitch = 95,
-	sound = ")ambient/levels/labs/teleport_malfunctioning.wav"
 
 
 })
@@ -511,7 +500,7 @@ function verify() --finally, the end!
 
 	local bBad = false
 
-	
+	bCanPress = false
 
 	
 	
@@ -559,7 +548,13 @@ function verify() --finally, the end!
 	if (bBad) then return end
 	
 	--need new way to obtain these ents since lua is fucking stupid and decides it should grab these at random order instead of sorted alphabetically.
-	local screens = ents.FindByName("compscren*")	
+	local screens = {
+		ents.FindByName("compscrena")[1],
+		ents.FindByName("compscrenb")[1],
+		ents.FindByName("compscrenc")[1],
+		ents.FindByName("compscrend")[1],
+		ents.FindByName("compscrene")[1]
+	}
 	for i = 1, table.maxn(screens), 1 do
 	
 		if (!IsValid(screens[i])) then bBad = true print("GUNMAN: ~ERROR~ a screen reference was nil!") break end 
@@ -569,15 +564,28 @@ function verify() --finally, the end!
 	
 	if (bBad) then return end
 	
-	local repairGuySequences = ents.FindByName("repairguy_seq*")
+	local repairGuySequences = {
+		ents.FindByName("repairguy_seqb")[1],
+		ents.FindByName("repairguy_seqd")[1],
+		ents.FindByName("repairguy_seqe")[1],
+		ents.FindByName("repairguy_seqe2")[1],
+		ents.FindByName("repairguy_seqf")[1]
+	
+	}
 	for i = 1, table.maxn(repairGuySequences), 1 do
 	
 		if (!IsValid(repairGuySequences[i])) then bBad = true print("GUNMAN: ~ERROR~ a repairGuySequences reference was nil!") break end
 	
-	end
+	end	
+	
 	if (bBad) then return end
 	
-	local repairGuySentences = ents.FindByName("repairguy_line2*")
+	local repairGuySentences = {
+		ents.FindByName("repairguy_line2a")[1],
+		ents.FindByName("repairguy_line2b")[1],
+		ents.FindByName("repairguy_line2c")[1],
+		ents.FindByName("repairguy_line2d")[1]
+	}
 	for i = 1, table.maxn(repairGuySentences), 1 do
 	
 		if (!IsValid(repairGuySentences[i])) then bBad = true print("GUNMAN: ~ERROR~ a repairGuySentences reference was nil!") break end
@@ -585,16 +593,26 @@ function verify() --finally, the end!
 	end	
 	
 	if (bBad) then return end
+	
+	local soundPositions = ents.FindByName("compSoundPos*")
+	for i = 1, table.maxn(soundPositions), 1 do
+	
+		if (!IsValid(soundPositions[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundPositions reference was nil!") break end
+	
+	end	
+	
+	if (bBad) then return end
 
+	
 	
 	local heat = ents.FindByName("compheat")[1]
 	if (!IsValid(heat)) then print("GUNMAN: ~ERROR~ heat reference was nil!") return end
 	
-	local smoke1Sound = CreateSound(heat, "smoking") -- at heat entity
-	local smoke2Sound = CreateSound(heat, "smoking2") -- at heat entity
-	local smoke3Sound = CreateSound(heat, "smoking3") -- at heat entity
+	local smoke1Sound = CreateSound(soundPositions[1], "smoking") -- at heat entity
+	local smoke2Sound = CreateSound(soundPositions[2], "smoking2") -- at heat entity
+	local smoke3Sound = CreateSound(soundPositions[3], "smoking3") -- at heat entity
 	
-	local fireSound = CreateSound(heat, "fire")
+	local fireSound = CreateSound(soundPositions[4], "fire")
 	
 	local compAmb = ents.FindByName("compsnd")[1]
 	if (!IsValid(compAmb)) then print("GUNMAN: ~ERROR~ compAmb reference was nil!") return end
@@ -608,9 +626,8 @@ function verify() --finally, the end!
 	local sparker = ents.FindByName("compspark")[1]
 	if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
 	
-	local chargeUpSound = CreateSound(computer, "whiningUp")
-	local fuckshit = CreateSound(computer, "malfunction")
-	local weirdPower = CreateSound(computer, "weirdPowerNoise")
+	local chargeUpSound = CreateSound(soundPositions[5], "whiningUp")
+	local weirdPower = CreateSound(soundPositions[7], "weirdPowerNoise")
 	
 	sound.Play("loading", computerPos)
 	timer.Simple(1, function() heat:Fire("TurnOn") end)
@@ -625,7 +642,7 @@ function verify() --finally, the end!
 			smoke2Sound:Play()
 			sound.Play("strain", computerPos)
 			timer.Simple(3, function() sound.Play("strain", computerPos) end)
-			timer.Simple(10, function() smoke3Sound:Play() smoke2[1]:Fire("TurnOn") smoke2[2]:Fire("TurnOn") sparker:Fire("SparkOnce") repairGuySequences[3]:Fire("CancelSequence") repairGuySequences[4]:Fire("BeginSequence") repairGuySentences[4]:Fire("BeginSentence") end)
+			timer.Simple(10, function() smoke3Sound:Play() smoke2[1]:Fire("TurnOn") smoke2[2]:Fire("TurnOn") sparker:Fire("SparkOnce") repairGuySequences[2]:Fire("CancelSequence") repairGuySequences[3]:Fire("BeginSequence") repairGuySentences[1]:Fire("BeginSentence") end)
 			timer.Simple(11, function() 
 				sound.Play("cheer", computerPos)
 				timer.Simple(0.24, function() smoke1[1]:Fire("TurnOff") smoke1[2]:Fire("TurnOff") end)
@@ -674,15 +691,17 @@ function verify() --finally, the end!
 					gibShooters[3]:Fire("Shoot")
 					gibShooters[4]:Fire("Shoot")
 					weirdPower:Stop()
-					sound:Play("powerOff", computerPos)
+					sound.Play("powerOff", computerPos)
 					chargeUpSound:Stop()
 					electricFires[1]:Fire("StartFire")
 					sound.Play("ignition", computerPos)
 					
-					timer.Simple(5, function() 
-						repairGuySequences[2]:Fire("BeginSequence")
+					timer.Simple(2, function() 
+						repairGuySequences[1]:Fire("BeginSequence")
 						repairGuySentences[4]:Fire("BeginSentence")
 					end)
+					
+					timer.Simple(10, function() electricFires[1]:Fire("Extinguish") electricFires[2]:Fire("Extinguish") heat:Fire("TurnOff") fireSound:Stop() sound.Play("extinguish", computerPos) end)
 					
 				end)
 				
@@ -691,22 +710,19 @@ function verify() --finally, the end!
 				timer.Simple(2.43, function() sparker:Fire("SparkOnce") end)
 				timer.Simple(2.63, function() sparker:Fire("SparkOnce") end)
 				timer.Simple(3.63, function() sparker:Fire("SparkOnce") end)
+				timer.Simple(16.63, function() weirdPower:Play() end)
 				timer.Simple(8.43, function() 
 					sparker:Fire("SparkOnce")
 					sound.Play("ignition", computerPos)
 					sound.Play("break", computerPos)
 					fireSound:Play()
-					repairGuySequences[3]:Fire("CancelSequence")
-					repairGuySequences[4]:Fire("BeginSequence")
 					repairGuySentences[2]:Fire("BeginSentence")
+					repairGuySequences[5]:Fire("BeginSequence")
 					timer.Simple(1.5, function() repairGuySentences[3]:Fire("BeginSentence") end)
 					chargeUpSound:Play()
 					electricFires[2]:Fire("StartFire")
-					
-				
 				end)
-				--timer.Simple("")
-				timer.Simple(16, function() weirdPower:Play() end)
+				
 				
 				
 				
@@ -846,12 +862,11 @@ function createNETmail1() --a daily news article for the player to read some lor
 	page:Write("\n\nHowever this conference was never to be, having been declined right after arriving at their office. The reason for the rejection, not publicly disclosed.")
 	
 	
-	page:Write("\n\n\nAnd with that hasty rejection, people are now starting to have second thoughts about their judgement of dr.Kalhorian's views and claims.")
-	page:Write("\nAnd with goverment officials like the D.O.C seemingly, in Kalhorian's own words, 'Sitting on their fat flat chair shaped as*es while their whole damn species goes extinct!'") 
+	page:Write("\n\n\nCombine that hasty rejection and the intensity of the current situation, and people are now starting to have second thoughts about their judgement of dr.Kalhorian's views and claims.")
+	page:Write("\nWith goverment officials like the D.O.C seemingly, in Kalhorian's own words, 'Sitting on their fat flat chair shaped as*es while their whole damn species goes extinct!'") 
 	page:Write("\ncombined with Kalhorian's claims that they're somehow involved in the disasters taking place just a few light years from here, coupled with the speed in which dr.Kalhorian's request for conference was declined?") 
 	
-	page:Write("\n\nYeah, it's no wonder people are suspicious.")
-	page:Write("\nNot to mention the fact that these xenomes are cropping up everywhere in seemingly unrelated places. How's that possible unless someone is purposfully placing and breeding them there?")
+	page:Write("\n\nYeah, it's no wonder people are starting to get suspicious.")
 	
 	
 	page:Write("\n\n\nWe managed to get an interview with a D.O.C spokesperson, Angelica Smith; about an hour ago. Here's what she had to say on record;")
@@ -859,19 +874,19 @@ function createNETmail1() --a daily news article for the player to read some lor
 	
 	page:Write("\n\n\n\nQuote 'Interviewer: did you hear about dr.Kalhorian's hastily rejected request to hold a press conference with the Department of Colonisation earlier today? If so, what are your thoughts on this whole.. situation?")
 	
-	page:Write("\n\nSpokesperson: Um well, you know, there is a lot of rumors going on around right now about how the department is evil, the department is hiding this, the department is doing that. Um, but I think that... whats really going on here.. is.. people are scared.")
+	page:Write("\n\nSpokesperson: Um well, you know, there is a lot of rumors going around right now about how the department is evil, the department is hiding this, the department is doing that. Um, but I think that... whats really going on here.. is.. people are scared.")
 	page:Write("\nand uh, you know, when people are scared, they're quick to point fingers, quick to act. They need someone to blame for something. It gives them comfort. But it's obviously a very harmful.. uh.. dogmatic mindset.")
 	page:Write("\nThe biggest rumor i've heard of so far was that we are... somehow.. responsible for whats been happening out there as of recent. And uh.. you know, I gotta say; these accusations are not only ridiculous, but have dangerous implications as well.")
-	page:Write("These rumors would suggest that a cancer is growing in our goverment and that a collapse in our authority is sure to follow suit. And in um.. in times like these, that could be the end of us.")
+	page:Write("\nThese rumors would suggest that a cancer is growing in our goverment and that a collapse in our authority is sure to follow suit. And in um.. in times like these, that could be the end of us.")
 	page:Write("\nWe need a goverment, an authoritative power, like how a kid needs their parent; now more than ever. It's keeps us sane, keeps us safe. And to toss that into kata space? Nonsense. We need to remain calm, We need to remain vigilant, and we need to remain sane.")
 	page:Write("\nWe have enough enemies at our doors as is. Last thing we need is to see our own neighbours among them.")
 	
 	page:Write("\nNow, to answer your original question; I'm not sure. Though it's probably due to a much more benign reason than what people are expecting, or outright claiming even.")
 	page:Write("\n\nFoul play in this case is just.. nonsense. Plain and simple. What.. would any madman have to gain out of worsening a situation.. like the one we're all currently.. and actively facing? A situation were our very own species' existence is at stake?")
-	page:Write("\nIs it for money? No, I don't think our currency will hold much value when the human race is gone. So we can rule out greed, the number one cause of foul play; as a possibility. And whats left? Well.. Nothing concrete. SUrely nothing to start accusations from.")
+	page:Write("\nIs it for money? No, I don't think our currency will hold much value when the human race is gone. So we can rule out greed, the number one cause of corruption as a possibility. And then whats left? Well.. Nothing concrete. Surely nothing to start accusations from.")
 	
-	page:Write("\n\nSo like I said, the people need someone to blame. And we just so happen to be the wrong person, there at the right time.")
-	page:Write("\nBelive me, I.. WE, hate to see whats happening out there, but we're doing everything we can and are in NO way responsible for these tragedies taking place.")
+	page:Write("\n\nSo like I said, the people need someone to blame. And we just so happen to be that person.")
+	page:Write("\nBelive me, I.. WE, hate to see whats happening out there, but we're doing everything we can to help, and are in NO way responsible for those tragedies taking place.")
 	
 	
 	page:Write("\n\n\nSo.. instead of looking to blame and fight each other, I say we need to band together and help each other. To save mankind.' End quote.")
@@ -887,28 +902,28 @@ function createNETmail1() --a daily news article for the player to read some lor
 
 
 	
-	page:Write("\n\n\n\nQuote 'Interviewer: So by now I'm sure that you've heard about dr.Kalhorian's wild claims that the xenomes invading our inhabited planets were actually genetically modifed. What do you make of that being a man of a scientific background?")
+	page:Write("\n\n\n\nQuote 'Interviewer: So by now I'm sure that you've heard about dr.Kalhorian's wild claims that the xenomes invading our inhabited planets were actually genetically modifed. What do you make of that? being a man of a scientific background.")
 	page:Write("\n\nInterviewed: Uh, well.. I'm not positive on why anyone would do such a thing, frankly; I dont really see how they could've done it. None of the tech we have here seems to cooperate with the few specimens we've managed to collect.")
 	
 	page:Write("\nAnd to make matters worse, by the.. the time their bodies are pulled from the battlefields, they're either.. ripped to shreds, or decayed to the point of being.. uh.. uh.. unidentifiable. Their bodies appear to decay much faster than any other material we've.. than we've ever seen.")
 	page:Write("\nWe also don't have the resources or.. or manpower to risk several men's lives to try and.. capture even just.. one.. of those things alive. Uh... we also don't have any refrigerators capable of freezing a specimen at the.. uhh.. at the temps we'd need.. to keep those bodies fresh.")
-	page:Write("\nNow, i'm sure that scientists in other places might.. have the stuff to do it, probably being closer to big goods manufacturers. Not to mention our supply line having been cut off by the.. the infestation. So.. uh.. We're on the brink... of another great depression for pete's sake.")
-	page:Write("\nAnd also, imagine asking for volunteers to risk their lives for... what? We wouldn't gain much of.. anything by understanding their genetic code or even their anatomy. Sure it might be.. interesting, but thats not.. thats not good enough of a reason to..")
-	page:Write("\nrisk... several people's lives. Especially.. you're talking in a time like this. The only possible use we'd get out of that research would be.. understanding the anatomy so we know where to aim for. But um... even then.. battle reports seeem to suggest that uh.. that that's.. self-explanatory.")
+	page:Write("\nNow, i'm sure that scientists in other places might.. have the stuff to do it, probably being closer to big manufacturers. Not to mention our supply line having been cut off by the.. the infestation. So.. uh.. I think we're on the track for another great depression.")
+	page:Write("\nAnd also, imagine asking for volunteers to risk their lives for... what? We wouldn't gain much of.. of anything by understanding their genetic code or even their anatomy. Sure it might be.. interesting, but thats not.. thats not really good enough of a reason to..")
+	page:Write("\nrisk... several men's lives. Especially.. if you're talking in a time like this. The only possible use we'd get out of that research would be.. understanding the anatomy so we know where to aim for. But um... even then.. battle reports seeem to suggest that uh.. that that's self-explanatory.")
 	
-	page:Write("\n\nBut uh.. regardless, unless dr.Kalhorian has been examining those.. xenomes' bodies in the field with.. better equipment than what we've got here in the labs, I uh.. I don't see how he could make that observation. I really don't.")
-	page:Write("\nAnd as to how they'd modify their genetics? I mean.. Come on... we don't even know their anatomy! Or what.. different... types of xenomes species there are, or even what.. their lifestyle is. Beyond killing us!")
+	page:Write("\n\nBut uh.. regardless, unless dr.Kalhorian has been examining those.. xenomes' bodies in the field with.. better equipment than what we've got here in the labs, I uh.. I don't see how he could've made that observation. I really don't.")
+	page:Write("\nAnd as to how they'd modify their genetic code? I mean.. Come on... we don't even know their anatomy! Or what.. different... types of xenomes species there are, or even what.. their lifestyle is. Beyond killing us!")
 	
 	page:Write("\n\nLet alone their genetic code.")
 
 
 
-	page:Write("\n\n\nAnd I-I.. I can't speak on the accusations that xenomes were deliberately.. placed? On colonised planets.. I wouldn't know anything about that.")
+	page:Write("\n\n\nAnd I can't speak on the accusations that xenomes were deliberately... uh.. placed? On colonised planets.. I.. I wouldn't happen to know.. uh.. anything really about that.")
 	
 	page:Write("\n\nRight, well, thank you for your time, mr.Dixon,' End quote")
 	
 	
-	page:Write("\n\n\n\nAfter that, we reached out to Vargas Kalhorian for his side of the story. However, we have not recieved any replies. ")
+	page:Write("\n\n\n\nAnd after that, we reached out to Vargas Kalhorian himself for his side of the story. However, we have yet to recieve a reply. ")
 	page:Write("\nWe'll update you on any further developments.")
 	
 	
@@ -960,7 +975,7 @@ function createNETmail2() --the security questions
 	
 	page:Write("\n\n\nVerifying your identity is easy. All you need to do is answer the given questions set by (hopefully) yourself.")
 	
-	page:Write("\n\n\nSimply shoot us a NETmail answering the questions below in the same order!")
+	page:Write("\n\n\nInput your answers in the order they were asked into the chat box field.")
 	
 	page:Write("\n\n\n\nThe questions are as follows:")
 	
@@ -986,102 +1001,6 @@ function createNETmail2() --the security questions
 	netMailNotify()
 	
 end
-
-
-
-
---old data processors
-
-
--- function processCredentials()
-	-- if (!file.Exists("gunman/inbox/HYper-caST Log Into your HYper-caST Account.txt", "DATA")) then 
-		-- print("GUNMAN: ~ERROR~ couldn't find the file. Was it moved or renamed? recreating...")
-		-- createNETmail1()
-	-- return false end
-	
-	-- local netmail = file.Open("gunman/inbox/HYper-caST Log Into your HYper-caST Account.txt", "r", "DATA")
-	
-	-- if (netmail == nil) then print("GUNMAN: ~ERROR~ couldn't open the text file!") return false end
-	
-	-- netmail:Seek(860)
-	
-	-- local user = netmail:Read(512)
-	
-	-- netmail:Seek(300)
-	-- local pass = netmail:Read(64)
-	
-	-- print(user)
-	
-	-- -- if (!string.match(user, "USERNAME:") 
-		-- -- or !string.match(pass, "PASSWORD:") 
-			-- -- and !string.match(pass, "USERNAME:") 
-				-- -- and !string.match(user, "PASSWORD:")) then 
-		-- -- createNETmail1()
-		-- -- complain(0)
-	-- -- return false end --this'll protect us from corruption. for the most part
-	
-	
-	
-	
-	
-	-- -- if (!string.match(user, "spaceconfederate2000")) then --these are too loose!
-		-- -- complain(1)
-	-- -- return false end
-	
-	-- -- if (!string.match(pass, "fuckxenomes")) then
-		-- -- complain(2)
-	-- -- return false end
-
-
-
--- return true end
-
--- function processAnswers() --doing it this way, we'll know which question was wrong
-	-- if (!file.Exists("gunman/inbox/hyper-cast verify identity.txt", "DATA")) then 
-		-- print("GUNMAN: ~ERROR~ couldn't find the file. Was it moved or renamed? recreating...")
-		-- createNETmail3()
-	-- return false end
-	
-	-- local netmail = file.Open("gunman/inbox/hyper-cast verify identity.txt", "r", "DATA")
-	
-	-- if (netmail == nil) then print("GUNMAN: ~ERROR~ couldn't open the text file!") return false end
-	
-	-- netmail:Seek(1250)
-	
-	-- local q1 = netmail:Read(256)
-	
-	-- netmail:Seek(1310)
-	-- local q2 = netmail:Read(256)
-
-	-- netmail:Seek(1320)
-	-- local q3 = netmail:Read(256)
-			-- print(q1)
-
-	
-	-- if (!string.match(q1, "Q1:") 
-		-- or !string.match(q2, "Q2:") 
-			-- or !string.match(q2, "Q3:")) then 
-		-- createnetmail3()
-		-- complain(0) --make generic corrupted netmail complaint
-	-- return false end --this'll protect us from corruption. for the most part
-	
-	
-	
-	
-	
-	-- if (!string.match(q1, "2000")) then --these are too loose!
-		-- complain(3)
-	-- return false end
-	
-	-- if (!string.match(q2, "Vargas Kalhorian")) then
-		-- complain(4)
-	-- return false end
-
-	-- if (!string.match(q3, "Gunmanship 101")) then
-		-- complain(5)
-	-- return false end
-
--- return true end
 
 function processCredentials(user, pass)
 
@@ -1141,7 +1060,17 @@ function complain(issue)
 	
 end
 
+function createTeleport()
 
+end
+
+function teleportToReality()
+
+end
+
+function teleportToDankRoom()
+
+end
 
 
 
