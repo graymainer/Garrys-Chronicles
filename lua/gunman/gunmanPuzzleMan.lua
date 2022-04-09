@@ -48,23 +48,245 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 if (!SERVER) then return end
 
 if (game.GetMap() != "gc_city02" and game.GetMap() != "gc_city03_22_2") then return end
 
 local computer = ents.FindByName("justinspc")[1]--attempts to load a reference, will be checked when first starting. the only reason we load this is mainly for debugger reasons. when lua refreshes, we dont want to have to go through the cvar again to test, so we try here as well.
 
-local computerPos
+local computerPos --the position of the computer. used for a bunch of stuff. needs set if computer is valid.
+
+spawnedEnts = {} --keeps track of the entites spawned by the player. --SHOULD BE LOCAL
+
+bNoclip = false --is the player noclipping?
+
+bCompDone = false --is the computer segment of the puzzle done?
+bDisableNoclip = false --how bout you noclip yourself some b
+
+
+function catalogueSpawnedEnt(ent)
+
+	table.insert(spawnedEnts, ent)
+
+end
 
 
 
-if (IsValid(computer)) then --attempt to get it now
+
+
+--hooks galore BEGIN
+
+hook.Add("PlayerDeath", "HK_PLYDIE", function(ply, model, entity) --for anti-noclip
+	bNoclip = false
+
+end)
+
+hook.Add("OnCleanup", "HK_CLEANUP", function(ply, model, entity) --to fix the soundscapes.
+	local soundscapesNormal = ents.FindByName("tproom_soundscape0")
+	for i = 1, table.maxn(soundscapesNormal), 1 do
+	
+		if (!IsValid(soundscapesNormal[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesNormal reference was nil!") break end
+	
+	end
+	
+	if (bBad) then return end
+	
+	for i = 1, table.maxn(soundscapesNormal), 1 do
+	
+		soundscapesNormal[i]:Fire("Disable")
+	
+	end
+	
+	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
+	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
+	
+	
+	soundscapeWeird:Fire("Enable")			
+	
+end)
+
+hook.Add("PlayerSpawnedEffect", "HK_SPAWNEDEFFECT", function(ply, model, entity) 
+	if (bCompDone) then return end --by that point, we'll just prevent them from spawing anything at all.
+
+	catalogueSpawnedEnt(entity)
+	
+end)
+
+hook.Add("PlayerSpawnedNPC", "HK_SPAWNEDNPC", function(ply, ent) 
+	if (bCompDone) then return end --by that point, we'll just prevent them from spawing anything at all.
+
+	catalogueSpawnedEnt(ent)
+	
+end)
+
+hook.Add("PlayerSpawnedProp", "HK_SPAWNEDPROP", function(ply, model, entity) 
+	if (bCompDone) then return end --by that point, we'll just prevent them from spawing anything at all.
+
+	catalogueSpawnedEnt(entity)
+	
+end)
+
+hook.Add("PlayerSpawnedRagdoll", "HK_SPAWNEDDOLL", function(ply, model, ent) 
+	if (bCompDone) then return end --by that point, we'll just prevent them from spawing anything at all.
+
+	catalogueSpawnedEnt(ent)
+	
+end)
+
+hook.Add("PlayerSpawnedSENT", "HK_SPAWNEDSENT", function(ply, ent) 
+	if (bCompDone) then return end --by that point, we'll just prevent them from spawing anything at all.
+
+	catalogueSpawnedEnt(ent)
+	
+end)
+
+hook.Add("WeaponEquip", "HK_GOTWEAPON", function(weapon, owner) 
+	if (!bCompDone) then return end
+	
+	local sparker = ents.Create("env_spark")		
+	if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
+	
+	
+	sparker:SetKeyValue("Magnitude", "5")
+	sparker:SetKeyValue("TrailLength", "3")
+	sparker:SetPos(owner:GetPos())
+	sparker:Fire("SparkOnce")
+	sound.Play("teleport0", owner:GetPos())		
+	
+	weapon:Remove()
+	
+	sparker:Fire("Kill")
+	
+end)
+
+hook.Add("PlayerSpawnedVehicle", "HK_SPAWNEDCAR", function(ply, ent) 
+	if (bCompDone) then return end--by that point, we'll just prevent them from spawing anything at all.
+
+	catalogueSpawnedEnt(ent)
+	
+end)
+
+hook.Add("PlayerSpawnEffect", "HK_SPAWNEFFECT", function(ply, model) 
+	if (!bCompDone) then return true end --by that point, we'll just prevent them from spawing anything at all.
+
+	return false
+	
+end)
+
+hook.Add("PlayerSpawnNPC", "HK_SPAWNNPC", function(ply, npc_type, weapon) 
+	if (!bCompDone) then return true end --by that point, we'll just prevent them from spawing anything at all.
+
+	return false
+end)
+
+hook.Add("PlayerSpawnProp", "HK_SPAWNPROP", function(ply, model) 
+	if (!bCompDone) then return true end --by that point, we'll just prevent them from spawing anything at all.
+
+	return false
+end)
+
+hook.Add("PlayerSpawnRagdoll", "HK_SPAWNDOLL", function(ply, model) 
+	if (!bCompDone) then return true end --by that point, we'll just prevent them from spawing anything at all.
+
+	return false
+end)
+
+hook.Add("PlayerSpawnSENT", "HK_SPAWNSENT", function(ply, class) 
+	if (!bCompDone) then return true end --by that point, we'll just prevent them from spawing anything at all.
+
+	return false
+end)
+
+hook.Add("PlayerSpawnVehicle", "HK_SPAWNCAR", function(ply, model, name, table) 
+	if (!bCompDone) then return true end --by that point, we'll just prevent them from spawing anything at all.
+
+	return false
+end)
+
+hook.Add("EntityRemoved", "HK_REMOVEDENT", function(ent) 
+	if (bCompDone) then return end
+	
+	for i = 1, table.maxn(spawnedEnts), 1 do
+		if spawnedEnts[i] == ent then
+			table.remove(spawnedEnts, i)
+			break
+		end
+	end
+end)
+
+function purgeEnts()
+	
+	
+	if (!table.IsEmpty(spawnedEnts)) then --if spawnedents is empty, commit unalive
+	
+		for i = 1, table.maxn(spawnedEnts), 1 do
+			local sparker = ents.Create("env_spark")
+			if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
+			
+			sparker:SetKeyValue("Magnitude", "5")
+			sparker:SetKeyValue("TrailLength", "3")
+			sparker:SetPos(spawnedEnts[i]:GetPos())
+			sparker:Fire("SparkOnce")
+			sound.Play("teleport0", spawnedEnts[i]:GetPos())
+			
+			--clean up fx
+			spawnedEnts[i]:Remove()
+			sparker:Fire("Kill")
+		end
+	end
+
+	local plyWpns = Entity(1):GetWeapons()
+
+	if (!table.IsEmpty(plyWpns)) then --if spawnedents is empty, commit unalive
+
+		local sparker = ents.Create("env_spark")
+		if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
+		
+		sparker:SetKeyValue("Magnitude", "5")
+		sparker:SetKeyValue("TrailLength", "3")
+		sparker:SetPos(Entity(1):GetPos())
+		sparker:Fire("SparkOnce")
+		sound.Play("teleport0", Entity(1):GetPos())
+		
+		Entity(1):StripWeapons()
+		
+		sparker:Fire("Kill")
+	end
+
+end
+
+
+--hooks galore END
+
+
+
+
+
+
+
+
+
+
+
+if (IsValid(computer)) then --attempt to get it now, keep in mind this is more for when you clean up while on the level, otherwise its handled more so by the callback.
 
 	computerPos = computer:GetPos()
 end
 
-
-file.CreateDir("gunman/inbox") --create us our inbox
+file.CreateDir("gunman/inbox") --create us our inbox for the letters.
 
 sound.Add({ --actually overwrites a default error entry, lol!
 
@@ -296,7 +518,6 @@ sound.Add({ --this way! --these might need adjusted..
 	name = "overhere0",
 	channel = CHAN_VOICE,
 	volume = 5,
-	level = SNDLVL_300dB,
 	pitch = 100,
 	sound = "gunman/club/puz/vo/thisway.wav"
 
@@ -308,7 +529,6 @@ sound.Add({ --up here!
 	name = "overhere1",
 	channel = CHAN_VOICE,
 	volume = 5,
-	level = SNDLVL_300dB,
 	pitch = 100,
 	sound = "gcsfx/city04/vo/gunman/scene02/line1.wav"
 
@@ -327,29 +547,34 @@ sound.Add({ --up here!
 
 })
 
+--chat processing START
 
-local nSeq = 0 
-local bProcessing = false 
-local bCredentials = false 
-local bQuestions = false 
+--we need our sensitive vars to be local to protect from tampering
+local nSeq = 0 --keeps track of what we're entering in. example: an nSeq of 1 during the credentials stage (bCredentials is true, bQuestions is false) means we just typed in our username.
+local bProcessing = false --keeps us from flooding the computer.
+local bCredentials = false
+local bQuestions = false
+
+--holds our answers and credentials
 local user = nil
 local pass = nil
 local a1 = nil
 local a2 = nil
 local a3 = nil
-local bNearTeleport = false
-local bCompDone = false
-local bDisableNoclip = false
+--chat processing END
 
-function closeEnoughToType(ply)	
+local bNearTeleport = false -- are we near the teleporter?
+local bFinished = false --keeps track of whether or not we finished the puzzle
+
+function closeEnoughToType(ply) --check that the player who sent the message is close enough to type.
 	local dist = computerPos:DistToSqr(ply:GetPos()) / 10000
 	
-	if (dist >= 2.0) then return false end
+	if (dist >= 2.0) then return false end -- if the distance is greater than 2, fuck em
 	
 	
-return true end
+return true end --otherwise they're free to go
 
-hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat) 
+hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat) --hook into the chat system for input to the computer.
 	if (bProcessing) then return end
 	if (!bCredentials and !bQuestions) then return end
 	if (!closeEnoughToType(sender)) then return end
@@ -360,53 +585,35 @@ hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat)
 	
 	
 	
-	if (bCredentials) then
-		nSeq = nSeq + 1 
-		if (nSeq == 1) then
+	if (bCredentials) then --if we're checking for credentials right now,
+		nSeq = nSeq + 1  --increment what sequence we're on (we'll start on 0, so this will make it 1)
+		if (nSeq == 1) then --if its 1, then this message sent was the username
 			user = text
-		else if (nSeq == 2) then
-			pass = text
+		elseif (nSeq == 2) then
+			pass = text --if its 2, then this message sent was the password
 		else
-			nSeq = 0
+			nSeq = 0 --somehow we fucked it, reset
 		end
 		
-		if (nSeq == 2) then
-			nSeq = 0
+		if (nSeq == 2) then --if seg is 2, then we just set the password, so we have everything we need. now check it.
+			nSeq = 0 --reset it
 			bProcessing = true
 			sound.Play("enter", computerPos)
+			timer.Simple(2, function() 
+				sound.Play("loading", computerPos)
 				timer.Simple(2, function() 
-					sound.Play("loading", computerPos)
-					timer.Simple(2, function() 
-						if (processCredentials(user, pass)) then
-							bCredentials = false
-							bQuestions = true
-							login()
-							timer.Simple(9, function() 
-								sound.Play("loading", computerPos)
-							
-								timer.Simple(1, function() 
-									createNETmail1() --send daily news
-									timer.Simple(3, function() 
-										sound.Play("loading", computerPos)
-									
-										timer.Simple(1, function() 
-											createNETmail2() --send instructions for questions
-											
-											
-											timer.Simple(2, function() bProcessing = false end)
-										
-										end)
-									end)
-								end)
-							end)
-						else
-							bProcessing = false
-							user = nil --reset the creds
-							pass = nil
-						end
-					end)
+					if (processCredentials(user, pass)) then --were they right?
+						bCredentials = false -- they're right, so we're no longer looking for creds,
+						bQuestions = true --now we're looking for answers.
+						login() --do the sequence that leads to asking questions.
+					else --no? fuck em then
+						bProcessing = false --set processing to false so we can send it messages again.
+						user = nil --reset the creds
+						pass = nil
+						bDisableNoclip = false
+					end
 				end)
-			end
+			end)
 		end
 	elseif (bQuestions) then
 		nSeq = nSeq + 1 
@@ -423,7 +630,13 @@ hook.Add("PlayerSay", "HK_CHAT", function(sender, text, teamChat)
 		
 		if (nSeq == 3) then
 			bProcessing = true
-			nSeq = 0			
+			nSeq = 0
+			if (bNoclip) then
+				print("noclip was true!")
+				Entity(1):Kill()
+			end
+			bDisableNoclip = true --this needs to be RIGHT here. this will keep the player from starting the timer then running off over to the parkour area. 
+						
 			timer.Simple(2, function() 
 				sound.Play("loading", computerPos)
 				timer.Simple(2, function() 
@@ -486,15 +699,11 @@ function init(newValue)
 		
 	bCanPress = true
 	
-	
-	cvars.AddChangeCallback("noclip", function(convar, oldValue, newValue) 
-		print("checking for bDisableNoclip")
-		if (!bDisableNoclip) then return end
+	hook.Add( "PlayerNoClip", "HK_NOCLIP", function( ply, desiredNoClipState )
 		
-		GetConVar("noclip"):Revert()
-		print("noclip call")
+		if (!bDisableNoclip) then bNoclip = desiredNoClipState return true end--if disablenoclip is false, then return this function with a value of true, allowing us to noclip.
+		return false--otherwise, if its true, then return this function with a value of false, disallowing us to noclip.
 	end)
-
 end
 
 --entry point end
@@ -539,16 +748,14 @@ function computerPressed() --let us fax on over that succulent information.
 	end)
 end
 
-function verify() --finally, the end!
-
-	bDisableNoclip = true
+function verify() --finally, the end! begins the final sequence where justinpc explodes and the parkour area begins.
 
 	local bBad = false
 
-	bCanPress = false
+	bCanPress = false -- i dont think we should still be able to use the pc anymore
 
 	
-	
+	--get our plural references and check them out
 	if (bBad) then return end
 	
 	local smoke2 = ents.FindByName("compsmok2")
@@ -653,12 +860,13 @@ function verify() --finally, the end!
 	local heat = ents.FindByName("compheat")[1]
 	if (!IsValid(heat)) then print("GUNMAN: ~ERROR~ heat reference was nil!") return end
 	
-	local smoke1Sound = CreateSound(soundPositions[1], "smoking") -- at heat entity
-	local smoke2Sound = CreateSound(soundPositions[2], "smoking2") -- at heat entity
-	local smoke3Sound = CreateSound(soundPositions[3], "smoking3") -- at heat entity
+	local smoke1Sound = CreateSound(soundPositions[1], "smoking")
+	local smoke2Sound = CreateSound(soundPositions[2], "smoking2")
+	local smoke3Sound = CreateSound(soundPositions[3], "smoking3") 
 	
 	local fireSound = CreateSound(soundPositions[4], "fire")
 	
+	--get our singular references then check them out
 	local compAmb = ents.FindByName("compsnd")[1]
 	if (!IsValid(compAmb)) then print("GUNMAN: ~ERROR~ compAmb reference was nil!") return end
 
@@ -856,14 +1064,31 @@ function verify() --finally, the end!
 
 end
 
-function login()
+function login() --send them the netmail about security questions
 	
 	sound.Play("login", computerPos)
 	PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Hello, and welcome back spaceconfederate2000, to Hyper-Cast™!")
+	timer.Simple(9, function() 
+		sound.Play("loading", computerPos)
+		timer.Simple(1, function() 
+			createNETmail1() --send daily news
+			timer.Simple(3, function() 
+				sound.Play("loading", computerPos)
+			
+				timer.Simple(1, function() 
+					createNETmail2() --send instructions for questions
+					
+					
+					timer.Simple(2, function() bProcessing = false end)
+				
+				end)
+			end)
+		end)
+	end)
 
 end
 
-function netMailNotify()
+function netMailNotify() --notify the player about an incoming netmail
 	sound.Play("mailSent", computerPos)
 	PrintMessage(HUD_PRINTTALK, "Hyper-Cast has sent you a NETmail in your 'garrysmod/data/gunman/inbox/' folder!")
 end
@@ -903,7 +1128,7 @@ function createFooter(fileHandle)
 end
 
 
-function createNETmail0() --creates the NETmail from hyper-cast regarding your request.
+function createNETmail0() --creates the NETmail from hyper-cast regarding your request, gives instructions on logging in.
 
 	
 
@@ -933,6 +1158,7 @@ function createNETmail0() --creates the NETmail from hyper-cast regarding your r
 	
 	msg:Write("\n\n\nThen once you've logged in, we'll ask you only a few security questions.")
 	
+	msg:Write("\n\n\n\nPlease note that we do not support capitalized characters, nor spaces. \nUsernames and passwords may contain numerical values.")
 	
 	msg:Write("\n\nAfter that, we'll evaluate your request for passage.")
 		
@@ -1073,7 +1299,7 @@ function createNETmail1() --a daily news article for the player to read some lor
 	
 end
 
-function createNETmail2() --the security questions
+function createNETmail2() --letter containing the security questions
 
 	local page = file.Open("gunman/inbox/HYper-caST Verify Identity.txt", "w", "DATA")
 	
@@ -1103,6 +1329,8 @@ function createNETmail2() --the security questions
 	page:Write("\n\n2.	'I DEMAND AN INVESTIGATION, BY A NEUTRAL PARTY; OF ALL RECORDS RELATED TO THE INFESTATION, INCLUDING A COMPLETE REVIEW OF DOCUMENTS I BELIEVE UNLAWFULLY SURPRESSED BY THE DEPARTMENT OF COLONISATION!' were some of the words of what man?")
 	
 	page:Write("\n\n3.	What was the name of the original modification of Quake that would later become Gunman Chronicles?")
+	
+	page:Write("\n\n\n\nAnswers should be properly capitalized.")
 	
 	page:Write("\n\n\n\nWe're waiting to hear back from you!")
 	
@@ -1148,7 +1376,7 @@ function processAnswers(ans1, ans2, ans3)
 return true end
 
 
-function complain(issue)
+function complain(issue) --generic function for complaining about different answer, credential, and letter related issues.
 	if (issue == 0) then
 		PrintMessage(HUD_PRINTTALK, "Hyper-Cast: Sorry, but the NETmail was detected as corrupted. Resending.")
 	elseif (issue == 1) then
@@ -1177,72 +1405,6 @@ function complain(issue)
 	
 	sound.Play("error", computerPos) --play that lovely 98 error sound
 	
-end
-
-function isNearTeleport()
-	if (!bCompDone) then return end
-	
-	local bBad = false
-	
-	local tpPos = ents.FindByName("exit")[1]
-	if (!IsValid(tpPos)) then print("GUNMAN: ~ERROR~ tpPos reference was nil!") return end
-	
-	sound.Play("overhere1", tpPos:GetPos())
-	
-	local soundscapeNormal = ents.FindByName("tproom_soundscape0")[1]
-	if (!IsValid(soundscapeNormal)) then print("GUNMAN: ~ERROR~ soundscapeNormal reference was nil!") return end
-	
-	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
-	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
-	
-	soundscapeNormal:Fire("Disable")
-	
-	soundscapeWeird:Fire("Enable")
-	
-	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
-	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
-	
-	local tpLites = ents.FindByName("tplite")
-	for i = 1, table.maxn(tpLites), 1 do
-	
-		if (!IsValid(tpLites[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpLites reference was nil!") break end
-	
-	end	
-	
-	local tpAmbs = ents.FindByName("tpamb")
-	for i = 1, table.maxn(tpLites), 1 do
-	
-		if (!IsValid(tpLites[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpLites reference was nil!") break end
-	
-	end	
-	
-	local tpGlows = ents.FindByName("tpglow")
-	for i = 1, table.maxn(tpGlows), 1 do
-	
-		if (!IsValid(tpGlows[i])) then bBad = true print("GUNMAN: ~ERROR~ a tpGlows reference was nil!") break end
-	
-	end		
-
-	if (bBad) then return end
-	
-	for i = 1, table.maxn(tpLites), 1 do
-		
-		tpLites[i]:Fire("TurnOn")
-		tpLites[i]:Fire("ShowSprite")
-	
-	end
-	
-	for i = 1, table.maxn(tpGlows), 1 do
-		
-		tpGlows[i]:Fire("ShowSprite")
-	
-	end
-	
-	for i = 1, table.maxn(tpAmbs), 1 do
-		
-		tpAmbs[i]:Fire("PlaySound")
-	
-	end
 end
 
 sound.Add({
@@ -1278,19 +1440,21 @@ sound.Add({
 
 })
 
-
 local bLegit = false
 
-function completedParkour()
+function completedParkour() --keep the player from entering the portal prematurely. GLOBAL
 	if (!bCompDone) then return end
 	bLegit = true
 
 end
 
-local guardOldPos
 
-function createTeleport()
+local guardOldPos --so we can teleport guardguy back to his spot
+
+function createTeleport() --acutally creates the teleporter scene. GLOBAL
 	if (!bCompDone) then return end
+	
+	purgeEnts()
 	
 	ents.FindByName("tpnear")[1]:Fire("Kill")
 	ents.FindByName("pkc")[1]:Fire("Enable")
@@ -1344,6 +1508,12 @@ function createTeleport()
 	local shake = ents.FindByName("tpshake")[1]
 	if (!IsValid(shake)) then print("GUNMAN: ~ERROR~ shake reference was nil!") return end
 	
+	local sparker = ents.FindByName("tpsparks")[1]
+	if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
+		
+	timer.Simple(1.5, function() sound.Play("overhere1", sparker:GetPos()) end)
+	sparker:Fire("StartSpark")
+	
 	shake:Fire("StartShake")
 	
 	stopAll:Fire("Enable")
@@ -1376,7 +1546,7 @@ function createTeleport()
 	local tpPos = ents.FindByName("exit")[1]
 	if (!IsValid(tpPos)) then print("GUNMAN: ~ERROR~ tpPos reference was nil!") return end
 	
-	sound.Play("overhere1", tpPos:GetPos())
+	
 	
 	local soundscapesNormal = ents.FindByName("tproom_soundscape0")
 	for i = 1, table.maxn(soundscapesNormal), 1 do
@@ -1436,7 +1606,57 @@ function createTeleport()
 
 end
 
-function teleportToReality()
+function antiCheat() --fuck them cheaters. GLOBAL
+	if (bFinished) then return end --but only if they haven't finished the puzzle yet...
+
+	local tpTo = ents.FindByName("exit")[1]
+	if (!IsValid(tpTo)) then print("GUNMAN: ~ERROR~ tpTo reference was nil!") return end
+
+	Entity(1):SetPos(tpTo:GetPos())
+
+end
+
+function endPuzzle() --the end, cleans up everything we've done to this point.
+	
+	bFinished = true
+	
+	local startAll = ents.FindByName("start")[1]
+	if (!IsValid(startAll)) then print("GUNMAN: ~ERROR~ startAll reference was nil!") return end
+
+	startAll:Fire("Enable") --resume all scripting on the map, then delete the relay.
+	startAll:Fire("Trigger")
+	startAll:Fire("Kill")
+	
+	
+	--clean up after ourselves
+	hook.Remove("PlayerSay", "HK_CHAT") 
+	hook.Remove("PlayerNoClip", "HK_NOCLIP") 
+	hook.Remove("PlayerDeath", "HK_PLYDIE") 
+	hook.Remove("OnCleanup", "HK_CLEANUP") 
+
+	
+	hook.Remove("PlayerInitialSpawn", "HK_MAPSTART") 
+	hook.Remove("PlayerSpawnedEffect", "HK_SPAWNEDEFFECT") 
+	hook.Remove("PlayerSpawnedNPC", "HK_SPAWNEDNPC") 
+	hook.Remove("PlayerSpawnedProp", "HK_SPAWNEDPROP") 
+	hook.Remove("PlayerSpawnedRagdoll", "HK_SPAWNEDDOLL") 
+	hook.Remove("WeaponEquip", "HK_GOTWEAPON") 
+	hook.Remove("PlayerSpawnedSWEP", "HK_SPAWNEDSWEP") 
+	hook.Remove("PlayerSpawnedVehicle", "HK_SPAWNEDCAR") 
+	
+	hook.Remove("EntityRemoved", "HK_REMOVEDENT") 
+	hook.Remove("PlayerSpawnEffect", "HK_SPAWNEFFECT") 
+	hook.Remove("PlayerSpawnNPC", "HK_SPAWNNPC") 
+	hook.Remove("PlayerSpawnProp", "HK_SPAWNPROP") 
+	hook.Remove("PlayerSpawnRagdoll", "HK_SPAWNDOLL") 
+	hook.Remove("PlayerSpawnSENT", "HK_SPAWNSENT") 
+	hook.Remove("PlayerSpawnVehicle", "HK_SPAWNCAR") 
+	
+	if (!table.IsEmpty(spawnedEnts)) then table.Empty(spawnedEnts) end --empty our catalogue of spawned stuff
+	
+end
+
+function teleportToReality() --teleport us back to the main map. also resets all the stuff the puzzles had done to the map and gets rid of the teleporter scene. GLOBAL
 	if (!bCompDone) then return end
 	
 	local bBad = false
@@ -1455,13 +1675,13 @@ function teleportToReality()
 	
 	if (bBad) then return end
 	
-	for i = 1, table.maxn(steps), 1 do
+	for i = 1, table.maxn(steps), 1 do --potential issue here, if the player swings by the parkour section fast enough and teleports in then back whle the steps are still opening, then this will cause their moving sound to loop forever.
 	
 		steps[i]:Fire("Kill")
 	
 	end	
 	
-	local guard = ents.FindByName("guardguy")[1]
+	local guard = ents.FindByName("guardguy")[1] --get a ref to guardguy so we can tp him back in
 	if (!IsValid(guard)) then print("GUNMAN: ~ERROR~ guard reference was nil!") return end
 	
 	guard:SetPos(guardOldPos)
@@ -1505,7 +1725,7 @@ function teleportToReality()
 	
 	end
 	
-	local soundscapesNormal = ents.FindByName("tproom_soundscape0")
+	local soundscapesNormal = ents.FindByName("tproom_soundscape0") --normal soundscape noises is the real shit
 	for i = 1, table.maxn(soundscapesNormal), 1 do
 	
 		if (!IsValid(soundscapesNormal[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesNormal reference was nil!") break end
@@ -1520,7 +1740,7 @@ function teleportToReality()
 	
 	end
 	
-	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
+	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1] --fuck all the weird soundscape noises.
 	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
 	
 	soundscapeWeird:Fire("Disable")	
@@ -1530,20 +1750,11 @@ function teleportToReality()
 
 	stopClub:Fire("Trigger")
 	
-	local startAll = ents.FindByName("start")[1]
-	if (!IsValid(startAll)) then print("GUNMAN: ~ERROR~ startAll reference was nil!") return end
-
-	startAll:Fire("Enable")
-	startAll:Fire("Trigger")
-	startAll:Fire("Kill")
-	
 	local tpTo = ents.FindByName("exit")[1]
 	if (!IsValid(tpTo)) then print("GUNMAN: ~ERROR~ tpTo reference was nil!") return end
 	
-	
-	local dest = tpTo:GetPos()
-	Entity(1):SetPos(dest)
-	Entity(1):ScreenFade(SCREENFADE.IN, color_white, 0.65, 1.0)
+	Entity(1):SetPos(tpTo:GetPos()) --tp us to the exit point
+	Entity(1):ScreenFade(SCREENFADE.IN, color_white, 0.65, 1.0) --flash our screen
 	shake:Fire("StartShake")
 	
 	sparker0:Fire("SparkOnce")
@@ -1578,8 +1789,15 @@ function teleportToReality()
 
 end
 
-function teleportToDankRoom()
+function teleportToDankRoom() --teleport us to the secret rave club. GLOBAL
 	if (!bCompDone or !bLegit) then return end
+	
+	local sparker = ents.FindByName("tpsparks")[1]
+	if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
+	
+	sparker:Fire("StopSpark")
+	
+	endPuzzle() --its over, you did it! 
 	
 	local tpTo = ents.FindByName("entry")[1]
 	if (!IsValid(tpTo)) then print("GUNMAN: ~ERROR~ tpTo reference was nil!") return end
