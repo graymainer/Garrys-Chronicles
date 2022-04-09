@@ -3,7 +3,7 @@
 
 -- file.CreateDir("gunman")
 
-function gunmanChangeMap(newMap)
+function gunmanLoadMap(newMap)
 	
 	local newMapStr = tostring(newMap)
 	if (newMapStr == nil or newMapStr == "" or newMapStr == " ") then print("GUNMAN: ~ERROR~ Map loader failed, couldn't get a string from value or value is invalid.") return end
