@@ -288,9 +288,9 @@ end
 
 file.CreateDir("gunman/inbox") --create us our inbox for the letters.
 
-sound.Add({ --actually overwrites a default error entry, lol!
+sound.Add({ --this actually overwrote a default error entry called "error", lol!
 
-	name = "error",
+	name = "compError",
 	channel = CHAN_VOICE,
 	volume = 1,
 	pitch = 100,
@@ -1403,7 +1403,7 @@ function complain(issue) --generic function for complaining about different answ
 		print("complain() recieved an unknown complaint.")
 	end
 	
-	sound.Play("error", computerPos) --play that lovely 98 error sound
+	sound.Play("compError", computerPos) --play that lovely 98 error sound
 	
 end
 
