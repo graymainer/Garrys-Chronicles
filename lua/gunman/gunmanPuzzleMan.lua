@@ -1606,14 +1606,31 @@ function createTeleport() --acutally creates the teleporter scene. GLOBAL
 
 end
 
-function antiCheat() --fuck them cheaters. GLOBAL
+function antiCheat() --fuck them cheaters.
 	if (bFinished) then return end --but only if they haven't finished the puzzle yet...
 
 	local tpTo = ents.FindByName("exit")[1]
 	if (!IsValid(tpTo)) then print("GUNMAN: ~ERROR~ tpTo reference was nil!") return end
 
+
+	local sparker = ents.FindByName("entrysparks")[1]
+	if (!IsValid(sparker)) then print("GUNMAN: ~ERROR~ sparker reference was nil!") return end
+	
+	local shake = ents.FindByName("tpshake")[1]
+	if (!IsValid(shake)) then print("GUNMAN: ~ERROR~ shake reference was nil!") return end
+	
+	shake:Fire("StartShake")
+	sparker:Fire("SparkOnce")
+	sparker:Fire("SparkOnce")
+	sparker:Fire("SparkOnce")
+	sparker:Fire("SparkOnce")
+	sparker:Fire("SparkOnce")
+	
+	Entity(1):ScreenFade(SCREENFADE.IN, color_white, 0.65, 1.0) --flash our screen
 	Entity(1):SetPos(tpTo:GetPos())
 
+	CreateSound(Entity(1), "teleport1"):Play()
+	timer.Simple(1, function() CreateSound(Entity(1), "teleport_thunder"):Play() end)
 end
 
 function endPuzzle() --the end, cleans up everything we've done to this point.
