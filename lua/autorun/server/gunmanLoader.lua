@@ -41,3 +41,4 @@ sound.Add( {
 include("gunman/gunmanPuzzleMan.lua")
 --include("gunman/soundLib.lua")
 
+include("gunman/gunmanMapLoader.lua")
