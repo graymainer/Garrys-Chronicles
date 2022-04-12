@@ -1,0 +1,191 @@
+// GUNMAN CHRONICLES SENTENCES -- Max of 1023 sentences. -- GCTGM
+//The sentence speech system allows us to bring back the sweet mouth animation system from goldsrc. It also pauses the sound when the game pauses, which is a nice bonus.
+
+
+//briefing scene
+GNMN_BRIEF1 gcsfx/vo/city03/briefing/line1 {Len 23.412}
+GNMN_BRIEF2 gcsfx/vo/city03/briefing/line2 {Len 1.315}
+GNMN_BRIEF3 gcsfx/vo/city03/briefing/line3 {Len 22.378}
+GNMN_BRIEF4 gcsfx/vo/city03/briefing/line4 {Len 0.843}
+GNMN_BRIEF5 gcsfx/vo/city03/briefing/line5 {Len 4.45}
+
+GNMN_BRIEF gcsfx/vo/city03/briefing/ (v100) line1 line2 line3 line4 line5 {Len 55.5}
+
+//guard at forcefield gate
+GNMN_GUARD gcsfx/vo/city03/gateguard/line {Len 2.183}
+GNMN_GUARD_USE gcsfx/vo/city03/gateguard/nag {Len 1.13}
+
+//dude fixing the computer. i think its a computer
+GNMN_ENGINEER gcsfx/vo/city03/repairguy/line {Len 4.226}
+GNMN_ENGINEER_USE gcsfx/vo/city03/repairguy/nag {Len 2.725}
+GNMN_ENGINEER_CALLOUT0 gunman/club/puz/vo/woah0 {Len 1.00}
+GNMN_ENGINEER_CALLOUT1 gunman/club/puz/vo/woah1 {Len 1.00}
+GNMN_ENGINEER_CALLOUT2 gunman/club/puz/vo/youcrazy {Len 1.00}
+GNMN_ENGINEER_CALLOUT3 gunman/club/puz/vo/thatsit {Len 1.00}
+
+//dont forget your armor
+GNMN_ARMOR1 gcsfx/vo/gunman/armor1 {Len 2.214}
+GNMN_ARMOR2 gcsfx/vo/gunman/armor2 {Len 3.523}
+GNMN_ARMOR3 gcsfx/vo/gunman/armor3 {Len 2.797}
+GNMN_ARMOR4 gcsfx/vo/gunman/armor4 {Len 2.079}
+GNMN_ARMOR5 gcsfx/vo/gunman/armor5 {Len 1.557}
+
+//mouseship crash sequence and the critically acclaimed subtle tutorial that follows
+GNMN_CRASH1 gcsfx/city04/vo/gunman/scene01/line1 {Len 4.812}
+GNMN_CRASH2 gcsfx/city04/vo/gunman/scene01/line2 {Len 2.577}
+GNMN_CRASH3 gcsfx/city04/vo/gunman/scene01/line3 {Len 2.421} //DUUHHHHH.... REALLYYY?
+GNMN_CRASH4 gcsfx/city04/vo/gunman/scene01/line4 {Len 0.528}
+GNMN_CRASH5 gcsfx/city04/vo/gunman/scene01/line5 {Len 2.844} //ARCHER NO UNDERSTAND
+GNMN_CRASH6 gcsfx/city04/vo/gunman/scene01/line6 {Len 1.846} //ARCHER JUMP? OOOHH ARCHER JUMP!
+GNMN_CRASH7 gcsfx/city04/vo/gunman/scene01/line7 {Len 3.733} //oh fucking really?
+GNMN_CRASH8 gcsfx/city04/vo/gunman/scene01/line8 {Len 0.557} 
+GNMN_CRASH9 gcsfx/city04/vo/gunman/scene01/line9 {Len 4.598}
+GNMN_CRASH10 gcsfx/city04/vo/gunman/scene01/line10 {Len 0.684} //GOOD ARCHER...
+
+//ladder and falling sequences that insue
+GNMN_LADDER1 gcsfx/city04/vo/gunman/scene02/line1 {Len 1.509}
+GNMN_LADDER2 gcsfx/city04/vo/gunman/scene02/line2 {Len 4.429}
+GNMN_LADDER3 gcsfx/city04/vo/gunman/scene02/line3 {Len 3.006}
+GNMN_LADDER4 gcsfx/city04/vo/gunman/scene02/line4 {Len 1.956}
+GNMN_LADDER5 gcsfx/city04/vo/gunman/scene02/line5 {Len 5.201}
+GNMN_LADDER6 gcsfx/city04/vo/gunman/scene02/line6 {Len 0.734}
+GNMN_LADDER7 gcsfx/city04/vo/gunman/scene02/line7 {Len 8.684}
+GNMN_LADDER8 gcsfx/city04/vo/gunman/scene02/line8 {Len 0.768} //first time anyone said that to me
+
+//vacuum sequence where jones, the greatest mind of our generation, gets sucked out into space and fucking dies
+GNMN_VACUUM_JONES gcsfx/city04/vo/gunman/scene03/jones_death {Len 5.689}
+GNMN_VACUUM1 gcsfx/city04/vo/gunman/scene03/line1 {Len 8.429}
+GNMN_VACUUM2 gcsfx/city04/vo/gunman/scene03/line2 {Len 4.017}
+GNMN_VACUUM_USE gcsfx/city04/vo/gunman/scene03/nag {Len 5.695}
+
+//box blockade sequence. why did he even block this hallway off? where did it even lead to? oh fuck it, who cares
+GNMN_BOXES1 gcsfx/city04/vo/gunman/scene04/line1 {Len 5.654}
+GNMN_BOXES2 gcsfx/city04/vo/gunman/scene04/line2 {Len 10.008}
+GNMN_BOXES3 gcsfx/city04/vo/gunman/scene04/expln {Len 5.259} //half-life parkour mfs be like
+GNMN_BOXES_USE gcsfx/city04/vo/gunman/scene04/nag {Len 2.194}
+
+//obligatory flashlight tutorial.
+GNMN_FUSES gcsfx/city05/vo/gunman/fuses {Len 4.778}
+GNMN_FUSES_FALL gcsfx/city05/vo/gunman/fuses_fail {Len 2.003} //in case you suck
+
+
+
+//TRAINING COURSE
+
+
+
+
+//FIRING RANGE
+
+
+//archer bad
+GNMN_TRAINING_COMMENTS_BAD1 gcsfx/city05/vo/gunman/baboon (v125) {Len 2.844} //ok, you dont have to be an ASS about it. sorry i've only logged a few couple hundred hours in ut99 and not my whole life..
+GNMN_TRAINING_COMMENTS_BAD2 gcsfx/city05/vo/gunman/tryagain (v125) {Len 1.695}
+
+//archer very bad
+
+GNMN_TRAINING_COMMENTS_WRONGSETTING gcsfx/city05/vo/gunman/wrongsetting (v135) {Len 2.711}
+GNMN_TRAINING_COMMENTS_DOWNRANGE gcsfx/city05/vo/gunman/dontgodownrange (v145) {Len 3.547} //again, a major doesn't know this already?
+
+//archer good
+GNMN_TRAINING_COMMENTS_GOOD1 gcsfx/city05/vo/gunman/niceshot (v125) {Len 1.048}
+GNMN_TRAINING_COMMENTS_GOOD2 gcsfx/city05/vo/gunman/icoulda (v125) {Len 2.258} //yeah, uh-huh. shut the fuck up 
+GNMN_TRAINING_COMMENTS_GOOD3 gcsfx/city05/vo/gunman/hitem (v125) {Len 1.295}
+GNMN_TRAINING_COMMENTS_GOOD4 gcsfx/city05/vo/gunman/praise2 (v125) {Len 1.721}
+GNMN_TRAINING_COMMENTS_GOOD5 gcsfx/city05/vo/gunman/therealones (v125) {Len 2.392} // you're telling this to a MAJOR!??! I PRACTICALLY FOUNDED THESE FUCKING THINGS!
+GNMN_TRAINING_COMMENTS_GOOD6 gcsfx/city05/vo/gunman/wasntbad (v125) {Len 1.440} //wow who would've thought a major would have *not bad* aim?
+
+//idle comments
+GNMN_TRAINING_COMMENTS_IDLE1 gcsfx/city05/vo/gunman/imoverdue (v125) {Len 2.711}
+GNMN_TRAINING_COMMENTS_IDLE2 gcsfx/city05/vo/gunman/liketorelax (v125) {Len 4.981}
+
+
+
+
+//explosives training course. because we should let *archer* handle explosives. im coming up there and kicking the captain's fucking ass, hold on
+GNMN_TRAINING_EXPLOSIVES1 gcsfx/city05/vo/gunman/explosives1 {Len 7.280}
+GNMN_TRAINING_EXPLOSIVES2 gcsfx/city05/vo/gunman/explosives2 {Len 7.211}
+GNMN_TRAINING_EXPLOSIVES3 gcsfx/city05/vo/gunman/explosives3 {Len 15.801} //yeah, yeah, you go and flee. it wont help you when i find you on the battelfield.
+
+//batteybot massacre sequence, over the radio, probably because we would've blown our teacher to bits.
+GNMN_TRAINING_ROCKETS1 gcsfx/city05/vo/gunman/rocket1 {Len 10.797}
+GNMN_TRAINING_ROCKETS2 gcsfx/city05/vo/gunman/rocket2 {Len 4.493}
+GNMN_TRAINING_ROCKETS3 gcsfx/city05/vo/gunman/rocket3 {Len 7.012}
+GNMN_TRAINING_ROCKETS4 gcsfx/city05/vo/gunman/rocket4 {Len 3.163}
+GNMN_TRAINING_ROCKETS5 gcsfx/city05/vo/gunman/rocket5 {Len 4.516}
+GNMN_TRAINING_ROCKETS6 gcsfx/city05/vo/gunman/rocket6 {Len 3.982}
+GNMN_TRAINING_ROCKETS7 gcsfx/city05/vo/gunman/rocket7 {Len 1.408}
+GNMN_TRAINING_ROCKETS8 gcsfx/city05/vo/gunman/rocket8 {Len 1.776}
+GNMN_TRAINING_ROCKETS9 gcsfx/city05/vo/gunman/rocket9 {Len 1.869}
+GNMN_TRAINING_ROCKETS10 gcsfx/city05/vo/gunman/rocket10 {Len 8.220}
+
+//Hard Technology Rock begins playing as you go rogue, shoot your teacher, and drive this baby straight out the asteroi.. oh wait it doesn't fire. damn.
+GNMN_TRAINING_TANK1 gcsfx/city05/vo/gunman/tank1 (v150) {Len 11.262}
+GNMN_TRAINING_TANK2 gcsfx/city05/vo/gunman/tank2 (v150) {Len 5.851}
+GNMN_TRAINING_TANK3 gcsfx/city05/vo/gunman/tank3 (v150) {Len 5.717}
+GNMN_TRAINING_TANK4 gcsfx/city05/vo/gunman/tank4 (v150) {Len 2.844}
+GNMN_TRAINING_TANK5 gcsfx/city05/vo/gunman/tank5 (v150) {Len 2.670} //thank you, because i just love it when games tell you to press your jump key to jump. it really helps.
+GNMN_TRAINING_TANK6 gcsfx/city05/vo/gunman/tank6 (v150) {Len 7.639}
+GNMN_TRAINING_TANK7 gcsfx/city05/vo/gunman/tank7 (v150) {Len 6.676}
+GNMN_TRAINING_TANK8 gcsfx/city05/vo/gunman/tank8 (v100) {Len 3.303}
+GNMN_TRAINING_TANK9 gcsfx/city05/vo/gunman/tank9 (v100) {Len 1.225}
+
+
+
+
+//obligatory hot female automated voice.
+
+//damage instructions
+AUTOVO_TRAINING_DAMAGE1_DONE gcsfx/city05/vo/av/300dpsacheived (v150) {Len 5.923}
+AUTOVO_TRAINING_DAMAGE1 gcsfx/city05/vo/av/300dpwithintime (v150) {Len 5.747}
+AUTOVO_TRAINING_DAMAGE2_DONE gcsfx/city05/vo/av/400dpsawarded (v150) {Len 5.666} //awarded? it must be cursed....
+AUTOVO_TRAINING_DAMAGE2 gcsfx/city05/vo/av/400dps (v150) {Len 4.434}
+AUTOVO_TRAINING_DAMAGE3_DONE gcsfx/city05/vo/av/500dpsachieved (v150) {Len 6.076}
+AUTOVO_TRAINING_DAMAGE3 gcsfx/city05/vo/av/500dpswithintime (v150) {Len 5.387}
+
+//setting/mode instructions
+
+AUTOVO_TRAINING_MODE_CHARGED gcsfx/city05/vo/av/charge (v150) {Len 3.094}
+AUTOVO_TRAINING_MODE_FIREPOWER gcsfx/city05/vo/av/increasefirepower (v150) {Len 6.576}
+AUTOVO_TRAINING_MODE_SHELLCOUNT gcsfx/city05/vo/av/increaseshellcount (v150) {Len 4.447}
+AUTOVO_TRAINING_MODE_RAPIDFIRE gcsfx/city05/vo/av/rapidfire (v150) {Len 3.622}
+AUTOVO_TRAINING_MODE_PAYLOADCLUSTER gcsfx/city05/vo/av/setpayloadtocluster (v150) {Len 8.542}
+AUTOVO_TRAINING_MODE_TRIGGERTIMED gcsfx/city05/vo/av/settriggertimed (v150) {Len 10.083}
+AUTOVO_TRAINING_MODE_SNIPER gcsfx/city05/vo/av/sniper (v150) {Len 3.696}
+
+//instructions for different actions.
+AUTOVO_TRAINING_INSTRUCT_PROPPERSETTING gcsfx/city05/vo/av/propersetting (v150) {Len 4.801} //dude i swear
+AUTOVO_TRAINING_INSTRUCT_NEXT gcsfx/city05/vo/av/targetdestroyed (v150) {Len 4.110} 
+AUTOVO_TRAINING_INSTRUCT_RETURNWEAPONS gcsfx/city05/vo/av/returnweapons (v150) {Len 3.442}
+AUTOVO_TRAINING_INSTRUCT_MULEGRENADES1 gcsfx/city05/vo/av/usemuleammo (v150) {Len 13.213}
+AUTOVO_TRAINING_INSTRUCT_MULEGRENADES2 gcsfx/city05/vo/av/removenosecone (v150) {Len 7.767}
+
+//other messages
+AUTOVO_TRAINING_WELCOME1 gcsfx/city05/vo/av/welcometo (v150) {Len 4.876}
+AUTOVO_TRAINING_WELCOME2 gcsfx/city05/vo/av/welcometoexplosives (v150) {Len 6.229}
+AUTOVO_TRAINING_WELCOME3 gcsfx/city05/vo/av/welcometomechagun (v150) {Len 3.273}
+AUTOVO_TRAINING_WELCOME4 gcsfx/city05/vo/av/welcometoshotgun (v150) {Len 3.035}
+AUTOVO_TRAINING_ISSUED1 gcsfx/city05/vo/av/issuedmule (v150) {Len 8.882}
+AUTOVO_TRAINING_ISSUED2 gcsfx/city05/vo/av/issuedpistol (v150) {Len 3.564}
+
+
+
+
+
+
+
+
+//tramride voice, aka the hyper-link woman. 
+//if you're wondering why we're migrating here, its because this will stop the sound from playing when paused, instead of keeping it going and desyncing like before.
+
+TRAM_VO1 gcsfx/tramride/vo/tram_vopt1 (v150) {Len 67.605}
+TRAM_VO2 gcsfx/tramride/vo/tram_vopt2 (v150) {Len 177.162}
+
+
+
+
+
+GNMN_CLUB1 vo/npc/male01/gordead_ans19 (v100) {Len 2}
+GNMN_CLUB2 vo/npc/male01/answer28 (v100) {Len 3.5}
+
+
