@@ -1835,15 +1835,11 @@ function teleportToDankRoom() --teleport us to the secret rave club. GLOBAL
 	local startClub = ents.FindByName("club_start")[1]
 	if (!IsValid(startClub)) then print("GUNMAN: ~ERROR~ startClub reference was nil!") return end
 	
-	local endClub = ents.FindByName("club_end")[1]
-	if (!IsValid(endClub)) then print("GUNMAN: ~ERROR~ endClub reference was nil!") return end
-	
 	local crashClub = ents.FindByName("club_crash")[1]
 	if (!IsValid(crashClub)) then print("GUNMAN: ~ERROR~ crashClub reference was nil!") return end
 	
 	--enable all the managers.
 	startClub:Fire("Enable")
-	endClub:Fire("Enable")
 	crashClub:Fire("Enable")
 	
 	sparker0:Fire("SparkOnce")
