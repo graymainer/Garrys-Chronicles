@@ -1828,12 +1828,24 @@ function teleportToDankRoom() --teleport us to the secret rave club. GLOBAL
 	local shake = ents.FindByName("tpshake")[1]
 	if (!IsValid(shake)) then print("GUNMAN: ~ERROR~ shake reference was nil!") return end
 	
-	
 	local dest = tpTo:GetPos()
-	Entity(1):SetPos(dest)
 	Entity(1):ScreenFade(SCREENFADE.IN, color_white, 0.65, 1.0)
 	shake:Fire("StartShake")
 	
+	local startClub = ents.FindByName("club_start")[1]
+	if (!IsValid(startClub)) then print("GUNMAN: ~ERROR~ startClub reference was nil!") return end
+	
+	local endClub = ents.FindByName("club_end")[1]
+	if (!IsValid(endClub)) then print("GUNMAN: ~ERROR~ endClub reference was nil!") return end
+	
+	local crashClub = ents.FindByName("club_crash")[1]
+	if (!IsValid(crashClub)) then print("GUNMAN: ~ERROR~ crashClub reference was nil!") return end
+	
+	--enable all the managers.
+	startClub:Fire("Enable")
+	endClub:Fire("Enable")
+	crashClub:Fire("Enable")
+	
 	sparker0:Fire("SparkOnce")
 	sparker1:Fire("SparkOnce")
 	sparker0:Fire("SparkOnce")
@@ -1860,9 +1872,11 @@ function teleportToDankRoom() --teleport us to the secret rave club. GLOBAL
 	sparker1:Fire("SparkOnce")
 	
 	
-
+	Entity(1):SetPos(dest)
 	CreateSound(Entity(1), "teleport1"):Play()
 	timer.Simple(1, function() CreateSound(Entity(1), "teleport_thunder"):Play() end)
+	
+	
 
 end
 
