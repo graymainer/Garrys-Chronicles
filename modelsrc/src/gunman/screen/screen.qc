@@ -1,6 +1,6 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "gunman/screen001a.mdl"
+$modelname "gunman/screen.mdl"
 
 $surfaceprop "glass"
 $contents "solid"
@@ -8,14 +8,16 @@ $staticprop
 
 $illumposition 0.247 -5.787 -34.244
 
-$bodygroup "studio"
+$bodygroup "screens"
 {
 	studio "screen"
+	studio "screen_big"
+	studio "screen_broken"
 }
 
 $cdmaterials "models/gunman/screen/"
 
-$collisionmodel	"screen_phys.smd"
+$collisionmodel	"screen.smd"
 {
 	$automass
 }
