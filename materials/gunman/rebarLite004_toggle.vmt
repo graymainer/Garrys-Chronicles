@@ -1,0 +1,24 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/rebarLite004_toggle"
+	"$selfillum" 1
+	//"$selfillummask" "gunman/rebarLite004_mask" doesn't do shit on brush
+	"$surfaceprop" "glass"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "gunman/rebarLite004_mask"
+	
+	"$envmaptint" "[0.25 0.25 0.25]"
+	"%keywords" "gunman, light"
+	
+	Proxies
+	{
+	
+		ToggleTexture //frame 0 is on, 1 is off
+		{
+		
+			ToggleTextureVar				$basetexture
+			ToggleTextureFrameNumVar		$frame
+		}
+	
+	}
+}
