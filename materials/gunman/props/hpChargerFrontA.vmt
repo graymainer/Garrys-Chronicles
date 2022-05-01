@@ -1,0 +1,20 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/props/hpChargerFrontA"
+	"$surfaceprop" "Computer"
+	"$selfillum" 1
+	"%keywords" "gc, gunman"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+	
+	
+	Proxies
+	{
+		ToggleTexture //frame 0 is full, 1 is empty
+		{
+			ToggleTextureVar 				$basetexture
+			ToggleTextureFrameNumVar 		$frame
+		}
+	}
+}

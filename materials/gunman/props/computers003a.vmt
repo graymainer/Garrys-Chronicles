@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/props/computers003a"
+	"$selfillum" 1
+	"$surfaceprop" "Computer"
+	"%keywords" "gc"
+//Detail (OLD)
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+
+}

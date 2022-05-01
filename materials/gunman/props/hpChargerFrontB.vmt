@@ -1,0 +1,11 @@
+//charger empty
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/props/hpChargerFrontB"
+	"$surfaceprop" "Computer"
+	"$selfillum" 1
+	"%keywords" "gc, gunman"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+}

@@ -1,0 +1,24 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/props/computers001a"
+	"$surfaceprop" "Computer"
+	"$bumpmap" "gunman/computers001a_normal"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.15 0.15 0.15]"
+	"$selfillum" 1
+	"$normalmapalphaenvmapmask" 1
+	
+	"%keywords" "gc"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+	
+	Proxies
+	{
+		ToggleTexture //frame 0 is on, 1 is off
+		{
+			ToggleTextureVar 				$basetexture
+			ToggleTextureFrameNumVar 		$frame
+		}
+	}
+}

@@ -1,7 +1,23 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "models/gunman/gunman/body"
+	"$basetexture" 					"models/gunman/gunman/body"
+	
+	"$selfillum" 					1
+	"$selfillummask"				"models/gunman/gunman/body_illum"
+	
+	"$bumpmap" 						"models/gunman/gunman/body_n"
+	
+	//"$envmap" 						"env_cubemap"
+	//"$normalmapalphaenvmapmask" 	1
+	
+	"$phong" 					1
+	
+	"$phongexponenttexture"		"models/gunman/gunman/body_exp"
+	"$phongboost"				3
+	"$phongfresnelranges"		"[0 0.5 1]"
+	"$phongtint" "[25 2 1]"
+	
 //Detail
-	"$detail" "gctextures/detail/gcde_cloth"
-	"$detailscale" "2"
+	"$detail" 						"gctextures/detail/gcde_cloth"
+	"$detailscale" 					2
 }

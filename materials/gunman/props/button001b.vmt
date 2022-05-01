@@ -1,0 +1,21 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/props/button001b"
+	"$surfaceprop" "computer"
+	"%keywords" "gc, gunman"
+	"$selfillum" 1
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+
+	Proxies
+	{
+		ToggleTexture //frame 0 is on, 1 is off
+		{
+			ToggleTextureVar 				$basetexture
+			ToggleTextureFrameNumVar 		$frame
+		}
+	}
+
+}
+

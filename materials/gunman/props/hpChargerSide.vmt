@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/props/hpChargerSide"
+	"$surfaceprop" "metal"
+	"%keywords" "gc, gunman"
+//Detail
+	"$detail" "gctextures/detail/gcde_metal02"
+	"$detailscale" "2"
+}

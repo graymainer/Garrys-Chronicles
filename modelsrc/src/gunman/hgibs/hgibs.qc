@@ -1,11 +1,8 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "gchumangibs.mdl"
-$cd "."
-$cliptotextures
-$scale 1.0
+$modelname "gunman/humanGibs.mdl"
 
-$surfaceprop "flesh"
+$surfaceprop "zombieflesh"
 
 $bodygroup "body"
 {
@@ -25,18 +22,13 @@ $bodygroup "body"
 	studio "hgibs_humanguts2"
 }
 
-$cdmaterials "models/gchumangibs/"
+$cdmaterials "models/gunman/hgibs"
 
+$collisionmodel "hgibs_humanribs.smd" {
+	$automass
+}
 
-$cbox 0 0 0 0 0 0
-
-$bbox 0 0 0 0 0 0
-
-$hbox 0 "Box01" -12.6 -7.78 -15.83 11.43 9.46 11.81
-$hbox 0 "frame6" -6.76 -10.56 -0.21 6.06 11.15 4.34
-$hbox 0 "heart" -3.97 -10.05 -20.280001 13.96 11.99 14.63
-
-$sequence "base" {
+$sequence "idle" {
 	"hgibs_anims\base"
 	fps 30
 }

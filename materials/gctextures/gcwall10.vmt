@@ -3,6 +3,7 @@
 	"$basetexture" "gctextures/gcwall10"
 	"$surfaceprop" "Metal"
 	"%keywords" "gc"
+	"$selfillum" 1
 //Detail
 	"$detail" "gctextures/detail/gcde_metal01"
 	"$detailscale" "2"

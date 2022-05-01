@@ -14,3 +14,6 @@ include("gunman/gunmanSoundLib.lua")
 include("gunman/gunmanPuzzleMan.lua")
 
 include("gunman/gunmanMapLoader.lua")
+
+include("gunman/gunmanZeroG.lua")
+
