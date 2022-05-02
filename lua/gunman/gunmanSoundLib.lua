@@ -37,7 +37,7 @@ sound.Add( {
 	name = "NPC.Gunman_Step1",
 	channel = CHAN_BODY,
 	volume = 15,
-	level = SNDLVL_75dB, --must be set (not equal to 0) for spatialization to work. not sure what to, though...
+	level = SNDLVL_75dB, --must be set (not equal to 0) for spatialization to work.
 	pitch = {95, 105},
 	sound = 
 		{
