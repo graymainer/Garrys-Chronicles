@@ -9,12 +9,14 @@
 	"$vertexalpha" "1"
 	"%keywords" "gc"
 	"Proxies" 
-		{ 
+	{ 
 		"AnimatedTexture" 
 		{ 
 			"animatedTextureVar" "$basetexture" 
 			"animatedTextureFrameNumVar" "$frame" 
-			"animatedTextureFrameRate" "12" 
+			"animatedTextureFrameRate" "12"    
+		}
+	}
 }
 
 
