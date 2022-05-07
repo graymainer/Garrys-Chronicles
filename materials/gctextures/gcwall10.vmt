@@ -7,4 +7,15 @@
 //Detail
 	"$detail" "gctextures/detail/gcde_metal01"
 	"$detailscale" "2"
+	
+	Proxies
+	{
+	
+		ToggleTexture
+		{
+			ToggleTextureVar					$basetexture
+			ToggleTextureFrameNumVar		$frame
+		}
+	}
+
 }
