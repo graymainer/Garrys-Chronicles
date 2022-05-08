@@ -1,4 +1,4 @@
-"UnlitGeneric"
+"LightmappedGeneric"
 {
 	"$basetexture" "gctextures/gclight11"
 	"$selfillum" 1
