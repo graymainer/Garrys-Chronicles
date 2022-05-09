@@ -7,4 +7,17 @@
 	//"$detailblendmode" 6
 	"$surfaceprop" "Computer"
 	"%keywords" "gc"
+	
+	
+	Proxies
+	{
+	
+		ToggleTexture //frame 0 is on, 1 is off
+		{
+		
+			ToggleTextureVar				$basetexture
+			ToggleTextureFrameNumVar		$frame
+		}
+	
+	}
 }

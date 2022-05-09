@@ -1,7 +1,7 @@
 function makeZeroG(target) --takes in a targetname, can handle multiple ents with the same name
 	if target == nil or target == "" or target == " " then print("GUNMAN:	!ZERO-G! target was invalid")return end
 	
-	
+	print("making '" .. target .. "' run in zero g...")
 	local ent = ents.FindByName(target)	
 	
 	if istable(ent) then
