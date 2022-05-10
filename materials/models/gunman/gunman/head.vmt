@@ -1,4 +1,17 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "models/gunman/gunman/head"
+	"$basetexture" 					"models/gunman/gunman/head"
+	
+	"$bumpmap" 						"models/gunman/gunman/head_n"
+	
+	"$envmap" 						"env_cubemap"
+	"$normalmapalphaenvmapmask" 	1
+	"$envmaptint"					"[0.25 0.25 0.25]"
+	
+	"$phong" 						1
+	"$phongexponenttexture"			"models/gunman/gunman/head_e"
+	"$phongboost"					5
+	"$phongfresnelranges"			"[0 0.5 1]"
+	"$phongtint" 					"[1 1 1]"
+
 }
