@@ -2,7 +2,7 @@
 {
 	"$basetexture" "gunman/props/computers001a"
 	"$surfaceprop" "Computer"
-	"$bumpmap" "gunman/computers001a_normal"
+	"$bumpmap" "gunman/props/computers001a_normal"
 	"$envmap" "env_cubemap"
 	"$envmaptint" "[0.15 0.15 0.15]"
 	"$selfillum" 1

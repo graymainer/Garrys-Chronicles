@@ -6,9 +6,9 @@
 	
 	"$bumpmap" 						"models/gunman/gunman/arms_n"
 	
-	"$envmap" 						"env_cubemap"
-	"$normalmapalphaenvmapmask" 	1
-	"$envmaptint"					"[0.25 0.25 0.25]"
+	//"$envmap" 						"env_cubemap"
+	//"$normalmapalphaenvmapmask" 	1
+	//"$envmaptint"					"[0.25 0.25 0.25]"
 
 	
 	"$phong" 						1
