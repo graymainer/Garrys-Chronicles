@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gc_rockspin/Rock2"
-	"$bumpmap" "models/gc_rockspin/Rock2_normal"
-	"$normalmap" "models/gc_rockspin/Rock2_normal"
-}

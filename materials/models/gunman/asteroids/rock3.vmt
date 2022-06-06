@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "gctextures/gcrock01"
+	"$surfaceprop" "boulder"
+//detail
+	"$detail" "gctextures/detail/gcde_rock01"
+	"$detailscale" "4"
+}

@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gc_holopipes/chrome3"
-	"$envmap" "env_cubemap"
-	"$envmapmask" "models/gc_holopipes/chrome3_env"
-}

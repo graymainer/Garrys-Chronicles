@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gcdropship/CHROME"
-	"$envmap" "env_cubemap"
-	"$envmapmask" "models/gcdropship/CHROME_env"
-}

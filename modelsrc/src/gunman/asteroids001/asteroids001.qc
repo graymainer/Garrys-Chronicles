@@ -1,15 +1,15 @@
 $modelname "gunman/asteroids001.mdl"
 
-$model "Asteroids" "asterioids_Ref"
+$model "Asteroids" "asteroids_Ref"
 
-$cdmaterials "models/gunman/brushprops/rock/"
+$cdmaterials "models/gunman/asteroids/"
 
 $contents "solid"
 $surfaceprop "boulder"
 
 $staticprop
 
-$collisionmodel "asterioids_Ref" {
+$collisionmodel "asteroids_Ref" {
 
 	$automass
 	$concave
@@ -18,6 +18,6 @@ $collisionmodel "asterioids_Ref" {
 }
 
 $sequence "idle" {
-	"asterioids_Ref"
+	"asteroids_Ref"
 	fps 30
 }

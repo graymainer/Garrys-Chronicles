@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/gunman/asteroids/Rock2_d"
+	"$bumpmap" "models/gunman/asteroids/Rock2_n"
+}

@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/gunman/human_gibs/Head"
+	"$bumpmap" 					"models/gunman/human_gibs/Head_n"
+	
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	
+	"$phong" 					1
+	
+	"$phongexponenttexture"		"models/gunman/human_gibs/Head_exp"
+	"$phongboost"				3
+	"$phongfresnelranges"		"[0 0.5 1]"
+	"$phongtint" "[25 2 1]"
+}

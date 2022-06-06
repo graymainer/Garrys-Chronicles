@@ -1,9 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gc_asteroid/ROCK"
-	"$bumpmap" "models/gc_asteroid/ROCK_normal"
-	"$normalmap" "models/gc_asteroid/ROCK_normal"
-//Detail
-	"$detail" "gctextures/detail/gcde_rock01"
-	"$detailscale" "2"
-}

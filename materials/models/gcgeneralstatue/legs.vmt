@@ -1,8 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gcgeneralstatue/legs"
-	"$surfaceprop" "Concrete"
-//Detail
-	"$detail" "gctextures/detail/gcde_rock01"
-	"$detailscale" "2"
-}

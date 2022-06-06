@@ -1,7 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gcradar01/support"
-//Detail
-	"$detail" "gctextures/detail/gcde_metal01"
-	"$detailscale" "2"
-}
