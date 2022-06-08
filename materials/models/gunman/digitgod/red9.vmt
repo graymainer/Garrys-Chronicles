@@ -1,4 +1,4 @@
-"VertexlitGeneric"
+"UnlitGeneric"
 {
 	"$basetexture" "models/gunman/digitgod/red9"
 	"$selfillum" 1
