@@ -86,11 +86,11 @@
 ]
 --]]
 
-//clean this shit up, find out what functions we do and dont need.
-//fix up the functions that still use us references. 
-	//Functions are singular, they do not copy across entites, 	
-		//that or we fucked things up (possibly that they call functions that aren't prefixed with ENT:, 
-			//in such case they dont copy) either way we need functions to use a passed ent ref.
+--clean this shit up, find out what functions we do and dont need.
+--fix up the functions that still use us references. 
+	--Functions are singular, they do not copy across entites, 	
+		--that or we fucked things up (possibly that they call functions that aren't prefixed with ENT:, 
+			--in such case they dont copy) either way we need functions to use a passed ent ref.
 
 
 AddCSLuaFile()
