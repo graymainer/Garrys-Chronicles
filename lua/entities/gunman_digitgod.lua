@@ -1,10 +1,6 @@
 --[[ Here is the definition of this entity in 'hammer i/o'-speak. Paste this into an fgd and it will allow you to use create the entity in hammer.
 @PointClass base(Targetname, Parentname, Angles) studioprop() = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
 [
-	spawnflags(flags) =
-	[
-		2 : "Clear to initial value" : 0
-	]
 
 	initialvalue(integer)				: "Initial Value"	: 0	  : "The value that the counter should be set at when spawned in. \n" + "If 'Clear to initial value' is ticked, when cleared, this value will be what the counter is set back to."
 
@@ -16,7 +12,7 @@
 	
 	model(studio)						: "World Model"		: 		"models/gunman/digitgod.mdl" : "What model should this counter be represented by? \n" + "WARNING! The model MUST have at least 10 skins to represent all 10 digits. Otherwise, the model will not load and will go back to default."
 
-	sndfile(sound) 						: "Sound Name" 		: ""  : "The sound to play whenever the value changes.\n" + " Example would be making the counter make a 'ticking' sound when it increments.\n" + " Must be a .wav file. If left blank, no sound will play."
+	sound(sound) 						: "Sound Name" 		: ""  : "The sound to play whenever the value changes.\n" + " Example would be making the counter make a 'ticking' sound when it increments.\n" + " Must be a .wav file. If left blank, no sound will play."
 	
 	sndvol(integer) 					: "Sound Volume"	: 5   : "The volume to play the sound at. Only works if a sound was selected."
 	
@@ -86,11 +82,11 @@
 ]
 --]]
 
---clean this shit up, find out what functions we do and dont need.
---fix up the functions that still use us references. 
 	--Functions are singular, they do not copy across entites, 	
 		--that or we fucked things up (possibly that they call functions that aren't prefixed with ENT:, 
 			--in such case they dont copy) either way we need functions to use a passed ent ref.
+
+--this shit is doing something funky as fuck with the i/o system. and lua_run is being a bitch and not running our dgFire inputs due to size shaming. what the fuck
 
 
 AddCSLuaFile()
@@ -104,7 +100,6 @@ MAX_DIGIT_SIZE = 999
 PANEL_OFFSET = 16 --magic number. it needs to be determined based on the model's size. You could automate it, but here, we are only using the digitgod mdl which suits our purpose.
 SUPPRESS_ALL_WARNINGS = false
 
-ENT.flags = 0
 ENT.model = "models/gunman/digitgod.mdl"
 ENT.initialValue = 0
 ENT.currentValue = 0
@@ -130,6 +125,38 @@ dgAllKeys = {}
 dgAllValues = {}
 ENT.pendingInputs = {}
 
+function reset(ent) --IF ANYTHING ABOVE IS CHANGED, UPDATE THIS TO REFLECT!!!
+	ent.model = "models/gunman/digitgod.mdl"
+	ent.initialValue = 0
+	ent.currentValue = 0
+	ent.lastValue = 0
+	ent.maxValue = 0
+	ent.targetValue = 0
+	ent.milestoneValue = 0
+	ent.milestoneCounter = 0
+	ent.soundFile = nil
+	ent.soundVolume = 5
+	ent.soundPitch = 100
+	ent.us = nil
+	ent.bUseTargetVal = false
+	ent.bEnabled = true
+	ent.bDamageScale = false
+	ent.panels = {}
+	ent.keys = {}
+	ent.values = {}
+	ent.bSearchOutputs = false 
+	ent.bDone = false 
+	dgAllEnts = {}
+	dgAllKeys = {}
+	dgAllValues = {}
+	ent.pendingInputs = {}
+
+	if (CLIENT) then return end
+	for i = 1, table.maxn(ent.panels), 1 do
+		ent.panels[i]:Remove()
+	end
+end
+
 function isStrValid(str)
 	if (str == nil) then return false end
 	str = string.Replace(str, " ", "")
@@ -142,268 +169,192 @@ function isInput(input, name)
 	if (string.lower(name) == string.lower(input)) then return true end
 return false end
 
+function fireOutput(ent, output, data)
+	if(!IsValid(ent)) then
+		ent = us
+	end
+
+	print(ent, output, data)
+
+	if(!IsValid(ent)) then return end
+	if (!isStrValid(output)) then logMsg(2, " fireOutput was given a bad output!") return end
+
+	
+	if (data != nil) then
+		ent:TriggerOutput(output, ent, tostring(data))
+	else
+		ent:TriggerOutput(output, ent, "")
+	end
+end
+
+function outputValue(ent, reciever, value)
+	if (CLIENT) then return end
+
+	if(!IsValid(ent)) then
+		ent = us
+	end
+	if(!IsValid(ent)) then return end
+
+	if (!isStrValid(value)) then return end
+
+	if (!IsValid(reciever)) then 
+		if (IsValid(Entity(1))) then
+			reciever = Entity(1)
+		else
+			logMsg(1, "'s outputValue() could not identify the reciever. Are there no players in this server?")
+		end
+	end
+
+	if (isstring(value)) then
+		reciever:Fire("AddOutput", value, 0, reciever, ent)
+	return end
+
+	if (isbool(value)) then
+		if (value) then
+			value = 1
+		else 
+			value = 0
+		end
+	end
+
+
+	local class = reciever:GetClass()
+
+	if (class == "logic_case" or class == "math_remap" or class == "math_colorblend") then
+		reciever:Fire("InValue", tostring(value), 0, reciever, ent)
+	elseif (class == "math_counter" or class == "logic_compare" or class == "logic_branch") then
+		reciever:Fire("SetValue", tostring(value), 0, reciever, ent)
+	else --we cant identify this entity, so just try to give them the value as an output.
+		reciever:Fire("AddOutput", tostring(value), 0, reciever, ent)
+	end
+end
+
+
 function dgFire(data)
 	local input, target, params
+	print(data)
 
 	local dataExploded = string.Explode(" ", data)
 
 	input = dataExploded[1]
 	target = dataExploded[2]
 	params = dataExploded[3]
+	
 
 	local ent = ents.FindByName(target)[1]
-
-
 
 	if (!IsValid(ent)) then print("dgFire was shot an input with an unknown target. ") return end --if its not for us, then fuck off
 	if (!isStrValid(input)) then logMsg(2, " was shot a bad input. Unknown input type!") return end
 	if (!isStrValid(target)) then logMsg(2, " was shot a bad input. Target was invalid!") return end
-
-	print(ent)
-	-- local startp, endp = string.find(data, " ", 0)
-
-	-- input = string.Trim(string.sub(data, 0, startp), " ")
-
-	-- local startp2, endp2 = string.find(data, " ", endp)
-
-	-- target = string.Trim(string.sub(data, endp, startp2), " ")
-
-	-- params = string.Trim(string.sub(data, endp2), " ")
-
-	--print(input, target, params)
 	
+	--process the input
 	if (isInput(input, "increment")) then
 		ent:add(1, ent)
-	end
-	if (isInput(input, "decrement")) then
+		fireOutput(ent, "onIncrement", ent.currentValue)
+	
+	elseif (isInput(input, "decrement")) then
 		ent:sub(1)
-	end
-
-	if (isInput(input, "add")) then
-		ent:add(1, ent)
-	end
-
-	if (isInput(input, "sub")) then
-		if (params == nil) then print(target .. " was shot a bad input. " .. input " input requires a valid parameter.") return end
+		fireOutput(ent, "onDecrement", ent.currentValue)
+	
+	elseif (isInput(input, "add")) then
+		if (!isStrValid(params)) then print(target .. " was shot a bad input. " .. input " input requires a valid parameter.") return end
 		
-		ent:sub(util.StringToType(params, "int"))
-	end
-
-
-
-end
-
-function reset() --IF ANYTHING ABOVE IS CHANGED, UPDATE THIS TO REFLECT!!!
-	us.flags = 0
-	us.model = "models/gunman/digitgod.mdl"
-	us.initialValue = 0
-	us.currentValue = 0
-	us.lastValue = 0
-	us.maxValue = 0
-	us.targetValue = 0
-	us.milestoneValue = 0
-	us.soundFile = nil
-	us.soundVolume = 5
-	us.soundPitch = 100
-	us.bUseTargetVal = false
-	us.bEnabled = true
-	us.bDamageScale = false
-	us.us = nil
-
-	if (CLIENT) then return end
-	for i = 1, table.maxn(us.panels), 1 do
-		us.panels[i]:Remove()
-	end
-end
-
-function ENT:AcceptInput( name, activator, caller, data )
-
-	print("ssssdosssosss")
-	print("\n\n", us:GetName(), "\n\n")
-
+		ent:add(util.StringToType(params, "int"), ent)
 	
-	-- if (SERVER) then
-	-- 	print("\n\n", us:GetName(), "\n\n")
-	-- 	PrintTable(us.pendingInputs)
-	-- end
-	self:StoreOutput(name, "caller")
-	self:TriggerOutput(name, activator, caller)
+	elseif (isInput(input, "sub")) then
+		if (!isStrValid(params)) then print(target .. " was shot a bad input. " .. input " input requires a valid parameter.") return end
+		
+		ent:sub(util.StringToType(params, "int"), ent)
 
-	if (!us.bEnabled) then return end
-
-
-	local bValid = false 
-	local inputKeys = table.GetKeys(us.pendingInputs)
-
-	for i = 1, table.maxn(inputKeys), 1 do
-		if (inputKeys[i] == caller) then
-			print("INPUT MATCH!")
-			bValid = true
-			break 
-		end
-	end
-
-	if (!bValid) then print("NO MATCH") return end
-
-
-	
-
-	name = string.lower(name)
-
-	if (isInput("add", name)) then
-		add(util.StringToType(data, "int"))
-	return end
-
-	if (isInput("sub", name)) then
-		sub(util.StringToType(data, "int"))
-	return end
-
-	if (isInput("increment", name)) then
-		add(1)
-		fireOutput("onIncrement", us.currentValue)
-	return end
-
-	if (isInput("decrement", name)) then
-		sub(1)
-		fireOutput("onDecrement", us.currentValue)
-	return end
-
-	if (isInput("toggle", name)) then
-		if (us.bEnabled) then
-			us.bEnabled = false 
-			fireOutput("onDisabled")
+	elseif (isInput(input, "toggle")) then
+		if (ent.bEnabled) then
+			ent.bEnabled = false 
+			fireOutput(ent, "onDisabled")
 		else
-			us.bEnabled = true 
-			fireOutput("onEnabled")
+			ent.bEnabled = true 
+			fireOutput(ent, "onEnabled")
 		end
-	return end
+		
+	elseif (isInput(input, "enable")) then
+		ent.bEnabled = true
+		fireOutput(ent, "onEnabled")
+		
+	elseif (isInput(input, "disable")) then
+		ent.bEnabled = false
+		fireOutput(ent, "onDisabled")
+		
+	elseif (isInput(input, "clear")) then
+		ent.currentValue = 0
+		fireOutput(ent, "onCleared", params)
+		fireOutput(ent, "onValueChanged", ent.currentValue)
+		updateDisplay(ent)
+			
+	elseif (isInput(input, "setvalue")) then
+		if (!isStrValid(params)) then print(target .. " was shot a bad input. " .. input " input requires a valid parameter.") return end
 
-	if (isInput("enable", name)) then
-		us.bEnabled = true
-		fireOutput("onEnabled")
-	return end
+		local newVal = util.StringToType(params, "int")
+		if (newVal < 0) then print(target .. " was shot a bad input. Value to set cannot be lower than zero.") return end
 
-	if (isInput("disable", name)) then
-		us.bEnabled = false
-		fireOutput("onDisabled")
-	return end
+		if (ent.maxValue > 0) then
+			if (newVal > ent.maxValue) then return end
+		end
+		
+		ent.currentValue = newVal
 
-	if (isInput("clear", name)) then
-		if (us.flags == 2) then
-			us.currentValue = us.initialValue
+		fireOutput(ent, "onValueSet", ent.currentValue)
+		fireOutput(ent, "onValueChanged", ent.currentValue)
+		updateDisplay(ent)
+				
+	elseif (isInput(input, "setmax")) then
+		if (!isStrValid(params)) then print(target .. " was shot a bad input. " .. input " input requires a valid parameter.") return end
+
+		local newVal = util.StringToType(params, "int")
+		if (newVal < 0) then print(target .. " was shot a bad input. Value to set as max cannot be lower than zero.") return end
+		
+		ent.maxValue = newVal
+
+		fireOutput(ent, "onMaxSet", ent.maxValue)
+			
+	elseif (isInput(input, "settarget")) then
+		if (!isStrValid(params)) then print(target .. " was shot a bad input. " .. input " input requires a valid parameter.") return end
+
+		local newVal = util.StringToType(params, "int")
+		if (newVal < 0) then print(target .. " was shot a bad input. Value to set as the target cannot be lower than zero.") return end
+
+		if (ent.maxValue > 0) then
+			if (newVal > ent.maxValue) then print(target .. " was shot a bad input. Value to set as the target cannot be greater than the maximum value.") return end
+		end
+
+		if (newVal == 0) then
+			ent.bUseTargetVal = false 
 		else
-			us.currentValue = 0
+			ent.bUseTargetVal = true
 		end
-
-		updateDisplay()
-		fireOutput("onValueChanged", us.currentValue)
-		fireOutput("onCleared")
-	return end
-
-	if (isInput("getvalue", name)) then
-		outputValue(caller, us.currentValue)
-	return end
-
-	if (isInput("setValue", name)) then
-		local valInt = util.StringToType(data, "int")
-		if (valInt < 0 or valInt > MAX_DIGIT_SIZE or valInt > us.maxValue) then return end
-
-		us.currentValue = valInt
-
-		isMaxReached()
-		playsound()
-		updateDisplay()
-		fireOutput("onValueChanged", valInt)
-	return end
-
-	if (isInput("getlastvalue", name)) then
-		outputValue(caller, us.lastValue)
-	return end
-
-	if (isInput("setMax", name)) then
-		if (!isStrValid(data)) then logMsg(1, " recieved an input from " .. caller .. " that had bad data passed to us. Ignored.") return end
-
-		local valInt = util.StringToType(data, "int")
-		if (valInt < 0 or valInt > MAX_DIGIT_SIZE) then return end
-		us.maxValue = valInt
-		fireOutput("onMaxSet", valInt)
-	return end
-	
-	if (isInput("getmax", name)) then
-		outputValue(caller, us.maxValue)
-	return end
-
-	if (isInput("setTarget", name)) then
-		if (!isStrValid(data)) then logMsg(1, " recieved an input from " .. caller .. " that had bad data passed to us. Ignored.") return end
-
-		local valInt = util.StringToType(data, "int")
-		if (valInt <= 0) then return end
-		us.targetValue = valInt
-		us.bUseTargetVal = true
-		fireOutput("onTargetSet", valInt)
-	return end
-	
-	if (isInput("getTarget", name)) then
-		outputValue(caller, us.targetValue)
-	return end
-
-	if (isInput("setSound", name)) then
-		if (!isStrValid(data)) then logMsg(1, " recieved an input from " .. caller .. " that had a bad sound file directory. Ignored.") return end
-		local newSound = string.Replace(data, '92', "/")
-		us.soundFile = newSound
-		fireOutput("onSoundChanged", newSound)
-	return end
-
-	if (isInput("setSoundVolume", name)) then
-		if (!isStrValid(data)) then logMsg(1, " recieved an input from " .. caller .. " that had bad data passed to us. Ignored.") return end
-		local valInt = util.StringToType(data, "int")
 		
-		if (valInt < 0 or valInt > 10) then logMsg(1, " recieved an input from " .. caller .. " with a bad volume. Volume must be within 0-10.") return end
-		us.soundVolume = valInt / 10
-	return end
+		ent.targetValue = newVal
 
-	if (isInput("setSoundPitch", name)) then
-		if (!isStrValid(data)) then logMsg(1, " recieved an input from " .. caller .. " that had bad data passed to us. Ignored.") return end
-		local valInt = util.StringToType(data, "int")
-		
-		if (valInt <= 0 or valInt > 999) then logMsg(1, " recieved an input from " .. caller .. " with a bad pitch. Pitch cannot be 0 or below or above 999.") return end
-		us.soundPitch = valInt
-	return end
+		fireOutput(ent, "onTargetSet", ent.targetValue)
 
-	if (isInput("getSound", name)) then
-		outputValue(caller, us.soundFile)
-	return end
+	elseif (isInput(input, "setsound")) then
 
-	if (isInput("getSoundVolume", name)) then
-		outputValue(caller, us.soundVolume)
-	return end
-
-	if (isInput("getSoundPitch", name)) then
-		outputValue(caller, us.soundPitch)
-	return end
-
-	if (isInput("getModel", name)) then
-		outputValue(caller, us.model)
-	return end
-
-	if (CLIENT) then
-		if (isInput("setModel", name)) then
-			if (!isStrValid(data)) then logMsg(1, " recieved an input from " .. caller .. " that had bad data passed to us. Ignored.") return end
-			local newmdl = string.Replace(data, '92', "/")
+		if (!isStrValid(params)) then print(target .. " was shot a bad input. Sound to set to was invalid!") return end
 			
-			if (IsUselessModel(newmdl)) then logMsg(1, " recieved an input from " .. caller .. " that was either a bad model or file directory. Ignored.") return end
+		ent.soundFile = string.Replace(params, '92', "/")
+
+		fireOutput(ent, "onSoundChanged", ent.soundFile)
+
+	elseif (isInput(input, "setmodel")) then
+
+		if (!isStrValid(params)) then print(target .. " was shot a bad input. " .. input " input requires a valid parameter.") return end
 			
-			if (NumModelSkins(newmdl) < 10) then logMsg(1, " recieved an input from " .. caller .. "(passed model: " .. newmdl ..", skins: " .. NumModelSkins(newmdl) .. ") but that model doesn't have enough skins to represent all 10 digits. Ignored.") return end
-			
-			us.model = newmdl
-			fireOutput("onModelChanged", newmdl)
-		return end
+		local newmdl = string.Replace(params, '92', "/")
+
+		if (IsUselessModel(newmdl)) then print(target .. " was shot a bad input. Model to set to was invalid!") return end
+
+		ent.model = newmdl
+
+		fireOutput(ent, "onModelChanged", ent.soundFile)
 	end
-
-	if (isInput("isMaxReached", name)) then
-		outputValue(caller, (us.currentValue >= us.maxValue))
-	return end
-
 end
 
 function spawnPanels(nPanels)
@@ -449,8 +400,9 @@ function addPanel(ent)
 
 end
 
-hook.Add("PreCleanupMap", "HK_CLEAN", function() 
-	reset()
+hook.Add("PreCleanupMap", "HK_CLEAN", function()
+	print(us) 
+	reset(us)
 end)
 
 function logMsg(lvl, msg)
@@ -566,40 +518,159 @@ function updateDisplay(ent)
 	end
 end
 
-function printKeysandValues()
+function printDGInfo(entName)
+	local ent = ents.FindByName(entName)[1]
+
 	print("\n")
 	print("----KEYS----")
-	PrintTable(us.keys)
+	PrintTable(ent.keys)
 	print("------------")
 	print("\n")
 	print("---VALUES---")
-	PrintTable(us.values)
+	PrintTable(ent.values)
 	print("------------")
 	print("\n")
+	print("------------")
+	print("\n")
+	print("---OUTPUTS---")
+	PrintTable(ent.pendingInputs)
+	print("------------")
+	print("\n")
+
 end
 
 function loadKeyValues(ent)
-	ent.currentValue = util.StringToType(ent.values[12], "int")
-	ent.initialValue = ent.currentValue
 
-	PrintTable(ent.panels)
+	for i = 1, table.maxn(ent.keys), 1 do
+		local key = string.lower(ent.keys[i])
+		local val = ent.values[i]
+
+		if (isKey("initialvalue", key)) then
+			ent.currentValue = util.StringToType(val, "int")
+			ent.initialValue = ent.currentValue
+		elseif (isKey("targetvalue", key)) then
+			ent.targetValue = util.StringToType(val, "int")
+		elseif (isKey("maxvalue", key)) then
+			ent.maxValue = util.StringToType(val, "int")
+		elseif (isKey("milestone", key)) then
+			ent.milestoneValue = util.StringToType(val, "int")
+		elseif (isKey("model", key)) then
+			ent.model = val
+		elseif (isKey("sound", key)) then
+			ent.soundFile = val
+		elseif (isKey("sndVol", key)) then
+			ent.soundVolume = util.StringToType(val, "int") / 10
+		elseif (isKey("sndPitch", key)) then
+			ent.soundPitch = util.StringToType(val, "int")
+		elseif (isKey("scaledmg", key)) then
+			if (val == "1") then
+				ent.bDamageScale = true 
+			end
+		elseif (isKey("startdisabled", key)) then
+			if (val == "1") then
+				ent.bEnabled = false 
+			end
+		elseif (isKey("startdisabled", key)) then
+			if (val == "1") then
+				ent:DrawShadow(true)
+			else
+				ent:DrawShadow(false)
+			end
+		end
+	end
 
 	updateDisplay(ent)
 end
 
+function verifyKeyvalues(ent)
+	if (!IsValid(ent)) then
+		if (IsValid(us)) then
+			ent = us
+		else
+			return 
+		end
+	end
+
+	if (SERVER) then
+
+		if (ent.currentValue < 0) then
+			ent.currentValue = 0
+			ent.initialValue = ent.currentValue
+			print(ent:GetName() .. " had an invalid value. Reset.")
+		elseif (ent.maxValue > 0) then
+			if (ent.currentValue > ent.maxValue) then
+				ent.currentValue = ent.maxValue
+				ent.initialValue = ent.currentValue
+				print(ent:GetName() .. " had an initial value of over " .. ent.maxValue .. ". Clamping!")
+			end
+		end
+
+		if (ent.targetValue != 0) then
+			if (ent.targetValue != nil and ent.targetValue > 0 and ent.targetValue < ent.maxValue) then
+				ent.bUseTargetVal = true
+			else
+				print(ent:GetName() .. " had an invalid targetValue. Ignored.")
+			end
+		end
+
+		if (ent.maxValue == nil or ent.maxValue < 0) then
+			ent.maxValue = MAX_DIGIT_SIZE
+			print(ent:GetName() .. " had an invalid maxValue. Reset.")
+		end
+
+		if (ent.milestoneValue <= 0 or ent.milestoneValue >= ent.maxValue) then
+			ent.milestoneValue = 0
+			print(ent:GetName() .. " had a bad milestone value. Reset to 0.")
+		end
+		
+		if (!isStrValid(ent.soundFile)) then
+			ent.soundFile = ""
+			print(ent:GetName() .. " had a bad sound file directory. Reset.")
+		else
+			ent.soundFile = string.Replace(ent.soundFile, '92', "/")
+		end
+
+		if (ent.soundVolume < 0 or ent.soundVolume > 10) then
+			ent.soundVolume = 0.5
+			print(ent:GetName() .. " had a bad volume. Volume must be within 0-10. Reset.")
+		end
+
+		if (ent.soundPitch <= 0 or ent.soundPitch > 999) then
+			ent.soundPitch = 100
+			print(ent:GetName() .. " had a bad pitch. Pitch cannot be 0, negative, or above 999. Reset.")
+		end
+	end
+
+	
+
+	if (CLIENT) then
+		--logMsg(0, " model at verifyKeyvalues is " .. model)
+		--logMsg(0, " checking model.")
+		if (!isStrValid(ent.model)) then
+			ent.model = "models/gunman/digitgod.mdl"
+			print( " had a bad model directory. Reset to default.")
+		else
+			if (IsUselessModel(ent.model)) then
+				print( "'s model (model: " .. ent.model ..") is a bad model or file directory. Reset to default.")
+				ent.model = "models/gunman/digitgod.mdl"
+			return end
+
+			if (NumModelSkins(ent.model) < 10) then
+				print( "'s model (" .. ent.model ..", skins: " .. NumModelSkins(ent.model) .. ") doesn't have enough skins to represent all 10 digits. Reset to default.")
+				ent.model = "models/gunman/digitgod.mdl"
+			return end
+			--logMsg(0, model .. " ok. Checking for back slashes.")
+			ent.model = string.Replace(ent.model, '92', "/") --replace all \ with /. cant reference \ directly without code commiting suicide.
+		end
+	end
+end
+
+
 hook.Add("EntityKeyValue", "HK_KEYVAL", function(ent, key, val) 
 	
-	--print(ent, key, val)
-
 	table.insert(dgAllEnts, ent)
 	table.insert(dgAllKeys, key)
 	table.insert(dgAllValues, val)
-
-	-- if (key == "targetname" or key == "a0luaname") then
-	-- end
-
-	--table.insert()
-
 
 end)
 
@@ -609,14 +680,11 @@ function loadInputs() --disgusting, i know, but i dont know of any other way tha
 
 		if (string.find(dgAllValues[i], us:GetName())) then
 			us.pendingInputs[dgAllEnts[i]] = dgAllKeys[i] .. "	" .. dgAllValues[i]
-			--table.insert(us.pendingInputs, tostring(dgAllEnts[i]) .. " : " .. dgAllKeys[i] .. "	" .. dgAllValues[i])
-
 		end
 	end
 end
 
 function ENT:KeyValue(key, value) --loads all the keys and their values given to us by hammer. including pending outputs. will all be verifed at Initialize
---	print(key, value)
 
 	
 	if (self.bDone) then return end
@@ -665,128 +733,6 @@ function ENT:KeyValue(key, value) --loads all the keys and their values given to
 	end
 
 
-
-	--print(key, value)
-
-	-- --WARNING! all messages logged from here will bitch about us being invalid.
-	-- if (isKey("spawnflags", key)) then
-	-- 	flags = util.StringToType(value, "int")
-	-- elseif (isKey("initialvalue", key)) then
-	-- 	currentValue = util.StringToType(value, "int")
-	-- 	initialValue = currentValue
-	-- elseif (isKey("targetvalue", key)) then
-	-- 	targetValue = util.StringToType(value, "int")
-	-- elseif (isKey("maxvalue", key)) then			
-	-- 	maxValue = util.StringToType(value, "int")
-	-- elseif (isKey("milestone", key)) then			
-	-- 	milestoneValue = util.StringToType(value, "int")
-	-- elseif (isKey("model", key)) then
-	-- 	--logMsg(0, " Found model key, extracting value... " .. value)		
-	-- 	model = value
-	-- elseif (isKey("sndfile", key)) then	
-	-- 	soundFile = value
-	-- elseif (isKey("sndvol", key)) then			
-	-- 	soundVolume = util.StringToType(value, "int")
-	-- elseif (isKey("sndpitch", key)) then			
-	-- 	soundPitch = util.StringToType(value, "int")
-	-- elseif (isKey("scaledmg", key)) then
-	-- 	if (value == "1") then
-	-- 		bDamageScale = true
-	-- 	end
-	-- elseif (isKey("StartDisabled", key)) then
-	-- 	if (value == "1") then
-	-- 		bEnabled = false
-	-- 	end
-	-- elseif (isKey("DisableShadows", key)) then
-	-- 	if (value == "1") then
-	-- 		self:DrawShadow(false)
-	-- 	else
-	-- 		self:DrawShadow(true)
-	-- 	end
-	-- elseif ( string.Left( key, 2 ) == "On" or string.Left( key, 2 ) == "on") then --we can assume its an output given to us by hammer
-	-- 	--print(key, value)
-	-- 	self:StoreOutput(key, value)
-	-- end
-end
-
-
-function verifyKeyvalues()
-	
-	if (SERVER) then
-	--	logMsg(0, " Verifying keys on server.")
-		if (us.flags > 2) then
-			us.flags = 0
-			print( " had unknown flags. Defaulting to 0.")
-		end
-
-		if (us.currentValue < 0) then
-			us.currentValue = 0
-			us.initialValue = us.currentValue
-			print( " had an invalid value. Reset.")
-		elseif (us.currentValue > us.maxValue) then
-			us.currentValue = us.maxValue
-			us.initialValue = us.currentValue
-			print( " had an initial value of over " .. us.maxValue .. ". Clamping!")
-		end
-
-		if (us.targetValue != 0) then
-			if (us.targetValue != nil and us.targetValue > 0 and us.targetValue < us.maxValue) then
-				us.bUseTargetVal = true
-			else
-				print( " had an invalid targetValue. Ignored.")
-			end
-		end
-
-		if (us.maxValue == nil or us.maxValue < 0) then
-			us.maxValue = MAX_DIGIT_SIZE
-			print(" had an invalid maxValue. Reset.")
-		end
-
-		if (us.milestoneValue <= 0 or us.milestoneValue >= us.maxValue) then
-			us.milestoneValue = 0
-			print( " had a bad milestone value. Reset to 0.")
-		end
-		
-		if (!isStrValid(us.soundFile)) then
-			us.soundFile = ""
-			print( " had a bad sound file directory. Reset.")
-		else
-			us.soundFile = string.Replace(us.soundFile, '92', "/")
-		end
-
-		if (us.soundVolume < 0 or us.soundVolume > 10) then
-			us.soundVolume = 0.5
-			print( " had a bad volume. Volume must be within 0-10. Reset.")
-		end
-
-		if (us.soundPitch <= 0 or us.soundPitch > 999) then
-			us.soundPitch = 100
-			print( " had a bad pitch. Pitch cannot be 0, negative, or above 999. Reset.")
-		end
-	end
-
-	
-
-	if (CLIENT) then
-		--logMsg(0, " model at verifyKeyvalues is " .. model)
-		--logMsg(0, " checking model.")
-		if (!isStrValid(us.model)) then
-			us.model = "models/gunman/digitgod.mdl"
-			print( " had a bad model directory. Reset to default.")
-		else
-			if (IsUselessModel(us.model)) then
-				print( "'s model (model: " .. us.model ..") is a bad model or file directory. Reset to default.")
-				us.model = "models/gunman/digitgod.mdl"
-			return end
-
-			if (NumModelSkins(us.model) < 10) then
-				print( "'s model (" .. us.model ..", skins: " .. NumModelSkins(us.model) .. ") doesn't have enough skins to represent all 10 digits. Reset to default.")
-				us.model = "models/gunman/digitgod.mdl"
-			return end
-			--logMsg(0, model .. " ok. Checking for back slashes.")
-			us.model = string.Replace(us.model, '92', "/") --replace all \ with /. cant reference \ directly without code commiting suicide.
-		end
-	end
 end
 
 function getModel()
@@ -794,8 +740,7 @@ function getModel()
 end
 
 function ENT:Initialize() --self is only valid within this scope.
---	PrintTable(dgAllKeys)
---	PrintTable(dgAllValues)
+
 
 	us = self	
 
@@ -833,62 +778,11 @@ function isMaxReached()
 	
 	if (ent.currentValue >= ent.maxValue) then
 		ent.currentValue = ent.maxValue
-		fireOutput("onMaxReached", ent.currentValue)
+		fireOutput(ent, "onMaxReached", ent.currentValue)
 	return true end
 return false end
 
-function fireOutput(output, data, ent)
-	if(!IsValid(ent)) then
-		ent = us
-	end
-	if(!IsValid(ent)) then return end
-
-	
-	if (data != nil) then
-		ent:TriggerOutput(output, ent, ent.currentValue)
-	else
-		ent:TriggerOutput(output, ent, "")
-	end
-end
-
-function outputValue(reciever, value)
-	if (CLIENT) then return end
-
-	if (!isStrValid(value)) then  return end
-
-	if (!IsValid(reciever)) then 
-		if (IsValid(Entity(1))) then
-			reciever = Entity(1)
-		else
-			logMsg(1, "'s outputValue() could not identify the reciever. Are there no players in this server?")
-		end
-	end
-
-	if (isstring(value)) then
-		reciever:Fire("AddOutput", value, 0, reciever, us)
-	return end
-
-	if (isbool(value)) then
-		if (value) then
-			value = 1
-		else 
-			value = 0
-		end
-	end
-
-
-	local class = reciever:GetClass()
-
-	if (class == "logic_case" or class == "math_remap" or class == "math_colorblend") then
-		reciever:Fire("InValue", us.maxValue, 0, reciever, us)
-	elseif (class == "math_counter" or class == "logic_compare" or class == "logic_branch") then
-		reciever:Fire("SetValue", us.maxValue, 0, reciever, us)
-	else --we cant identify this entity, so just try to give them the value as an output.
-		reciever:Fire("AddOutput", us.maxValue, 0, reciever, us)
-	end
-end
-
-function playsound()
+function playsound(ent)
 	if(!IsValid(ent)) then
 		ent = us
 	end
@@ -917,20 +811,43 @@ function ENT:add(value, ent)
 
 	if (ent.bDamageScale) then
 		if (!IsValid(Entity(1))) then logMsg(2, " could not get a reference to player 1 to scale damage! Is there anyone here? Cancelling.") return end
-		value = value + GetAmmoData(Entity(1):GetActiveWeapon():GetPrimaryAmmoType()).npcdmg
+	
+		local wpn = Entity(1):GetActiveWeapon()
+	
+		if (!IsValid(wpn)) then return end
+
+		local ammoDat = game.GetAmmoData(wpn:GetPrimaryAmmoType())
+
+		if (ammoDat == nil) then return end
+
+		local dmg = GetConVar(ammoDat.plydmg):GetInt()
+
+		if (dmg == nil) then return end
+
+		local scaledValue = value + dmg * 2
+
+		print(scaledValue)
+
+		if (ent.maxValue > 0) then
+			if (scaledValue + ent.currentValue > ent.maxValue) then
+				scaledValue = 0
+			end
+		end
+
+		value = scaledValue
 	end
 
 	ent.lastValue = ent.currentValue
 	ent.currentValue = ent.currentValue + value
-	fireOutput("onValueChanged", ent.currentValue, ent)
-	fireOutput("onAdd", value, ent)
+	fireOutput(ent, "onValueChanged", ent.currentValue)
+	fireOutput(ent, "onAdd", value)
 
 	isMaxReached(ent)
 
 	if (ent.milestoneValue > 0) then
 		
 		if (ent.milestoneCounter >= ent.milestoneValue) then
-			fireOutput("onMilestone", ent.currentValue, ent)
+			fireOutput(ent, "onMilestone", ent.currentValue)
 			ent.milestoneCounter = 0
 		else
 			ent.milestoneCounter = ent.milestoneCounter + 1
@@ -940,7 +857,7 @@ function ENT:add(value, ent)
 
 	if (ent.bUseTargetVal) then
 		if (ent.currentValue >= ent.targetValue) then
-			fireOutput("onTargetReached", ent.currentValue, ent)
+			fireOutput(ent, "onTargetReached", ent.currentValue)
 			ent.bUseTargetVal = false
 		end
 	end
@@ -962,8 +879,8 @@ function sub(value, ent)
 	ent.lastValue = ent.currentValue
 	ent.currentValue = ent.currentValue - value
 
-	fireOutput("onValueChanged", ent.currentValue, ent)
-	fireOutput("onSub", value, ent)
+	fireOutput(ent, "onValueChanged", ent.currentValue)
+	fireOutput(ent, "onSub", value)
 
 	updateDisplay(ent)
 	playsound(ent)
