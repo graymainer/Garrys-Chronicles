@@ -1,21 +1,47 @@
-@PointClass base(Targetname, Parentname, Angles) studioprop() = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
+
+@PointClass base(Targetname, Parentname, Angles) studioprop() = gunman_test : "This entity is apart of the Garry's Chronicles project. \n" + "This is a testing entity."
 [
+	spawnflags(flags) =
+	[
+		1	:	"Say on Spawn": 0
+	]
+	
+	saything(string)					: "Thing to Say"	: "Hi" : "The thing we should say."
+
+
+	input Test(void)					: "They're waiting for you freeman. In the tesssssst chamberrrrrr."
+	input setSayThing(string)			: "Tell us what to say."
+	
+	output onSaid(string)				: "Fired when we said something. Returns what we said."
+]
+
+@PointClass base(Targetname, Parentname, Angles) studioprop("models/gunman/digitgod.mdl") = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
+[
+	//if you want to change this system to use custom models, you'll want to get rid of the "models/gunman/digitgod.mdl" part and leave it as "studioprop()". 
+	//then make sure that you have a key value here that has the type "studio" set to a default model. otherwise, you'll get the generic hammer entity cube of death.
+
+	spawnflags(flags) =
+	[
+		1	:	"Fire Target Once"	:	1
+		2	:	"Trigger Target on Exact Match"	:	0
+	]
 
 	initialvalue(integer)				: "Initial Value"	: 0	  : "The value that the counter should be set at when spawned in. \n" + "If 'Clear to initial value' is ticked, when cleared, this value will be what the counter is set back to."
 
 	targetvalue(integer)				: "Value Target"	: 0   : "The value this counter should aim to achieve. Once reached, the onValueReached output will fire. \n" + "\n" + "A value of 0 will disable."
 	
-	maxvalue(integer)					: "Maximum Value"	: 999 : "The max value that this counter can go to. \n" + "Will fire onMaxReached output when reached. \n" + "\n" + "A value of 0 will default to 999."
+	maxvalue(integer)					: "Maximum Value"	: 999 : "The max value that this counter can go to. \n" + "Will fire onMaxReached output when reached. \n" + "\n" + "A value of 0 will set this counter to have no max."
 
-	milestone(integer)					: "Milestone Value" : 10  : "The value we consider a milestone. \n" + "\n" + "By default, every ten numbers added to the counter will be considered a milestone, and fire the onMilestone() output. \n" + "So for example:\n" + "0..1..2..3..4..5..6..7..8..9..10 Milestone reached! \n" + "11..12..13..14..15..16..17..18..19..20 Milestone reached! \n" + "21..22..23 etc."
-	
-	model(studio)						: "World Model"		: 		"models/gunman/digitgod.mdl" : "What model should this counter be represented by? \n" + "WARNING! The model MUST have at least 10 skins to represent all 10 digits. Otherwise, the model will not load and will go back to default."
+//	milestone(integer)					: "Milestone Value" : 10  : "The value we consider a milestone. \n" + "\n" + "By default, every ten numbers added to the counter will be considered a milestone, and fire the onMilestone() output. \n" + "So for example:\n" + "0..1..2..3..4..5..6..7..8..9..10 Milestone reached! \n" + "11..12..13..14..15..16..17..18..19..20 Milestone reached! \n" + "21..22..23 etc."
 
-	sndfile(sound) 					: "Sound Name" 		: ""  : "The sound to play whenever the value changes.\n" + " Example would be making the counter make a 'ticking' sound when it increments.\n" + " Must be a .wav file. If left blank, no sound will play."
+//this is the key im referring to above.
+//	model(studio)						: "World Model"		: 		"models/gunman/digitgod.mdl" : "What model should this counter be represented by? \n" + "WARNING! The model MUST have at least 10 skins to represent all 10 digits. Otherwise, the model will not load and will go back to default."
+
+	//sound(sound) 						: "Sound Name" 		: ""  : "The sound to play whenever the value changes.\n" + " Example would be making the counter make a 'ticking' sound when it increments.\n" + " Must be a .wav file. If left blank, no sound will play."
 	
-	sndvol(integer) 					: "Sound Volume"	: 5   : "The volume to play the sound at. Only works if a sound was selected."
+	//sndvol(integer) 					: "Sound Volume"	: 5   : "The volume to play the sound at. Only works if a sound was selected."
 	
-	sndpitch(integer) 					: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
+	//sndpitch(integer) 					: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
 	
 	scaledmg(choices)					: "Scale by Damage" : 0	  : "Should we scale all increments, additions, subtractions, etc by the damage of the player's current weapon?" = 
 	[
@@ -35,31 +61,21 @@
 		1 : "Yes"
 	] 
 	
-	a0luaname(target_source) 			: "LUA Name"		: "Name"	: "The name of this entity for lua to recognize. Must be set, otherwise the entity cannot be identified. Must be the same as the targetname. (the name of this entity in hammer.)"
-
-	// Inputs -- graymainer: these dont work, you have to use a lua_run entity. add the 'RunPassedCode' output. 
-	//then put in the following: "dgFire('*yourInputName* *yourTargetName* *any optional parameters*')" -- dont use spaces except to seperate the three arguments. 
-	//Otherwise, you'll break things. Dont use commas, dont use "", use '' instead. of course, the asterisks are just there for show, dont use those either.
-	//make sure all three arguments are enclosed with ''. not quotes of any kind within those quotes.
-	//caps do not matter, use whatever caps you want.
 	
-	
-	//That being said, these are still completely valid inputs. Use them here as reference for dgFire().
-	
-	//input Add(integer)					: "Add this value to the counter."
-	//input Sub(integer)					: "Subtract this value from the counter."
-	//input Increment(void)				: "Increment the counter."
-	//input Decrement(void)				: "Decrement the counter."
-	//input Toggle(void)					: "Will toggle the counter."
-	//input Enable(void)					: "Will enable the counter. Fires the onEnabled output."
-	//input Disable(void)					: "Will disable the counter. It will no longer function. Fires the onDisabled output."
-	//input Clear(void)					: "Clears the current value of this counter and resets it to 0. \n" + "But if the 'Clear to initial value' flag is set, it will instead reset to whatever the initial value was."
+	input Add(integer)					: "Add this value to the counter."
+	input Sub(integer)					: "Subtract this value from the counter."
+	input Increment(void)				: "Increment the counter."
+	input Decrement(void)				: "Decrement the counter."
+	input Toggle(void)					: "Will toggle the counter."
+	input Enable(void)					: "Will enable the counter. Fires the onEnabled output."
+	input Disable(void)					: "Will disable the counter. It will no longer function. Fires the onDisabled output."
+	input Clear(void)					: "Clears the current value of this counter and resets it to 0. \n" + "But if the 'Clear to initial value' flag is set, it will instead reset to whatever the initial value was."
 	//input getValue(void)				: "Will get the current value that this counter is at.\n" + "This works through some lua trickery. basically, if its an entity that can hold values, like a 'logic_case' or a 'math_counter',\n" + "we will fire their respective 'invalue' or 'setvalue' inputs and feed them the value you asked for here.\n" + "This means that the entity you're making the output from should be something that can hold values. Like logic_case.\n" + "\n" + "If the entity isn't recognized as an entity that can hold values, it will then try to add an output with the value inside it.\n" + "It should be findable by searching through the entity that asked for the value's keyvalues.\n" + " This will be the way all of our get inputs will work."
-	//input setValue(integer)				: "Will set our value to what you specify. Cannot be negative and cannot pass the max limit."
+	input setValue(integer)				: "Will set our value to what you specify. Cannot be negative and cannot pass the max limit."
 	//input getLastValue(void)			: "Will get the last value that this counter had. This is only set when the value has previously changed.\n" + "It will return 0 if nothing changed."
-	//input setMax(integer)				: "Will set the maximum value of this counter to the parameter value."
+	input setMax(integer)				: "Will set the maximum value of this counter to the parameter value."
 	//input getMax(void)					: "Will get our maximum value."
-	//input setTarget(integer)			: "Will set the target value of this counter to the parameter value."
+	input setTarget(integer)			: "Will set the target value of this counter to the parameter value."
 	//input getTarget(void)				: "Will get our target value."
 	//input setSound(integer)				: "Will change the sound to play to whatever you give us. Does not support gamesound entries."
 	//input setSoundVolume(integer)		: "Will change the volume of the sound to whatever you give us."
@@ -75,7 +91,7 @@
 	output onDecrement(integer)			: "Fired when this counter is decremented. Returns the value the counter is now at."
 	output onAdd(integer)				: "Fired when this counter is added to. Returns the value added to it."
 	output onSub(integer)				: "Fired when this counter is subtracted from. Returns the value subtracted from it."
-	output onMilestone(integer)			: "Fired when this counter reaches the next milestone. \n" + "By default, a milestone is reached by every 10. Will return it's current value."
+	//output onMilestone(integer)			: "Fired when this counter reaches the next milestone. \n" + "By default, a milestone is reached by every 10. Will return it's current value."
 	output onTargetReached(integer)		: "Fired when this counter reaches its target value. Will return it's current value."
 	output onValueChanged(integer)		: "Fired when this counter's value is changed. Returns the new value. You can retrieve the old value through getLastValue()."
 	output onMaxReached(integer)		: "Fired when this counter reaches its max value. Will return it's current value."
@@ -83,7 +99,8 @@
 	output onDisabled(void)				: "Fired when this counter is disabled."
 	output onCleared(void)				: "Fired when this counter's value has been cleared."
 	output onMaxSet(integer)			: "Fired when this counter's maximum value has been set to something. Returns what it was set to."
+	output onValueSet(integer)			: "Fired when this counter's value has been set to something. Returns what it was set to."
 	output onTargetSet(integer)			: "Fired when this counter's target value has been set to something. Returns what it was set to."
-	output onSoundChanged(string)		: "Fired when our sound is changed. Returns the new sound file."
-	output onModelChanged(string)		: "Fired when our model is changed. Returns the new model file."
+	//output onSoundChanged(string)		: "Fired when our sound is changed. Returns the new sound file."
+	//output onModelChanged(string)		: "Fired when our model is changed. Returns the new model file."
 ]
