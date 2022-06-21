@@ -9,7 +9,7 @@
 	saything(string)					: "Thing to Say"	: "Hi" : "The thing we should say."
 
 
-	input Test(void)					: "They're waiting for you freeman. In the tesssssst chamberrrrrr."
+	input Test(void)					: "They're waiting for you mr. freeman. In the tesssssst chamberrrrrr."
 	input setSayThing(string)			: "Tell us what to say."
 	
 	output onSaid(string)				: "Fired when we said something. Returns what we said."
