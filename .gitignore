@@ -22,4 +22,3 @@ release/
 *.lin
 *.bsp
 !maps/*.bsp
-gunman.fgd
