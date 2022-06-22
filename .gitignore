@@ -13,6 +13,7 @@
 #modelsrc/
 #materialssrc/
 
+Prefabs/
 release/
 *.lnk
 *.blend1
