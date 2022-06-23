@@ -21,7 +21,7 @@ include("gunman/gunmanZeroG.lua")
 
 --this checks for a certain addon for compatibility reasons. 
 --If its true, it will set all logic_branches with a name beginning with "if_gcwpns_installed" to 1 (true). 
---allow for map behavior to change based on if they have the addon installed and mounter or not.
+--this allows for map behavior to change based on if they have the addon installed and mounted or not.
 hook.Add("InitPostEntity", "HK_INITPOSTENT", function() 
 
 	local ifs = ents.FindByName("if_gcwpns_installed*")
