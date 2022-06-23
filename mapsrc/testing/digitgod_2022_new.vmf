@@ -2,7 +2,7 @@ versioninfo
 {
 	"editorversion" "400"
 	"editorbuild" "8860"
-	"mapversion" "136"
+	"mapversion" "143"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -72,7 +72,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "136"
+	"mapversion" "143"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -801,16 +801,16 @@ world
 			"plane" "(126.715 37.7295 7.62939e-06) (108.713 13.7272 7.62939e-06) (108.713 -16.2738 7.62939e-06)"
 			vertices_plus
 			{
-				"v" "126.715 37.7295 7.62939e-06"
-				"v" "108.713 13.7272 7.62939e-06"
-				"v" "108.713 -16.2738 7.62939e-06"
-				"v" "126.71 -40.2691 7.62939e-06"
-				"v" "157.722 -49.2725 7.62939e-06"
-				"v" "187.707 -40.2764 7.62939e-06"
-				"v" "205.714 -16.2647 7.62939e-06"
-				"v" "205.714 13.7275 7.62939e-06"
-				"v" "187.718 37.7236 7.62939e-06"
-				"v" "157.707 46.7275 7.62939e-06"
+				"v" "126.715 37.7295 0"
+				"v" "108.713 13.7272 0"
+				"v" "108.713 -16.2738 0"
+				"v" "126.71 -40.2691 0"
+				"v" "157.722 -49.2725 0"
+				"v" "187.707 -40.2764 0"
+				"v" "205.714 -16.2647 0"
+				"v" "205.714 13.7275 0"
+				"v" "187.718 37.7236 0"
+				"v" "157.707 46.7275 0"
 			}
 			"material" "TOOLS/TOOLSCLIP"
 			"uaxis" "[-1 0 0 58.2478] 0.86"
@@ -826,8 +826,8 @@ world
 			vertices_plus
 			{
 				"v" "157.711 -49.2737 65"
-				"v" "157.711 -49.2735 7.62939e-06"
-				"v" "126.714 -40.2747 7.62939e-06"
+				"v" "157.711 -49.2735 0"
+				"v" "126.714 -40.2747 0"
 				"v" "126.714 -40.2747 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -844,8 +844,8 @@ world
 			vertices_plus
 			{
 				"v" "187.71 -40.276 65"
-				"v" "187.709 -40.2758 7.62939e-06"
-				"v" "157.711 -49.2755 7.62939e-06"
+				"v" "187.709 -40.2758 0"
+				"v" "157.711 -49.2755 0"
 				"v" "157.711 -49.2756 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -862,8 +862,8 @@ world
 			vertices_plus
 			{
 				"v" "205.713 -16.2713 65"
-				"v" "205.713 -16.2704 7.62939e-06"
-				"v" "187.71 -40.2749 7.62939e-06"
+				"v" "205.713 -16.2704 0"
+				"v" "187.71 -40.2749 0"
 				"v" "187.71 -40.2752 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -880,8 +880,8 @@ world
 			vertices_plus
 			{
 				"v" "205.713 13.728 65"
-				"v" "205.713 13.728 7.62939e-06"
-				"v" "205.713 -16.2708 7.62939e-06"
+				"v" "205.713 13.728 0"
+				"v" "205.713 -16.2708 0"
 				"v" "205.713 -16.2716 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -898,8 +898,8 @@ world
 			vertices_plus
 			{
 				"v" "187.713 37.7256 65"
-				"v" "187.712 37.7265 7.62939e-06"
-				"v" "205.713 13.7254 7.62939e-06"
+				"v" "187.712 37.7265 0"
+				"v" "205.713 13.7254 0"
 				"v" "205.713 13.7254 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -916,8 +916,8 @@ world
 			vertices_plus
 			{
 				"v" "157.71 46.7269 65"
-				"v" "157.711 46.7272 7.62939e-06"
-				"v" "187.714 37.7262 7.62939e-06"
+				"v" "157.711 46.7272 0"
+				"v" "187.714 37.7262 0"
 				"v" "187.715 37.7253 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -934,8 +934,8 @@ world
 			vertices_plus
 			{
 				"v" "126.714 37.7283 65"
-				"v" "126.714 37.7282 7.62939e-06"
-				"v" "157.71 46.7272 7.62939e-06"
+				"v" "126.714 37.7282 0"
+				"v" "157.71 46.7272 0"
 				"v" "157.709 46.7268 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -952,8 +952,8 @@ world
 			vertices_plus
 			{
 				"v" "108.713 13.729 65"
-				"v" "108.713 13.7292 7.62939e-06"
-				"v" "126.711 37.7272 7.62939e-06"
+				"v" "108.713 13.7292 0"
+				"v" "126.711 37.7272 0"
 				"v" "126.711 37.7273 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -970,8 +970,8 @@ world
 			vertices_plus
 			{
 				"v" "108.713 -16.2738 65"
-				"v" "108.713 -16.2738 7.62939e-06"
-				"v" "108.713 13.7272 7.62939e-06"
+				"v" "108.713 -16.2738 0"
+				"v" "108.713 13.7272 0"
 				"v" "108.713 13.727 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -988,8 +988,8 @@ world
 			vertices_plus
 			{
 				"v" "126.711 -40.2725 65"
-				"v" "126.711 -40.2725 7.62939e-06"
-				"v" "108.713 -16.2764 7.62939e-06"
+				"v" "126.711 -40.2725 0"
+				"v" "108.713 -16.2764 0"
 				"v" "108.713 -16.2764 65"
 			}
 			"material" "TOOLS/TOOLSCLIP"
@@ -1051,93 +1051,26 @@ world
 			"visgroupautoshown" "1"
 		}
 	}
-	group
+}
+entity
+{
+	"id" "4408"
+	"classname" "ambient_generic"
+	"health" "10"
+	"message" "gcsfx/city05/fail.wav"
+	"pitch" "100"
+	"pitchstart" "100"
+	"radius" "1250"
+	"SourceEntityName" "vo0"
+	"spawnflags" "48"
+	"targetname" "vo2"
+	"origin" "64.2934 36.4647 218"
+	editor
 	{
-		"id" "3819"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
-	}
-	group
-	{
-		"id" "3820"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
-	}
-	group
-	{
-		"id" "3821"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
-	}
-	group
-	{
-		"id" "3822"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
-	}
-	group
-	{
-		"id" "3823"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
-	}
-	group
-	{
-		"id" "3824"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
-	}
-	group
-	{
-		"id" "3825"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
-	}
-	group
-	{
-		"id" "3826"
-		editor
-		{
-			"color" "220 220 220"
-			"groupid" "3817"
-			"visgroupshown" "1"
-			"visgroupautoshown" "1"
-		}
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 1000]"
 	}
 }
 entity
@@ -1171,6 +1104,298 @@ entity
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
 		"logicalpos" "[0 1500]"
+	}
+}
+entity
+{
+	"id" "4351"
+	"classname" "gunman_digitgod"
+	"angles" "0 180 0"
+	"DisableShadows" "1"
+	"maxvalue" "500"
+	"scaledmg" "1"
+	"spawnflags" "1"
+	"targetname" "counter01"
+	connections
+	{
+		"onAdd" "failtimer,ResetTimer,,0,-1"
+		"onAdd" "failtimer,Enable,,0,-1"
+		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
+		"onMaxReached" "failtimer,Disable,,0.01,-1"
+		"onMaxReached" "proj_off0,Trigger,,2,-1"
+		"onMaxReached" "vo3,PlaySound,,0,-1"
+		"onMaxReached" "vo1,PlaySound,,2,-1"
+		"onMaxReached" "counter01,Disable,,0,-1"
+		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
+		"onMaxReached" "vo5,PlaySound,,0,-1"
+	}
+	"origin" "107.713 -16.2718 209.975"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 0]"
+	}
+}
+entity
+{
+	"id" "4583"
+	"classname" "ambient_generic"
+	"health" "10"
+	"message" "gcsfx/city05/vo/gunman/niceshot.wav"
+	"pitch" "100"
+	"pitchstart" "100"
+	"radius" "1250"
+	"SourceEntityName" "proj_mdl0"
+	"spawnflags" "48"
+	"targetname" "vo5"
+	"origin" "122.66 -16.3687 141"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 1000]"
+	}
+}
+entity
+{
+	"id" "4392"
+	"classname" "ambient_generic"
+	"health" "10"
+	"message" "gcsfx/city05/vo/av/500dpswithintime.wav"
+	"pitch" "100"
+	"pitchstart" "100"
+	"radius" "1250"
+	"spawnflags" "48"
+	"targetname" "vo0"
+	"origin" "100.713 2.9765 212.138"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 1000]"
+	}
+}
+entity
+{
+	"id" "4399"
+	"classname" "ambient_generic"
+	"health" "10"
+	"message" "gcsfx/city05/vo/av/500dpsachieved.wav"
+	"pitch" "100"
+	"pitchstart" "100"
+	"radius" "1250"
+	"SourceEntityName" "vo0"
+	"spawnflags" "48"
+	"targetname" "vo1"
+	"origin" "67.3689 56.6153 218"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 1000]"
+	}
+}
+entity
+{
+	"id" "4082"
+	"classname" "logic_relay"
+	"spawnflags" "0"
+	"targetname" "proj_off0"
+	connections
+	{
+		"OnTrigger" "proj_lites0,TurnOff,,0,-1"
+		"OnTrigger" "proj_dust0,TurnOff,,0,-1"
+		"OnTrigger" "proj_amb0,StopSound,,0,-1"
+		"OnTrigger" "proj_spr0,HideSprite,,0,-1"
+		"OnTrigger" "proj_rotor0,Stop,,0,-1"
+		"OnTrigger" "proj_spotlites0,LightOff,,0,-1"
+		"OnTrigger" "proj_mdl0,Disable,,0,-1"
+	}
+	"origin" "233.025 22.5 216"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 0]"
+	}
+}
+entity
+{
+	"id" "4084"
+	"classname" "env_sprite"
+	"framerate" "10.0"
+	"GlowProxySize" "2.0"
+	"gmod_allowphysgun" "1"
+	"HDRColorScale" "1.0"
+	"model" "sprites/glow01.spr"
+	"parentname" "proj_rotor0"
+	"renderamt" "255"
+	"rendercolor" "0 255 134"
+	"rendermode" "9"
+	"scale" "2"
+	"spawnflags" "1"
+	"targetname" "proj_spr0"
+	"origin" "171.018 35.8986 46.445"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[1000 -9768]"
+	}
+}
+entity
+{
+	"id" "4087"
+	"classname" "env_cubemap"
+	"cubemapsize" "0"
+	"origin" "159.713 -1.27332 140"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[1000 -9768]"
+	}
+}
+entity
+{
+	"id" "4090"
+	"classname" "env_sprite"
+	"framerate" "10.0"
+	"GlowProxySize" "2.0"
+	"gmod_allowphysgun" "1"
+	"HDRColorScale" "1.0"
+	"model" "sprites/glow01.spr"
+	"parentname" "proj_rotor0"
+	"renderamt" "255"
+	"rendercolor" "0 255 134"
+	"rendermode" "9"
+	"scale" "2"
+	"spawnflags" "1"
+	"targetname" "proj_spr0"
+	"origin" "198.713 -0.0365906 44.7134"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[1000 -9768]"
+	}
+}
+entity
+{
+	"id" "4093"
+	"classname" "env_sprite"
+	"framerate" "10.0"
+	"GlowProxySize" "2.0"
+	"gmod_allowphysgun" "1"
+	"HDRColorScale" "1.0"
+	"model" "sprites/glow01.spr"
+	"parentname" "proj_rotor0"
+	"renderamt" "255"
+	"rendercolor" "0 255 134"
+	"rendermode" "9"
+	"scale" "2"
+	"spawnflags" "1"
+	"targetname" "proj_spr0"
+	"origin" "171.511 -36.8348 47.3667"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[1000 -9768]"
+	}
+}
+entity
+{
+	"id" "4096"
+	"classname" "env_projectedtexture"
+	"angles" "90 -0 0"
+	"cameraspace" "0"
+	"enableshadows" "1"
+	"farz" "750.0"
+	"lightcolor" "0 255 134 100"
+	"lightfov" "175"
+	"lightonlytarget" "0"
+	"lightworld" "1"
+	"nearz" "1"
+	"shadowquality" "1"
+	"spawnflags" "1"
+	"style" "0"
+	"targetname" "proj_lites0"
+	"origin" "159.713 -1.27332 64"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[1000 -9768]"
+	}
+}
+entity
+{
+	"id" "4099"
+	"classname" "env_sprite"
+	"framerate" "10.0"
+	"GlowProxySize" "2.0"
+	"gmod_allowphysgun" "1"
+	"HDRColorScale" "1.0"
+	"model" "sprites/glow01.spr"
+	"parentname" "proj_rotor0"
+	"renderamt" "255"
+	"rendercolor" "0 255 134"
+	"rendermode" "9"
+	"scale" "2"
+	"spawnflags" "1"
+	"targetname" "proj_spr0"
+	"origin" "125.171 -23.1083 46.6777"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[1000 -9768]"
+	}
+}
+entity
+{
+	"id" "4102"
+	"classname" "env_sprite"
+	"framerate" "10.0"
+	"GlowProxySize" "2.0"
+	"gmod_allowphysgun" "1"
+	"HDRColorScale" "1.0"
+	"model" "sprites/glow01.spr"
+	"parentname" "proj_rotor0"
+	"renderamt" "255"
+	"rendercolor" "0 255 134"
+	"rendermode" "9"
+	"scale" "2"
+	"spawnflags" "1"
+	"targetname" "proj_spr0"
+	"origin" "123.786 21.6785 42.6975"
+	editor
+	{
+		"color" "220 220 220"
+		"groupid" "3817"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[1000 -9768]"
 	}
 }
 entity
@@ -2838,8 +3063,8 @@ entity
 			{
 				"v" "108.713 14.0757 16"
 				"v" "108.713 -15.5703 16"
-				"v" "108.713 -15.5703 7.62939e-06"
-				"v" "108.713 14.0757 7.62939e-06"
+				"v" "108.713 -15.5703 0"
+				"v" "108.713 14.0757 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -2856,8 +3081,8 @@ entity
 			{
 				"v" "205.713 -14.9223 16"
 				"v" "205.713 14.7807 16"
-				"v" "205.713 14.7807 7.62939e-06"
-				"v" "205.713 -14.9223 7.62939e-06"
+				"v" "205.713 14.7807 0"
+				"v" "205.713 -14.9223 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -2896,16 +3121,16 @@ entity
 			"plane" "(187.613 38.9137 7.62939e-06) (157.743 47.8747 7.62939e-06) (127.473 39.0917 7.62939e-06)"
 			vertices_plus
 			{
-				"v" "187.613 38.9137 7.62939e-06"
-				"v" "157.743 47.8747 7.62939e-06"
-				"v" "127.473 39.0917 7.62939e-06"
-				"v" "108.713 14.0737 7.62939e-06"
-				"v" "108.713 -15.5683 7.62939e-06"
-				"v" "126.633 -39.4713 7.62939e-06"
-				"v" "157.543 -48.4423 7.62939e-06"
-				"v" "187.263 -39.5293 7.62939e-06"
-				"v" "205.713 -14.9223 7.62939e-06"
-				"v" "205.713 14.7807 7.62939e-06"
+				"v" "187.613 38.9137 0"
+				"v" "157.743 47.8747 0"
+				"v" "127.473 39.0917 0"
+				"v" "108.713 14.0737 0"
+				"v" "108.713 -15.5683 0"
+				"v" "126.633 -39.4713 0"
+				"v" "157.543 -48.4423 0"
+				"v" "187.263 -39.5293 0"
+				"v" "205.713 -14.9223 0"
+				"v" "205.713 14.7807 0"
 			}
 			"material" "GCTEXTURES/GCWALL04"
 			"uaxis" "[-1 0 0 56.7131] 1"
@@ -2922,8 +3147,8 @@ entity
 			{
 				"v" "157.743 47.8737 16"
 				"v" "127.473 39.0887 16"
-				"v" "127.473 39.0887 7.62939e-06"
-				"v" "157.743 47.8737 7.62939e-06"
+				"v" "127.473 39.0887 0"
+				"v" "157.743 47.8737 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -2940,8 +3165,8 @@ entity
 			{
 				"v" "187.613 38.9127 16"
 				"v" "157.743 47.8727 16"
-				"v" "157.743 47.8727 7.62939e-06"
-				"v" "187.613 38.9127 7.62939e-06"
+				"v" "157.743 47.8727 0"
+				"v" "187.613 38.9127 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -2958,8 +3183,8 @@ entity
 			{
 				"v" "157.543 -48.4413 16"
 				"v" "187.263 -39.5283 16"
-				"v" "187.263 -39.5283 7.62939e-06"
-				"v" "157.543 -48.4413 7.62939e-06"
+				"v" "187.263 -39.5283 0"
+				"v" "157.543 -48.4413 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -2976,8 +3201,8 @@ entity
 			{
 				"v" "126.633 -39.4713 16"
 				"v" "157.543 -48.4413 16"
-				"v" "157.543 -48.4413 7.62939e-06"
-				"v" "126.633 -39.4713 7.62939e-06"
+				"v" "157.543 -48.4413 0"
+				"v" "126.633 -39.4713 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -2994,8 +3219,8 @@ entity
 			{
 				"v" "187.263 -39.5293 16"
 				"v" "205.713 -14.9193 16"
-				"v" "205.713 -14.9193 7.62939e-06"
-				"v" "187.263 -39.5293 7.62939e-06"
+				"v" "205.713 -14.9193 0"
+				"v" "187.263 -39.5293 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -3011,8 +3236,8 @@ entity
 			vertices_plus
 			{
 				"v" "126.633 -39.4723 16"
-				"v" "126.633 -39.4723 7.62939e-06"
-				"v" "108.713 -15.5683 7.62939e-06"
+				"v" "126.633 -39.4723 0"
+				"v" "108.713 -15.5683 0"
 				"v" "108.713 -15.5683 16"
 			}
 			"material" "GCTEXTURES/GCTANK6"
@@ -3029,8 +3254,8 @@ entity
 			vertices_plus
 			{
 				"v" "187.613 38.9137 16"
-				"v" "187.613 38.9137 7.62939e-06"
-				"v" "205.713 14.7797 7.62939e-06"
+				"v" "187.613 38.9137 0"
+				"v" "205.713 14.7797 0"
 				"v" "205.713 14.7797 16"
 			}
 			"material" "GCTEXTURES/GCTANK6"
@@ -3048,8 +3273,8 @@ entity
 			{
 				"v" "127.473 39.0887 16"
 				"v" "108.713 14.0767 16"
-				"v" "108.713 14.0767 7.62939e-06"
-				"v" "127.473 39.0887 7.62939e-06"
+				"v" "108.713 14.0767 0"
+				"v" "127.473 39.0887 0"
 			}
 			"material" "GCTEXTURES/GCTANK6"
 			"uaxis" "[0 0 -1 16.5556] 0.9"
@@ -3206,6 +3431,7 @@ entity
 	connections
 	{
 		"OnTakeDamage" "counter01,Add,1,0,-1"
+		"OnTakeDamage" "counter0,Increment,,0,-1"
 	}
 	"origin" "160.346 -3.43677 89"
 	editor
@@ -3219,330 +3445,48 @@ entity
 }
 entity
 {
-	"id" "4082"
-	"classname" "logic_relay"
-	"spawnflags" "0"
-	"targetname" "proj_off0"
-	connections
-	{
-		"OnTrigger" "proj_lites0,TurnOff,,0,-1"
-		"OnTrigger" "proj_dust0,TurnOff,,0,-1"
-		"OnTrigger" "proj_amb0,StopSound,,0,-1"
-		"OnTrigger" "proj_spr0,HideSprite,,0,-1"
-		"OnTrigger" "proj_rotor0,Stop,,0,-1"
-		"OnTrigger" "proj_spotlites0,LightOff,,0,-1"
-		"OnTrigger" "proj_mdl0,Disable,,0,-1"
-	}
-	"origin" "233.025 22.5 216"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 0]"
-	}
-}
-entity
-{
-	"id" "4084"
-	"classname" "env_sprite"
-	"framerate" "10.0"
-	"GlowProxySize" "2.0"
-	"gmod_allowphysgun" "1"
-	"HDRColorScale" "1.0"
-	"model" "sprites/glow01.spr"
-	"parentname" "proj_rotor0"
-	"renderamt" "255"
-	"rendercolor" "0 255 134"
-	"rendermode" "9"
-	"scale" "2"
-	"spawnflags" "1"
-	"targetname" "proj_spr0"
-	"origin" "171.018 35.8986 46.445"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[1000 -9768]"
-	}
-}
-entity
-{
-	"id" "4087"
-	"classname" "env_cubemap"
-	"cubemapsize" "0"
-	"origin" "159.713 -1.27332 140"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[1000 -9768]"
-	}
-}
-entity
-{
-	"id" "4090"
-	"classname" "env_sprite"
-	"framerate" "10.0"
-	"GlowProxySize" "2.0"
-	"gmod_allowphysgun" "1"
-	"HDRColorScale" "1.0"
-	"model" "sprites/glow01.spr"
-	"parentname" "proj_rotor0"
-	"renderamt" "255"
-	"rendercolor" "0 255 134"
-	"rendermode" "9"
-	"scale" "2"
-	"spawnflags" "1"
-	"targetname" "proj_spr0"
-	"origin" "198.713 -0.0365906 44.7134"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[1000 -9768]"
-	}
-}
-entity
-{
-	"id" "4093"
-	"classname" "env_sprite"
-	"framerate" "10.0"
-	"GlowProxySize" "2.0"
-	"gmod_allowphysgun" "1"
-	"HDRColorScale" "1.0"
-	"model" "sprites/glow01.spr"
-	"parentname" "proj_rotor0"
-	"renderamt" "255"
-	"rendercolor" "0 255 134"
-	"rendermode" "9"
-	"scale" "2"
-	"spawnflags" "1"
-	"targetname" "proj_spr0"
-	"origin" "171.511 -36.8348 47.3667"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[1000 -9768]"
-	}
-}
-entity
-{
-	"id" "4096"
-	"classname" "env_projectedtexture"
-	"angles" "90 -0 0"
-	"cameraspace" "0"
-	"enableshadows" "1"
-	"farz" "750.0"
-	"lightcolor" "0 255 134 100"
-	"lightfov" "175"
-	"lightonlytarget" "0"
-	"lightworld" "1"
-	"nearz" "1"
-	"shadowquality" "1"
-	"spawnflags" "1"
-	"style" "0"
-	"targetname" "proj_lites0"
-	"origin" "159.713 -1.27332 64"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[1000 -9768]"
-	}
-}
-entity
-{
-	"id" "4099"
-	"classname" "env_sprite"
-	"framerate" "10.0"
-	"GlowProxySize" "2.0"
-	"gmod_allowphysgun" "1"
-	"HDRColorScale" "1.0"
-	"model" "sprites/glow01.spr"
-	"parentname" "proj_rotor0"
-	"renderamt" "255"
-	"rendercolor" "0 255 134"
-	"rendermode" "9"
-	"scale" "2"
-	"spawnflags" "1"
-	"targetname" "proj_spr0"
-	"origin" "125.171 -23.1083 46.6777"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[1000 -9768]"
-	}
-}
-entity
-{
-	"id" "4102"
-	"classname" "env_sprite"
-	"framerate" "10.0"
-	"GlowProxySize" "2.0"
-	"gmod_allowphysgun" "1"
-	"HDRColorScale" "1.0"
-	"model" "sprites/glow01.spr"
-	"parentname" "proj_rotor0"
-	"renderamt" "255"
-	"rendercolor" "0 255 134"
-	"rendermode" "9"
-	"scale" "2"
-	"spawnflags" "1"
-	"targetname" "proj_spr0"
-	"origin" "123.786 21.6785 42.6975"
-	editor
-	{
-		"color" "220 220 220"
-		"groupid" "3817"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[1000 -9768]"
-	}
-}
-entity
-{
-	"id" "4351"
-	"classname" "gunman_digitgod"
-	"angles" "0 180 0"
-	"DisableShadows" "1"
-	"maxvalue" "500"
-	"scaledmg" "1"
-	"spawnflags" "257"
-	"targetname" "counter01"
-	connections
-	{
-		"onAdd" "failtimer,ResetTimer,,0,-1"
-		"onAdd" "failtimer,Enable,,0,-1"
-		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
-		"onMaxReached" "failtimer,Disable,,0.01,-1"
-		"onMaxReached" "proj_off0,Trigger,,2,-1"
-		"onMaxReached" "vo3,PlaySound,,0,-1"
-		"onMaxReached" "vo1,PlaySound,,2,-1"
-		"onMaxReached" "counter01,Disable,,0,-1"
-		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
-		"onMaxReached" "vo5,PlaySound,,0,-1"
-	}
-	"origin" "107.713 -16.2718 209.975"
+	"id" "4624"
+	"classname" "weapon_gausspistol"
+	"origin" "-139.27 -9.48305 32"
 	editor
 	{
 		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"logicalpos" "[0 0]"
+		"logicalpos" "[0 2000]"
 	}
 }
 entity
 {
-	"id" "4583"
+	"id" "4603"
+	"classname" "logic_auto"
+	"spawnflags" "1"
+	connections
+	{
+		"OnMapSpawn" "vo0,PlaySound,,1,-1"
+	}
+	"origin" "53.2297 73.6855 218"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 500]"
+	}
+}
+entity
+{
+	"id" "4573"
 	"classname" "ambient_generic"
 	"health" "10"
-	"message" "gcsfx/city05/vo/gunman/niceshot.wav"
+	"message" "gcsfx/city04/vo/gunman/scene03/jones_death.wav"
 	"pitch" "100"
 	"pitchstart" "100"
 	"radius" "1250"
 	"SourceEntityName" "proj_mdl0"
 	"spawnflags" "48"
-	"targetname" "vo5"
-	"origin" "122.66 -16.3687 141"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "4392"
-	"classname" "ambient_generic"
-	"health" "10"
-	"message" "gcsfx/city05/vo/av/500dpswithintime.wav"
-	"pitch" "100"
-	"pitchstart" "100"
-	"radius" "1250"
-	"spawnflags" "48"
-	"targetname" "vo0"
-	"origin" "100.713 2.9765 212.138"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "4399"
-	"classname" "ambient_generic"
-	"health" "10"
-	"message" "gcsfx/city05/vo/av/500dpsachieved.wav"
-	"pitch" "100"
-	"pitchstart" "100"
-	"radius" "1250"
-	"SourceEntityName" "vo0"
-	"spawnflags" "48"
-	"targetname" "vo1"
-	"origin" "67.3689 56.6153 218"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "4408"
-	"classname" "ambient_generic"
-	"health" "10"
-	"message" "gcsfx/city05/fail.wav"
-	"pitch" "100"
-	"pitchstart" "100"
-	"radius" "1250"
-	"SourceEntityName" "vo0"
-	"spawnflags" "48"
-	"targetname" "vo2"
-	"origin" "64.2934 36.4647 218"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "4411"
-	"classname" "ambient_generic"
-	"health" "10"
-	"message" "gcsfx/city05/success.wav"
-	"pitch" "100"
-	"pitchstart" "100"
-	"radius" "1250"
-	"SourceEntityName" "vo0"
-	"spawnflags" "48"
-	"targetname" "vo3"
-	"origin" "63.9914 14.8415 218"
+	"targetname" "vo4"
+	"origin" "109.53 16.4378 151.536"
 	editor
 	{
 		"color" "220 30 220"
@@ -3580,54 +3524,23 @@ entity
 }
 entity
 {
-	"id" "4573"
+	"id" "4411"
 	"classname" "ambient_generic"
 	"health" "10"
-	"message" "gcsfx/city04/vo/gunman/scene03/jones_death.wav"
+	"message" "gcsfx/city05/success.wav"
 	"pitch" "100"
 	"pitchstart" "100"
 	"radius" "1250"
-	"SourceEntityName" "proj_mdl0"
+	"SourceEntityName" "vo0"
 	"spawnflags" "48"
-	"targetname" "vo4"
-	"origin" "109.53 16.4378 151.536"
+	"targetname" "vo3"
+	"origin" "63.9914 14.8415 218"
 	editor
 	{
 		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
 		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "4603"
-	"classname" "logic_auto"
-	"spawnflags" "1"
-	connections
-	{
-		"OnMapSpawn" "vo0,PlaySound,,1,-1"
-	}
-	"origin" "53.2297 73.6855 218"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 500]"
-	}
-}
-entity
-{
-	"id" "4624"
-	"classname" "weapon_gausspistol"
-	"origin" "-139.27 -9.48305 32"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 2000]"
 	}
 }
 cameras

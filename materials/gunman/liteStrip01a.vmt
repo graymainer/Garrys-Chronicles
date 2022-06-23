@@ -4,4 +4,16 @@
 	"$selfillum" 1
 	"$surfaceprop" "glass"
 	"%keywords" "gc"
+	
+	Proxies
+	{
+	
+		ToggleTexture //frame 0 is on, 1 is off
+		{
+		
+			ToggleTextureVar				$basetexture
+			ToggleTextureFrameNumVar		$frame
+		}
+	
+	}
 }

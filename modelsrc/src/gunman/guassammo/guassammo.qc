@@ -1,33 +1,20 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "gaussclip.mdl"
-$cd "."
-$cliptotextures
-$scale 1.0
+$modelname "gunman/item_ammo_pistol.mdl"
 
 $contents "solid"
 $surfaceprop "weapon"
 
-$bodygroup "studio"
-{
-	studio "guassammo_ammo"
-}
+$body "Gauss Energy Cannister" "gauss_ammo_ref"
 
-$cdmaterials "models/gcitems/gaussclip/"
+$cdmaterials "models/gunman/items/pistol/ammo/"
 
-
-$cbox 0 0 0 0 0 0
-
-$bbox 0 0 0 0 0 0
-
-$hbox 0 "cap" -1.62 -2.77 -10.85 6.81 2.77 0.5
-
-$collisionmodel	"gaussammo_phys.smd"
+$collisionmodel	"gauss_ammo_ref.smd"
 {
 	$automass
 }
 
-$sequence "ammo" {
-	"guassammo_anims\ammo"
+$sequence "idle" {
+	"gauss_ammo_ref"
 	fps 10
 }

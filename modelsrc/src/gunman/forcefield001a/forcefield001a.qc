@@ -1,6 +1,9 @@
 $modelname "gunman/forcefield001a"
 
-$body "Body" "forcefield001a_ref"
+$bodygroup "Body" { //use this for a reference on where to place lights.
+	studio "forcefield001a_refa"
+	studio "forcefield001a_refb"
+}
 
 $bodygroup "light_reference" { //use this for a reference on where to place lights.
 	blank
@@ -31,6 +34,6 @@ $surfaceprop "flesh"
 $contents "grate"
 
 
-$collisionmodel "forcefield001a_ref"  {
+$collisionmodel "forcefield001a_refb"  {
 	$automass
 }

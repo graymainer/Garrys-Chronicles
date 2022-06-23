@@ -7,6 +7,9 @@ $bodygroup "studio"
 	studio "gc_beak_beak_base.smd"
 }
 
+$collisionmodel "gc_beak_beak_base" { //pretty fuckin lazy, but this serves my purpose. might get to it later
+	$automass
+}
 
 $surfaceprop "antlion"
 

@@ -15,6 +15,19 @@
 	output onSaid(string)				: "Fired when we said something. Returns what we said."
 ]
 
+
+//@PointClass base(Item) studio("models/gunman/item_.mdl")= gunman_item_ : "" []
+
+//@PointClass base(Weapon) studio("models/gunman/weapon/.mdl") = gunman_weapon_ : "" []
+
+
+@PointClass base(Item) studio("models/gunman/item_ammo_pistol.mdl")= gunman_item_ammo_pistol : "A cannister of gauss energy for the gauss pistol." []
+@PointClass base(Item) studio("models/gunman/item_ammo_shotgun.mdl")= gunman_item_ammo_shotgun : "A box of 12ga. buckshot shells for the combat shotgun." []
+@PointClass base(Item) studio("models/gunman/item_ammo_mechagun.mdl")= gunman_item_ammo_mechagun : "A rack of 7.62mm rounds for the Mecha-Gun." []
+@PointClass base(Item) studio("models/gunman/item_ammo_rocketpack.mdl")= gunman_item_ammo_rocketpack : "A pack of HE rocket cannisters." []
+@PointClass base(Item) studio("models/gunman/item_armor.mdl")= gunman_item_armor : "A standard issue gunman ballistics proof combat vest." []
+@PointClass base(Item) studio("models/gunman/item_medkit.mdl")= gunman_item_medkit : "A basic emergency medical kit." []
+
 @PointClass base(Targetname, Parentname, Angles) studioprop("models/gunman/digitgod.mdl") = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
 [
 	//if you want to change this system to use custom models, you'll want to get rid of the "models/gunman/digitgod.mdl" part and leave it as "studioprop()". 
@@ -22,8 +35,9 @@
 
 	spawnflags(flags) =
 	[
-		1	:	"Fire Target Once"	:	1
+		1	:	"Fire Target Once"				:	1
 		2	:	"Trigger Target on Exact Match"	:	0
+		4 	:	"Dont Render"					:	0
 	]
 
 	initialvalue(integer)				: "Initial Value"	: 0	  : "The value that the counter should be set at when spawned in. \n" + "If 'Clear to initial value' is ticked, when cleared, this value will be what the counter is set back to."
@@ -41,7 +55,7 @@
 	
 	//sndvol(integer) 					: "Sound Volume"	: 5   : "The volume to play the sound at. Only works if a sound was selected."
 	
-	//sndpitch(integer) 					: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
+	//sndpitch(integer) 				: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
 	
 	scaledmg(choices)					: "Scale by Damage" : 0	  : "Should we scale all increments, additions, subtractions, etc by the damage of the player's current weapon?" = 
 	[
@@ -49,18 +63,17 @@
 		1 : "Yes"
 	]
 	
-	StartDisabled(choices) 			: "Start Disabled" 	: 0   : "Should this counter be off when spawned in?" =
+	StartDisabled(choices) 				: "Start Disabled" 	: 0   : "Should this counter be off when spawned in?" =
 	[
 		0 : "No"
 		1 : "Yes"
 	] 
 
-	DisableShadows(choices) 			: "Disable Shadows" : 0   : "Should this counter's model have its shadows disabled?"  =
+	DisableShadows(choices) 			: "Disable Shadows" : 0   : "Should this counter's model not render shadows?"  =
 	[
 		0 : "No"
 		1 : "Yes"
 	] 
-	
 	
 	input Add(integer)					: "Add this value to the counter."
 	input Sub(integer)					: "Subtract this value from the counter."

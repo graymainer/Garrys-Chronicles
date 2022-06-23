@@ -25,8 +25,9 @@
 
 	spawnflags(flags) =
 	[
-		1	:	"Fire Target Once"	:	1
+		1	:	"Fire Target Once"				:	1
 		2	:	"Trigger Target on Exact Match"	:	0
+		4 	:	"Dont Render"					:	0
 	]
 
 	initialvalue(integer)				: "Initial Value"	: 0	  : "The value that the counter should be set at when spawned in. \n" + "If 'Clear to initial value' is ticked, when cleared, this value will be what the counter is set back to."
@@ -44,7 +45,7 @@
 	
 	//sndvol(integer) 					: "Sound Volume"	: 5   : "The volume to play the sound at. Only works if a sound was selected."
 	
-	//sndpitch(integer) 					: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
+	//sndpitch(integer) 				: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
 	
 	scaledmg(choices)					: "Scale by Damage" : 0	  : "Should we scale all increments, additions, subtractions, etc by the damage of the player's current weapon?" = 
 	[
@@ -52,18 +53,17 @@
 		1 : "Yes"
 	]
 	
-	StartDisabled(choices) 			: "Start Disabled" 	: 0   : "Should this counter be off when spawned in?" =
+	StartDisabled(choices) 				: "Start Disabled" 	: 0   : "Should this counter be off when spawned in?" =
 	[
 		0 : "No"
 		1 : "Yes"
 	] 
 
-	DisableShadows(choices) 			: "Disable Shadows" : 0   : "Should this counter's model have its shadows disabled?"  =
+	DisableShadows(choices) 			: "Disable Shadows" : 0   : "Should this counter's model not render shadows?"  =
 	[
 		0 : "No"
 		1 : "Yes"
 	] 
-	
 	
 	input Add(integer)					: "Add this value to the counter."
 	input Sub(integer)					: "Subtract this value from the counter."
@@ -108,9 +108,10 @@
 	//output onModelChanged(string)		: "Fired when our model is changed. Returns the new model file."
 ]
 
-]]--
 
---TODO?: properly implement removePanel()
+--]]
+
+--?TODO?: properly implement removePanel()
 
 
 --basic stuff for entity declarations.
@@ -127,6 +128,7 @@ PANEL_OFFSET = 16 -- the offset to spawn each panel by.
 --flags
 SF_FIRE_TARGET_ONCE = 1 --the spawnflag that will tell us if we should reset targetValue once we reached it or not.
 SF_TARGET_EXACT_MATCH = 2 --flag for if we should use == to compare the targetvalue instead of looser terms like < or >
+SF_INVISIBLE = 4
 
 --
 
@@ -140,6 +142,7 @@ ENT.maxValue = 0 --our maximum value. targetvalue cannot be higher than this, bu
 ENT.mdl = "models/gunman/digitgod.mdl" -- the model we're going to use. If you change this, keep in mind that the system expects a model with 10 skins to represent all 10 digits. You also have to change the PANEL_OFFSET variable to match the size of your new model.
 ENT.panels = {} --keeps track of the panels we've spawned.
 ENT.bEnabled = true --are we enabled?
+ENT.bDisableRender = false
 --
 
 
@@ -162,12 +165,14 @@ function printDGInfo(entName)
 	print("\n\n========Digit God Info========n\n")
 	print("\n\n")
 	print("Name:", "", "", ent:GetName())
+	print("Flags:", "", "", ent:GetSpawnFlags())
 	print("Initialised?", "", ent.bInit)
 	print("Value:", "", "", ent.value)
 	print("Target Value:", "", ent.targetValue)
 	print("Max Value:", "", ent.maxValue)
 	print("Model:", "", "", ent.mdl)
-	print("bEnabled?", "", ent.bEnabled)
+	print("Enabled?", "", ent.bEnabled)
+	print("Rendering?", "", !ent.bDisableRender)
 	print("Panels:")
 	PrintTable(ent.panels)
 	print("\n")
@@ -301,22 +306,21 @@ function ENT:KeyValue( k, v )
 		if (val == 0) then return end
 
 		self.maxValue = val
-			
+	
 	elseif (isKey("scaledmg", k)) then --booleans in hammer i/o speak are simply 0s and 1s.
 		if (v == "1") then 
 			self.bScaleDmg = true
 		end
-				
+	
 	elseif (isKey("StartDisabled", k)) then
 		if (v == "1") then 
 			self.bStartDisabled = true
 		end
-					
+	
 	elseif (isKey("DisableShadows", k)) then
 		if (v == "1") then 
 			self:DrawShadow(false)
 		end
-
 	end
 
 
@@ -356,11 +360,19 @@ function ENT:verifyKeys()
 		self.bTargetFireOnce = true
 	end
 
-	if (self:HasSpawnFlags(SF_TARGET_EXACT_MATCH)) then -- if we have the flag for firing target output once, then set our bool for it to true.
+	if (self:HasSpawnFlags(SF_TARGET_EXACT_MATCH)) then
 		self.bTargetMustMatch = true
 	end
+	
+	if (self:HasSpawnFlags(SF_INVISIBLE)) then
+		self:SetRenderMode(RENDERMODE_NONE)
+		self.bDisableRender = true
+		self:DrawShadow(false)
+	end
+	
+	
 
-	if (self.bStartDisabled) then
+	if (self.bStartDisabled) then --will screw up initial value addition if we do it in ent:keyvalue()
 		self.bEnabled = false
 	end
 end
@@ -368,6 +380,9 @@ end
 function ENT:setupPanels()
 
 	self.panels[1] = self --initialize the first value of panels with ourselves. spawnPanel will take it from here.
+	
+	if (self.bDisableRender) then return end
+	
 	if (self.maxValue == 0) then --if maxvalue is zero (it isn't set) then our value is over 1 digit, spawn panels for every digit we dont yet represent.
 		if (self.value > 9) then
 			self:spawnPanel(string.len(tostring(self.value)) - 1)
@@ -381,7 +396,9 @@ end
 function ENT:Initialize()
 	self:verifyKeys() --check our keys again.
 
-	self:SetModel(self.mdl) --set our model.
+	if (!bDisableRender) then
+		self:SetModel(self.mdl) --set our model.
+	end
 
 	self:setupPanels() --setup our panels to start with.
 
@@ -392,6 +409,8 @@ end
 
 --spawns in panels in an amount of your choosing then indexes them into the panels table. it will automatically move them to the right of the counter. can create as many as you need.
 function ENT:spawnPanel(nPanelsToSpawn)
+	if (self.bDisableRender) then return end
+
 	if (CLIENT) then
 		return end
 
@@ -421,6 +440,8 @@ end
 
 --does the opposite of above. removes the panel or panels if you choose multiple, and gets rid of it in the table. WARNING!: Not sure how much i tested this!
 function ENT:removePanel(nPanelsToDel)
+	if (self.bDisableRender) then return end
+	
 	if (CLIENT) then
 		return end
 
