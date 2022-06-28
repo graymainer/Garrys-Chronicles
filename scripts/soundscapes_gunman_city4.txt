@@ -1,0 +1,226 @@
+"Gunman.Announcements"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"98,103"
+		"position"	"0, 7"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
+
+"Gunman.Announcements_NonPositional"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"98,103"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
+
+
+"Gunman.City1"
+{
+	"dsp" "8"
+	"dsp_volume" "4"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"volume"	"1.0"
+		"name" "Gunman.Announcements"
+		
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_metalstress"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"1, 15"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/metallic2.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}
+
+"Gunman.City1b"
+{
+	"dsp" "8"
+	"dsp_volume" "4"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"volume"	"0.8,1.4"
+		"name" "Gunman.Announcements_NonPositional"
+		
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_metalstress"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"1, 15"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/metallic2.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}
+
+//no announcements
+"Gunman.City1d"
+{
+	"dsp" "8"
+	"dsp_volume" "4"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_metalstress"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"1, 15"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/metallic2.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}

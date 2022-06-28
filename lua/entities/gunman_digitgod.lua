@@ -761,7 +761,7 @@ end
 --clears our value and fires the appropiate outputs.
 function ENT:clear()
 	if (CLIENT) then return end
-	if (!self.bEnabled) then return end
+	--if (!self.bEnabled) then return end --i've found it more useful to avoid disabling this function when disabled.
 	if (self.value == 0) then return end
 
 	self.value = 0
