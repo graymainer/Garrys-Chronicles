@@ -413,5 +413,5 @@ hook.Add("PreCleanupMap", "HK_CLEANUP", function()
 	nGrenades = 2
 	ammoMulti = 1.0
 	
- end)
+end)
 
