@@ -1,5 +1,6 @@
 --our own level loader since facepunch couldn't be bothered to fix info_landmark entities.
 --put in whatever value you want in the hammer editor, will automatically be converted to a string.
+--could do with a remake into its own seperate point entity.
 
 -- file.CreateDir("gunman")
 

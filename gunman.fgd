@@ -1,3 +1,36 @@
+@PointClass base(Targetname) iconsprite("gunman/editor/gunman_equip") = gunman_equip : "This entity is apart of the Garry's Chronicles project. \n" + "This entity will equip the activator with the specified weaponry. \n" + "It will replace these weapons with gunman sweps if they are found in the user's addons. \n" + "Weapons are specified through spawn flags."
+[
+	spawnflags(flags) =
+	[
+		1		:	"Crowbar / Knife"		: 0
+		2		:	"Pistol"				: 0
+		4		:	"Sniper" 				: 0
+		8		:	"Machinegun"			: 0
+		16		:	"Shotgun"				: 0
+		32		:	"Rocket Launcher"		: 0
+		64		:	"Grenades"				: 0
+		128		:	"Strip Before Equip"	: 1
+		256		:	"Force Vanilla Weapons"	: 0
+		512		:	"Equip All Players"		: 1
+		1024	:	"Equip on Spawn"		: 1
+	]
+	
+	nades(integer)						: "Grenades" 		: 	2 	: "How many grenades should we give? (If any)"
+	ammomulti(float)					: "Ammo Amount" 	: "1.0" : "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
+
+	input equip(void)					: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
+	input setAmmoMultiplier(float)		: "Sets our ammo multiplier."
+	input toggleGun(string)				: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
+	
+	output onEquipped(void)				: "Fires when we equipped something."
+	output onGunsChanged(void)			: "Fires when our catalogue of collected guns have changed."
+	
+]
+
+@PointClass base(Targetname) iconsprite("gunman/editor/gunman_mapMarker") = gunman_mapMarker :
+	"This entity is apart of the Garry's Chronicles project. Marks this map as a garry's chronicles map which enables lua systems from that project."
+[
+]
 
 @PointClass base(Targetname, Parentname, Angles) studioprop() = gunman_test : "This entity is apart of the Garry's Chronicles project. \n" + "This is a testing entity."
 [
@@ -21,12 +54,21 @@
 //@PointClass base(Weapon) studio("models/gunman/weapon/.mdl") = gunman_weapon_ : "" []
 
 
+
+@PointClass base(Weapon) studio("models/gcweapons/combatknife/w_combatknife.mdl") = gunman_weapon_knife : "Standard Issue Combat Knife." []
+@PointClass base(Weapon) studio("models/gcweapons/gunmanfists/v_melee.mdl") = gunman_weapon_fists : "Fisticuffs." []
+@PointClass base(Weapon) studio("models/gcweapons/gausspistol/w_gausspistol.mdl") = gunman_weapon_pistol : "Standard Issued Gauss Pistol." []
+@PointClass base(Weapon) studio("models/gcweapons/mechagun/w_mechagun.mdl") = gunman_weapon_mechagun : "Mecha-Gun Assault Rifle." []
+@PointClass base(Weapon) studio("models/gcweapons/shotgun/w_shotgun.mdl") = gunman_weapon_shotgun : "Standard Issue Trooper Scattergun." []
+
+
 @PointClass base(Item) studio("models/gunman/item_ammo_pistol.mdl")= gunman_item_ammo_pistol : "A cannister of gauss energy for the gauss pistol." []
 @PointClass base(Item) studio("models/gunman/item_ammo_shotgun.mdl")= gunman_item_ammo_shotgun : "A box of 12ga. buckshot shells for the combat shotgun." []
 @PointClass base(Item) studio("models/gunman/item_ammo_mechagun.mdl")= gunman_item_ammo_mechagun : "A rack of 7.62mm rounds for the Mecha-Gun." []
 @PointClass base(Item) studio("models/gunman/item_ammo_rocketpack.mdl")= gunman_item_ammo_rocketpack : "A pack of HE rocket cannisters." []
 @PointClass base(Item) studio("models/gunman/item_armor.mdl")= gunman_item_armor : "A standard issue gunman ballistics proof combat vest." []
 @PointClass base(Item) studio("models/gunman/item_medkit.mdl")= gunman_item_medkit : "A basic emergency medical kit." []
+
 
 @PointClass base(Targetname, Parentname, Angles) studioprop("models/gunman/digitgod.mdl") = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
 [

@@ -1,7 +1,9 @@
-// Created by Crowbar 0.49.0.0
+// Created by Crowbar 0.65
 
-$modelname "v_gausspistol.mdl"
+// Stored modelname (without quotes): "c:\rewolf/v_guasspistol.mdl"
+$modelname "v_guasspistol.mdl"
 $cd "."
+$cdtexture "."
 $cliptotextures
 $scale 1.0
 
@@ -15,8 +17,7 @@ $bodygroup "pistolchange"
 	studio "v_guasspistol_sniperbase"
 }
 
-$cdmaterials "models/gcweapons/gauss_pistol/"
-$cdmaterials "models/gcweapons/misc/"
+$flags 0
 
 
 $attachment 0 "Bone17" 0 0 0
@@ -42,29 +43,19 @@ $hbox 0 "Bone20" -1.26 0 -10.95 1.41 35.419998 5.45
 
 $sequence "idle" {
 	"v_guasspistol_anims\idle"
-	ACT_VM_IDLE 1
-	fadein 0
-	fadeout 0
 	fps 8
-	loop
 }
 $sequence "idlerestless" {
 	"v_guasspistol_anims\idlerestless"
-	ACT_VM_IDLE 1
-	fadein 0
-	fadeout 0
 	fps 10
-	loop
 }
 $sequence "singleshot" {
 	"v_guasspistol_anims\singleshot"
-	ACT_VM_PRIMARYATTACK 1
 	{ event 5001 0 "42" }
 	fps 11
 }
 $sequence "rapidfire" {
 	"v_guasspistol_anims\rapidfire"
-	ACT_VM_SECONDARYATTACK 1
 	{ event 5001 0 "42" }
 	fps 40
 }
@@ -75,12 +66,10 @@ $sequence "chargefire" {
 }
 $sequence "draw" {
 	"v_guasspistol_anims\draw"
-	ACT_VM_DRAW 1
 	fps 14
 }
 $sequence "holster" {
 	"v_guasspistol_anims\holster"
-	ACT_VM_HOLSTER 1
 	fps 16
 }
 $sequence "sniperidle" {

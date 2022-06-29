@@ -1,7 +1,10 @@
+--GUNMAN PARTICLE LOADER
 
-if ( !string.StartWith(game.GetMap(), "gc_") and !string.StartWith(game.GetMap(), "gunman_")) then return end
+--loads our custom particles. Without this, none of our custom particles will function.
 
---print("GCTGM: Loading gunman particles...")
+
+
+if ( !string.StartWith(game.GetMap(), "gc_") and !string.StartWith(game.GetMap(), "gunman_")) then return end --checks if the map we're on is a gunman project map. If false, then end.
 
 
 --FILES BEGIN

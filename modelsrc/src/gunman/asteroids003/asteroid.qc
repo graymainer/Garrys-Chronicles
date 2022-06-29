@@ -5,14 +5,16 @@ $modelname "gunman/asteroids003.mdl"
 $surfaceprop "boulder"
 $contents "solid"
 
-$collisionmodel	"asteroid_base.smd"
+$collisionmodel	"asteroid_base_M.smd"
 {
 	$automass
 }
 
-$bodygroup "studio"
+$bodygroup "size"
 {
-	studio "asteroid_base"
+	studio "asteroid_base_M"
+	studio "asteroid_base_S"
+	studio "asteroid_base_L"
 }
 
 $cdmaterials "models/gunman/asteroids/"

@@ -24,6 +24,7 @@ sound.Add( {
 
 --tram vo players
 function playTramVO0() --needed for some dumbass reason im not sure anyone will ever understand. this same exact code cant just be executed in hammer for who knows what reason. even with the "s replaced with the 's. nope.
+					--6/28/22 this is actually because lua_run (or hammer) doesn't support commas in the param field.
 	sound.Play("Tram.Voice0", Vector(0, 0, 0))
 end
 
