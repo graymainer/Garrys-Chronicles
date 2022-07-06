@@ -27,6 +27,57 @@
 	
 ]
 
+@PointClass base(Targetname, Parentname, RenderFxChoices) iconsprite("gunman/editor/gunman_item_spawner") = gunman_item_spawner : "This entity is apart of the Garry's Chronicles project. \n" + "Will spawn the set item into the world. \n" + "If respawn item is ticked in the flags, the item will respawn when it is picked up. This is default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "Color and render mode keys will effect the sprite and the beams that will play around it upon spawning an item."
+[
+	spawnflags(flags) =
+	[
+		1		:											"Respawn Item"												: 	1 //should the item respawn when its taken?
+		2		:											"Force HL2 Items"											: 	0 //skip the gunman swep check and go straight for hl2 stuff?
+		4		:											"No Beam FX"													: 	0 //Disable env_beam effects. Redundant if 'No FX' is applied.
+		8		:											"No FX"																: 	0 //Disable all effects.
+	]
+	
+	spawnitem(choices) 					: "Item to Spawn" 					: 		0   			:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
+	[
+		0 : "Medkit"
+		1 : "Armor"
+		2 : "Pistol Ammo"
+		3 : "Crossbow Ammo" //specifically for hl2 wpns.
+		3 : "Machinegun Ammo"
+		4 : "Shotgun Ammo"
+		5 : "Grenade"
+	] 
+	
+	StartDisabled(choices) 				: "Start Disabled" 					: 		0   			:	 "Should this spawner start off?" =
+	[
+		0 : "No"
+		1 : "Yes"
+	] 
+	
+	spawnMax(integer)						:	"Max Items"							:		0				:	"After these many items have been spawned, disable this spawner. If zero, no limit will be applied."
+	spawnAmount(integer)				:	"Spawn Quantity"				:		1				:	"The amount of this item to create each time we spawn."
+	spawnDelay(float)						:	"Spawn Delay"						:	"1.0"			:	"The amount of seconds to wait to spawn in an item. Zero means instant."
+	spawnSound(sound)					:	"Spawn Sound"					:							"gcsfx/ammo_respawn.wav"	:	"The sound to play when spawning in an item. If empty, no sound will play."
+	respawnDelay(float)					:	"Respawn Delay"					:	"5.0"			:	"The amount of seconds to wait to respawn an item. Zero means instant. Only applicable if the 'Respawn Item' flag is ticked."
+	respawnDistance(float)				:	"Distance to Respawn"		:	"0.0"			:	"The distance that needs to be reached before we can respawn an item. Overrides default respawn behavior. Zero means default respawning behavior. (see help for default respawn behavior definition.)"
+	spawnSprite(material)				:	"Spawn Sprite"						:							"gctextures/gc_spnglw.vmt"	:	"The vmt to play when we spawn in an item. If empty, will default to gc_spnglw.vmt"
+
+
+//insert the beam keys here, since we'll need to make some and then fill in the settings. So we'll have to have the user set those settings here.
+	fxBeamIntensity(integer) 						: 	"Brightness (1 - 255)" 		: 	255				:	"The brightness of the beam effects."
+	fxBeamColor(color255) 				: 	"Beam Color (R G B)" 			:	 "0 255 0"	:	"The color of the beam effects."
+
+	input spawn(void)							: 	"Spawns an item."
+	input setItem(string)						: 	"Sets the item we should spawn. Enter Pistol, Crossbow, Machinegun, Shotgun, or Grenade to set the item to one of the defaults. If the value given is none of these, we'll assume its a classname."
+
+	output onSpawnBegin(void)		: 	"Fires when we begin the spawning process."
+	output onSpawn(void)					: 	"Fires when we actually the spawn the item in."
+	output onItemSet(void)				: 	"Fires when we change what item we're spawning in."
+	output onItemGot(void)				: 	"Fires when the item we spawned in was picked up."
+	output onRespawn(void)				: 	"Fires when we respawn our item."
+	
+]
+
 @PointClass base(Targetname) iconsprite("gunman/editor/gunman_mapMarker") = gunman_mapMarker :
 	"This entity is apart of the Garry's Chronicles project. Marks this map as a garry's chronicles map which enables lua systems from that project."
 [
