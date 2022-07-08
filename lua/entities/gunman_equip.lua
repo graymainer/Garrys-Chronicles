@@ -58,32 +58,32 @@ ENT.DisableDuplicator = true
 
 --your flags
 
-local SF_MELEE = 1
-local SF_PISTOL = 2
-local SF_SNIPER = 4 --this one is gunman specific.
-local SF_MACHINEGUN = 8
-local SF_SHOTGUN = 16
-local SF_LAUNCHER = 32
-local SF_FRAGS = 64
-local SF_STRIP = 128 --should we strip the player before equipping them?
-local SF_FORCEHL2WPNS = 256 --should we skip the check for gunman weapons and just equip with hl2 weapons?
-local SF_ALLPLAYERS = 512 --should we say fuck it and go for all players instead of activator or player 1? (if activator is null)
-local SF_AUTOEQUIP = 1024 --should we equip whenever a player spawns/respawns?
+SF_MELEE = 1
+SF_PISTOL = 2
+SF_SNIPER = 4 --this one is gunman specific.
+SF_MACHINEGUN = 8
+SF_SHOTGUN = 16
+SF_LAUNCHER = 32
+SF_FRAGS = 64
+SF_STRIP = 128 --should we strip the player before equipping them?
+SF_FORCEHL2WPNS = 256 --should we skip the check for gunman weapons and just equip with hl2 weapons?
+SF_ALLPLAYERS = 512 --should we say fuck it and go for all players instead of activator or player 1? (if activator is null)
+SF_AUTOEQUIP = 1024 --should we equip whenever a player spawns/respawns?
 
 --
 
 --your variables.
 
-local bMelee = false
-local bPistol = false
-local bSniper = false
-local bMachineGun = false
-local bShotgun = false
-local bLauncher = false
-local bFrags = false
+ENT.bMelee = false
+ENT.bPistol = false
+ENT.bSniper = false
+ENT.bMachineGun = false
+ENT.bShotgun = false
+ENT.bLauncher = false
+ENT.bFrags = false
 
-local nGrenades = 2
-local ammoMulti = 1.0
+ENT.nGrenades = 2
+ENT.ammoMulti = 1.0
 
 --
 
@@ -183,13 +183,13 @@ function ENT:KeyValue( k, v )
 		local val = util.StringToType(v, "int")
 		if (!isValValid(val) or val <= 0) then print(self:GetName() .. " was given a bad grenade count. Ignoring.") return end
 		
-		nGrenades = val
+		self.nGrenades = val
 	elseif ( isKey("ammomulti", k) ) then
 		if (!self:isKeyValueValid(k, v, true)) then return end
 		local val = util.StringToType(v, "float")
 		if (!isValValid(val) or val < 0) then print(self:GetName() .. " was given a bad ammo multiplier. Ignoring.") return end
 		
-		ammoMulti = val
+		self.ammoMulti = val
 	end
 
 	--scans for outputs we made using this entity and stores them so we can trigger them later.
@@ -201,31 +201,31 @@ end
 
 function ENT:processGunFlags()
 	if (self:HasSpawnFlags(SF_MELEE)) then
-		bMelee = true
+		self.bMelee = true
 	end
 
 	if (self:HasSpawnFlags(SF_PISTOL)) then
-		bPistol = true
+		self.bPistol = true
 	end
 
 	if (self:HasSpawnFlags(SF_SNIPER)) then
-		bSniper = true
+		self.bSniper = true
 	end
 
 	if (self:HasSpawnFlags(SF_MACHINEGUN)) then
-		bMachineGun = true
+		self.bMachineGun = true
 	end
 
 	if (self:HasSpawnFlags(SF_SHOTGUN)) then
-		bShotgun = true
+		self.bShotgun = true
 	end
 
 	if (self:HasSpawnFlags(SF_LAUNCHER)) then
-		bLauncher = true
+		self.bLauncher = true
 	end
 
 	if (self:HasSpawnFlags(SF_FRAGS)) then
-		bFrags = true
+		self.bFrags = true
 	end
 end
 
@@ -296,19 +296,19 @@ function ENT:AcceptInput( name, activator, caller, data )
 		--we use iskey because it just works
 		--and yes, im aware this is lookin like yandere code, but fuck it, its the only way i know how damnit
 		if (isKey("melee", data)) then
-			bMelee = !bMelee
+			self.bMelee = !self.bMelee
 		elseif (isKey("pistol", data)) then
-			bPistol = !bPistol
+			self.bPistol = !self.bPistol
 		elseif (isKey("sniper", data)) then
-			bSniper = !bSniper
+			self.bSniper = !self.bSniper
 		elseif (isKey("machinegun", data)) then
-			bMachineGun = !bMachineGun
+			self.bMachineGun = !self.bMachineGun
 		elseif (isKey("shotgun", data)) then
-			bShotgun = !bShotgun
+			self.bShotgun = !self.bShotgun
 		elseif (isKey("launcher", data)) then
-			bLauncher = !bLauncher
+			self.bLauncher = !self.bLauncher
 		elseif (isKey("grenades", data)) then
-			bFrags = !bFrags
+			self.bFrags = !self.bFrags
 		end
 		
 		self:fireEvent("onGunsChanged")
@@ -343,7 +343,7 @@ function ENT:equip(ent) --TODO LATER: fix these to use dopey's class names for t
 		ent:StripWeapons()
 	end
 
-	if (bMelee) then
+	if (self.bMelee) then
 		if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
 			ent:Give("weapon_crowbar", true)
 		else
@@ -352,66 +352,51 @@ function ENT:equip(ent) --TODO LATER: fix these to use dopey's class names for t
 		end
 	end
 
-	if (bPistol) then
+	if (self.bPistol) then
 		if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
 			ent:Give("weapon_pistol", false)
-			ent:GiveAmmo(18 * ammoMulti, "Pistol", true)
+			ent:GiveAmmo(18 * self.ammoMulti, "Pistol", true)
 		else
 			ent:Give("gunman_weapon_pistol", false)
-			ent:GiveAmmo(35 * ammoMulti, "Pistol", true)
+			ent:GiveAmmo(35 * self.ammoMulti, "Pistol", true)
 		end
 	end
 
-	if (bSniper) then
+	if (self.bSniper) then
 		ent:Give("weapon_crossbow", false) --we dont have the sniper kit ported currently, so just do this for now.
-		ent:GiveAmmo(5 * ammoMulti, "XBowBolt", true)
+		ent:GiveAmmo(5 * self.ammoMulti, "XBowBolt", true)
 	end
 
-	if (bMachineGun) then
+	if (self.bMachineGun) then
 		if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
 			ent:Give("weapon_smg1", false)
-			ent:GiveAmmo(75 * ammoMulti, "Smg1", true)
+			ent:GiveAmmo(75 * self.ammoMulti, "Smg1", true)
 		else
 			ent:Give("gunman_weapon_mechagun", true)
-			ent:GiveAmmo(30 * ammoMulti, "Smg1", true)
+			ent:GiveAmmo(30 * self.ammoMulti, "Smg1", true)
 		end
 	end
 
-	if (bShotgun) then
+	if (self.bShotgun) then
 		if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
 			ent:Give("weapon_shotgun", false)
-			ent:GiveAmmo(22 * ammoMulti, "Buckshot", true)
+			ent:GiveAmmo(22 * self.ammoMulti, "Buckshot", true)
 		else
 			ent:Give("gunman_weapon_shotgun", true)
-			ent:GiveAmmo(16 * ammoMulti, "Buckshot", true)
+			ent:GiveAmmo(16 * self.ammoMulti, "Buckshot", true)
 		end
 	end
 
-	if (bLauncher) then
+	if (self.bLauncher) then
 		ent:Give("weapon_rpg", false) --we dont have the MULE launcher ported currently, so just do this for now.
-		ent:GiveAmmo(2 * ammoMulti, "RPG_Round", true)
+		ent:GiveAmmo(2 * self.ammoMulti, "RPG_Round", true)
 	end
 
-	if (bFrags) then
+	if (self.bFrags) then
 		ent:Give("weapon_frag", false) --we dont have the grenades ported currently, so just do this for now.
-		ent:GiveAmmo(nGrenades - 1, "Grenade", true)
+		ent:GiveAmmo(self.nGrenades - 1, "Grenade", true)
 	end
 
 	self:fireEvent("onEquipped")
 end
-
-hook.Add("PreCleanupMap", "HK_CLEANUP", function()
-
-	bMelee = false
-	bPistol = false
-	bSniper = false
-	bMachineGun = false
-	bShotgun = false
-	bLauncher = false
-	bFrags = false
-	
-	nGrenades = 2
-	ammoMulti = 1.0
-	
-end)
 

@@ -2,10 +2,10 @@
 [
 	spawnflags(flags) =
 	[
-		1		:	"Crowbar / Knife"		: 0
-		2		:	"Pistol"				: 0
-		4		:	"Sniper" 				: 0
-		8		:	"Machinegun"			: 0
+		1			:	"Crowbar / Knife"		: 0
+		2			:	"Pistol"				: 0
+		4			:	"Sniper" 				: 0
+		8			:	"Machinegun"			: 0
 		16		:	"Shotgun"				: 0
 		32		:	"Rocket Launcher"		: 0
 		64		:	"Grenades"				: 0
@@ -15,66 +15,81 @@
 		1024	:	"Equip on Spawn"		: 1
 	]
 	
-	nades(integer)						: "Grenades" 		: 	2 	: "How many grenades should we give? (If any)"
-	ammomulti(float)					: "Ammo Amount" 	: "1.0" : "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
+	nades(integer)										: "Grenades" 			: 		2 		: "How many grenades should we give? (If any)"
+	ammomulti(float)								: "Ammo Amount" 	: 	"1.0" 	: "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
 
-	input equip(void)					: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
+	input equip(void)									: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
 	input setAmmoMultiplier(float)		: "Sets our ammo multiplier."
-	input toggleGun(string)				: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
+	input toggleGun(string)						: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
 	
 	output onEquipped(void)				: "Fires when we equipped something."
 	output onGunsChanged(void)			: "Fires when our catalogue of collected guns have changed."
 	
 ]
 
-@PointClass base(Targetname, Parentname, RenderFxChoices) iconsprite("gunman/editor/gunman_item_spawner") = gunman_item_spawner : "This entity is apart of the Garry's Chronicles project. \n" + "Will spawn the set item into the world. \n" + "If respawn item is ticked in the flags, the item will respawn when it is picked up. This is default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "Color and render mode keys will effect the sprite and the beams that will play around it upon spawning an item."
+@PointClass base(Targetname, Parentname) iconsprite("gunman/editor/gunman_item_spawner") = gunman_item_spawner : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects."
 [
 	spawnflags(flags) =
 	[
-		1		:											"Respawn Item"												: 	1 //should the item respawn when its taken?
-		2		:											"Force HL2 Items"											: 	0 //skip the gunman swep check and go straight for hl2 stuff?
-		4		:											"No Beam FX"													: 	0 //Disable env_beam effects. Redundant if 'No FX' is applied.
-		8		:											"No FX"																: 	0 //Disable all effects.
+		1	:	"Respawn Item"														: 	1 //should the item respawn when its taken?
+		2	:	"Delete Items on Limit Reached"										: 	1 //When we've hit the maximum number of items we're allowed to spawn, should we delete the oldest item we've spawned and make room? Or just not spawn anymore?
+		4	:	"Force HL2 Items"													: 	0 //skip the gunman swep check and go straight for hl2 stuff?
+		8	:	"No Beam FX"														: 	0 //Disable env_beam effects. Redundant if 'No FX' is applied.
+		16	:	"No FX"																: 	0 //Disable all effects.
 	]
 	
-	spawnitem(choices) 					: "Item to Spawn" 					: 		0   			:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
+	spawnitem(choices) 					: "Item to Spawn" 							: 	1   						:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
 	[
-		0 : "Medkit"
-		1 : "Armor"
-		2 : "Pistol Ammo"
-		3 : "Crossbow Ammo" //specifically for hl2 wpns.
-		3 : "Machinegun Ammo"
-		4 : "Shotgun Ammo"
-		5 : "Grenade"
+		1	:	"Medkit"
+		2	:	"Armor"
+		3	:	"Pistol Ammo"
+		4	:	"Crossbow Ammo" //specifically for hl2 wpns.
+		5	:	"Machinegun Ammo"
+		6	:	"Shotgun Ammo"
+		7	:	"Grenade"
 	] 
 	
-	StartDisabled(choices) 				: "Start Disabled" 					: 		0   			:	 "Should this spawner start off?" =
-	[
-		0 : "No"
-		1 : "Yes"
-	] 
+	fxBeam(target_destination)			:	"Beam Template Entity"					:	""							:	"The beam entity to use as a template for our beam effects. If empty or not an env_beam entity, it will assume our own default settings. 'No FX' flag will disable the beam effects! 'No Beam FX' will obviously disable."	
+	fxSprite(material)					:	"Spawn Sprite"							:	"gctextures/gc_spnglw.vmt"	:	"The vmt to play when we spawn in an item. If empty, will default to gc_spnglw.vmt. 'No FX' flag will disable this!"
+	fxSound(sound)						:	"Spawn Sound"							:	"gcsfx/ammo_respawn.wav"	:	"The sound to play when spawning in an item. If empty, no sound will play. 'No FX' flag will disable this!"
+
+	spawnLifespan(integer)				:	"Spawner Lifespan"						:	0							:	"After these many items have been spawned, disable this spawner. If zero, no limit will be applied."
+	spawnMaxConcurrent(integer)			:	"Item Limit"							:	1							:	"The amount of items this spawner has created that can exist at one time. If the limit exists and has been reached, then if the 'Delete Items on Limit Reached' flag is true, it will delete the oldest item spawned to make room for the new one. Otherwise, it will stop spawning. If set to zero, no limit will be applied."
+	spawnQuantity(integer)				:	"Spawn Quantity"						:	1							:	"The amount of items to create each time we spawn."
+	spawnOffset(vector)					:	"Spawn Offset"							:	"0 0 1"						:	"An offset to move the item by when spawning it in."
+	spawnDelay(float)					:	"Spawn Delay"							:	"1.0"						:	"The amount of seconds to wait to spawn in an item. Zero means instant."
+	respawnDelay(float)					:	"Respawn Delay"							:	"5.0"						:	"The amount of seconds to wait to respawn an item. Zero means instant. Only applicable if the 'Respawn Item' flag is ticked. Can be zero to be instantenous. Keep in mind that the spawn delay will add onto this delay."
+	respawnDistance(float)				:	"Distance to Respawn"					:	"0.0"						:	"The distance that needs to be reached before we can respawn an item. Zero means default respawning behavior. (see help for default respawn behavior definition.)"
 	
-	spawnMax(integer)						:	"Max Items"							:		0				:	"After these many items have been spawned, disable this spawner. If zero, no limit will be applied."
-	spawnAmount(integer)				:	"Spawn Quantity"				:		1				:	"The amount of this item to create each time we spawn."
-	spawnDelay(float)						:	"Spawn Delay"						:	"1.0"			:	"The amount of seconds to wait to spawn in an item. Zero means instant."
-	spawnSound(sound)					:	"Spawn Sound"					:							"gcsfx/ammo_respawn.wav"	:	"The sound to play when spawning in an item. If empty, no sound will play."
-	respawnDelay(float)					:	"Respawn Delay"					:	"5.0"			:	"The amount of seconds to wait to respawn an item. Zero means instant. Only applicable if the 'Respawn Item' flag is ticked."
-	respawnDistance(float)				:	"Distance to Respawn"		:	"0.0"			:	"The distance that needs to be reached before we can respawn an item. Overrides default respawn behavior. Zero means default respawning behavior. (see help for default respawn behavior definition.)"
-	spawnSprite(material)				:	"Spawn Sprite"						:							"gctextures/gc_spnglw.vmt"	:	"The vmt to play when we spawn in an item. If empty, will default to gc_spnglw.vmt"
+		
+	
+	StartDisabled(choices) 				: "Start Disabled" 							: 	0   						:	 "Should this spawner start off and not create an item on spawn?" =
+	[
+		0	:	"No"
+		1	:	"Yes"
+	] 
 
+	input spawn(string)					: 	"Spawns an item. Can take in a classname if you wish to spawn a specific item here."
+	input setItem(string)				: 	"Sets the item we should spawn. Enter Pistol, Crossbow, Machinegun, Shotgun, or Grenade to set the item to one of the defaults. If the value given is none of these, we'll assume its a classname."
+	input setBeamEntity(string)			: 	"Sets our beam entity template to the entity whose targetname you give us. All previous rules apply."
+	input setSpawnOffset(vector)		: 	"Sets the offset to spawn by."
+	input toggle(void)					:	"Toggles the spawner. Fires onEnabled and onDisabled respectively."
+	input disable(void)					:	"Disables the spawner. Fires onDisabled."
+	input enable(void)					:	"Enables the spawner. Fires onEnabled."
+	input deleteLastItem(void)			:	"Deletes the item we just spawned."
+	input deleteOldestItem(void)		:	"Deletes the first item we spawned."
+	input deleteAllItems(void)			:	"Deletes all item we've spawned."
 
-//insert the beam keys here, since we'll need to make some and then fill in the settings. So we'll have to have the user set those settings here.
-	fxBeamIntensity(integer) 						: 	"Brightness (1 - 255)" 		: 	255				:	"The brightness of the beam effects."
-	fxBeamColor(color255) 				: 	"Beam Color (R G B)" 			:	 "0 255 0"	:	"The color of the beam effects."
-
-	input spawn(void)							: 	"Spawns an item."
-	input setItem(string)						: 	"Sets the item we should spawn. Enter Pistol, Crossbow, Machinegun, Shotgun, or Grenade to set the item to one of the defaults. If the value given is none of these, we'll assume its a classname."
-
-	output onSpawnBegin(void)		: 	"Fires when we begin the spawning process."
-	output onSpawn(void)					: 	"Fires when we actually the spawn the item in."
-	output onItemSet(void)				: 	"Fires when we change what item we're spawning in."
-	output onItemGot(void)				: 	"Fires when the item we spawned in was picked up."
-	output onRespawn(void)				: 	"Fires when we respawn our item."
+	output onSpawnBegin(void)			: 	"Fires when we begin the spawning process."
+	output onSpawn(void)				: 	"Fires when we actually the spawn the item in."
+	output onLimitReached(void)			: 	"Fires when we've hit the maximum number of items we're allowed to spawn."
+	output onItemDeleted(void)			: 	"Fires when we delete an item."
+	output onItemChanged(void)			: 	"Fires when we change what item we're spawning in."
+	output onItemGot(void)				: 	"Fires when the item we spawned in was picked up. (Or deleted!)"
+	output onDisabled(void)				: 	"Fires when we're disabled."
+	output onEnabled(void)				: 	"Fires when we're enabled."
+	
+	//output onRespawn(void)			: 	"Fires when we respawn our item." //kind of redundant
 	
 ]
 
