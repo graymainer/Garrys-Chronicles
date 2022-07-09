@@ -11,17 +11,16 @@ ENT.DisableDuplicator = true
 --your flags
 
 SF_RESPAWN = 1
-SF_DELETE_ON_LIMIT = 2
-SF_FORCEHL2 = 4
-SF_NOBEAMS = 8
-SF_NOFX = 16
+SF_FORCEHL2 = 2
+SF_NOBEAMS = 4
+SF_NOFX = 8
+SF_NOGRAVITY = 16
 
 --
 
 --your variables.
 
 --core stuff
-ENT.us = nil
 ENT.bInit = false
 ENT.bEnabled = true
 ENT.item = "gc_medkit" --the item we are to spawn. This is the default item.
@@ -33,16 +32,21 @@ ENT.fxSound = "gcsfx/ammo_respawn.wav"
 
 --item spawning logic
 ENT.bSpawning = false --are we currently spawning an entity?
+ENT.spawnOffset = Vector(0, 0, 1) --the offset to spawn the item at. different from spawnPos, in that this will add to whatever the trace determines as the actual position to spawn the item at.
+ENT.spawnAngles = Angle(0, 0, 0) --the angles that the item should have initially.
 ENT.spawnLifespan = 0 --How many items can we spawn before we disable ourselves?
-ENT.spawnQuantity = 1 --how many are spawned at once.
 ENT.spawnDelay = 1.0 --how long after being told to spawn does the item spawn?
-ENT.spawnMaxConcurrent = 1 --limit for how many items we can have spawned at once.
-ENT.spawnedItems = {} --what items do we currently have spawned?
+ENT.spawnedItem = nil --the last item we spawned.
+ENT.spawnPosOverride = nil --the name of an entity whose position we'll use instead of our own to spawn items at.
+ENT.spawnPos = nil --the position we'll spawn items at. This wont be used as the EXACT position at which items are spawned at. This will be the pos that the trace that finds a suitable surface will start at. So spawnOffset is not applicable here.
+ENT.spawnSurfaceTraceDir = Vector(0,0,-10000)
 
-
---item respawning logic	
-ENT.respawnDelay = 5.0 --how long after we've been told to respawn do we respawn? spawnDelay applies here as well.
+--item respawning logic
+ENT.bRespawning = false --are we currently respawning an entity?
+ENT.respawnDelay = 3.0 --how long after we've been told to respawn do we respawn? spawnDelay applies here as well.
 ENT.respawnDistance = 0.0 --disabled by default.
+ENT.bRespawnDistance = false
+
 --
 
 
@@ -64,12 +68,13 @@ end
 
 --if the string contains only numeric characters return true. False if a single alphabetic character is found.
 function strIsNum(str)
-	if (isStrInvalid(str)) then return false end
-
-
+	if (isStrInvalid(str)) then return false end	
+	str = string.Replace(str, ".", "") --support for floats
+	
 	for i = 1, string.len(str), 1 do
 		if (str[i] < '0' or str[i] > '9') then return false end
 	end
+	
 	
 	return true
 end
@@ -177,19 +182,16 @@ function ENT:printInfo()
 	print("Beam Entity:", "", self.fxBeam)
 	print("Sprite:", "", "", self.fxSprite)
 	print("Sound:", "", "", self.fxSound)
-	print("Spawn Quantity:", "", self.spawnQuantity)
 	print("Spawn Delay:", "", self.spawnDelay)
 	print("Respawn Delay:", "", self.respawnDelay)
-	
-	print("\n\n")
-	PrintTable(self.spawnedItems)
-	print("\n\n")
+	print("Spawn Position:", "", self.spawnPos)
+	print("Spawn Angles:", "", self.spawnAngles)
 	
 	
-	if (self.spawnMaxConcurrent <= 0) then
-		print("Max Concurrent Items:", "No Limit.")
+	if (self.spawnPosOverride != nil) then
+		print("Spawn Position Type:", "Using an override; " .. tostring(spawnPosOverride))
 	else
-		print("Max Concurrent Items:", self.spawnMaxConcurrent)
+		print("Spawn Position Type:", "Using self.")
 	end
 	
 	if (self.spawnLifespan <= 0) then
@@ -198,12 +200,33 @@ function ENT:printInfo()
 		print("Spawner Lifespan:", self.spawnLifespan)
 	end
 	
+	if (self.bSpawning) then
+		print("Spawning?", "", "Yes.")
+	else
+		print("Spawning?", "", "No.")
+	end
+	
 	if (self.respawnDistance <= 0.0) then
 		print("Respawn Distance:", "Using default respawn behavior.")
 	else
 		print("Respawn Distance:", self.respawnDistance)
 	end
-		
+	
+	if (self.bRespawnDistance) then
+		if (IsValid(self.spawnedItem)) then
+			print("Item Distance:", "", (self.spawnedItem:GetPos() - self.spawnPos):LengthSqr() / 20)
+		else
+			print("Item Distance:", "", "Item not spawned.")
+		end
+	else
+		print("Item Distance:", "", "Disabled.")
+	end
+	
+	if (self.bRespawning) then
+		print("Respawning?", "", "Yes.")
+	else
+		print("Respawning?", "", "No.")
+	end
 	
 	
 	--footer
@@ -219,62 +242,17 @@ end
 
 --here is where we read in all the keyvalues passed in to our entity. our specific object of this entity class.
 function ENT:KeyValue( k, v )
-	if (true) then return end
-
 
 	if (isKey("spawnitem", k)) then
 		if (isStrInvalid(v)) then return end
-		if (isStrNum(v)) then
-			local val = util.StringToType(v, "int")
+		if (strIsNum(v)) then
+			local itemIndex = util.StringToType(v, "int")
 			
-			if (val == 1) then
-				if (bGunmanSWEPS) then
-					self.item = "gc_medkit"
-				else
-					self.item = "item_healthkit"
-				end
-			elseif (val == 2) then
-				if (bGunmanSWEPS) then
-					self.item = "gc_armor"
-				else
-					self.item = "item_battery"
-				end
-			elseif (val == 3) then
-				if (bGunmanSWEPS) then
-					self.item = "gunman_item_ammo_pistol"
-				else
-					self.item = "item_ammo_pistol"
-				end
-			elseif (val == 4) then
-				self.item = "item_ammo_crossbow"
-			elseif (val == 5) then
-				if (bGunmanSWEPS) then
-					self.item = "gunman_item_ammo_mechagun"
-				else
-					self.item = "item_ammo_smg1"
-				end
-			elseif (val == 6) then
-				if (bGunmanSWEPS) then
-					self.item = "gunman_item_ammo_shotgun"
-				else
-					self.item = "item_box_buckshot"
-				end
-			elseif (val == 7) then
-				if (bGunmanSWEPS) then
-					self.item = "gc_ammo_dmlrocket"
-				else
-					self.item = "weapon_frag"
-				end
-			else
-				print(self, "tried to spawn an unknown item type from number. Ignoring.")
-			end
-		else --assume we've put in a classname.
+			if (itemIndex < 0 or itemIndex > 7) then print(self, "had an item index that was out of range. Ignoring.")return end
+			self.item = itemIndex --we'll check it out more later, but we cant do it here because bGunmanSWEPS could be nil.
+		else --Its not a number, so assume we've put in a classname.
 			local testent = ents.Create(v) --try to create the entity from the class its trying to give us.
-
-			if (testent == NULL) then --we couldn't, so clearly its not a valid class. Leave at default.
-				print(self, "was given an unknown item to spawn. Ignoring.")
-				return 
-			end
+			if (testent == NULL) then print(self, "was given an unknown item to spawn. Ignoring.") return end
 			
 			self.item = v
 		end
@@ -301,54 +279,74 @@ function ENT:KeyValue( k, v )
 		else
 			self.bEnabled = false
 		end
-	elseif (isKey("spawnLifespan", k)) then
+	elseif (isKey("spawnOffset", k)) then
 		if (isStrInvalid(v)) then return end
-		if (!isStrNum(v)) then return end
-		local val = util.StringToType(v, "int")
-				
-		if (val == nil or val < 0) then print(self, "was given a bad spawn limit. Ignoring.") return end
-		
-		self.spawnLifespan = val
-		
-	elseif (isKey("spawnMaxConcurrent", k)) then
-		if (isStrInvalid(v)) then return end
-		if (!isStrNum(v)) then return end
-		local val = util.StringToType(v, "int")
-				
-		if (val == nil or val < 0) then print(self, "was given a bad spawn limit. Ignoring.") return end
-		
-		self.spawnMaxConcurrent = val
-		
-	elseif (isKey("spawnquantity", k)) then
-		if (isStrInvalid(v)) then return end
-		if (!isStrNum(v)) then return end
-		local val = util.StringToType(v, "int")
-				
-		if (val == nil or val < 0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
-		
-		self.spawnQuantity = val
-	elseif (isKey("spawnDelay", k)) then
-		if (isStrInvalid(v)) then return end
-		if (!isStrNum(v)) then return end
+		if (!strIsNum(v)) then return end
 		local val = util.StringToType(v, "float")
 				
 		if (val == nil or val < 0.0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
 		
 		self.spawnDelay = val
-	elseif (isKey("respawnDelay", k)) then
+	elseif (isKey("spawnAngles", k)) then
 		if (isStrInvalid(v)) then return end
-		if (!isStrNum(v)) then return end
+		if (!strIsNum(v)) then return end
 		local val = util.StringToType(v, "float")
 				
-		if (val == nil or val < 0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
+		if (val == nil or val < 0.0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
+		
+		self.spawnDelay = val
+	elseif (isKey("spawnDelay", k)) then
+		if (isStrInvalid(v)) then return end
+		if (!strIsNum(v)) then return end
+		local val = util.StringToType(v, "float")
+				
+		if (val == nil or val < 0.0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
+		
+		self.spawnDelay = val
+	elseif (isKey("spawnDelay", k)) then
+		if (isStrInvalid(v)) then return end
+		if (!strIsNum(v)) then return end
+		local val = util.StringToType(v, "float")
+				
+		if (val == nil or val < 0.0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
+		
+		self.spawnDelay = val
+	elseif (isKey("spawnLifespan", k)) then
+		if (isStrInvalid(v)) then return end
+		if (!strIsNum(v)) then return end
+		local val = util.StringToType(v, "int")
+				
+		if (val == nil or val < 0) then print(self, "was given a bad spawn limit. Ignoring.") return end
+		
+		self.spawnLifespan = val
+
+	elseif (isKey("spawnDelay", k)) then
+		if (isStrInvalid(v)) then return end
+		if (!strIsNum(v)) then return end
+		local val = util.StringToType(v, "float")
+				
+		if (val == nil or val < 0.0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
+		
+		self.spawnDelay = val
+	elseif (isKey("spawnPositionOverride", k)) then
+		if (isStrInvalid(v)) then return end
+	
+		self.spawnPosOverride = val
+	elseif (isKey("respawnDelay", k)) then
+		if (isStrInvalid(v)) then return end
+		if (!strIsNum(v)) then return end
+		local val = util.StringToType(v, "float")
+				
+		if (val == nil or val < 0) then print(self, "was given a bad respawn delay. Ignoring.") return end
 		
 		self.respawnDelay = val
 	elseif (isKey("respawnDistance", k)) then
 		if (isStrInvalid(v)) then return end
-		if (!isStrNum(v)) then return end
+		if (!strIsNum(v)) then return end
 		local val = util.StringToType(v, "float")
-				
-		if (val == nil or val < 0) then print(self, "was given a bad spawn quantity. Ignoring.") return end
+		
+		if (val == nil or val < 0) then print(self, "was given a bad respawn distance. Ignoring.") return end
+		
 		
 		self.respawnDistance = val
 	end
@@ -363,7 +361,67 @@ end
 --we start main execution here.
 function ENT:Initialize()
 	self.bInit = true
-	self.us = self
+	
+	if (self.respawnDistance > 0.0) then
+		self.bRespawnDistance = true
+	end
+		
+	--if the item we were given is a number, then we need to reinterpret it as a classname. 
+	--We also need to switch classes based on gunman swep availability. 
+	--bGunmanSWEPS isn't available during ENT:keyvalue, so we do it here.
+	if (isnumber(self.item)) then
+		if (self.item == 1) then
+			if (bGunmanSWEPS) then
+				self.item = "gc_medkit"
+			else
+				self.item = "item_healthkit"
+			end
+		elseif (self.item == 2) then
+			if (bGunmanSWEPS) then
+				self.item = "gc_armor"
+			else
+				self.item = "item_battery"
+			end
+		elseif (self.item == 3) then
+			if (bGunmanSWEPS) then
+				self.item = "gunman_item_ammo_pistol"
+			else
+				self.item = "item_ammo_pistol"
+			end
+		elseif (self.item == 4) then --dont have a gunman equivalent
+			self.item = "item_ammo_crossbow"
+		elseif (self.item == 5) then
+			if (bGunmanSWEPS) then
+				self.item = "gunman_item_ammo_mechagun"
+			else
+				self.item = "item_ammo_smg1"
+			end
+		elseif (self.item == 6) then
+			if (bGunmanSWEPS) then
+				self.item = "gunman_item_ammo_shotgun"
+			else
+				self.item = "item_box_buckshot"
+			end
+		elseif (self.item == 7) then
+			if (bGunmanSWEPS) then
+				self.item = "gc_ammo_dmlrocket"
+			else
+				self.item = "weapon_frag"
+			end
+		else
+			print(self:GetName() .. " tried to spawn an unknown item type from number. Ignoring.")
+		end
+	end
+	
+	if (self.spawnPosOverride != nil) then
+		if (IsValid(ents.FindByName(self.spawnPosOverride)[1])) then
+			self.spawnPos = self.spawnPosOverride:GetPos()
+		else
+			self.spawnPos = self:GetPos()
+		end
+	else
+		self.spawnPos = self:GetPos()
+	end
 end
 
 --set up our ACTIVATOR and CALLER globals.
@@ -382,7 +440,7 @@ end
 --the heart and soul of this entity. This baby reads in hammer i/o input and translates it into LUA calls. This will allow you to use the inputs in the fgd in hammer to actually use this entity in the map with hammer's scripting.
 function ENT:AcceptInput( name, activator, caller, data )
 	if (CLIENT) then self:KillGlobals() return false end --mostly becuase we use getname in our error printouts.
-	if (isStrInvalid(name)) then	print(self:GetName() .. " was shot a bad input!") return end --you never know.
+	if (isStrInvalid(name)) then print(self:GetName() .. " was shot a bad input!") return end --you never know.
 	if (strIsNum(name)) then print(self:GetName() .. " was fired an invalid input. Input name contained numbers.") self:KillGlobals() return false end
 
 	self:SetupGlobals(activator, caller)
@@ -395,12 +453,16 @@ function ENT:AcceptInput( name, activator, caller, data )
 	if (isInput("spawn", name)) then
 		if (strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given only numerical data.") self:KillGlobals() return false end
 		if (isStrValid(data)) then
-			self:spawnItem(data) --override our item and spawn the one given instead.
+			self:spawn(data) --override our item and spawn the one given instead.
 		else
-			self:spawnItem(nil) --spawn whatever we have set to spawn.
-		end
-
+			self:spawn(nil) --spawn whatever we have set to spawn.
+		end		
 		
+		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
+	return true end
+	
+	if (isInput("printInfo", name)) then		
+		self:printInfo()
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
 
@@ -423,6 +485,18 @@ function ENT:KillGlobals()
 
 end
 
+function ENT:Think()
+	if (self.bRespawnDistance) then
+		if (IsValid(self.spawnedItem)) then
+		
+			local dist = (self.spawnedItem:GetPos() - self.spawnPos):LengthSqr() / 20
+			
+			print(dist)
+			
+		end
+	end
+end
+
 --
 
 function ENT:playFX()
@@ -442,47 +516,62 @@ end
 
 function ENT:respawn()
 	if (!self.bInit) then return end
+	if (self.bRespawning) then return end
 	if (!self:HasSpawnFlags(SF_RESPAWN)) then return end
-	
+	self.bRespawning = true
 	
 	if (self.respawnDelay > 0.0) then
 		timer.Simple(self.respawnDelay, function() 
 			if (self == nil or self == NULL or !IsValid(self)) then return end
-			self:spawnItem()
+			self:spawn(nil, true)
+			self.bRespawning = false
 		end)
 	else
-		self:spawnItem()
+		self:spawn(nil, true)
+		self.bRespawning = false
 	end
 
 	
 end
 
---looks for the given entity in our spawner table. if found it will return true the index of the found entity. nil otherwise.
-function ENT:lookupEntityInSpawnerTable(ent)
-	if (table.IsEmpty(self.spawnedItems)) then return end
+function ENT:createItem(ent)
+		ent:Spawn()
 
-	local hasEnt = false
-	local index = 0
+		local traceRes = util.QuickTrace(self.spawnPos, Vector(0,0,-10000), function() return false end)
 
-	for i = 1, #self.spawnedItems, 1 do
-		if (self.spawnedItems[i] == ent) then
-			hasEnt = true
-			index = i
-			break
+		ent:SetPos(traceRes.HitPos + Vector(0,0,1))
+		self:fireEvent("onSpawn")
+		
+		ent.bRemovedBySpawner = false
+		
+		ent:CallOnRemove("ItemGot", function(ent) 
+			if (ent.bRemovedBySpawner) then return end
+			self:fireEvent("onItemGot")
+			self:respawn()
+			
+			
+		end)
+		
+		if (IsValid(self.spawnedItem)) then
+			self.spawnedItem.bRemovedBySpawner = true
+			self.spawnedItem:Remove()
+			self.spawnedItem = nil
 		end
-	end
-
-
-	if (hasItem) then return index end
-	
-	return nil
+		
+		self.spawnedItem = ent
+		
+		self.bSpawning = false
 end
 
-function ENT:spawnItem(classname)
+function ENT:spawn(classname, bSkipSpawnCheck)
 	if (CLIENT) then return end
 	if (!self.bInit) then return end
-	print(self)
-	if (self.bSpawning) then return end
+	if (bSkipSpawnCheck == nil) then
+		bSkipSpawnCheck = false
+	end
+	if (!bSkipSpawnCheck) then
+		if (self.bSpawning or self.bRespawning) then return end
+	end
 	
 	local item = self.item
 	if (isStrValid(classname)) then
@@ -490,15 +579,12 @@ function ENT:spawnItem(classname)
 	end
 
 
-
-	local newEnt = ents.Create(item)
+	local ent = ents.Create(item)
 	
-	if (!IsValid(newEnt)) then print(self:GetName() .. " failed to create an entity. ('", classname, "')") return end
+	if (!IsValid(ent)) then print(self:GetName() .. " failed to create an entity. ('", classname, "')") return end
 
 	self.bSpawning = true
-		
-	table.insert(self.spawnedItems, newEnt)
-
+	
 	self:fireEvent("onSpawnBegin")
 
 	self:playFX()
@@ -506,40 +592,13 @@ function ENT:spawnItem(classname)
 	if (self.spawnDelay > 0) then
 		timer.Simple(self.spawnDelay, function() 
 			if (self == nil or self == NULL or !IsValid(self)) then return end
-			if (!IsValid(newEnt)) then return end
+			if (!IsValid(ent)) then return end
 			if (!self.bSpawning) then return end
 			
-			newEnt:Spawn()
-	
-			local traceRes = util.QuickTrace(self:GetPos(), Vector(0,0,-10000), function() return false end)
-	
-			newEnt:SetPos(traceRes.HitPos + Vector(0,0,1))
-			self:fireEvent("onSpawn")
-			
-			newEnt:CallOnRemove("ItemGot", function() 
-				self:fireEvent("onItemGot")
-				self:respawn()
-				
-				if (#self.spawnedItems == 1) then
-					table.remove(self.spawnedItems, 1)
-				else
-					table.remove(self.spawnedItems, self:lookupEntityInSpawnerTable(newEnt))
-				end
-				
-			end)
-			
-			self.bSpawning = false
+			self:createItem(ent)
 		end)
 	else
-		newEnt:Spawn()
-		
-		local traceRes = util.QuickTrace(self:GetPos(), Vector(0,0,-10000), function() return false end)
-		
-		newEnt:SetPos(traceRes.HitPos + Vector(0,0,1))
-		
-		self:fireEvent("onSpawn")
-		
-		self.bSpawning = false
+		self:createItem(ent)
 	end
 end
 

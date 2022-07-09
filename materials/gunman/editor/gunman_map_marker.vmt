@@ -2,6 +2,6 @@
 {
 	"$spriteorientation" "vp_parallel"
 	"$spriteorigin" "[ 0.50 0.50 ]"
-	"$basetexture" "gunman/editor/gunman_mapMarker"
+	"$basetexture" "gunman/editor/gunman_map_marker"
 	"$no_fullbright" 1
 }

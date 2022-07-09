@@ -1,8 +1,8 @@
 versioninfo
 {
 	"editorversion" "400"
-	"editorbuild" "8861"
-	"mapversion" "6"
+	"editorbuild" "8862"
+	"mapversion" "7"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -72,7 +72,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "6"
+	"mapversion" "7"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -805,16 +805,15 @@ world
 }
 entity
 {
-	"id" "37"
-	"classname" "info_player_start"
-	"angles" "0 0 0"
-	"origin" "0 0 0.999992"
+	"id" "86"
+	"classname" "gunman_map_marker"
+	"origin" "14.1788 -23.2446 8"
 	editor
 	{
-		"color" "0 255 0"
+		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
+		"logicalpos" "[0 500]"
 	}
 }
 entity
@@ -836,15 +835,16 @@ entity
 }
 entity
 {
-	"id" "86"
-	"classname" "gunman_mapMarker"
-	"origin" "14.1788 -23.2446 8"
+	"id" "37"
+	"classname" "info_player_start"
+	"angles" "0 0 0"
+	"origin" "0 0 0.999992"
 	editor
 	{
-		"color" "220 30 220"
+		"color" "0 255 0"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"logicalpos" "[0 500]"
+		"logicalpos" "[0 1000]"
 	}
 }
 cameras

@@ -3,7 +3,7 @@ bGunmanSWEPS = false
 gunmanSWEPsID = "2815854365" --this is the workshop id of the addon we need for weapon compatibility. --TODO: REPLACE WITH ACTUAL ADDON'S ID
 
 function tellMapCompat()
-	if (!bGunmanSWEPS) then return end --false? then we should tell the map we're currently on that we do have those sweps installed!
+	if (!bGunmanSWEPS) then return end
 
 	local ifs = ents.FindByName("if_gcwpns_installed*")
 	
@@ -13,7 +13,7 @@ function tellMapCompat()
 	for i = 1, table.maxn(ifs), 1 do
 		
 		ifs[i]:Fire("SetValue", "1") --let the maps know.
-		--print("Set " .. ifs[i]:GetName() .. " to true!")
+		print("Set " .. ifs[i]:GetName() .. " to true!")
 	end
 
 end
@@ -36,6 +36,5 @@ if (addons != nil and !table.IsEmpty(addons)) then
 			break
 		end
 	end
-	
-	tellMapCompat() --tell the map if we have it or not. We do it every cleanup to cover all cases, since this will only fire when we load into the map for the first time.
+	--normally, we'd call tellMapCompat here, but we need to wait for the map's entities to spawn in properly. So we wait...
 end

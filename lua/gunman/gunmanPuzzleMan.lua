@@ -69,12 +69,12 @@ local computer = ents.FindByName("justinspc")[1]--attempts to load a reference, 
 
 local computerPos --the position of the computer. used for a bunch of stuff. needs set if computer is valid.
 
-spawnedEnts = {} --keeps track of the entites spawned by the player. --SHOULD BE LOCAL
+local spawnedEnts = {} --keeps track of the entites spawned by the player.
 
-bNoclip = false --is the player noclipping?
+local bNoclip = false --is the player noclipping?
 
-bCompDone = false --is the computer segment of the puzzle done?
-bDisableNoclip = false --how bout you noclip yourself some b
+local bCompDone = false --is the computer segment of the puzzle done?
+local bDisableNoclip = false --how bout you noclip yourself some b
 
 
 function catalogueSpawnedEnt(ent)
