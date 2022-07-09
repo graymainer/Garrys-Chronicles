@@ -14,7 +14,8 @@ SF_RESPAWN = 1
 SF_FORCEHL2 = 2
 SF_NOBEAMS = 4
 SF_NOFX = 8
-SF_NOGRAVITY = 16
+SF_FROZEN = 16
+SF_NOGRAVITY = 32
 
 --
 
@@ -49,6 +50,18 @@ ENT.bRespawnDistance = false
 
 --
 
+--[[
+	TODO::
+	
+	implement all inputs and outputs.
+	
+	implement spawnLifespan
+	
+	figure out a way to implement fxBeam
+	
+	
+
+--]]
 
 
 --your helper functions. These are ported from the garrys chronicles project. these bad boys make life easier.
@@ -273,11 +286,11 @@ function ENT:KeyValue( k, v )
 		
 	elseif (isKey("StartDisabled", k)) then
 		if (isStrInvalid(v)) then return end
-		
 		if (v == "1") then
-			self.bEnabled = true
-		else
 			self.bEnabled = false
+			
+		else
+			self.bEnabled = true
 		end
 	elseif (isKey("spawnOffset", k)) then
 		if (isStrInvalid(v)) then return end
@@ -360,6 +373,11 @@ end
 
 --we start main execution here.
 function ENT:Initialize()
+
+	if (isStrInvalid(self:GetName())) then --we cant be unnamed because certain functions (namely the fx) require a name reference to ourselves.
+		self:SetName("itemSpawner" .. tostring(#ents.FindByName("itemSpawner*")))
+	end
+
 	self.bInit = true
 	
 	if (self.respawnDistance > 0.0) then
@@ -371,19 +389,19 @@ function ENT:Initialize()
 	--bGunmanSWEPS isn't available during ENT:keyvalue, so we do it here.
 	if (isnumber(self.item)) then
 		if (self.item == 1) then
-			if (bGunmanSWEPS) then
+			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
 				self.item = "gc_medkit"
 			else
 				self.item = "item_healthkit"
 			end
 		elseif (self.item == 2) then
-			if (bGunmanSWEPS) then
+			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
 				self.item = "gc_armor"
 			else
 				self.item = "item_battery"
 			end
 		elseif (self.item == 3) then
-			if (bGunmanSWEPS) then
+			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
 				self.item = "gunman_item_ammo_pistol"
 			else
 				self.item = "item_ammo_pistol"
@@ -391,19 +409,19 @@ function ENT:Initialize()
 		elseif (self.item == 4) then --dont have a gunman equivalent
 			self.item = "item_ammo_crossbow"
 		elseif (self.item == 5) then
-			if (bGunmanSWEPS) then
+			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
 				self.item = "gunman_item_ammo_mechagun"
 			else
 				self.item = "item_ammo_smg1"
 			end
 		elseif (self.item == 6) then
-			if (bGunmanSWEPS) then
+			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
 				self.item = "gunman_item_ammo_shotgun"
 			else
 				self.item = "item_box_buckshot"
 			end
 		elseif (self.item == 7) then
-			if (bGunmanSWEPS) then
+			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
 				self.item = "gc_ammo_dmlrocket"
 			else
 				self.item = "weapon_frag"
@@ -421,6 +439,20 @@ function ENT:Initialize()
 		end
 	else
 		self.spawnPos = self:GetPos()
+	end
+	
+	if (self.bEnabled) then
+		if (self.respawnDelay > 0) then
+			timer.Simple(self.respawnDelay, function()
+				if (self == nil or self == NULL or !IsValid(self)) then return end
+				self:spawn() --spawn automatically if we are enabled on start.
+			end)
+		else
+			timer.Simple(2, function()
+				if (self == nil or self == NULL or !IsValid(self)) then return end
+				self:spawn() --spawn automatically if we are enabled on start.
+			end)
+		end
 	end
 end
 
@@ -486,13 +518,16 @@ function ENT:KillGlobals()
 end
 
 function ENT:Think()
+	if (!self.bEnabled) then return end
+	
 	if (self.bRespawnDistance) then
 		if (IsValid(self.spawnedItem)) then
-		
-			local dist = (self.spawnedItem:GetPos() - self.spawnPos):LengthSqr() / 20
-			
-			print(dist)
-			
+			if (self.spawnedItem:GetVelocity():LengthSqr() > 0) then
+				if ((self.spawnedItem:GetPos() - self.spawnPos):LengthSqr() / 20 >= self.respawnDistance) then
+					self:deleteOldItem()
+					self:respawn()
+				end
+			end
 		end
 	end
 end
@@ -500,25 +535,136 @@ end
 --
 
 function ENT:playFX()
+	if (!self.bEnabled) then return end
 	if (self:HasSpawnFlags(SF_NOFX)) then return end
 	if (isStrInvalid(self.fxSound)) then return end
 
 	self:EmitSound(self.fxSound)
 	
 	if (isStrValid(self.fxSprite)) then
-		--local spr = 
+	--if (false) then
+		local spr = ents.Create("env_sprite")
+		
+		
+		spr:SetKeyValue("spawnflags", bit.bor(1, 2)) --start on, play once
+		spr:SetKeyValue("model", self.fxSprite)
+		spr:SetKeyValue("scale", "0.8")
+		spr:SetKeyValue("rendercolor", "146 255 47")
+		spr:SetKeyValue("rendermode", 9)
+		spr:SetKeyValue("renderfx", 1)
+		spr:SetKeyValue("GlowProxySize", "10.0")
+		spr:SetPos(self.spawnPos)
+		spr:Spawn()
+		
+		if (self.spawnDelay > 0) then
+			timer.Simple(self.spawnDelay, function() 
+				if (spr == nil or spr == NULL or !IsValid(spr)) then return end
+				spr:Remove()
+			end)
+		else
+			timer.Simple(2, function() 
+				if (spr == nil or spr == NULL or !IsValid(spr)) then return end
+				spr:Remove()
+			end)
+		end
 	end
 	
+	if (self.spawnDelay > 0) then
+		timer.Simple(self.spawnDelay, function() 
+			local sparker = ents.Create("env_spark")
+			if (!IsValid(sparker) or !IsValid(self)) then return end
+		
+			sparker:SetKeyValue("Magnitude", "2")
+			sparker:SetKeyValue("TrailLength", "1")
+			sparker:SetKeyValue("spawnflags", bit.bor(256)) --256: silent
+			sparker:SetPos(self.spawnPos)
+			sparker:Spawn()
+		
+			sparker:Fire("SparkOnce")
+			
+			--clean up fx
+			sparker:Fire("Kill") --needs to be this way instead of remove(). This way allows us to call sparkonce and the equivalent of remove all on the same frame.
+		end)
+	else
+		timer.Simple(2, function() 
+			local sparker = ents.Create("env_spark")
+			if (!IsValid(sparker) or !IsValid(self)) then return end
+		
+			sparker:SetKeyValue("Magnitude", "2")
+			sparker:SetKeyValue("TrailLength", "1")
+			sparker:SetKeyValue("spawnflags", bit.bor(256)) --256: silent
+			sparker:SetPos(self.spawnPos)
+			sparker:Spawn()
+			sparker:Fire("SparkOnce")
+			
+			--clean up fx
+			sparker:Fire("Kill") --needs to be this way instead of remove(). This way allows us to call sparkonce and the equivalent of remove all on the same frame.
+		end)
+	end
+	
+	
 	if (self:HasSpawnFlags(SF_NOBEAMS)) then return end
-	if (!IsValid(self.fxBeam)) then return end
+	
+	
+
+	
+	local beams = {}
+	
+	--safest way to get env_beam a start location
+	local beamTgt = ents.Create("info_target")	
+	
+	for i = 1, 4, 1 do --4 is how many beams we want
+		beams[i] = ents.Create("env_beam")
+		
+		beams[i]:SetName("spawnerBeams" .. tostring(i - 1))
+		beams[i]:SetKeyValue("spawnflags", bit.bor(4)) --random strike
+		beams[i]:SetKeyValue("boltwidth", 1)
+		beams[i]:SetKeyValue("life", 0.2)
+		beams[i]:SetKeyValue("noiseamplitude", 15)
+		beams[i]:SetKeyValue("radius", 30)
+		beams[i]:SetKeyValue("renderamt", 255)
+		beams[i]:SetKeyValue("rendercolor", "0 255 0")
+		beams[i]:SetKeyValue("striketime", 0)
+		beams[i]:SetKeyValue("texture", "sprites/laserbeam.spr")
+		beams[i]:SetKeyValue("texturescroll", 12)
+		beams[i]:SetKeyValue("lightningstart", self:GetName())
+		beams[i]:SetPos(self.spawnPos)
+		beams[i]:Spawn()
+		
+		
+		beams[i]:Fire("TurnOn")
+		
+	end
+
+	
+	if (self.spawnDelay > 0) then
+		timer.Simple(self.spawnDelay, function() 
+			if (beams == nil or table.IsEmpty(beams) or beams[1] == nil or beams[1] == NULL or !IsValid(beams[1])) then return end
+			for i = 1, #beams, 1 do
+				beams[i]:Fire("TurnOff")
+				beams[i]:Fire("Kill")
+			end
+		end)
+	else
+		timer.Simple(2, function() 
+			if (beams == nil or table.IsEmpty(beams) or beams[1] == nil or beams[1] == NULL or !IsValid(beams[1])) then return end
+			for i = 1, #beams, 1 do
+				beams[i]:Fire("TurnOff")
+				beams[i]:Fire("Kill")
+			end
+		end)
+	end
 
 end
 
 function ENT:respawn()
+	if (!self.bEnabled) then return end
 	if (!self.bInit) then return end
 	if (self.bRespawning) then return end
 	if (!self:HasSpawnFlags(SF_RESPAWN)) then return end
 	self.bRespawning = true
+	
+	self:fireEvent("onRespawn")
 	
 	if (self.respawnDelay > 0.0) then
 		timer.Simple(self.respawnDelay, function() 
@@ -534,37 +680,76 @@ function ENT:respawn()
 	
 end
 
-function ENT:createItem(ent)
-		ent:Spawn()
+function ENT:deleteOldItem()
+	if (!self.bEnabled) then return end
+	
+	if (!self:HasSpawnFlags(SF_NOFX)) then
+		local sparker = ents.Create("env_spark")
+		if (!IsValid(sparker)) then return end
 
-		local traceRes = util.QuickTrace(self.spawnPos, Vector(0,0,-10000), function() return false end)
+		sparker:SetKeyValue("Magnitude", "1")
+		sparker:SetKeyValue("TrailLength", "1")
+		sparker:SetPos(self.spawnedItem:GetPos())
+		sparker:SetKeyValue("spawnflags", bit.bor(256)) --256: silent
+		sparker:Spawn()
+		sparker:Fire("SparkOnce")
 
-		ent:SetPos(traceRes.HitPos + Vector(0,0,1))
-		self:fireEvent("onSpawn")
-		
-		ent.bRemovedBySpawner = false
-		
-		ent:CallOnRemove("ItemGot", function(ent) 
-			if (ent.bRemovedBySpawner) then return end
-			self:fireEvent("onItemGot")
-			self:respawn()
-			
-			
-		end)
-		
-		if (IsValid(self.spawnedItem)) then
-			self.spawnedItem.bRemovedBySpawner = true
-			self.spawnedItem:Remove()
-			self.spawnedItem = nil
+		--clean up fx
+		sparker:Fire("Kill")
+	end
+
+	self.spawnedItem.bRemovedBySpawner = true --tells callonremove that we deleted it and dont want anything to do with it anymore.
+	self.spawnedItem:Remove()
+	self.spawnedItem = nil
+	
+	self:fireEvent("onItemDeleted")
+	
+end
+
+function ENT:createItem(ent)	
+	ent:Spawn()
+
+	local traceRes = util.QuickTrace(self.spawnPos, Vector(0,0,-10000), function() return false end)
+
+	ent:SetPos(traceRes.HitPos + Vector(0,0,1))
+	ent:SetAngles(self.spawnAngles)
+	
+	ent.bRemovedBySpawner = false
+	
+	if (IsValid(self.spawnedItem)) then
+		self:deleteOldItem()
+	end
+	
+	self.spawnedItem = ent
+	
+	self.bSpawning = false
+	
+	if (self:HasSpawnFlags(SF_FROZEN)) then
+		for i = 0, ent:GetPhysicsObjectCount() - 1 do
+			local phys = ent:GetPhysicsObjectNum(i)
+			if !IsValid(phys) then break end
+			phys:EnableMotion(false)
 		end
+	elseif (self:HasSpawnFlags(SF_NOGRAVITY)) then
+		makeZeroG(ent)
+	end
+	
+	
+	
+	
+	ent:CallOnRemove("ItemGot", function(ent) 
+		if (ent.bRemovedBySpawner) then return end
+		self:fireEvent("onItemGot")
+		self:respawn()
 		
-		self.spawnedItem = ent
-		
-		self.bSpawning = false
+	end)
+	
+	self:fireEvent("onSpawn")
 end
 
 function ENT:spawn(classname, bSkipSpawnCheck)
 	if (CLIENT) then return end
+	if (!self.bEnabled) then return end
 	if (!self.bInit) then return end
 	if (bSkipSpawnCheck == nil) then
 		bSkipSpawnCheck = false

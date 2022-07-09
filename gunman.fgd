@@ -31,11 +31,12 @@
 [
 	spawnflags(flags) =
 	[
-		1	:	"Respawn Item"														: 	1 //should the item respawn when its taken?
+		1	:	"Respawn"															: 	1 //should the item respawn when its taken?
 		2	:	"Force HL2 Items"													: 	0 //skip the gunman swep check and go straight for hl2 stuff?
 		4	:	"No Beam FX"														: 	0 //Disable env_beam effects. Redundant if 'No FX' is applied.
 		8	:	"No FX"																: 	0 //Disable all effects.
-		16	:	"Spawn in Zero Gravity"												: 	0 //Spawn items in zero gravity. Just for fun. uses lua/gunman/gunmanZeroG.lua
+		16	:	"Spawn Frozen"														: 	0 //Spawn items frozen.
+		32	:	"Spawn in Zero Gravity"												: 	0 //Spawn items in zero gravity. Just for fun. uses lua/gunman/gunmanZeroG.lua
 	]
 	
 	spawnitem(choices) 							: "Item to Spawn" 							: 	1   						:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
@@ -50,7 +51,7 @@
 	] 
 	
 	fxBeam(target_destination)					:	"Beam Template Entity"					:	""							:	"The beam entity to use as a template for our beam effects. If empty or not an env_beam entity, it will assume our own default settings. 'No FX' flag will disable the beam effects! 'No Beam FX' will obviously disable."	
-	fxSprite(material)							:	"Spawn Sprite"							:	"gctextures/gc_spnglw.vmt"	:	"The vmt to play when we spawn in an item. If empty, will default to gc_spnglw.vmt. 'No FX' flag will disable this!"
+	fxSprite(sprite)							:	"Spawn Sprite"							:	"gctextures/gc_spnglw.vmt"	:	"The vmt to play when we spawn in an item. If empty, will default to gc_spnglw.vmt. 'No FX' flag will disable this!"
 	fxSound(sound)								:	"Spawn Sound"							:	"gcsfx/ammo_respawn.wav"	:	"The sound to play when spawning in an item. If empty, no sound will play. 'No FX' flag will disable this!"
 	
 	
@@ -94,8 +95,7 @@
 	output onItemGot(void)						: 	"Fires when the item we spawned in was picked up. (Or was deleted!)"
 	output onDisabled(void)						: 	"Fires when we're disabled."
 	output onEnabled(void)						: 	"Fires when we're enabled."
-	
-	//output onRespawn(void)					: 	"Fires when we respawn our item." //kind of redundant
+	output onRespawn(void)						: 	"Fires when we begin to respawn our item."
 	
 ]
 
