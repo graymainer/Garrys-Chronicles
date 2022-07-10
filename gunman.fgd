@@ -33,10 +33,14 @@
 	[
 		1	:	"Respawn"															: 	1 //should the item respawn when its taken?
 		2	:	"Force HL2 Items"													: 	0 //skip the gunman swep check and go straight for hl2 stuff?
-		4	:	"No Beam FX"														: 	0 //Disable env_beam effects. Redundant if 'No FX' is applied.
-		8	:	"No FX"																: 	0 //Disable all effects.
-		16	:	"Spawn Frozen"														: 	0 //Spawn items frozen.
-		32	:	"Spawn in Zero Gravity"												: 	0 //Spawn items in zero gravity. Just for fun. uses lua/gunman/gunmanZeroG.lua
+		4	:	"No Beam FX"														: 	0 //Disable beam effects. Redundant if 'No FX' is enabled.
+		8	:	"No Glow FX"														: 	0 //Disable glow effects. Redundant if 'No FX' is enabled.
+		16	:	"No Spark FX"														: 	0 //Disable sparking effects. Redundant if 'No FX' is enabled.
+		32	:	"No Spawn Sparks"													: 	0 //Disable sparking effects when spawning an item. Spark effects will still play when deleting an item. (i.e if the item reaches the respawnDistance or is replace by another call to spawn()) Redundant if 'No FX' is enabled.
+		64	:	"No FX"																: 	0 //Disables all effects.
+		128	:	"Spawn Frozen"														: 	0 //Spawn items frozen.
+		256	:	"Spawn in Zero Gravity"												: 	0 //Spawn items in zero gravity. Just for fun. uses lua/gunman/gunmanZeroG.lua
+		512	:	"No Surface Alignment"												: 	0 //Disables automatic surface alignment. Item will spawn right where the entity is placed. 
 	]
 	
 	spawnitem(choices) 							: "Item to Spawn" 							: 	1   						:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
@@ -50,7 +54,7 @@
 		7	:	"Grenades"
 	] 
 	
-	fxBeam(target_destination)					:	"Beam Template Entity"					:	""							:	"The beam entity to use as a template for our beam effects. If empty or not an env_beam entity, it will assume our own default settings. 'No FX' flag will disable the beam effects! 'No Beam FX' will obviously disable."	
+	fxBeam(target_destination)					:	"Beam Entity"							:	""							:	"The beam entity to use instead our own for our spawning effects. If empty or not an env_beam entity, it will assume our own default settings. Can be multiple beam entities if they share the same name or start with the same name. 'No FX' flag will disable the beam effects! 'No Beam FX' will obviously disable."	
 	fxSprite(sprite)							:	"Spawn Sprite"							:	"gctextures/gc_spnglw.vmt"	:	"The vmt to play when we spawn in an item. If empty, will default to gc_spnglw.vmt. 'No FX' flag will disable this!"
 	fxSound(sound)								:	"Spawn Sound"							:	"gcsfx/ammo_respawn.wav"	:	"The sound to play when spawning in an item. If empty, no sound will play. 'No FX' flag will disable this!"
 	
@@ -60,8 +64,8 @@
 	spawnOffset(vector)							:	"Spawned Item Offset"					:	"0 0 1"						:	"An offset to move the item by when spawning it in."
 	spawnAngles(angle)							:	"Spawned Item Angles"					:	"0 0 0"						:	"The angles that the item should be orientated at when spawned in."
 	spawnSurfaceTraceDirection(vector)			:	"Surface Trace Direction"				:	"0 0 -10000"				:	"An offset to move the item by when spawning it in."
-	spawnDelay(float)							:	"Spawn Delay"							:	"1.0"						:	"The amount of seconds to wait to spawn in an item. Zero means instant."
-	respawnDelay(float)							:	"Respawn Delay"							:	"3.0"						:	"The amount of seconds to wait to respawn an item. Zero means instant. Only applicable if the 'Respawn Item' flag is ticked. Can be zero to be instantenous. Keep in mind that the spawn delay will add onto this delay."
+	spawnDelay(float)							:	"Spawn Delay"							:	"1.0"						:	"The amount of seconds to wait to spawn in an item. Value must be 0.1 or over."
+	respawnDelay(float)							:	"Respawn Delay"							:	"3.0"						:	"The amount of seconds to wait to respawn an item. Value must be 0.1 or over. Only applicable if the 'Respawn Item' flag is ticked. Can be zero to be instantenous. Keep in mind that the spawn delay will add onto this delay."
 	respawnDistance(float)						:	"Distance to Respawn"					:	"0.0"						:	"The distance that needs to be reached before we can respawn an item. Zero means default respawning behavior. (see help for default respawn behavior definition.)"
 
 	
@@ -72,20 +76,21 @@
 		1	:	"Yes"	
 	] 	
 	
-	input spawn(string)							: 	"Tells the spawner to spawn its item. Can override the spawner's set item and spawn the item you give instead if given a classname."
-	input setItem(string)						: 	"Sets the item we should spawn. Enter Medkit, Armor, PistolAmmo, CrossbowAmmo, MachinegunAmmo, ShotgunAmmo, or Grenades to set the item to one of the defaults. You can also use simple numbers to specify default items. (1-7) If the value given is not a simple number and is not a default item name, then we'll assume its a classname."
+	input spawn(string)							: 	"Tells the spawner to spawn its item. Can override the spawner's set item and spawn the item you give instead if given a classname or a default item type index. (1-7)"
+	input setItem(string)						: 	"Sets the item we should spawn. Enter 1-7 to specify default item types. If the value given is not a simple number and is not a default item name, then we'll assume its a classname."
 	input setBeamEntity(target_destination)		: 	"Sets our beam entity template."
 	input setSpawnSprite(string)				: 	"Sets the sprite to play when spawning."
 	input setSpawnSound(string)					: 	"Sets the sound to play when spawning.."
 	input setSpawnLifespan(integer)				: 	"Sets the spawner lifespan."
 	input setSpawnOffset(vector)				: 	"Sets the offset to spawn by."
+	input setSurfaceTraceDirection(vector)		: 	"Sets the direction to do a surface trace from."
 	input setSpawnDelay(float)					: 	"Sets the spawning delay."
 	input setRespawnDelay(float)				: 	"Sets the respawning delay."
 	input setRespawnDistance(float)				: 	"Sets distance to respawn an item by."
 	input toggle(void)							:	"Toggles the spawner. Fires onEnabled and onDisabled respectively."
-	input disable(void)							:	"Disables the spawner. Fires onDisabled."
 	input enable(void)							:	"Enables the spawner. Fires onEnabled."
-	input respawnItem(void)						:	"Deletes the item and creates a new one."
+	input disable(void)							:	"Disables the spawner. Fires onDisabled."
+	input respawn(void)							:	"Deletes the item and creates a new one."
 	input printInfo(void)						:	"Prints the entity's data into console. For debugging."
 	
 	output onSpawnBegin(void)					: 	"Fires when we begin the spawning process."
@@ -96,6 +101,7 @@
 	output onDisabled(void)						: 	"Fires when we're disabled."
 	output onEnabled(void)						: 	"Fires when we're enabled."
 	output onRespawn(void)						: 	"Fires when we begin to respawn our item."
+	output onLifespanEnd(void)					: 	"Fires when this spawner's lifespan has reached its end."
 	
 ]
 
