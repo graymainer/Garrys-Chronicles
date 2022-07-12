@@ -19,7 +19,7 @@
 	ammomulti(float)									: "Ammo Amount" 	: 	"1.0" 	: "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
 
 	input equip(void)									: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
-	input strip(void)									: "Strips the entity of all its weapons if given nothing. However if given a classname, it will strip that specific entity from the player. if 'Strip Before Equip' is unticked, nothing will happen. If activator is null, it will strip player 1. If 'Equip All Players' is ticked, all players will be stripped."
+	input strip(string)									: "Strips the entity of all its weapons if given nothing. However if given a classname, it will strip that specific entity from the player. if 'Strip Before Equip' is unticked, nothing will happen. If activator is null, it will strip player 1. If 'Equip All Players' is ticked, all players will be stripped."
 	input setAmmoMultiplier(float)						: "Sets our ammo multiplier."
 	input toggleGun(string)								: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
 	input clear(void)									: "Clears all guns we think you have. No weapons will be given."
@@ -94,7 +94,7 @@
 	input setSpawnSound(string)					: 	"Sets the sound to play when spawning. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setSpawnLifespan(integer)				: 	"Sets the spawner lifespan."
 	input setSpawnOffset(vector)				: 	"Sets the offset to spawn at."
-	input setSpawnAngles(angle)					: 	"Sets the angles to spawn with."
+	input setSpawnAngles(vector)					: 	"Sets the angles to spawn with."
 	input setSurfaceTraceDirection(vector)		: 	"Sets the direction to do a surface trace from."
 	input setSpawnDelay(float)					: 	"Sets the spawning delay."
 	input setRespawnDelay(float)				: 	"Sets the respawning delay."

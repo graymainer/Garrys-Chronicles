@@ -960,7 +960,8 @@ function ENT:playFXSpawning(item)
 		
 		spr:SetKeyValue("spawnflags", bit.bor(1, 2)) --start on, play once
 		spr:SetKeyValue("model", self.fxSprite)
-		spr:SetKeyValue("scale", "0.8")
+		spr:SetKeyValue("scale", "0.5")
+		spr:SetKeyValue("framerate", "1")
 		spr:SetKeyValue("rendercolor", "146 255 47")
 		spr:SetKeyValue("rendermode", 9)
 		spr:SetKeyValue("renderfx", 1)
@@ -1001,7 +1002,7 @@ function ENT:playFXSpawning(item)
 				
 				beams[i]:SetName(self:GetName() .. "_spawnerfx_beams" .. tostring(i - 1))
 				beams[i]:SetKeyValue("spawnflags", bit.bor(4)) --random strike
-				beams[i]:SetKeyValue("boltwidth", 1)
+				beams[i]:SetKeyValue("boltwidth", 0.65)
 				beams[i]:SetKeyValue("life", 0.2)
 				beams[i]:SetKeyValue("noiseamplitude", 15)
 				beams[i]:SetKeyValue("radius", 40)
