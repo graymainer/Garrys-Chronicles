@@ -271,19 +271,32 @@ function ENT:SetupGlobals( activator, caller )
 
 end
 
-function ENT:stripPlayer(activator)
+function ENT:stripPlayer(activator, itemToTake)
 	if (!self:HasSpawnFlags(SF_STRIP)) then return end
 
 	if (activator != nil and activator != NULL and activator:IsPlayer()) then
-		activator:StripWeapons()
+		if (itemToTake == nil or itemToTake == NULL) then
+			activator:StripWeapons()
+		else
+			activator:StripWeapon(itemToTake)
+		end
 	else
 		local plys = player.GetAll()
 		if (self:HasSpawnFlags(SF_ALLPLAYERS)) then
 			for i = 1, #plys, 1 do
-				plys[i]:StripWeapons()
+				if (itemToTake == nil or itemToTake == NULL) then
+					plys[i]:StripWeapons()
+				else
+					plys[i]:StripWeapon(itemToTake)
+				end
+				
 			end
 		else
-			plys[1]:StripWeapons()
+			if (itemToTake == nil or itemToTake == NULL) then
+				plys[1]:StripWeapons()
+			else
+				plys[1]:StripWeapon(itemToTake)
+			end
 		end
 		
 	end
@@ -330,7 +343,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("strip", name)) then
-		self:stripPlayer(activator)
+		self:stripPlayer(activator, data) --if data is nil, it will strip all.
 		
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
