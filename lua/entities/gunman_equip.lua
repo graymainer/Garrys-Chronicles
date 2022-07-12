@@ -33,15 +33,18 @@
 		1024	:	"Equip on Spawn"		: 1
 	]
 	
-	nades(integer)						: "Grenades" 		: 	2 	: "How many grenades should we give? (If any)"
-	ammomulti(float)					: "Ammo Amount" 	: "1.0" : "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
+	nades(integer)										: "Grenades" 			: 		2 		: "How many grenades should we give? (If any)"
+	ammomulti(float)									: "Ammo Amount" 	: 	"1.0" 	: "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
 
-	input equip(void)					: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
-	input setAmmoMultiplier(float)		: "Sets our ammo multiplier."
-	input toggleGun(string)				: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
+	input equip(void)									: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
+	input setAmmoMultiplier(float)						: "Sets our ammo multiplier."
+	input toggleGun(string)								: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
+	input clearAllGuns(void)							: "Clears all guns. No weapons will be given."
+	input giveAll(void)									: "Enables all guns. All weapons will be given."
 	
-	output onEquipped(void)				: "Fires when we equipped something."
-	output onGunsChanged(void)			: "Fires when our catalogue of collected guns have changed."
+	output onEquipped(void)								: "Fires when we equipped something."
+	output onCleared(void)								: "Fires when we cleared all guns."
+	output onGunsChanged(void)							: "Fires when our catalogue of collected guns have changed."
 	
 ]
 
@@ -268,6 +271,40 @@ function ENT:SetupGlobals( activator, caller )
 
 end
 
+function ENT:stripPlayer(activator)
+	if (!self:HasSpawnFlags(SF_STRIP)) then return end
+
+	if (activator != nil and activator != NULL and activator:IsPlayer()) then
+		activator:StripWeapons()
+	else
+		local plys = player.GetAll()
+		if (self:HasSpawnFlags(SF_ALLPLAYERS)) then
+			for i = 1, #plys, 1 do
+				plys[i]:StripWeapons()
+			end
+		else
+			plys[1]:StripWeapons()
+		end
+		
+	end
+end
+
+function ENT:equipPlayer(activator)
+	
+	if (activator != nil and activator != NULL and activator:IsPlayer()) then
+		self:equip(activator)
+	else
+		local plys = player.GetAll()
+		if (self:HasSpawnFlags(SF_ALLPLAYERS)) then
+			for i = 1, #plys, 1 do
+				self:equip(plys[i])
+			end
+		else
+			self:equip(plys[1])
+		end
+		
+	end
+end
 
 --the heart and soul of this entity. This baby reads in hammer i/o input and translates it into LUA calls. This will allow you to use the inputs in the fgd in hammer to actually use this entity in the map with hammer's scripting.
 function ENT:AcceptInput( name, activator, caller, data )
@@ -287,19 +324,13 @@ function ENT:AcceptInput( name, activator, caller, data )
 		--local val = util.StringToType(data, "int")
 		--if (!isValValid(val)) then self:KillGlobals() return false end 
 
-		if (self:HasSpawnFlags(SF_ALLPLAYERS)) then
-			local plys = player.GetAll()
-
-			for i = 1, #plys, 1 do
-				self:equip(plys[i])
-			end
-		else
-			if (IsValid(activator) and IsPlayer(activator)) then
-				self:equip(activator)
-			else
-				self:equip(Entity(1)) --else we just get the first player.
-			end
-		end
+		self:equipPlayer(activator)
+		
+		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
+	return true end
+	
+	if (isInput("strip", name)) then
+		self:stripPlayer(activator)
 		
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
@@ -330,6 +361,39 @@ function ENT:AcceptInput( name, activator, caller, data )
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
 	
+	if (isInput("clear", name)) then
+				
+		self.bMelee = false
+		self.bPistol = false
+		self.bSniper = false
+		self.bMachineGun = false
+		self.bShotgun = false
+		self.bLauncher = false
+		self.bFrags = false
+		
+		self:fireEvent("onGunsChanged")
+		self:fireEvent("onCleared")
+		self:stripPlayer(activator)
+		
+		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
+	return true end
+	
+	if (isInput("giveAll", name)) then
+		
+		self.bMelee = true
+		self.bPistol = true
+		self.bSniper = true
+		self.bMachineGun = true
+		self.bShotgun = true
+		self.bLauncher = true
+		self.bFrags = true
+		
+		self:fireEvent("onGunsChanged")
+		self:fireEvent("onGiveAll")
+		self:equipPlayer(activator)
+		
+		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
+	return true end
 	
 	print(self:GetName() .. " was shot an unknown input! ('" .. name .. "')") -- by this point, if execution has reached us, we have no earthly idea what this input is.
 	self:KillGlobals()
