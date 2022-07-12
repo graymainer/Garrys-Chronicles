@@ -425,8 +425,8 @@ function ENT:equip(ent) --TODO LATER: fix these to use dopey's class names for t
 		if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
 			ent:Give("weapon_crowbar", true)
 		else
-			ent:Give("gunman_weapon_knife", true)
-			ent:Give("gunman_weapon_fists", true)
+			ent:Give("gunman_weapon_knife", true) 
+			--ent:Give("gunman_weapon_fists", true) --knife gives fists automatically.
 		end
 	end
 

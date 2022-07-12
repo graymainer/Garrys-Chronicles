@@ -114,7 +114,7 @@ end
 
 function SWEP:Equip()
 
-local w = Entity( 1 ):Give( "weapon_gcfists", true )
+local w = Entity( 1 ):Give( "gunman_weapon_fists", true )
 self.Weapon:EmitSound( "gcwpn_pkup" )
 
 end

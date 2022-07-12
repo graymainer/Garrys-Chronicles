@@ -176,7 +176,7 @@ self.IdleTimer = CurTime() + self.Owner:GetViewModel():SequenceDuration() + 1
 end
 
 function SWEP:Equip()
-local w = Entity( 1 ):Give( "weapon_combatknife", true )
+local w = Entity( 1 ):Give( "gunman_weapon_knife", true )
 end
 
 function SWEP:Reload()
