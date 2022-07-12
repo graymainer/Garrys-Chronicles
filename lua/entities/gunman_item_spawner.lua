@@ -15,11 +15,13 @@ SF_FORCEHL2 = 2
 SF_NOBEAMS = 4
 SF_NOGLOW = 8
 SF_NOSPARKS = 16
-SF_NOSPAWNSPARKS = 32
-SF_NOFX = 64
-SF_FROZEN = 128
-SF_NOGRAVITY = 256
-SF_NOSURFALIGN = 512
+SF_NOLITES = 32
+SF_NOSHADOWS = 64
+SF_NOSPAWNSPARKS = 128
+SF_NOFX = 256
+SF_FROZEN = 512
+SF_NOGRAVITY = 1024
+SF_NOSURFALIGN = 2048
 
 --
 
@@ -32,6 +34,8 @@ ENT.item = "gc_medkit" --the item we are to spawn. This is the default item.
 
 --spawning effects
 ENT.fxBeam = nil --a reference to a beam entity.
+ENT.fxLite = nil --a reference to an env_projectedtexture entity.
+ENT.fxLiteAngles = Angle(-90, 0, 0) --the angles to spawn the light at.
 ENT.fxSprite = "gctextures/gc_spnglw.vmt"
 ENT.fxSound = "gcsfx/ammo_respawn.wav"
 
@@ -66,9 +70,17 @@ ENT.bRespawnDistance = false --used to determine if this feature is enabled or n
 
 --checks if the string is valid by making sure it isn't nil and that it isn't just white space or spaces.
 function isStrValid(str)
-	if (str == nil) then return false end
-	str = string.Replace(str, " ", "")
-	if (str == "") then return false end
+	if (istable(str)) then
+		for i = 1, #str, 1 do
+			if (str[i] == nil) then return false end
+			str[i] = string.Replace(str[i], " ", "")
+			if (str[i] == "") then return false end
+		end
+	else
+		if (str == nil) then return false end
+		str = string.Replace(str, " ", "")
+		if (str == "") then return false end
+	end
 return true end
 
 --simple wrapper function made specifically to check if the str is invalid.
@@ -133,7 +145,7 @@ function isValInvalid(val)
 	return !isValValid(val) 
 end
 
---checks if the keyvalue it is fed is actually valid or not. It uses isstrvalid to check. You can tell it that you only want numbers by passing true into the 3rd argument.
+--checks if the keyvalue it is fed is actually valid or not. It uses isStrValid to check. You can tell it that you only want numbers by passing true into the 3rd argument.
 function isKeyValueValid(k, v, bOnlyNumber)
 	if (bOnlyNumber == nil) then bOnlyNumber = false end
 
@@ -149,6 +161,110 @@ function isKeyValueValid(k, v, bOnlyNumber)
 	
 
 	return true
+end
+
+--gets a string and checks if it will be a valid vector.
+function strIsValidVector(vec, ent, bAng)
+	if(isStrInvalid(vec)) then return false end
+	if (!isstring(vec)) then vec = tostring(vec) end
+	if (bAng == nil) then bAng = false end
+	
+	local name
+	if (ent == nil or ent == NULL) then 
+		name = "*Unknown*"
+	else
+		name = ent
+	end
+
+	local typename
+	
+	if (bAng) then
+		typename = "angle"
+	else
+		typename = "vector"
+	end
+
+	local vectorNums = string.Explode(" ", vec)
+	if (#vectorNums != 3) then print(name, " was given a " .. typename .. " with an invalid number of axes.") return false end
+	if (!strIsNum(table.concat(vectorNums), true)) then print(name, "was given a " .. typename .. " with letters.") return false end
+		
+	if (util.StringToType(vec, typename) == nil) then print(name, "string couldn't convert to a " .. typename .. ".") return false end
+	
+	return true
+
+end
+
+function strIsInvalidVector(vec, ent)
+	return !strIsValidVector(vec, ent)
+end
+
+function strIsValidAngles(ang, ent)
+	return strIsValidVector(ang, ent, true)
+end
+
+function strIsInvalidAngles(ang, ent)
+	return !strIsValidAngles(ang, ent)
+end
+
+--checks if the string makes for a valid entity. or entities. can take in a classname and filter out entities by that name. Safe for use before entity initialization BUT NOT IF using search mode. Can search for the entity, or attempt to create it using the str as a classname.
+function strIsValidEntity(str, bSearch, desiredClass)
+	if (isStrInvalid(str)) then print("strIsValidEntity: Was not passed a valid str argument.") return false end
+	if (bSearch == nil) then bSearch = false end
+	if (bSearch) then
+		if (istable(str)) then
+			for strI = 1, #str, 1 do
+				local foundEnts = ents.FindByName(str[strI])
+				if (foundEnts == nil or table.IsEmpty(foundEnts) or foundEnts[1] == nil or foundEnts[1] == NULL) then print("strIsValidEntity: Could not find an entity. ('" .. str[strI] .. "')") return false end
+				
+				for i = 1, #foundEnts, 1 do
+					if (foundEnts[i] == nil or foundEnts[i] == NULL) then print("strIsValidEntity: An entity was invalid. ('" .. str[strI] .. "')") return false end --would use isvalid, but its kind of jank.
+					if (isStrValid(desiredClass)) then
+						
+						if (foundEnts[i]:GetClass() != desiredClass) then print("strIsValidEntity: An entity did not match the class filter. ('" .. str[strI] .. "')") return false end
+					end
+				end
+			end
+		else
+			local foundEnts = ents.FindByName(str)
+			
+			if (foundEnts == nil or table.IsEmpty(foundEnts) or foundEnts[1] == nil or foundEnts[1] == NULL) then print("strIsValidEntity: Could not find the entity. ('" .. str .. "')") return false end
+
+			
+			for i = 1, #foundEnts, 1 do
+				if (foundEnts[i] == nil or foundEnts[i] == NULL) then print("strIsValidEntity: The entity was invalid. ('" .. str .. "')") return false end --would use isvalid, but its kind of jank.
+				if (isStrValid(desiredClass)) then
+					if (foundEnts[i]:GetClass() != desiredClass) then print("strIsValidEntity: The entity did not match the class filter. ('" .. str .. "')") return false end
+				end
+			end
+		end
+	else
+		if (istable(str)) then
+			for i = 1, #str, 1 do
+				local ent = ents.Create(str[i])
+				if ( ent == NULL or ent == nil) then 
+					print("strIsValidEntity: Could not create an entity ('" .. str[i] .. "')!") 
+					return false
+				else
+					ent:Remove()
+				end
+			end
+		else
+			local ent = ents.Create(str)
+			if ( ent == NULL or ent == nil) then 
+				print("strIsValidEntity: Could not create an entity ('" .. str .. "')!") 
+				return false
+			else
+				ent:Remove()
+			end
+		end
+		
+	end
+	
+	return true
+end
+
+function strIsInvalidEntity(str, bSearch, desiredClass)
+	return !strIsValidEntity(str, bSearch, desiredClass)
 end
 
 --checks if the name is actually a key. Normalizes the input, so caps do not matter.
@@ -197,20 +313,31 @@ function ENT:printInfo()
 	
 	--implementation
 	print("Item to Spawn:", "", "", self.item)
-	print("Beam Entity:", "", "", self.fxBeam)
+	print("Light Angles:", "", "", self.fxLiteAngles)
 	print("Sprite:", "", "", "", self.fxSprite)
 	print("Sound:", "", "", "", self.fxSound)
 	print("Spawn Delay:", "", "", self.spawnDelay)
 	print("Respawn Delay:", "", "", self.respawnDelay)
 	print("Spawn Position:", "", "", self.spawnPos)
 	print("Spawn Angles:", "", "", self.spawnAngles)
-	print("Surface Trace Direction:", "", "", self.spawnSurfaceTraceDir)
+	print("Surface Trace Direction:", self.spawnSurfaceTraceDir)
 	
+	if (self.fxLite != nil and self.fxLite != NULL) then
+		print("Light Effects Overwritten?", "Yes, using: " .. tostring(self.fxLite))
+	else
+		print("Light Effects Overwritten?", "No, using default.")
+	end
+	
+	if (self.fxBeam != nil and self.fxBeam != NULL) then
+		print("Beam Effects Overwritten?", "Yes, using: " .. tostring(self.fxLite))
+	else
+		print("Beam Effects Overwritten?", "No, using default.")
+	end
 	
 	if (self.spawnPosOverride != nil) then
-		print("Spawn Position Type:", "", "Using an override; " .. tostring(spawnPosOverride))
+		print("Spawn Position Overwritten?", "Yes, using: " .. tostring(self.spawnPosOverride) .. " at " .. tostring(self.spawnPos))
 	else
-		print("Spawn Position Type:", "", "Using self.")
+		print("Spawn Position Overwritten?", "No, using default.")
 	end
 	
 	if (self.spawnLifespan <= 0) then
@@ -266,6 +393,18 @@ function ENT:printInfo()
 		print("No Beam Effects?", "", "", "Yes.")
 	else
 		print("No Beam Effects?", "", "", "No.")
+	end
+	
+	if (self:HasSpawnFlags(SF_NOLITES)) then
+		print("No Lighting Effects?", "", "", "Yes.")
+	else
+		print("No Lighting Effects?", "", "", "No.")
+	end
+	
+	if (!self:HasSpawnFlags(SF_NOSHADOWS)) then
+		print("Does Lighting Cast Shadows?", "", "Yes.")
+	else
+		print("Does Lighting Cast Shadows??", "", "No.")
 	end
 	
 	if (self:HasSpawnFlags(SF_NOGLOW)) then
@@ -329,25 +468,27 @@ function ENT:KeyValue( k, v )
 		if (strIsNum(v)) then
 			local itemIndex = util.StringToType(v, "int")
 			
-			if (itemIndex < 0 or itemIndex > 7) then print(self, "had an item index that was out of range. Ignoring.")return end
-			self.item = itemIndex --we'll check it out more later, but we cant do it here because bGunmanSWEPS could be nil.
+			if (itemIndex < 0 or itemIndex > 7) then print(self, "had key with an item index that was out of range. Ignoring.")return end
+			self:getItem(itemIndex)
 		else --Its not a number, so assume we've put in a classname.
-			local testent = ents.Create(v) --try to create the entity from the class its trying to give us.
-			if (testent == NULL) then print(self, "was given an unknown item to spawn. Ignoring.") return end
-			
+			if (strIsInvalidEntity(v, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") return end
 			self.item = v
 		end
 		
 	elseif (isKey("fxBeam", k)) then
 		if (isStrInvalid(v)) then return end
 		self.fxBeam = v
+		
+	elseif (isKey("fxLite", k)) then
+		if (isStrInvalid(v)) then return end
+		self.fxLite = v
 	
 	elseif (isKey("fxSprite", k)) then
-		if (isStrInvalid(v)) then print(self, "was given a bad sprite. Ignoring.") return end
+		if (isStrInvalid(v)) then return end
 		self.fxSprite = v
 		
 	elseif (isKey("fxSound", k)) then
-		if (isStrInvalid(v)) then print(self, "was given a bad sound. Ignoring.") return end
+		if (isStrInvalid(v)) then return end
 		self.fxSound = v
 		
 	elseif (isKey("StartDisabled", k)) then
@@ -358,27 +499,35 @@ function ENT:KeyValue( k, v )
 		else
 			self.bEnabled = true
 		end
+		
 	elseif (isKey("spawnOffset", k)) then
 		if (isStrInvalid(v)) then return end
-		local val = util.StringToType(v, "vector")
-				
-		if (val == nil) then print(self, "was given a bad spawn offset. Ignoring.") return end
 		
-		self.spawnOffset = val
+		if (strIsInvalidVector(v, self)) then print(self, "was given a bad vector for spawn offset. Ignoring.") return end
+		
+		self.spawnOffset = util.StringToType(v, "vector")
+		
 	elseif (isKey("spawnAngles", k)) then
 		if (isStrInvalid(v)) then return end
-		local val = util.StringToType(v, "angle")
-				
-		if (val == nil) then print(self, "was given bad spawn angles. Ignoring.") return end
 		
-		self.spawnAngles = val
+		if (strIsInvalidAngles(v, self)) then print(self, "was given bad spawn angles. Ignoring.") return end
+		
+		self.spawnAngles = util.StringToType(v, "angle")
+		
+	elseif (isKey("fxLiteAngles", k)) then
+		if (isStrInvalid(v)) then return end
+		
+		if (strIsInvalidAngles(v, self)) then print(self, "was given bad light effect angles. Ignoring.") return end
+		
+		self.fxLiteAngles = util.StringToType(v, "angle")
+		
 	elseif (isKey("spawnSurfaceTraceDirection", k)) then
 		if (isStrInvalid(v)) then return end
-		local val = util.StringToType(v, "vector")
-				
-		if (val == nil) then print(self, "was given a bad surface trace direction. Ignoring.") return end
 		
-		self.spawnSurfaceTraceDir = val
+		if (strIsInvalidVector(v, self)) then print(self, "was given a bad surface trace direction. Ignoring.") return end
+		
+		self.spawnSurfaceTraceDir = util.StringToType(v, "vector")
+		
 	elseif (isKey("spawnLifespan", k)) then
 		if (isStrInvalid(v)) then return end
 		if (!strIsNum(v)) then return end
@@ -416,8 +565,8 @@ function ENT:KeyValue( k, v )
 		
 	elseif (isKey("spawnPositionOverride", k)) then
 		if (isStrInvalid(v)) then return end
-	
-		self.spawnPosOverride = val
+		if (strIsInvalidEntity(v, true)) then print(self, "was given a bad position override entity. Ignoring.") return end
+		self.spawnPosOverride = v
 	
 	elseif (isKey("respawnDistance", k)) then
 		if (isStrInvalid(v)) then return end
@@ -428,6 +577,8 @@ function ENT:KeyValue( k, v )
 		
 		if (val < 5.0) then
 			val = 0.0
+		else
+			self.bRespawnDistance = true
 		end
 		
 		
@@ -441,6 +592,53 @@ function ENT:KeyValue( k, v )
 
 end
 
+--gets one of our default item types from index. Chooses either vanilla hl2 items or gunman items depending on addon availability.
+function ENT:getItem(index)
+	if (index == nil or !isnumber(index)) then print(self, "attempted to get an item from an invalid index.") return end
+
+	if (index == 1) then
+		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
+			self.item = "gc_medkit"
+		else
+			self.item = "item_healthkit"
+		end
+	elseif (index == 2) then
+		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
+			self.item = "gc_armor"
+		else
+			self.item = "item_battery"
+		end
+	elseif (index == 3) then
+		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
+			self.item = "gunman_item_ammo_pistol"
+		else
+			self.item = "item_ammo_pistol"
+		end
+	elseif (index == 4) then --dont have a gunman equivalent
+		self.item = "item_ammo_crossbow"
+	elseif (index == 5) then
+		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
+			self.item = "gunman_item_ammo_mechagun"
+		else
+			self.item = "item_ammo_smg1"
+		end
+	elseif (index == 6) then
+		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
+			self.item = "gunman_item_ammo_shotgun"
+		else
+			self.item = "item_box_buckshot"
+		end
+	elseif (index == 7) then
+		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
+			self.item = "gc_ammo_dmlrocket"
+		else
+			self.item = "weapon_frag"
+		end
+	else
+		print(self:GetName() .. " tried to spawn an unknown item from a bad index. Ignoring.")
+	end
+end
+
 --we start main execution here.
 function ENT:Initialize()
 
@@ -448,69 +646,25 @@ function ENT:Initialize()
 		self:SetName("itemSpawner" .. tostring(#ents.FindByName("itemSpawner*")))
 	end
 	
-	if (self.spawnPosOverride != nil) then
-		if (!IsValid(ents.FindByName(self.spawnPosOverride)[1])) then
-			print(self, "was given a bad spawn position override. Resetting!")
-			self.spawnPosOverride = nil
-		end
+	--verify some values we couldn't verify at ent:keyvalue
+	if (self.fxBeam != nil) then
+		if (strIsInvalidEntity(self.fxBeam, true, "env_beam")) then print(self:GetName(), "was given a bad beam entity. Resetting.") self.fxBeam = nil end
 	end
-
-	self.bInit = true
 	
-	if (self.respawnDistance > 5.0) then
-		self.bRespawnDistance = true
-	end
-		
-	--if the item we were given is a number, then we need to reinterpret it as a classname. 
-	--We also need to switch classes based on gunman swep availability. 
-	--bGunmanSWEPS isn't available during ENT:keyvalue, so we do it here.
-	if (isnumber(self.item)) then
-		if (self.item == 1) then
-			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-				self.item = "gc_medkit"
-			else
-				self.item = "item_healthkit"
-			end
-		elseif (self.item == 2) then
-			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-				self.item = "gc_armor"
-			else
-				self.item = "item_battery"
-			end
-		elseif (self.item == 3) then
-			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-				self.item = "gunman_item_ammo_pistol"
-			else
-				self.item = "item_ammo_pistol"
-			end
-		elseif (self.item == 4) then --dont have a gunman equivalent
-			self.item = "item_ammo_crossbow"
-		elseif (self.item == 5) then
-			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-				self.item = "gunman_item_ammo_mechagun"
-			else
-				self.item = "item_ammo_smg1"
-			end
-		elseif (self.item == 6) then
-			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-				self.item = "gunman_item_ammo_shotgun"
-			else
-				self.item = "item_box_buckshot"
-			end
-		elseif (self.item == 7) then
-			if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-				self.item = "gc_ammo_dmlrocket"
-			else
-				self.item = "weapon_frag"
-			end
+	if (self.fxLite != nil) then
+		if (strIsInvalidEntity(self.fxLite, true, "env_projectedtexture")) then 
+			print(self:GetName(), "was given a bad light entity. Resetting.") 
+			self.fxLite = nil
 		else
-			print(self:GetName() .. " tried to spawn an unknown item type from number. Ignoring.")
+			ents.FindByName(self.fxLite)[1]:Fire("TurnOff") --nasty hack, but a nice qol feature since env_projectedtexture ents ignore the enabled flag.
 		end
 	end
 	
+	--overrides the spawn position with the override entity given IF the override isn't nil.
 	if (self.spawnPosOverride != nil) then
-		if (IsValid(ents.FindByName(self.spawnPosOverride)[1])) then
-			self.spawnPos = self.spawnPosOverride:GetPos()
+		local override = ents.FindByName(self.spawnPosOverride)[1]
+		if (IsValid(override)) then
+			self.spawnPos = override:GetPos()
 		else
 			self.spawnPos = self:GetPos()
 		end
@@ -518,16 +672,20 @@ function ENT:Initialize()
 		self.spawnPos = self:GetPos()
 	end
 	
-	
+	--auto spawns items if we're enabled at initialization.
 	if (self.bEnabled) then
 		self.bSpawning = true --sort of a hack to stop spawns from occuring before we auto spawn.
 		timer.Simple(self.respawnDelay, function()
 			if (self == nil or self == NULL or !IsValid(self)) then return end
 			if (IsValid(self.spawnedItem)) then self.bSpawning = false return end
 			self.bSpawning = false
-			self:spawn() --spawn automatically if we are enabled on start.
+			self:spawn()
 		end)
 	end
+	
+	
+	
+	self.bInit = true --we're init baby!
 end
 
 --set up our ACTIVATOR and CALLER globals.
@@ -563,49 +721,9 @@ function ENT:AcceptInput( name, activator, caller, data )
 			local i = util.StringToType(data, "int")
 			if (isValInvalid(i) or i < 1 or i > 7) then print(self:GetName() .. "'s " .. name .. " input was given an invalid type index.") self:KillGlobals() return end
 		
-			if (i == 1) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self:spawn("gc_medkit")
-				else
-					self:spawn("item_healthkit")
-				end
-			elseif (i == 2) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self:spawn("gc_armor")
-				else
-					self:spawn("item_battery")
-				end
-			elseif (i == 3) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self:spawn("gunman_item_ammo_pistol")
-				else
-					self:spawn("item_ammo_pistol")
-				end
-			elseif (i == 4) then --dont have a gunman equivalent
-				self:spawn("item_ammo_crossbow")
-			elseif (i == 5) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self:spawn("gunman_item_ammo_mechagun")
-				else
-					self:spawn("item_ammo_smg1")
-				end
-			elseif (i == 6) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self:spawn("gunman_item_ammo_shotgun")
-				else
-					self:spawn("item_box_buckshot")
-				end
-			elseif (i == 7) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self:spawn("gc_ammo_dmlrocket")
-				else
-					self:spawn("weapon_frag")
-				end
-			else
-				print(self:GetName() .. "'s " .. name .. " input was given an unknown type index.")
-			end
+			self:getItem(i)
 		else--assume its a classname
-			if (ents.Create(data) == NULL) then print(self:GetName() .. "'s " .. name .. " input was given a nonexistent classname.") self:KillGlobals() return end
+			if (strIsInvalidEntity(data, false)) then print(self:GetName() .. "'s " .. name .. " input was given a nonexistent classname.") self:KillGlobals() return end
 			self:spawn(data) --override our item and try to spawn the one given instead.
 		end
 
@@ -619,50 +737,10 @@ function ENT:AcceptInput( name, activator, caller, data )
 			local i = util.StringToType(data, "int")
 			if (isValInvalid(i) or i < 1 or i > 7) then print(self:GetName() .. "'s " .. name .. " input was given an invalid type index.") self:KillGlobals() return end
 		
-			if (i == 1) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self.item = "gc_medkit"
-				else
-					self.item = "item_healthkit"
-				end
-			elseif (i == 2) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self.item = "gc_armor"
-				else
-					self.item = "item_battery"
-				end
-			elseif (i == 3) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self.item = "gunman_item_ammo_pistol"
-				else
-					self.item = "item_ammo_pistol"
-				end
-			elseif (i == 4) then --dont have a gunman equivalent
-				self.item = "item_ammo_crossbow"
-			elseif (i == 5) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self.item = "gunman_item_ammo_mechagun"
-				else
-					self.item = "item_ammo_smg1"
-				end
-			elseif (i == 6) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self.item = "gunman_item_ammo_shotgun"
-				else
-					self.item = "item_box_buckshot"
-				end
-			elseif (i == 7) then
-				if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-					self.item = "gc_ammo_dmlrocket"
-				else
-					self.item = "weapon_frag"
-				end
-			else
-				print(self:GetName() .. " tried to spawn an unknown item type from number. Ignoring.")
-			end
+			self:getItem(i)
 		else
 			if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input wasn't given a valid parameter value.") self:KillGlobals() return end
-			if (ents.Create(data) == NULL) then print(self:GetName() .. "'s " .. name .. " input was given a nonexistent class name.") self:KillGlobals() return end
+			if (strIsInvalidEntity(data, false)) then print(self:GetName() .. "'s " .. name .. " input was given a nonexistent class name.") self:KillGlobals() return end
 			
 			self.item = data
 		end
@@ -675,16 +753,20 @@ function ENT:AcceptInput( name, activator, caller, data )
 	
 	if (isInput("setBeamEntity", name)) then
 		
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (isStrInvalid(data) or data == "nil" or data == "null") then self.fxBeam = nil self:KillGlobals() return end
 		
-		local foundEnts = ents.FindByName(data)
-		if (foundEnts == nil or table.IsEmpty(foundEnts)) then print(self:GetName() .. "'s " .. name .. " input was given a beam entity reference with which no beam entities could be found.") self:KillGlobals() return end
-		
-		for i = 1, #foundEnts, 1 do
-			if (foundEnts[i] == nil or foundEnts[i] == NULL or !IsValid(foundEnts[i]) or foundEnts[i]:GetClass() != "env_beam") then print(self:GetName() .. "'s " .. name .. " input was given a bad reference to a beam entity.") self:KillGlobals() return end
-		end
+		if (strIsInvalidEntity(data, true, "env_beam")) then print(self:GetName() .. "'s " .. name .. " found no valid entity.") self:KillGlobals() return end
 		
 		self.fxBeam = data
+		self:KillGlobals()
+	return true end
+	
+	if (isInput("setLightEntity", name)) then
+		if (isStrInvalid(data) or data == "nil" or data == "null") then self.fxLite = nil self:KillGlobals() return end		
+		
+		if (strIsInvalidEntity(data, true, "env_projectedtexture")) then print(self:GetName() .. "'s " .. name .. " found no valid entity.") self:KillGlobals() return end
+		
+		self.fxLite = data
 		self:KillGlobals()
 	return true end
 	
@@ -696,7 +778,8 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("setSpawnSound", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (isStrInvalid(data) or data == "nil" or data == "null") then self.fxSound = nil self:KillGlobals() return end		
+		
 		
 		self.fxSound = data
 		self:KillGlobals()
@@ -717,33 +800,29 @@ function ENT:AcceptInput( name, activator, caller, data )
 	if (isInput("setSpawnOffset", name)) then
 		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		local vectorNums = string.Explode(" ", data)
-		if (#vectorNums != 3) then print(self:GetName() .. "'s " .. name .. " input tried to set our spawn offset to a vector with an invalid number of axes. Ignoring.") self:KillGlobals() return end
-		if (!strIsNum(table.concat(vectorNums), true)) then print(self:GetName() .. "'s " .. name .. " input tried to set our spawn offset to a vector with non numeric characters. Ignoring.") self:KillGlobals() return end
+		if (strIsInvalidVector(data)) then print(self:GetName() .. "'s " .. name .. " input had an invalid vector.") self:KillGlobals() return end
 		
 		
+		self.spawnOffset = util.StringToType(data, "vector")
+		self:KillGlobals()
+	return true end
+	
+	if (isInput("setSpawnAngles", name)) then
+		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		local vector = util.StringToType(data, "vector")
-		if (vector == nil) then print(self:GetName() .. "'s " .. name .. " input tried to set our spawn offset to an invalid vector. Ignoring.") self:KillGlobals() return end
+		if (strIsInvalidAngles(data)) then print(self:GetName() .. "'s " .. name .. " input had an invalid angle.") self:KillGlobals() return end
 		
 		
-		self.spawnOffset = vector
+		self.spawnAngles = util.StringToType(data, "angle")
 		self:KillGlobals()
 	return true end
 	
 	if (isInput("setSurfaceTraceDirection", name)) then
 		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		local vectorNums = string.Explode(" ", data)
-		if (#vectorNums != 3) then print(self:GetName() .. "'s " .. name .. " input tried to set our surface trace direction to a vector with an invalid number of axes. Ignoring.") self:KillGlobals() return end
-		if (!strIsNum(table.concat(vectorNums), true)) then print(self:GetName() .. "'s " .. name .. " input tried to set our surface trace direction to a vector with non numeric characters. Ignoring.") self:KillGlobals() return end
+		if (strIsInvalidVector(data)) then print(self:GetName() .. "'s " .. name .. " input had an invalid vector.") self:KillGlobals() return end
 		
-		
-		local vector = util.StringToType(data, "vector")
-		if (vector == nil) then print(self:GetName() .. "'s " .. name .. " input tried to set our surface trace direction to an invalid vector. Ignoring.") self:KillGlobals() return end
-		
-		
-		self.spawnSurfaceTraceDir = vector
+		self.spawnSurfaceTraceDir = util.StringToType(data, "vector")
 		self:KillGlobals()
 	return true end
 	
@@ -786,18 +865,6 @@ function ENT:AcceptInput( name, activator, caller, data )
 			self.bRespawnDistance = false
 		end
 
-		
-		self.respawnDistance = val
-		self:KillGlobals()
-	return true end
-	
-	if (isInput("setRespawnDistance", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
-		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input tried to set our respawn distance to a value with non numeric characters.") self:KillGlobals() return end
-		
-		local val = util.StringToType(data, "float")
-		
-		if (val < 0.0) then print(self:GetName() .. "'s " .. name .. " input tried to set our respawn distance to a negative number.") self:KillGlobals() return end
 		
 		self.respawnDistance = val
 		self:KillGlobals()
@@ -878,12 +945,13 @@ end
 
 --
 
-function ENT:playFXSpawning()
+function ENT:playFXSpawning(item)
 	if (!self.bEnabled) then return end
 	if (self:HasSpawnFlags(SF_NOFX)) then return end
 	if (isStrInvalid(self.fxSound)) then return end
+	
 
-	self:EmitSound(self.fxSound)
+	item:EmitSound(self.fxSound)
 	
 	if (!self:HasSpawnFlags(SF_NOGLOW) and isStrValid(self.fxSprite)) then
 	--if (false) then
@@ -907,72 +975,123 @@ function ENT:playFXSpawning()
 		
 	end
 	
-	if (self:HasSpawnFlags(SF_NOBEAMS)) then return end
-	
-	
-	if (self.fxBeam != nil) then
-		local beams = ents.FindByName(self.fxBeam .. "*")
-		if (beams == nil or table.IsEmpty(beams) or beams[1] == nil or beams[1] == NULL or !IsValid(beams[1])) then return end
-		
-		for i = 1, #beams, 1 do
-			beams[i]:SetKeyValue("lightningstart", self:GetName())
-			beams[i]:SetPos(self.spawnPos)
-			beams[i]:Fire("TurnOn")
-		end
-		
-		timer.Simple(self.spawnDelay, function() 
+	if (!self:HasSpawnFlags(SF_NOBEAMS)) then
+		if (self.fxBeam != nil) then
+			local beams = ents.FindByName(self.fxBeam)
 			if (beams == nil or table.IsEmpty(beams) or beams[1] == nil or beams[1] == NULL or !IsValid(beams[1])) then return end
+			
 			for i = 1, #beams, 1 do
-				beams[i]:Fire("TurnOff")
+				beams[i]:SetKeyValue("lightningstart", beams[i]:GetName())
+				beams[i]:SetPos(self.spawnPos)
+				beams[i]:Fire("TurnOn")
 			end
-		end)
-	else
-		local beams = {}
-		
-		--safest way to get env_beam a start location
-		local beamTgt = ents.Create("info_target")	
-		
-		for i = 1, 4, 1 do --4 is how many beams we want
-			beams[i] = ents.Create("env_beam")
-			if (!IsValid(beams[i])) then return end
 			
-			beams[i]:SetName("spawnerBeams" .. tostring(i - 1))
-			beams[i]:SetKeyValue("spawnflags", bit.bor(4)) --random strike
-			beams[i]:SetKeyValue("boltwidth", 1)
-			beams[i]:SetKeyValue("life", 0.2)
-			beams[i]:SetKeyValue("noiseamplitude", 15)
-			beams[i]:SetKeyValue("radius", 40)
-			beams[i]:SetKeyValue("renderamt", 255)
-			beams[i]:SetKeyValue("rendercolor", "0 255 0")
-			beams[i]:SetKeyValue("striketime", 0)
-			beams[i]:SetKeyValue("texture", "sprites/laserbeam.spr")
-			beams[i]:SetKeyValue("texturescroll", 12)
-			beams[i]:SetKeyValue("lightningstart", self:GetName())
-			beams[i]:SetPos(self.spawnPos)
-			beams[i]:Spawn()
+			timer.Simple(self.spawnDelay, function() 
+				if (beams == nil or table.IsEmpty(beams) or beams[1] == nil or beams[1] == NULL or !IsValid(beams[1])) then return end
+				for i = 1, #beams, 1 do
+					beams[i]:Fire("TurnOff")
+				end
+			end)
+		else
+			local beams = {}
 			
+			for i = 1, 4, 1 do --4 is how many beams we want
+				beams[i] = ents.Create("env_beam")
+				if (!IsValid(beams[i])) then return end
+				
+				beams[i]:SetName(self:GetName() .. "_spawnerfx_beams" .. tostring(i - 1))
+				beams[i]:SetKeyValue("spawnflags", bit.bor(4)) --random strike
+				beams[i]:SetKeyValue("boltwidth", 1)
+				beams[i]:SetKeyValue("life", 0.2)
+				beams[i]:SetKeyValue("noiseamplitude", 15)
+				beams[i]:SetKeyValue("radius", 40)
+				beams[i]:SetKeyValue("renderamt", 255)
+				beams[i]:SetKeyValue("rendercolor", "0 255 0")
+				beams[i]:SetKeyValue("striketime", 0)
+				beams[i]:SetKeyValue("texture", "sprites/laserbeam.spr")
+				beams[i]:SetKeyValue("texturescroll", 12)
+				beams[i]:SetKeyValue("lightningstart", beams[i]:GetName())
+				beams[i]:SetPos(self.spawnPos)
+				beams[i]:Spawn()
+				
+				
+				beams[i]:Fire("TurnOn")
+				
+			end
 			
-			beams[i]:Fire("TurnOn")
-			
+			timer.Simple(self.spawnDelay, function() 
+				if (beams == nil or table.IsEmpty(beams) or beams[1] == nil or beams[1] == NULL or !IsValid(beams[1])) then return end
+				for i = 1, #beams, 1 do
+					beams[i]:Fire("TurnOff")
+					beams[i]:Fire("Kill")
+				end
+			end)
 		end
-		
-		timer.Simple(self.spawnDelay, function() 
-			if (beams == nil or table.IsEmpty(beams) or beams[1] == nil or beams[1] == NULL or !IsValid(beams[1])) then return end
-			for i = 1, #beams, 1 do
-				beams[i]:Fire("TurnOff")
-				beams[i]:Fire("Kill")
-			end
-		end)
 	end
+	
+	if (!self:HasSpawnFlags(SF_NOLITES)) then
+		if (self.fxLite != nil) then
+			local lite = ents.FindByName(self.fxLite)[1]
+			if (lite == NULL) then print(self:GetName() .. " tried to create an env_projectedtexture and couldn't.") return end
+		
+			--positioning, name, and angles.
+			lite:SetPos(self.spawnPos - Vector(0, 0, 5))
+			lite:SetAngles(self.fxLiteAngles)
+			
+			lite:Fire("TurnOn")
+			
+			timer.Simple(self.spawnDelay, function()
+				if (self == nil or self == NULL or lite == nil or lite == NULL) then return end
+				lite:Fire("TurnOff")
+			end)
+		else
+			local lite = ents.Create("env_projectedtexture")
+			if (lite == NULL) then print(self:GetName() .. " tried to create an env_projectedtexture and couldn't.") return end
+			
+	
+			--positioning, name, and angles.
+			lite:SetName(self:GetName() .. "_spawnfx_lite")
+			lite:SetPos(self.spawnPos - Vector(0, 0, 10))
+			lite:SetAngles(self.fxLiteAngles)
+			
+			
+			--everything else.
+			
+			if (self:HasSpawnFlags(SF_NOSHADOWS)) then
+				lite:SetKeyValue("enableshadows", 0)
+			else
+				lite:SetKeyValue("enableshadows", 1)
+			end
+			
+			lite:SetKeyValue("targetname", self:GetName() .. "_spawnfx_lite")
+			lite:SetKeyValue("lightcolor", "0 255 0 400")
+			lite:SetKeyValue("style", 8)
+			--lite:SetKeyValue("pattern", "dfgsdfadfa") --doesn't function
+			lite:SetKeyValue("lightfov", 175)
+			
+			lite:Spawn() --create that bad boy!
+			
+			timer.Simple(self.spawnDelay, function()
+				if (self == nil or self == NULL or lite == nil or lite == NULL) then return end
+				lite:Remove() 
+			end)
+			
+		end
+	end
+	
 end
 
-function ENT:playFXSpawned(itemPos)
+function ENT:playFXSpawned(item)
 	if (!self.bEnabled) then return end
 	if (self:HasSpawnFlags(SF_NOFX)) then return end
 	if (isStrInvalid(self.fxSound)) then return end
 	
-	if (itemPos == nil) then
+	local itemPos
+	
+	if (item == nil or item == NULL) then
 		itemPos = self.spawnPos
+	else
+		itemPos = item:GetPos()
 	end
 	
 	if (!self:HasSpawnFlags(SF_NOSPARKS) and !self:HasSpawnFlags(SF_NOSPAWNSPARKS)) then
@@ -1039,13 +1158,6 @@ function ENT:createItem(ent)
 	
 	ent:Spawn() --spawn the entity in. Not to be confused with our spawn function, Spawn capitalized is source engine's spawn method.
 
-	if (!self:HasSpawnFlags(SF_NOSURFALIGN)) then
-		local traceRes = util.QuickTrace(self.spawnPos, self.spawnSurfaceTraceDir, function() return false end)
-
-		ent:SetPos(traceRes.HitPos + self.spawnOffset)
-	else
-		ent:SetPos(self:GetPos() + self.spawnOffset)
-	end
 	ent:SetAngles(self.spawnAngles)
 	
 	ent.bRemovedBySpawner = false
@@ -1085,7 +1197,7 @@ function ENT:createItem(ent)
 		end
 	end
 	
-	self:playFXSpawned(ent:GetPos())
+	self:playFXSpawned(ent)
 	
 	self:fireEvent("onSpawn")
 end
@@ -1115,8 +1227,17 @@ function ENT:spawn(classname, bSkipSpawnCheck)
 	self.bSpawning = true
 	
 	self:fireEvent("onSpawnBegin")
+	
+	--we do this here because fx needs an accurate pos.
+	if (!self:HasSpawnFlags(SF_NOSURFALIGN)) then
+		local traceRes = util.QuickTrace(self.spawnPos, self.spawnSurfaceTraceDir, function() return false end)
 
-	self:playFXSpawning()
+		ent:SetPos(traceRes.HitPos + self.spawnOffset)
+	else
+		ent:SetPos(self:GetPos() + self.spawnOffset)
+	end
+
+	self:playFXSpawning(ent)
 	
 	timer.Simple(self.spawnDelay, function() 
 		if (self == nil or self == NULL or !IsValid(self)) then return end

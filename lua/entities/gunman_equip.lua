@@ -99,10 +99,24 @@ function isStrValid(str)
 return true end
 
 --checks if the string contains letters. If it does, return false, if it doesn't, it returns true.
-function strHasNum(str)
-	for i = 1, string.len(str), 1 do
-		if (str[i] < '0' or str[i] > '9') then return false end
+--if the string contains only numeric characters return true. False if a single alphabetic character is found.
+local function isStrNum(str, bIgnoreMinus) --backport from gunman_item_spawner, apparently another module has a isStrNum, so we do local to avoid issues.
+	if (isStrInvalid(str)) then return false end
+	if (bIgnoreMinus == nil) then bIgnoreMinus = false end
+	
+	str = string.Replace(str, ".", "") --support for floats
+	if (bIgnoreMinus) then
+		str = string.Replace(str, "-", "") --ignore minus if told to do so.
 	end
+	
+	for i = 1, string.len(str), 1 do
+		if (bIgnoreMinus) then
+			if (str[i] < '0' or str[i] > '9') then return false end
+		else
+			if (str[i] < '0' or str[i] > '9') then return false end
+		end
+	end
+	
 	
 	return true
 end
