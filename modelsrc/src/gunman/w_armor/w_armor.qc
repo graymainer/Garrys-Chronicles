@@ -1,32 +1,20 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "armor.mdl"
-$cd "."
-$cliptotextures
-$scale 1.0
+$modelname "gunman/item_armor.mdl"
 
-$surfaceprop "metal"
+$surfaceprop "weapon"
 $contents "solid"
 
-$bodygroup "studio"
-{
-	studio "w_armor_armor"
-}
+$body "Armor Vest" "armor_ref"
 
-$cdmaterials "models/gcitems/armor/"
+$cdmaterials "models/gunman/items/armor/"
 
-$collisionmodel	"armor_phys.smd"
+$collisionmodel	"armor_ref.smd"
 {
 	$automass
 }
 
-$cbox 0 0 0 0 0 0
-
-$bbox 0 0 0 0 0 0
-
-$hbox 0 "Line06" -11.54 0 -7.88 13.73 16.43 7.88
-
 $sequence "idle" {
-	"w_armor_anims\idle"
+	"armor_ref"
 	fps 9
 }

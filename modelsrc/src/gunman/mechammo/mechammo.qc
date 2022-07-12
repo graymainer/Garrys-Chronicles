@@ -1,33 +1,20 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "mechaclip.mdl"
-$cd "."
-$cliptotextures
-$scale 1.0
+$modelname "gunman/item_ammo_mechagun.mdl"
 
-$bodygroup "studio"
-{
-	studio "mechammo_ammoclip"
-}
+$body "Mechagun Ammo" "mechaammo_ref"
 
 $contents "solid"
 $surfaceprop "weapon"
 
-$cdmaterials "models/gcitems/mechaclip/"
+$cdmaterials "models/gunman/items/mechagunammo/"
 
-
-$cbox 0 0 0 0 0 0
-
-$bbox 0 0 0 0 0 0
-
-$hbox 0 "Box01" -1.74 -4.45 0 1.79 3.96 19.950001
-
-$collisionmodel	"mechammo_phys.smd"
+$collisionmodel	"mechaammo_ref.smd"
 {
 	$automass
 }
 
 $sequence "idle" {
-	"mechammo_anims\idle"
+	"mechaammo_ref"
 	fps 15
 }

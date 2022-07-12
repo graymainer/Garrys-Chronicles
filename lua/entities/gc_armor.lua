@@ -28,7 +28,7 @@ end
 
 function ENT:Initialize()
 if SERVER then
-self.Entity:SetModel( "models/gcitems/armor.mdl" )
+self.Entity:SetModel( "models/gunman/item_armor.mdl" )
 self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 self.Entity:SetSolid( SOLID_VPHYSICS )
 self.Entity:PhysicsInit( SOLID_VPHYSICS )

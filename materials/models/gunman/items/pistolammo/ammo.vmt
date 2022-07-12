@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 					"models/gunman/items/pistolammo/ammo"
+	
+	"$selfillum" 					1
+	"$selfillummask"				"models/gunman/items/pistolammo/ammo_illum"
+//Detail
+	"$detail" 						"models/gcweapons/misc/metal2"
+	"$detailscale" 					1
+}

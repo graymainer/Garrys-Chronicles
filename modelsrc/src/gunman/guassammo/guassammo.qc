@@ -7,7 +7,7 @@ $surfaceprop "weapon"
 
 $body "Gauss Energy Cannister" "gauss_ammo_ref"
 
-$cdmaterials "models/gunman/items/pistol/ammo/"
+$cdmaterials "models/gunman/items/pistolammo/"
 
 $collisionmodel	"gauss_ammo_ref.smd"
 {

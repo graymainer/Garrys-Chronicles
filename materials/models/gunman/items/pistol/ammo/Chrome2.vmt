@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$color2" 				"[0.11 0.1 0.1]"
-	"$envmap" 				"models/gunman/items/pistol/ammo/Chrome2"
-	"$envmaptint" 		"[ 0.08 0.08 0.08 ]" //envmaptint appears to be multiplied by 10 when actually in-game, so make sure you keep that in mind when viewing through hammer. (in my case, hammer++ and when using a specific texture for envmap)
-}

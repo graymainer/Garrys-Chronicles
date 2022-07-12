@@ -1,32 +1,20 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "rocket.mdl"
-$cd "."
-$cliptotextures
-$scale 1.0
+$modelname "gunman\item_ammo_rocket.mdl"
+$body "Rocket Ammo" "dmlrocket_ref"
 
 $contents "solid"
-$surfaceprop "metal"
+$surfaceprop "weapon"
 
-$bodygroup "studio"
-{
-	studio "dmlrocket_rocket"
-}
 
-$cdmaterials "models\gcitems\dmlammo\"
+$cdmaterials "models\gunman\items\dmlammo\"
 
-$collisionmodel "dmlrocket_phys.smd"
+$collisionmodel "dmlrocket_ref.smd"
 {
 	$automass
 }
 
-$cbox 0 0 0 0 0 0
-
-$bbox 0 0 0 0 0 0
-
-$hbox 0 "rocket1" -2.27 -17.629999 -2.27 2.27 8.4 2.27
-
-$sequence "base" {
-	"dmlrocket_anims\base"
+$sequence "idle" {
+	"dmlrocket_ref"
 	fps 10
 }

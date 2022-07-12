@@ -1,32 +1,20 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "medkit.mdl"
-$cd "."
-$cliptotextures
-$scale 1.0
+$modelname "gunman/item_medkit.mdl"
 
 $surfaceprop "weapon"
 $contents "solid"
 
-$bodygroup "studio"
-{
-	studio "w_medkit_ammo"
-}
+$body "Medkit" "shotgunammo_ref"
 
-$cdmaterials "models/gcitems/medkit/"
+$cdmaterials "models/gunman/items/medkit/"
 
-$collisionmodel	"medkit_phys.smd"
+$collisionmodel	"shotgunammo_ref.smd"
 {
 	$automass
 }
 
-$cbox 0 0 0 0 0 0
-
-$bbox 0 0 0 0 0 0
-
-$hbox 0 "Box01" -15.855 -5.43 -7.665 0 16.799999 7.665
-
-$sequence "ammo" {
-	"w_medkit_anims\ammo"
+$sequence "idle" {
+	"shotgunammo_ref"
 	fps 10
 }

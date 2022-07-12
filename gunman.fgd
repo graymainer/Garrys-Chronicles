@@ -155,7 +155,8 @@
 @PointClass base(Item) studio("models/gunman/item_ammo_pistol.mdl")= gunman_item_ammo_pistol : "A cannister of gauss energy for the gauss pistol." []
 @PointClass base(Item) studio("models/gunman/item_ammo_shotgun.mdl")= gunman_item_ammo_shotgun : "A box of 12ga. buckshot shells for the combat shotgun." []
 @PointClass base(Item) studio("models/gunman/item_ammo_mechagun.mdl")= gunman_item_ammo_mechagun : "A rack of 7.62mm rounds for the Mecha-Gun." []
-@PointClass base(Item) studio("models/gunman/item_ammo_rocketpack.mdl")= gunman_item_ammo_rocketpack : "A pack of HE rocket cannisters." []
+@PointClass base(Item) studio("models/gunman/item_ammo_dml.mdl")= gunman_item_ammo_dml : "A pack of HE rocket cannisters." []
+@PointClass base(Item) studio("models/gunman/item_ammo_rocket.mdl")= gunman_item_ammo_rocket : "A HE rocket cannister." []
 @PointClass base(Item) studio("models/gunman/item_armor.mdl")= gunman_item_armor : "A standard issue gunman ballistics proof combat vest." []
 @PointClass base(Item) studio("models/gunman/item_medkit.mdl")= gunman_item_medkit : "A basic emergency medical kit." []
 
