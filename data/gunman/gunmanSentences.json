@@ -161,11 +161,11 @@ AV_INSTRUCT_MULEGRENADES2 gcsfx/city05/vo/av/removenosecone (v150) {Len 7.767}
 
 //other messages
 AV_WELCOME1 gcsfx/city05/vo/av/welcometo (v150) {Len 4.876}
-AV_WELCOME2 gcsfx/city05/vo/av/welcometoexplosives (v150) {Len 6.229}
+AV_WELCOME2 gcsfx/city05/vo/av/welcometoshotgun (v150) {Len 3.035}
 AV_WELCOME3 gcsfx/city05/vo/av/welcometomechagun (v150) {Len 3.273}
-AV_WELCOME4 gcsfx/city05/vo/av/welcometoshotgun (v150) {Len 3.035}
-AV_ISSUED1 gcsfx/city05/vo/av/issuedmule (v150) {Len 8.882}
-AV_ISSUED2 gcsfx/city05/vo/av/issuedpistol (v150) {Len 3.564}
+AV_WELCOME4 gcsfx/city05/vo/av/welcometoexplosives (v150) {Len 6.229}
+AV_ISSUED1 gcsfx/city05/vo/av/issuedpistol (v150) {Len 3.564}
+AV_ISSUED2 gcsfx/city05/vo/av/issuedmule (v150) {Len 8.882}
 
 
 

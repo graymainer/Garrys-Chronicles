@@ -91,103 +91,41 @@ ENT.ammoMulti = 1.0
 --
 
 
---your helper functions. These are ported from the garrys chronicles project. these bad boys make life easier.
+include("gunman/gunmanUtil.lua") --include that useful utility library baby
 
+--nice debug function that will print out to you all the data related to the entity.
+function ENT:printInfo()
 
---checks if the string is valid by making sure it isn't nil and that it isn't just white space or spaces.
-function isStrValid(str)
-	if (str == nil) then return false end
-	str = string.Replace(str, " ", "")
-	if (str == "") then return false end
-return true end
-
---checks if the string contains letters. If it does, return false, if it doesn't, it returns true.
---if the string contains only numeric characters return true. False if a single alphabetic character is found.
-local function isStrNum(str, bIgnoreMinus) --backport from gunman_item_spawner, apparently another module has a isStrNum, so we do local to avoid issues.
-	if (isStrInvalid(str)) then return false end
-	if (bIgnoreMinus == nil) then bIgnoreMinus = false end
-	
-	str = string.Replace(str, ".", "") --support for floats
-	if (bIgnoreMinus) then
-		str = string.Replace(str, "-", "") --ignore minus if told to do so.
-	end
-	
-	for i = 1, string.len(str), 1 do
-		if (bIgnoreMinus) then
-			if (str[i] < '0' or str[i] > '9') then return false end
-		else
-			if (str[i] < '0' or str[i] > '9') then return false end
-		end
-	end
-	
-	
-	return true
-end
-
---same as above, but for if you dont want numbers. Returns true if it contains numeric characters. False if it doesn't.
-function strNoNum(str)
-	for i = 1, string.len(str), 1 do
-		if (str[i] >= '0' and str[i] <= '9') then return true end
-	end
-	
-	return false
-end
-
---same as isStrValid, but for numbers.
-function isValValid(val)
-
-	if (val == nil) then return false end
-
-	if (!isnumber(val)) then return false end
-
-return true end
-
---checks if the keyvalue it is fed is actually valid or not. It uses isstrvalid to check. You can tell it that you only want numbers by passing true into the 3rd argument.
-function ENT:isKeyValueValid(k, v, bOnlyNumber)
-	if (bOnlyNumber == nil) then bOnlyNumber = false end
 	local name = self:GetName()
-	if (!isStrValid(name)) then name = "*Unknown Equipper Entity*" end
 
-	if (!isStrValid(k) ) then print(name .. " recieved a bad key.") return false end
-	if (!isStrValid(v)) then print(name .. " recieved a bad value from key '" .. k .. "'.") return false end
-
-
-	if (bOnlyNumber) then
-		if (!isStrNum(v)) then print(name .. "'s number only key ('" .. k .. "') was given a value that did not contain only numerical values. ('" .. v .. "')") return end
+	if (isStrInvalid(name)) then
+		name = tostring(self)
+	end
+	--header
+	print("\n\n========" .. self:GetClass() .. " - " .. name .. " Info========\n\n")
+	
+	--basic stuff.
+	print("Name:", "", "", self:GetName())
+	print("Flags:", "", "", self:GetSpawnFlags())
+	print("Initialised?", "", self.bInit)
+	print("Enabled?", "", self.bEnabled)
+	
+	--implementation
+	--print("Implement me:", "", self:GetPos())
+	
+	--conditional example
+	if (true) then
+		print("Is True?", "Yes")
+	else
+		print("Is True?", "No")
 	end
 	
-
-	return true
+	--footer
+	print("\n")
+	print("\n\n========Info END========\n\n")
+	print("\n\n")
 end
 
---checks if the name is actually a key. Normalizes the input, so caps do not matter.
-function isKey(key, name)
-	--normalize.
-	key = string.lower(key)
-	name = string.lower(name)
-
-	if (!isStrValid(key) or !isStrValid(name)) then return false end
-
-	if(name == key) then return true end
-
-return false end
-
---same as isKey(), but for inputs.
-function isInput(input, name)
-	return isKey(input, name) end
-
---fires an output event. This is what makes the outputs in our fgd have meaning and actually tick. without this, none of the entity's outputs will ever fire.
-function ENT:fireEvent(input) --EXTREME WARNING!! if you pass data into the triggeroutput function (the 3rd argument) IT WILL DISCARD ANY DATA PASSED INTO IT THROUGH PARAMS IN HAMMER!
-
- 
-	if (IsValid(ACTIVATOR)) then
-		self:TriggerOutput(input, ACTIVATOR)--trigger that output baby!
-	else
-		self:TriggerOutput(input, self)
-	end
-end
-
---
 
 
 --(IN ORDER OF EXECUTION!)
@@ -196,13 +134,13 @@ end
 function ENT:KeyValue( k, v )
 
 	if ( isKey("nades", k) ) then
-		if (!self:isKeyValueValid(k, v, true)) then return end
+		if (!isKeyValueValid(k, v, true)) then return end
 		local val = util.StringToType(v, "int")
 		if (!isValValid(val) or val <= 0) then print(self:GetName() .. " was given a bad grenade count. Ignoring.") return end
 		
 		self.nGrenades = val
 	elseif ( isKey("ammomulti", k) ) then
-		if (!self:isKeyValueValid(k, v, true)) then return end
+		if (!isKeyValueValid(k, v, true)) then return end
 		local val = util.StringToType(v, "float")
 		if (!isValValid(val) or val < 0) then print(self:GetName() .. " was given a bad ammo multiplier. Ignoring.") return end
 		
@@ -273,12 +211,72 @@ end
 
 function ENT:stripPlayer(activator, itemToTake)
 	if (!self:HasSpawnFlags(SF_STRIP)) then return end
+	
+	
 
 	if (activator != nil and activator != NULL and activator:IsPlayer()) then
-		if (itemToTake == nil or itemToTake == NULL) then
-			activator:StripWeapons()
+		if (itemToTake != nil or itemToTake != NULL) then
+			itemToTake = string.lower(itemToTake)
+			if (itemToTake == "melee") then
+				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
+					activator:StripWeapon("weapon_crowbar")
+				else
+					activator:StripWeapon("gunman_weapon_knife") 
+				end
+			
+			elseif (itemToTake == "pistol") then
+				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
+					activator:StripWeapon("weapon_pistol")
+				else
+					activator:StripWeapon("gunman_weapon_pistol") 
+				end
+				
+			elseif (itemToTake == "shotgun") then
+				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
+					activator:StripWeapon("weapon_shotgun")
+				else
+					activator:StripWeapon("gunman_weapon_shotgun") 
+				end
+			elseif (itemToTake == "machinegun") then
+				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
+					activator:StripWeapon("weapon_smg1")
+				else
+					activator:StripWeapon("gunman_weapon_mechagun") 
+				end
+				
+			elseif (itemToTake == "sniper") then
+				activator:StripWeapon("weapon_crossbow")
+				
+				-- if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
+					-- activator:StripWeapon("weapon_crossbow")
+				-- else
+					-- activator:StripWeapon("gunman_weapon_shotgun") 
+				-- end
+				
+			elseif (itemToTake == "launcher") then
+				activator:StripWeapon("weapon_rpg")
+			
+				-- if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
+					-- activator:StripWeapon("weapon_rpg")
+				-- else
+					-- activator:StripWeapon("gunman_weapon_dml") 
+				-- end
+				
+			elseif (itemToTake == "grenade" or itemToTake == "grenades") then
+				activator:StripWeapon("weapon_frag")
+			
+				-- if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
+					-- activator:StripWeapon("weapon_rpg")
+				-- else
+					-- activator:StripWeapon("gunman_weapon_dml") 
+				-- end
+			else
+				activator:StripWeapon(itemToTake)
+			end
+			
+			
 		else
-			activator:StripWeapon(itemToTake)
+			activator:StripWeapon()
 		end
 	else
 		local plys = player.GetAll()
@@ -322,8 +320,8 @@ end
 --the heart and soul of this entity. This baby reads in hammer i/o input and translates it into LUA calls. This will allow you to use the inputs in the fgd in hammer to actually use this entity in the map with hammer's scripting.
 function ENT:AcceptInput( name, activator, caller, data )
 	if (CLIENT) then self:KillGlobals() return false end --mostly becuase we use getname in our error printouts.
-	if (!isStrValid(name)) then	print(self:GetName() .. " was shot a bad input!") return end --you never know.
-	if (isStrNum(name)) then print(self:GetName() .. " was fired an invalid input. Input name contained numbers.") self:KillGlobals() return false end
+	if (isStrInvalid(name)) then	print(self:GetName() .. " was shot a bad input!") return end --you never know.
+	if (strIsNum(name)) then print(self:GetName() .. " was fired an invalid input. Input name contained numbers.") self:KillGlobals() return false end
 
 	self:SetupGlobals(activator, caller)
 
@@ -333,7 +331,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	--for every input we have in the fgd, we make an if statement for it. then we return true if we found our input, false if we didn't or something failed. (dont ask me why, im honestly not sure, just do it.)
 	--caps dont matter
 	if (isInput("equip", name)) then
-		--if (!isStrNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
+		--if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		--local val = util.StringToType(data, "int")
 		--if (!isValValid(val)) then self:KillGlobals() return false end 
 
@@ -349,7 +347,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 
 	if (isInput("toggleGun", name)) then
-		if (!isStrValid(data)) then self:KillGlobals() return end
+		if (isStrInvalid(data)) then self:KillGlobals() return end
 		
 		--we use iskey because it just works
 		--and yes, im aware this is lookin like yandere code, but fuck it, its the only way i know how damnit

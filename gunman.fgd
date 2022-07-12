@@ -19,7 +19,7 @@
 	ammomulti(float)									: "Ammo Amount" 	: 	"1.0" 	: "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
 
 	input equip(void)									: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
-	input strip(string)									: "Strips the entity of all its weapons if given nothing. However if given a classname, it will strip that specific entity from the player. if 'Strip Before Equip' is unticked, nothing will happen. If activator is null, it will strip player 1. If 'Equip All Players' is ticked, all players will be stripped."
+	input strip(string)									: "Strips the entity of all its weapons if given nothing. If given a classname, it will strip that specific entity from the player. If given on of the default weapon types, it will strip that type from the player. (melee, pistol, sniper, shotgun, machinegun, launcher, grenade). if 'Strip Before Equip' is unticked, nothing will happen. If activator is null, it will strip player 1. If 'Equip All Players' is ticked, all players will be stripped."
 	input setAmmoMultiplier(float)						: "Sets our ammo multiplier."
 	input toggleGun(string)								: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
 	input clear(void)									: "Clears all guns we think you have. No weapons will be given."
@@ -58,7 +58,8 @@
 		4	:	"Crossbow Ammo" //specifically for hl2 wpns.
 		5	:	"Machinegun Ammo"
 		6	:	"Shotgun Ammo"
-		7	:	"Grenades"
+		7	:	"Launcher Ammo"
+		8	:	"Grenades"
 	] 
 	
 	fxLite(target_destination)					:	"Light Entity Override"					:	""							:	"The env_projectedtexture entity to use instead our own for our spawning effects. If empty or not an env_projectedtexture entity, it will assume our own default settings. Can NOT be multiple entities. Light will be turned off on spawn automatically. Position and angles will be overwritten. 'No FX' and 'No Light FX' flags will disable the light effects!"	
@@ -190,10 +191,17 @@
 	
 	//sndpitch(integer) 				: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
 	
-	scaledmg(choices)					: "Scale by Damage" : 0	  : "Should we scale all increments, additions, subtractions, etc by the damage of the player's current weapon?" = 
+	dmgent(target_destination)		: "Damage Entity" 	: 	""	 : "If set, this entity will add to the counter the amount of damage its taken."
+	
+	wpnfilter(choices)				: "Weapon Filter" 	: 	0	 : "We'll only allow this weapon type to affect the counter. (weapon type is defined by the ammo type that the weapon uses.) If empty, or set to 'No', no filter will be used. Supports classnames. If this fails, will fire onFilterFailed, if successful, onFilterPassed." = 
 	[
 		0 : "No"
-		1 : "Yes"
+		1 : "Melee"
+		2 : "Pistol"
+		3 : "Shotgun"
+		4 : "Machinegun"
+		5 : "Sniper"
+		5 : "Explosive"
 	]
 	
 	StartDisabled(choices) 				: "Start Disabled" 	: 0   : "Should this counter be off when spawned in?" =
@@ -247,6 +255,8 @@
 	output onMaxSet(integer)			: "Fired when this counter's maximum value has been set to something. Returns what it was set to."
 	output onValueSet(integer)			: "Fired when this counter's value has been set to something. Returns what it was set to."
 	output onTargetSet(integer)			: "Fired when this counter's target value has been set to something. Returns what it was set to."
+	output onFilterFailed(void)			: "Fires when an instigator fails this counter's filter."
+	output onFilterPassed(void)			: "Fires when an instigator passes through this counter's filter."
 	//output onSoundChanged(string)		: "Fired when our sound is changed. Returns the new sound file."
 	//output onModelChanged(string)		: "Fired when our model is changed. Returns the new model file."
 ]
