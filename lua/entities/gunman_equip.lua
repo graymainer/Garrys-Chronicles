@@ -216,65 +216,7 @@ function ENT:stripPlayer(activator, itemToTake)
 
 	if (activator != nil and activator != NULL and activator:IsPlayer()) then
 		if (itemToTake != nil or itemToTake != NULL) then
-			itemToTake = string.lower(itemToTake)
-			if (itemToTake == "melee") then
-				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
-					activator:StripWeapon("weapon_crowbar")
-				else
-					activator:StripWeapon("gunman_weapon_knife") 
-				end
-			
-			elseif (itemToTake == "pistol") then
-				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
-					activator:StripWeapon("weapon_pistol")
-				else
-					activator:StripWeapon("gunman_weapon_pistol") 
-				end
-				
-			elseif (itemToTake == "shotgun") then
-				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
-					activator:StripWeapon("weapon_shotgun")
-				else
-					activator:StripWeapon("gunman_weapon_shotgun") 
-				end
-			elseif (itemToTake == "machinegun") then
-				if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
-					activator:StripWeapon("weapon_smg1")
-				else
-					activator:StripWeapon("gunman_weapon_mechagun") 
-				end
-				
-			elseif (itemToTake == "sniper") then
-				activator:StripWeapon("weapon_crossbow")
-				
-				-- if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
-					-- activator:StripWeapon("weapon_crossbow")
-				-- else
-					-- activator:StripWeapon("gunman_weapon_shotgun") 
-				-- end
-				
-			elseif (itemToTake == "launcher") then
-				activator:StripWeapon("weapon_rpg")
-			
-				-- if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
-					-- activator:StripWeapon("weapon_rpg")
-				-- else
-					-- activator:StripWeapon("gunman_weapon_dml") 
-				-- end
-				
-			elseif (itemToTake == "grenade" or itemToTake == "grenades") then
-				activator:StripWeapon("weapon_frag")
-			
-				-- if (self:HasSpawnFlags(SF_FORCEHL2WPNS) or !bGunmanSWEPS) then
-					-- activator:StripWeapon("weapon_rpg")
-				-- else
-					-- activator:StripWeapon("gunman_weapon_dml") 
-				-- end
-			else
-				activator:StripWeapon(itemToTake)
-			end
-			
-			
+			activator:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
 		else
 			activator:StripWeapon()
 		end
@@ -285,7 +227,7 @@ function ENT:stripPlayer(activator, itemToTake)
 				if (itemToTake == nil or itemToTake == NULL) then
 					plys[i]:StripWeapons()
 				else
-					plys[i]:StripWeapon(itemToTake)
+					plys[i]:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
 				end
 				
 			end
@@ -293,7 +235,7 @@ function ENT:stripPlayer(activator, itemToTake)
 			if (itemToTake == nil or itemToTake == NULL) then
 				plys[1]:StripWeapons()
 			else
-				plys[1]:StripWeapon(itemToTake)
+				plys[1]:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
 			end
 		end
 		

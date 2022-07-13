@@ -112,6 +112,7 @@
 --]]
 
 --?TODO?: properly implement removePanel()
+--?TODO?: add panels to left and right respectively.
 
 
 --basic stuff for entity declarations.
@@ -146,32 +147,38 @@ ENT.bDisableRender = false
 --
 
 
-ENT.bScaleDmg = false --should we scale all additions and subtractions by the damage of the activator's current weapon?
+ENT.wpnFilter = nil --We'll only allow this weapon type to affect the counter. (weapon type is defined by the ammo type that the weapon uses.) If empty, or set to 'No', no filter will be used. Supports classnames. If this fails, will fire onFilterFailed, if successful, onFilterPassed.
+ENT.dmgEnt = nil --If set, this entity will add to the counter the amount of damage its taken.
 ENT.bTargetFireOnce = false --set by a spawnflag in hammer. this will tell us if we should unset our target value after we reach it.
 ENT.bStartDisabled = false -- we do it this way because we want the entity to be properly initialized, but if we disable it during the keyvalue analyisis, it wont set values right. so we need to wait til verify keyvalues to do it.
 ENT.bTargetMustMatch = false
 --
 
 
---helper functions. these bad boys make life easier.
+include("gunman/gunmanUtil.lua") --include that useful utility library baby
 
---simply does all the checks to make sure the string is valid. cleaner this way.
+--nice debug function that will print out to you all the data related to the entity.
+function ENT:printInfo()
 
---nice debug function that will print out to you all the data related to the entity. Takes in the name of the entity.
-function printDGInfo(entName)
-	local ent = ents.FindByName(entName)[1]
+	local name = self:GetName()
 
-
-	print("\n\n========Digit God Info========n\n")
-	print("\n\n")
-	print("Name:", "", "", ent:GetName())
-	print("Flags:", "", "", ent:GetSpawnFlags())
-	print("Initialised?", "", ent.bInit)
+	if (isStrInvalid(name)) then
+		name = tostring(self)
+	end
+	--header
+	print("\n\n========" .. self:GetClass() .. " - " .. name .. " Info========\n\n")
+	
+	--basic stuff.
+	print("Name:", "", "", self:GetName())
+	print("Flags:", "", "", self:GetSpawnFlags())
+	print("Initialised?", "", self.bInit)
+	print("Enabled?", "", self.bEnabled)
+	
+	--implementation
 	print("Value:", "", "", ent.value)
 	print("Target Value:", "", ent.targetValue)
 	print("Max Value:", "", ent.maxValue)
 	print("Model:", "", "", ent.mdl)
-	print("Enabled?", "", ent.bEnabled)
 	print("Rendering?", "", !ent.bDisableRender)
 	print("Panels:")
 	PrintTable(ent.panels)
@@ -180,81 +187,13 @@ function printDGInfo(entName)
 	print("Target Fire Once?", ent.bTargetFireOnce)
 	print("Start Disabled?", "", ent.bStartDisabled)
 	print("Target Match Exactly?", ent.bTargetMustMatch)
-
-end
-
---checks if the string is valid by making sure it isn't nil and that it isn't just white space or spaces.
-function isStrValid(str)
-	if (str == nil) then return false end
-	str = string.Replace(str, " ", "")
-	if (str == "") then return false end
-return true end
-
---checks if the string contains non numeric characters.
-function isStrNum(str)
-	for i = 1, string.len(str), 1 do
-		if (str[i] < '0' or str[i] > '9') then return false end
-	end
 	
-	return true
-end
-
---same as isStrValid, but for numbers. It also makes sure that the value isn't less than zero, since we can't represent negative numbers.
-function isValValid(val)
-
-	if (val == nil) then return false end
-
-	if (!isnumber(val) or val < 0) then return false end -- val < 0 because we cant represent negative numbers.
-
-return true end
-
-
-function ENT:isKeyValueValid(k, v, bOnlyNumber)
-	if (bOnlyNumber == nil) then bOnlyNumber = false end
-	local name = self:GetName()
-	if (!isStrValid(name)) then name = "*Unknown Digitgod Entity*" end
-
-	if (!isStrValid(k) ) then print(name .. " recieved a bad key.") return false end
-	if (!isStrValid(v)) then print(name .. " recieved a bad value from key '" .. k .. "'.") return false end
-
-
-	if (bOnlyNumber) then
-		if (!isStrNum(v)) then print(name .. "'s number only key ('" .. k .. "') was given a value that did not contain only numerical values. ('" .. v .. "')") return end
-	end
 	
-
-	return true
+	--footer
+	print("\n")
+	print("\n\n========Info END========\n\n")
+	print("\n\n")
 end
-
---checks if name is actually a key. the key to check it against, being key. Normalizes the input, so caps do not matter.
-function isKey(key, name)
-	--normalize.
-	key = string.lower(key)
-	name = string.lower(name)
-
-	if (!isStrValid(key) or !isStrValid(name)) then return false end
-
-	if(name == key) then return true end
-
-return false end
-
---same as isKey(), but for inputs.
-function isInput(input, name)
-	return isKey(input, name) end
-
---fires an output event. This is what makes the outputs in our fgd have meaning and actually tick. without this, none of the entity's outputs will ever fire.
-function ENT:fireEvent(input) --EXTREME WARNING!! if you pass data into the triggeroutput function (the 3rd argument) 
-						--IT WILL DISCARD ANY DATA PASSED INTO IT THROUGH PARAMS IN HAMMER, RENDERING IT ONLY USEFUL IF ITS AN OUPUT
-								-- PURELY DEDICATED TO GETTING DATA FROM SOMETHING!!!! 
-									--Do not pass triggeroutput any data if you want that output to pass around data through params.
- 
-	if (IsValid(ACTIVATOR)) then
-		self:TriggerOutput(input, ACTIVATOR)--trigger that baby! this will make the output fire from this entity.
-	else
-		self:TriggerOutput(input, self)
-	end
-end
-
 --
 
 
@@ -286,12 +225,12 @@ end
 function ENT:KeyValue( k, v )
 
 	if ( isKey("initialvalue", k) ) then
-		if (!self:isKeyValueValid(k, v, true)) then return end
+		if (!isKeyValueValid(k, v, true)) then return end
 
 		self:setValue(util.StringToType(v, "int")) --dont need to do a isvaluevalid check here because setValue() does that already.
 
 	elseif (isKey("targetvalue", k)) then
-		if (!self:isKeyValueValid(k, v, true)) then return end
+		if (!isKeyValueValid(k, v, true)) then return end
 
 		local val = util.StringToType(v, "int")
 		if (val == 0) then return end
@@ -299,7 +238,7 @@ function ENT:KeyValue( k, v )
 		self.targetValue = val
 
 	elseif (isKey("maxvalue", k)) then
-		if (!self:isKeyValueValid(k, v, true)) then return end
+		if (!isKeyValueValid(k, v, true)) then return end
 
 		local val = util.StringToType(v, "int")
 
@@ -307,11 +246,24 @@ function ENT:KeyValue( k, v )
 
 		self.maxValue = val
 	
-	elseif (isKey("scaledmg", k)) then --booleans in hammer i/o speak are simply 0s and 1s.
-		if (v == "1") then 
-			self.bScaleDmg = true
+	elseif (isKey("dmgent", k)) then
+		if (isStrInvalid(v)) then return end
+		
+		self.dmgEnt = v
+		
+	elseif (isKey("wpnfilter", k)) then
+		if (isStrInvalid(v)) then return end
+		if (v == "0") then return end
+		local filter = getItemFromType(v, false, false)
+		
+		if (filter == nil) then
+			if (strIsInvalidEntity(v, false)) then print(self, "was given a filter with a bad class.") return end
+			filter = v
 		end
-	
+		
+		
+		self.wpnFilter = filter
+
 	elseif (isKey("StartDisabled", k)) then
 		if (v == "1") then 
 			self.bStartDisabled = true
@@ -338,21 +290,31 @@ function ENT:verifyKeys()
 
 	if (self.targetValue != 0) then
 		if (self.targetValue <= self.value) then
-			print(self:GetName() .. " tried to set a target value (" .. self.targetValue .. ") less than or equal to our current value. Reset.")
+			print(self:GetName() .. " tried to set a target value ('" .. self.targetValue .. "') less than or equal to our current value. Reset.")
 			self.targetValue = 0
 		end
 	end
 
 	if (self.maxValue > 0) then --we dont know when maxvalue will be set, so we have to wait till we know for a fact that we set it. Thus, we do it here.
 		if (self.value > self.maxValue) then
-			print(self:GetName() .. " tried to set an initial value (" .. self.value .. ") over the max value. Clamped.")
+			print(self:GetName() .. " tried to set an initial value ('" .. self.value .. "') over the max value. Clamped.")
 			self.value = self.maxValue
 		end
 
 		if (self.targetValue > self.maxValue) then
 
-			print(self:GetName() .. " tried to set a target value (" .. self.targetValue .. ") over the max value. (" .. self.maxValue .. ") Clamped.")
+			print(self:GetName() .. " tried to set a target value ('" .. self.targetValue .. "') over the max value. (" .. self.maxValue .. ") Clamped.")
 			self.targetValue = self.maxValue
+		end
+	end
+
+	if (self.dmgEnt != nil) then
+		if (strIsInvalidEntity(self.dmgEnt, true)) then
+			print(self:GetName() .. " tried to set a damage entity ('" .. self.dmgEnt .. "') which did not exist. Resetting.")
+			self.dmgEnt = nil
+		else
+			self.dmgEnt = ents.FindByName(self.dmgEnt)[1]
+			self:hookDamageEntity() --hook our designated damage entity.
 		end
 	end
 
@@ -390,6 +352,29 @@ function ENT:setupPanels()
 	else --we have a max value, which makes things easier. spawn a panel for every digit we dont currently represent according to the difference between our max value and our current value.
 		self:spawnPanel(string.len(tostring(self.maxValue)) - string.len(tostring(self.value)))
 	end
+end
+
+hook.Add("PreCleanupMap", "HK_CLEANHOOKS", function() 
+	hook.Remove("EntityTakeDamage", "HK_DG_ENTDMG")
+end)
+
+function ENT:hookDamageEntity() --adds a EntityTakeDamage hook into our designated damage entity. (self.dmgEnt)
+	hook.Add("EntityTakeDamage", "HK_DG_ENTDMG", function(ent, dmg)
+		if (!self.bInit or !self.bEnabled) then return end
+		if (self.dmgEnt == nil) then return end
+		if (ent != self.dmgEnt) then return end
+		
+		if (isStrValid(self.wpnFilter)) then
+			
+			if (dmg:GetAttacker():GetActiveWeapon():GetClass() == self.wpnFilter) then
+				self:fireEvent("onFilterPassed")
+				self:add(dmg:GetDamage())
+			else
+				self:fireEvent("onFilterFailed")
+				return
+			end
+		end
+	end)
 end
 
 --we start main execution here.
@@ -489,14 +474,14 @@ end
 --the heart and soul of this entity. This baby reads in hammer i/o input and translates it into LUA calls. This will allow you to use the inputs in the fgd in hammer to actually use this entity in the map with hammer's scripting.
 function ENT:AcceptInput( name, activator, caller, data )
 	if (CLIENT) then self:KillGlobals() return false end --mostly becuase we use getname in our error printouts.
-	if (!isStrValid(name)) then	print(self:GetName() .. " was shot a bad input!") return end --you never know.
-	if (isStrNum(name)) then print(self:GetName() .. " was fired an invalid input. Input name contained numbers.") self:KillGlobals() return false end
+	if (isStrInvalid(name)) then	print(self:GetName() .. " was shot a bad input!") return end --you never know.
+	if (strIsNum(name)) then print(self:GetName() .. " was fired an invalid input. Input name contained numbers.") self:KillGlobals() return false end
 
 	self:SetupGlobals(activator, caller)
 
 	--for every input we have in the fgd, we make an if statement for it. then we return true if we found our input, false if we didn't. (dont ask me why, im honestly not sure, just do it.)
 	if (isInput("add", name)) then
-		if (!isStrNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
+		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
 		if (!isValValid(val)) then self:KillGlobals() return false end
 
@@ -505,7 +490,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("sub", name)) then
-		if (!isStrNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
+		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
 		if (!isValValid(val)) then self:KillGlobals() return false end
 
@@ -562,7 +547,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 
 	if (isInput("setValue", name)) then
 		if (!self.bEnabled) then self:KillGlobals() return false end
-		if (!isStrNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
+		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		self:setValue(util.StringToType(data, "int"))
 
 		self:KillGlobals()
@@ -571,9 +556,9 @@ function ENT:AcceptInput( name, activator, caller, data )
 
 	if (isInput("setMax", name)) then
 		if (!self.bEnabled) then self:KillGlobals() return false end
-		if (!isStrNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
+		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
-		if (!isStrValid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
+		if (isStrInvalid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
 		if (!isValValid(val)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid value.") self:KillGlobals() return false end
 		if (val <= self.value) then self:KillGlobals() return false end
 
@@ -592,9 +577,9 @@ function ENT:AcceptInput( name, activator, caller, data )
 
 	if (isInput("setTarget", name)) then
 		if (!self.bEnabled) then self:KillGlobals() return false end
-		if (!isStrNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
+		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
-		if (!isStrValid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
+		if (isStrInvalid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
 		if (!isValValid(val)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid value.") self:KillGlobals() return false end
 		if (self.maxValue > 0) then
 			if (val > self.maxValue) then print(self:GetName() .. " was fired a bad input." .. name .. " target value cannot be higher than the maximum value.") return end 
@@ -606,7 +591,41 @@ function ENT:AcceptInput( name, activator, caller, data )
 
 		self:KillGlobals()
 	return true end
+	
+	if (isInput("setFilter", name)) then
+		if (isStrInvalid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
+		
+		if (data == "0") then self.wpnFilter = nil self:KillGlobals() return true end
+		local filter = getItemFromType(data, false, false)
+		
+		if (filter == nil) then
+			if (strIsInvalidEntity(data, false)) then print(self:GetName() .. " was fired a bad input." .. name .. " was given a filter with a bad class.") return end
+			filter = data
+		end
+		
+		
+		self.wpnFilter = filter
 
+		self:KillGlobals()
+	return true end
+	
+	if (isInput("setDamageEntity", name)) then
+		if (isStrInvalid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
+		
+		if (strIsInvalidEntity(data, true)) then
+			print(self:GetName() .. " was fired a bad input." .. name .. " which requires a valid entity. No entity was found.")
+			
+			self:KillGlobals()
+			self.dmgEnt = nil
+			return false
+		else
+			self.dmgEnt = ents.FindByName(data)[1]
+			hook.Remove("EntityTakeDamage", "HK_DG_ENTDMG")
+			self:hookDamageEntity() --hook this as our new designated damage entity.
+		end
+
+		self:KillGlobals()
+	return true end
 	
 	print(self:GetName() .. " was shot an unknown input! ('" .. name .. "')")
 	self:KillGlobals()
@@ -618,36 +637,36 @@ end
 
 --main implementation
 
---a function to that gets the damage of the activator's current weapon.
-function ENT:getDamage()
-	if (CLIENT) then return 0 end --mostly because we use getname. i'm sorry, but i cant stop. its an addiction. i need hel
-	if (!self.bScaleDmg) then return 0 end
+-- --a function to that gets the damage of the activator's current weapon. --no longer needed, we have a hook to EntityTakeDamage.
+-- function ENT:getDamage()
+	-- if (CLIENT) then return 0 end --mostly because we use getname. i'm sorry, but i cant stop. its an addiction. i need hel
+	-- if (!self.bScaleDmg) then return 0 end
 	
-	local ent = ACTIVATOR
+	-- local ent = ACTIVATOR
 
-	if (!IsValid(ent)) then --ACTIVATOR will ALWAYS be null the first time around. dont know why, but we handle that here.
-		if (IsValid(Entity(1))) then
-			ent = Entity(1)
-		else 
-			print(self:GetName() .. " found no players to use as a reference for damage scaling. Is anyone there?") 
-			return 0 
-		end
-	end
+	-- if (!IsValid(ent)) then --ACTIVATOR will ALWAYS be null the first time around. dont know why, but we handle that here.
+		-- if (IsValid(Entity(1))) then
+			-- ent = Entity(1)
+		-- else 
+			-- print(self:GetName() .. " found no players to use as a reference for damage scaling. Is anyone there?") 
+			-- return 0 
+		-- end
+	-- end
 
-	local wpn = ent:GetActiveWeapon()
+	-- local wpn = ent:GetActiveWeapon()
 
-	if (!IsValid(wpn)) then return 0 end
+	-- if (!IsValid(wpn)) then return 0 end
 
-	local ammoDat = game.GetAmmoData(wpn:GetPrimaryAmmoType())
+	-- local ammoDat = game.GetAmmoData(wpn:GetPrimaryAmmoType())
 
-	if (ammoDat == nil) then return 0 end
+	-- if (ammoDat == nil) then return 0 end
 
-	local dmg = GetConVar(ammoDat.plydmg):GetInt()
+	-- local dmg = GetConVar(ammoDat.plydmg):GetInt()
 
-	if (dmg == nil) then return 0 end
+	-- if (dmg == nil) then return 0 end
 
-	return dmg
-end
+	-- return dmg
+-- end
 
 function ENT:add(value)
 	if (CLIENT) then return end
@@ -660,7 +679,7 @@ function ENT:add(value)
 
 
 	--set that value baby
-	self.value = (self.value + value) + self:getDamage() * 2 --getDamage will return 0 if our bScaleDmg is false.
+	self.value = self.value + value
 
 
 	--if we dont have a maxvalue
@@ -726,7 +745,7 @@ function ENT:sub(value)
 	if (!isValValid(value) or value == 0) then return end
 	
 
-	self.value = (self.value - value) - self:getDamage() * 2
+	self.value = self.value - value
 
 	if (self.value < 0) then self.value = 0 end --if we went into the negative, clamp to zero.
 		

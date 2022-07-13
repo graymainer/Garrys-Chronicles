@@ -225,3 +225,172 @@ function ENT:fireEvent(input) --EXTREME WARNING!! if you pass data into the trig
 		self:TriggerOutput(input, self)
 	end
 end
+
+--**GETITEMFROMTYPE()**--
+--gets an item from ("medkit, armor, melee, pistol, shotgun, sniper, machinegun, launcher, grenade (or grenades)" or 1-9). 
+--If the second argument is true, we'll get its ammo. (if applicable. if not, we'll return nil) 
+--if the third argument is true, we will always return half life 2 items instead of gunman items.
+function getItemFromType(iType, bAmmo, bForceHL2)
+	--ok, now THIS is some mothafuckin yandere code baby
+
+	if (iType == nil) then return nil end
+
+	
+	if (isstring(iType)) then
+		if (isStrInvalid(iType)) then return nil end
+		iType = string.lower(iType)--normalize the input
+	elseif (isnumber(iType)) then
+		if (isValInvalid(iType)) then return nil end
+		if (iType < 0 or iType > 8) then return nil end
+		iType = tostring(iType)--normalize the input
+	else
+		return nil
+	end
+	
+		
+	if (iType == "medkit" or iType == "1") then
+		if (bGunmanSWEPS and !bForceHL2) then
+			if (bAmmo) then
+				return nil
+			else
+				return "gunman_item_medkit"
+			end
+		else
+			if (bAmmo) then
+				return nil
+			else
+				return "item_healthkit"
+			end
+		end
+		
+	elseif (iType == "armor" or iType == "2") then
+		if (bGunmanSWEPS and !bForceHL2) then
+			if (bAmmo) then
+				return nil
+			else
+				return "gunman_item_armor"
+			end
+		else
+			if (bAmmo) then
+				return nil
+			else
+				return "item_battery"
+			end
+		end
+		
+	elseif (iType == "melee" or iType == "3") then
+		if (bGunmanSWEPS and !bForceHL2) then
+			if (bAmmo) then
+				return nil
+			else
+				return "gunman_weapon_knife"
+			end
+		else
+			if (bAmmo) then
+				return nil
+			else
+				return "weapon_crowbar"
+			end
+		end
+		
+	elseif (iType == "pistol" or iType == "4") then
+		if (bGunmanSWEPS and !bForceHL2) then
+			if (bAmmo) then
+				return "gunman_item_ammo_pistol"
+			else
+				return "gunman_weapon_pistol"
+			end
+		else
+			if (bAmmo) then
+				return "item_ammo_pistol"
+			else
+				return "weapon_pistol"
+			end
+		end
+		
+	elseif (iType == "shotgun" or iType == "5") then
+		if (bGunmanSWEPS and !bForceHL2) then
+			if (bAmmo) then
+				return "gunman_item_ammo_shotgun"
+			else
+				return "gunman_weapon_shotgun"
+			end
+		else
+			if (bAmmo) then
+				return "item_box_buckshot"
+			else
+				return "weapon_shotgun"
+			end
+		end
+		
+	elseif (iType == "sniper" or iType == "6") then
+		if (bAmmo) then
+			return "item_ammo_crossbow"
+		else
+			return "weapon_crossbow"
+		end
+	
+		-- if (bGunmanSWEPS and !bForceHL2) then --we have no sniper from gc yet..
+			-- if (bAmmo) then
+				-- return ""
+			-- else
+				-- return ""
+			-- end
+		-- else
+			-- if (bAmmo) then
+				-- return "item_ammo_crossbow"
+			-- else
+				-- return "weapon_crossbow"
+			-- end
+		-- end
+		
+	elseif (iType == "machinegun" or iType == "7") then
+		if (bGunmanSWEPS and !bForceHL2) then
+			if (bAmmo) then
+				return "gunman_item_ammo_mechagun"
+			else
+				return "gunman_weapon_mechagun"
+			end
+		else
+			if (bAmmo) then
+				return "item_ammo_smg1"
+			else
+				return "weapon_smg1"
+			end
+		end
+		
+	elseif (iType == "launcher" or iType == "8") then
+		if (bAmmo) then
+			return "item_rpg_round"
+		else
+			return "weapon_rpg"
+		end
+	
+		-- if (bGunmanSWEPS and !bForceHL2) then --we have no launcher from gc yet..
+			-- if (bAmmo) then
+				-- return ""
+			-- else
+				-- return ""
+			-- end
+		-- else
+			-- if (bAmmo) then
+				-- return "item_rpg_round"
+			-- else
+				-- return "weapon_rpg"
+			-- end
+		-- end
+		
+	elseif (iType == "grenade" or iType == "grenades" or iType == "9") then
+		if (bGunmanSWEPS and !bForceHL2) then --we have no launcher from gc yet..
+			return "gunman_item_ammo_rocket"
+		else
+			return "weapon_frag"
+		end
+	else
+		print("gunmanUTIL:	Could not find the item ('" .. iType .. "') from type.")
+		return nil
+	end
+
+
+	return nil --if we're here, something probably fucked up.
+end

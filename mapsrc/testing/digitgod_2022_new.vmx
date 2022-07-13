@@ -1,8 +1,8 @@
 versioninfo
 {
 	"editorversion" "400"
-	"editorbuild" "8860"
-	"mapversion" "142"
+	"editorbuild" "8862"
+	"mapversion" "151"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -72,7 +72,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "142"
+	"mapversion" "151"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -1054,82 +1054,9 @@ world
 }
 entity
 {
-	"id" "4408"
-	"classname" "ambient_generic"
-	"health" "10"
-	"message" "gcsfx/city05/fail.wav"
-	"pitch" "100"
-	"pitchstart" "100"
-	"radius" "1250"
-	"SourceEntityName" "vo0"
-	"spawnflags" "48"
-	"targetname" "vo2"
-	"origin" "64.2934 36.4647 218"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "37"
-	"classname" "info_player_start"
-	"angles" "0 0 0"
-	"origin" "-192 0 0.999992"
-	editor
-	{
-		"color" "0 255 0"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1000]"
-	}
-}
-entity
-{
-	"id" "39"
-	"classname" "light"
-	"_light" "255 255 255 200"
-	"_lightHDR" "-1 -1 -1 1"
-	"_lightscaleHDR" "1"
-	"_quadratic_attn" "1"
-	"spawnflags" "0"
-	"targetname" "goodlite"
-	"origin" "-143 0 169"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 1500]"
-	}
-}
-entity
-{
-	"id" "4351"
-	"classname" "gunman_digitgod"
-	"angles" "0 180 0"
-	"DisableShadows" "1"
-	"maxvalue" "500"
-	"scaledmg" "1"
-	"spawnflags" "1"
-	"targetname" "counter01"
-	connections
-	{
-		"onAdd" "failtimer,ResetTimer,,0,-1"
-		"onAdd" "failtimer,Enable,,0,-1"
-		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
-		"onMaxReached" "failtimer,Disable,,0.01,-1"
-		"onMaxReached" "proj_off0,Trigger,,2,-1"
-		"onMaxReached" "vo3,PlaySound,,0,-1"
-		"onMaxReached" "vo1,PlaySound,,2,-1"
-		"onMaxReached" "counter01,Disable,,0,-1"
-		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
-		"onMaxReached" "vo5,PlaySound,,0,-1"
-	}
-	"origin" "107.713 -16.2718 209.975"
+	"id" "4892"
+	"classname" "gunman_map_marker"
+	"origin" "32 0 218"
 	editor
 	{
 		"color" "220 30 220"
@@ -1161,16 +1088,83 @@ entity
 }
 entity
 {
-	"id" "4392"
+	"id" "4351"
+	"classname" "gunman_digitgod"
+	"angles" "0 180 0"
+	"DisableShadows" "1"
+	"dmgent" "proj_mdl0"
+	"maxvalue" "500"
+	"spawnflags" "1"
+	"targetname" "counter01"
+	"wpnfilter" "machinegun"
+	connections
+	{
+		"onAdd" "failtimer,ResetTimer,,0,-1"
+		"onAdd" "failtimer,Enable,,0,-1"
+		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
+		"onMaxReached" "failtimer,Disable,,0.01,-1"
+		"onMaxReached" "proj_off0,Trigger,,2,-1"
+		"onMaxReached" "vo3,PlaySound,,0,-1"
+		"onMaxReached" "vo1,PlaySound,,2,-1"
+		"onMaxReached" "counter01,Disable,,0,-1"
+		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
+		"onMaxReached" "vo5,PlaySound,,0,-1"
+	}
+	"origin" "107.713 -16.2718 209.975"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 0]"
+	}
+}
+entity
+{
+	"id" "39"
+	"classname" "light"
+	"_light" "255 255 255 200"
+	"_lightHDR" "-1 -1 -1 1"
+	"_lightscaleHDR" "1"
+	"_quadratic_attn" "1"
+	"spawnflags" "0"
+	"targetname" "goodlite"
+	"origin" "-143 0 169"
+	editor
+	{
+		"color" "220 30 220"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 1500]"
+	}
+}
+entity
+{
+	"id" "37"
+	"classname" "info_player_start"
+	"angles" "0 0 0"
+	"origin" "-192 0 0.999992"
+	editor
+	{
+		"color" "0 255 0"
+		"visgroupshown" "1"
+		"visgroupautoshown" "1"
+		"logicalpos" "[0 1000]"
+	}
+}
+entity
+{
+	"id" "4408"
 	"classname" "ambient_generic"
 	"health" "10"
-	"message" "gcsfx/city05/vo/av/500dpswithintime.wav"
+	"message" "gcsfx/city05/fail.wav"
 	"pitch" "100"
 	"pitchstart" "100"
 	"radius" "1250"
+	"SourceEntityName" "vo0"
 	"spawnflags" "48"
-	"targetname" "vo0"
-	"origin" "100.713 2.9765 212.138"
+	"targetname" "vo2"
+	"origin" "64.2934 36.4647 218"
 	editor
 	{
 		"color" "220 30 220"
@@ -3428,11 +3422,6 @@ entity
 	"solid" "6"
 	"spawnflags" "256"
 	"targetname" "proj_mdl0"
-	connections
-	{
-		"OnTakeDamage" "counter01,Add,1,0,-1"
-		"OnTakeDamage" "counter0,Increment,,0,-1"
-	}
 	"origin" "160.346 -3.43677 89"
 	editor
 	{
@@ -3445,48 +3434,17 @@ entity
 }
 entity
 {
-	"id" "4624"
-	"classname" "weapon_gausspistol"
-	"origin" "-139.27 -9.48305 32"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 2000]"
-	}
-}
-entity
-{
-	"id" "4603"
-	"classname" "logic_auto"
-	"spawnflags" "1"
-	connections
-	{
-		"OnMapSpawn" "vo0,PlaySound,,1,-1"
-	}
-	"origin" "53.2297 73.6855 218"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 500]"
-	}
-}
-entity
-{
-	"id" "4573"
+	"id" "4411"
 	"classname" "ambient_generic"
 	"health" "10"
-	"message" "gcsfx/city04/vo/gunman/scene03/jones_death.wav"
+	"message" "gcsfx/city05/success.wav"
 	"pitch" "100"
 	"pitchstart" "100"
 	"radius" "1250"
-	"SourceEntityName" "proj_mdl0"
+	"SourceEntityName" "vo0"
 	"spawnflags" "48"
-	"targetname" "vo4"
-	"origin" "109.53 16.4378 151.536"
+	"targetname" "vo3"
+	"origin" "63.9914 14.8415 218"
 	editor
 	{
 		"color" "220 30 220"
@@ -3524,17 +3482,17 @@ entity
 }
 entity
 {
-	"id" "4411"
+	"id" "4573"
 	"classname" "ambient_generic"
 	"health" "10"
-	"message" "gcsfx/city05/success.wav"
+	"message" "gcsfx/city04/vo/gunman/scene03/jones_death.wav"
 	"pitch" "100"
 	"pitchstart" "100"
 	"radius" "1250"
-	"SourceEntityName" "vo0"
+	"SourceEntityName" "proj_mdl0"
 	"spawnflags" "48"
-	"targetname" "vo3"
-	"origin" "63.9914 14.8415 218"
+	"targetname" "vo4"
+	"origin" "109.53 16.4378 151.536"
 	editor
 	{
 		"color" "220 30 220"
@@ -3545,130 +3503,59 @@ entity
 }
 entity
 {
-	"id" "5169"
-	"classname" "gunman_digitgod"
-	"angles" "0 180 0"
-	"DisableShadows" "1"
-	"maxvalue" "500"
-	"scaledmg" "1"
+	"id" "4603"
+	"classname" "logic_auto"
 	"spawnflags" "1"
-	"targetname" "counter02"
 	connections
 	{
-		"onAdd" "failtimer,ResetTimer,,0,-1"
-		"onAdd" "failtimer,Enable,,0,-1"
-		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
-		"onMaxReached" "failtimer,Disable,,0.01,-1"
-		"onMaxReached" "proj_off0,Trigger,,2,-1"
-		"onMaxReached" "vo3,PlaySound,,0,-1"
-		"onMaxReached" "vo1,PlaySound,,2,-1"
-		"onMaxReached" "counter01,Disable,,0,-1"
-		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
-		"onMaxReached" "vo5,PlaySound,,0,-1"
+		"OnMapSpawn" "vo0,PlaySound,,1,-1"
 	}
-	"origin" "107.713 64 209.975"
+	"origin" "53.2297 73.6855 218"
 	editor
 	{
 		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"logicalpos" "[0 0]"
+		"logicalpos" "[0 500]"
 	}
 }
 entity
 {
-	"id" "5173"
-	"classname" "gunman_digitgod"
-	"angles" "0 180 0"
-	"DisableShadows" "1"
-	"maxvalue" "500"
-	"scaledmg" "1"
-	"spawnflags" "1"
-	"targetname" "counter001"
-	connections
-	{
-		"onAdd" "failtimer,ResetTimer,,0,-1"
-		"onAdd" "failtimer,Enable,,0,-1"
-		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
-		"onMaxReached" "failtimer,Disable,,0.01,-1"
-		"onMaxReached" "proj_off0,Trigger,,2,-1"
-		"onMaxReached" "vo3,PlaySound,,0,-1"
-		"onMaxReached" "vo1,PlaySound,,2,-1"
-		"onMaxReached" "counter01,Disable,,0,-1"
-		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
-		"onMaxReached" "vo5,PlaySound,,0,-1"
-	}
-	"origin" "107.713 -128 209.975"
+	"id" "4624"
+	"classname" "gunman_weapon_pistol"
+	"angles" "0 0 0"
+	"fademaxdist" "0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"spawnflags" "0"
+	"origin" "-139.27 -9.48305 32"
 	editor
 	{
-		"color" "220 30 220"
+		"color" "0 0 200"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"logicalpos" "[0 0]"
+		"logicalpos" "[0 2000]"
 	}
 }
 entity
 {
-	"id" "5179"
-	"classname" "gunman_digitgod"
-	"angles" "0 180 0"
-	"DisableShadows" "1"
-	"maxvalue" "500"
-	"scaledmg" "1"
-	"spawnflags" "1"
-	"targetname" "counter10"
-	connections
-	{
-		"onAdd" "failtimer,ResetTimer,,0,-1"
-		"onAdd" "failtimer,Enable,,0,-1"
-		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
-		"onMaxReached" "failtimer,Disable,,0.01,-1"
-		"onMaxReached" "proj_off0,Trigger,,2,-1"
-		"onMaxReached" "vo3,PlaySound,,0,-1"
-		"onMaxReached" "vo1,PlaySound,,2,-1"
-		"onMaxReached" "counter01,Disable,,0,-1"
-		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
-		"onMaxReached" "vo5,PlaySound,,0,-1"
-	}
-	"origin" "107.713 -192 209.975"
+	"id" "4392"
+	"classname" "ambient_generic"
+	"health" "10"
+	"message" "gcsfx/city05/vo/av/500dpswithintime.wav"
+	"pitch" "100"
+	"pitchstart" "100"
+	"radius" "1250"
+	"spawnflags" "48"
+	"targetname" "vo0"
+	"origin" "100.713 2.9765 212.138"
 	editor
 	{
 		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"logicalpos" "[0 0]"
-	}
-}
-entity
-{
-	"id" "5183"
-	"classname" "gunman_digitgod"
-	"angles" "0 180 0"
-	"DisableShadows" "1"
-	"maxvalue" "500"
-	"scaledmg" "1"
-	"spawnflags" "1"
-	"targetname" "counter"
-	connections
-	{
-		"onAdd" "failtimer,ResetTimer,,0,-1"
-		"onAdd" "failtimer,Enable,,0,-1"
-		"onAdd" "proj_mdl0,SetAnimation,Disco10,0,-1"
-		"onMaxReached" "failtimer,Disable,,0.01,-1"
-		"onMaxReached" "proj_off0,Trigger,,2,-1"
-		"onMaxReached" "vo3,PlaySound,,0,-1"
-		"onMaxReached" "vo1,PlaySound,,2,-1"
-		"onMaxReached" "counter01,Disable,,0,-1"
-		"onMaxReached" "proj_mdl0,SetAnimation,salute,0.01,-1"
-		"onMaxReached" "vo5,PlaySound,,0,-1"
-	}
-	"origin" "107.713 128 209.975"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 0]"
+		"logicalpos" "[0 1000]"
 	}
 }
 cameras
