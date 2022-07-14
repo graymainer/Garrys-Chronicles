@@ -248,34 +248,19 @@ function getItemFromType(iType, bAmmo, bForceHL2)
 	end
 	
 		
-	if (iType == "medkit" or iType == "1") then
+	if (iType == "health" or iType == "healthkit" or iType == "hp" or iType == "medkit" or iType == "1") then
 		if (bGunmanSWEPS and !bForceHL2) then
-			if (bAmmo) then
-				return nil
-			else
-				return "gunman_item_medkit"
-			end
+
+			return "gunman_item_medkit"
 		else
-			if (bAmmo) then
-				return nil
-			else
-				return "item_healthkit"
-			end
+			return "item_healthkit"
 		end
 		
 	elseif (iType == "armor" or iType == "2") then
 		if (bGunmanSWEPS and !bForceHL2) then
-			if (bAmmo) then
-				return nil
-			else
-				return "gunman_item_armor"
-			end
+			return "gunman_item_armor"
 		else
-			if (bAmmo) then
-				return nil
-			else
-				return "item_battery"
-			end
+			return "item_battery"
 		end
 		
 	elseif (iType == "melee" or iType == "3") then

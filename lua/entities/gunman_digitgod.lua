@@ -175,18 +175,19 @@ function ENT:printInfo()
 	print("Enabled?", "", self.bEnabled)
 	
 	--implementation
-	print("Value:", "", "", ent.value)
-	print("Target Value:", "", ent.targetValue)
-	print("Max Value:", "", ent.maxValue)
-	print("Model:", "", "", ent.mdl)
-	print("Rendering?", "", !ent.bDisableRender)
+	print("Value:", "", "", self.value)
+	print("Target Value:", "", self.targetValue)
+	print("Max Value:", "", self.maxValue)
+	print("Model:", "", "", self.mdl)
+	print("Rendering?", "", !self.bDisableRender)
 	print("Panels:")
-	PrintTable(ent.panels)
+	PrintTable(self.panels)
 	print("\n")
-	print("Scale Damage?", "", ent.bScaleDmg)
-	print("Target Fire Once?", ent.bTargetFireOnce)
-	print("Start Disabled?", "", ent.bStartDisabled)
-	print("Target Match Exactly?", ent.bTargetMustMatch)
+	print("Damage Entity", "", self.dmgEnt:GetName())
+	print("Filter", "", "", self.wpnFilter)
+	print("Target Fire Once?", self.bTargetFireOnce)
+	print("Start Disabled?", "", self.bStartDisabled)
+	print("Target Match Exactly?", self.bTargetMustMatch)
 	
 	
 	--footer
@@ -354,12 +355,15 @@ function ENT:setupPanels()
 	end
 end
 
-hook.Add("PreCleanupMap", "HK_CLEANHOOKS", function() 
-	hook.Remove("EntityTakeDamage", "HK_DG_ENTDMG")
-end)
+function ENT:OnRemove()
+	if (CLIENT) then return end
+	
+	hook.Remove("EntityTakeDamage", "HK_DG_ENTDMG_" .. self:GetName())
+end
 
 function ENT:hookDamageEntity() --adds a EntityTakeDamage hook into our designated damage entity. (self.dmgEnt)
-	hook.Add("EntityTakeDamage", "HK_DG_ENTDMG", function(ent, dmg)
+	hook.Add("EntityTakeDamage", "HK_DG_ENTDMG_" .. self:GetName(), function(ent, dmg)
+		
 		if (!self.bInit or !self.bEnabled) then return end
 		if (self.dmgEnt == nil) then return end
 		if (ent != self.dmgEnt) then return end
@@ -369,6 +373,7 @@ function ENT:hookDamageEntity() --adds a EntityTakeDamage hook into our designat
 			if (dmg:GetAttacker():GetActiveWeapon():GetClass() == self.wpnFilter) then
 				self:fireEvent("onFilterPassed")
 				self:add(dmg:GetDamage())
+				
 			else
 				self:fireEvent("onFilterFailed")
 				return
@@ -620,10 +625,16 @@ function ENT:AcceptInput( name, activator, caller, data )
 			return false
 		else
 			self.dmgEnt = ents.FindByName(data)[1]
-			hook.Remove("EntityTakeDamage", "HK_DG_ENTDMG")
+			hook.Remove("EntityTakeDamage", "HK_DG_ENTDMG_" .. self:GetName())
+			
 			self:hookDamageEntity() --hook this as our new designated damage entity.
 		end
 
+		self:KillGlobals()
+	return true end
+	
+	if (isInput("printInfo", name)) then
+		self:printInfo()
 		self:KillGlobals()
 	return true end
 	

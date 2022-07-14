@@ -151,6 +151,7 @@ AV_MODE_RAPIDFIRE gcsfx/city05/vo/av/rapidfire (v150) {Len 3.622}
 AV_MODE_PAYLOADCLUSTER gcsfx/city05/vo/av/setpayloadtocluster (v150) {Len 8.542}
 AV_MODE_TRIGGERTIMED gcsfx/city05/vo/av/settriggertimed (v150) {Len 10.083}
 AV_MODE_SNIPER gcsfx/city05/vo/av/sniper (v150) {Len 3.696}
+AV_MODE_OVERHEAT gcsfx/city05/vo/av/overheat (v150) {Len 8.000}
 
 //instructions for different actions.
 AV_INSTRUCT_WRONGMODE gcsfx/city05/vo/av/propersetting (v150) {Len 4.801}

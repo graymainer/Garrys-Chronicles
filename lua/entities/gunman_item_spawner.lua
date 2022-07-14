@@ -30,7 +30,7 @@ SF_NOSURFALIGN = 2048
 --core stuff
 ENT.bInit = false
 ENT.bEnabled = true
-ENT.item = "gc_medkit" --the item we are to spawn. This is the default item.
+ENT.item = "gunman_item_medkit" --the item we are to spawn. This is the default item.
 
 --spawning effects
 ENT.fxBeam = nil --a reference to a beam entity.
@@ -231,15 +231,17 @@ function ENT:KeyValue( k, v )
 
 	if (isKey("spawnitem", k)) then
 		if (isStrInvalid(v)) then return end
-		if (strIsNum(v)) then
-			local itemIndex = util.StringToType(v, "int")
-
-			if (itemIndex < 0 or itemIndex > MAX_NUMBER_OF_DEFAULT_ITEMS) then print(self, "had a key with an item index that was out of range. Ignoring.")return end
-			self:getItem(itemIndex)
-		else --Its not a number, so assume we've put in a classname.
+		
+		local item = getItemFromType(v, true, self:HasSpawnFlags(SF_FORCEHL2))
+		
+		if (item == nil) then
 			if (strIsInvalidEntity(v, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") return end
 			self.item = v
+			return
 		end
+		
+		self.item = item
+		
 		
 	elseif (isKey("fxBeam", k)) then
 		if (isStrInvalid(v)) then return end
@@ -358,58 +360,6 @@ function ENT:KeyValue( k, v )
 
 end
 
---gets one of our default item types from index. Chooses either vanilla hl2 items or gunman items depending on addon availability.
-function ENT:getItem(index)
-	if (index == nil or !isnumber(index)) then print(self, "attempted to get an item from an invalid index.") return end
-
-	if (index == 1) then
-		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-			self.item = "gc_medkit"
-		else
-			self.item = "item_healthkit"
-		end
-	elseif (index == 2) then
-		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-			self.item = "gc_armor"
-		else
-			self.item = "item_battery"
-		end
-	elseif (index == 3) then
-		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-			self.item = "gunman_item_ammo_pistol"
-		else
-			self.item = "item_ammo_pistol"
-		end
-	elseif (index == 4) then --dont have a gunman equivalent
-		self.item = "item_ammo_crossbow"
-	elseif (index == 5) then
-		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-			self.item = "gunman_item_ammo_mechagun"
-		else
-			self.item = "item_ammo_smg1"
-		end
-	elseif (index == 6) then
-		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-			self.item = "gunman_item_ammo_shotgun"
-		else
-			self.item = "item_box_buckshot"
-		end
-	elseif (index == 7) then
-		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-			self.item = "gunman_item_ammo_dml"
-		else
-			self.item = "weapon_frag"
-		end
-	elseif (index == 8) then
-		if (bGunmanSWEPS and !self:HasSpawnFlags(SF_FORCEHL2)) then
-			self.item = "gunman_item_ammo_rocket"
-		else
-			self.item = "item_rpg_round"
-		end
-	else
-		print(self:GetName() .. " tried to spawn an unknown item from a bad index. Ignoring.")
-	end
-end
 
 --we start main execution here.
 function ENT:Initialize()
@@ -487,17 +437,22 @@ function ENT:AcceptInput( name, activator, caller, data )
 	--for every input we have in the fgd, we make an if statement for it. then we return true if we found our input, false if we didn't or something failed. (dont ask me why, im honestly not sure, just do it.)
 	--caps dont matter
 	if (isInput("spawn", name)) then
-		if (isStrInvalid(data)) then self:spawn() self:KillGlobals() return end
+		if (isStrInvalid(data)) then 
+			self:spawn()
+		else
+			local item = getItemFromType(data, true, self:HasSpawnFlags(SF_FORCEHL2))
 		
-		if (strIsNum(data)) then --assume its a default item type index number
-			local i = util.StringToType(data, "int")
-			if (isValInvalid(i) or i < 1 or i > 7) then print(self:GetName() .. "'s " .. name .. " input was given an invalid type index.") self:KillGlobals() return end
-		
-			self:getItem(i)
-		else--assume its a classname
-			if (strIsInvalidEntity(data, false)) then print(self:GetName() .. "'s " .. name .. " input was given a nonexistent classname.") self:KillGlobals() return end
-			self:spawn(data) --override our item and try to spawn the one given instead.
+			if (item == nil) then
+				if (strIsInvalidEntity(data, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") self:KillGlobals() return false end
+				self:spawn(data)
+				self:KillGlobals()
+				return true
+			end
+			
+			self:spawn(item)
 		end
+		
+		
 
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
@@ -505,17 +460,18 @@ function ENT:AcceptInput( name, activator, caller, data )
 	if (isInput("setItem", name)) then
 		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		if (strIsNum(data)) then
-			local i = util.StringToType(data, "int")
-			if (isValInvalid(i) or i < 1 or i > 8) then print(self:GetName() .. "'s " .. name .. " input was given an invalid type index.") self:KillGlobals() return end
+		local item = getItemFromType(data, true, self:HasSpawnFlags(SF_FORCEHL2))
 		
-			self:getItem(i)
-		else
-			if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input wasn't given a valid parameter value.") self:KillGlobals() return end
-			if (strIsInvalidEntity(data, false)) then print(self:GetName() .. "'s " .. name .. " input was given a nonexistent class name.") self:KillGlobals() return end
-			
+		if (item == nil) then
+			if (strIsInvalidEntity(data, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") self:KillGlobals() return false end
 			self.item = data
+			self:deleteOldItem()
+			self:respawn()
+			self:KillGlobals()
+			return true
 		end
+		
+		self.item = item
 		
 		self:deleteOldItem()
 		self:respawn()

@@ -1,8 +1,9 @@
 $modelname "gunman/forcefield001a"
 
-$bodygroup "Body" { //use this for a reference on where to place lights.
+$bodygroup "Shape" {
 	studio "forcefield001a_refa"
 	studio "forcefield001a_refb"
+	studio "forcefield001a_refc"
 }
 
 $bodygroup "light_reference" { //use this for a reference on where to place lights.

@@ -52,14 +52,14 @@
 	
 	spawnitem(choices) 							: "Item to Spawn" 							: 	1   						:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
 	[
-		1	:	"Medkit"
-		2	:	"Armor"
-		4	:	"Pistol Ammo"
-		5	:	"Shotgun Ammo"
-		6	:	"Crossbow Ammo" //specifically for hl2 wpns.
-		7	:	"Machinegun Ammo"
-		8	:	"Launcher Ammo"
-		9	:	"Grenades"
+		"health"		:	"Medkit"
+		"armor"			:	"Armor"
+		"pistol"		:	"Pistol Ammo"
+		"shotgun"		:	"Shotgun Ammo"
+		"sniper"		:	"Crossbow Ammo" //specifically for hl2 wpns.
+		"machinegun"	:	"Machinegun Ammo"
+		"launcher"		:	"Launcher Ammo"
+		"grenade"		:	"Grenades"
 	] 
 	
 	fxLite(target_destination)					:	"Light Entity Override"					:	""							:	"The env_projectedtexture entity to use instead our own for our spawning effects. If empty or not an env_projectedtexture entity, it will assume our own default settings. Can NOT be multiple entities. Light will be turned off on spawn automatically. Position and angles will be overwritten. 'No FX' and 'No Light FX' flags will disable the light effects!"	
@@ -88,7 +88,7 @@
 	
 	
 	input spawn(string)							: 	"Tells the spawner to spawn its item. Can override the spawner's set item and spawn the item you give instead if given a classname or a default item type index. (1-8)"
-	input setItem(string)						: 	"Sets the item we should spawn. Enter 1-9 (excluding '3') to specify default item types. If the value given is not a simple number and is not a default item name (melee, pistol, shotgun, sniper, machinegun, launcher, grenade or grenades), then we'll assume its a direct classname."
+	input setItem(string)						: 	"Sets the item we should spawn. Enter 1-9 (excluding '3') to specify default item types. If the value given is not a simple number and is not a default item name (health, armor, pistol, shotgun, sniper, machinegun, launcher, grenade or grenades), then we'll assume its a direct classname."
 	input setBeamEntity(target_destination)		: 	"Sets our beam entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setLightEntity(target_destination)	: 	"Sets our light entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setSpawnSprite(string)				: 	"Sets the sprite to play when spawning."
