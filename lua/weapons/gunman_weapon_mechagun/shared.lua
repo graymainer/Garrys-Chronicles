@@ -67,9 +67,9 @@ SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false
 
-SWEP.ViewModel	= "models/gcweapons/mechagun/v_mechagun.mdl"
+SWEP.ViewModel	= "models/gunman/v_mechagun.mdl"
 SWEP.ViewModelFOV			= 83
-SWEP.WorldModel = "models/gcweapons/mechagun/w_mechagun.mdl"
+SWEP.WorldModel = "models/gunman/w_mechagun.mdl"
 SWEP.ViewModelFlip = false
 SWEP.BobScale = 1
 SWEP.SwayScale = 0

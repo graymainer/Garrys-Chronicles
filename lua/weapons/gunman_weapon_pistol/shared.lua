@@ -65,9 +65,9 @@ SWEP.Spawnable= true
 SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false
 
-SWEP.ViewModel	= "models/gcweapons/gausspistol/v_gausspistol.mdl"
+SWEP.ViewModel	= "models/gunman/v_pistol.mdl"
 SWEP.ViewModelFOV			= 85
-SWEP.WorldModel = "models/gcweapons/gausspistol/w_gausspistol.mdl"
+SWEP.WorldModel = "models/gunman/w_pistol.mdl"
 SWEP.ViewModelFlip = false
 SWEP.BobScale = 1
 SWEP.SwayScale = 0

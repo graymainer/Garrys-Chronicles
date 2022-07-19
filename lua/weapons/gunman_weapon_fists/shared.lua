@@ -61,8 +61,8 @@ SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false
 
 SWEP.ViewModelFOV = 100
-SWEP.ViewModel = "models/gcweapons/gunmanfists/v_melee.mdl"
-SWEP.WorldModel = ""
+SWEP.ViewModel = "models/gunman/v_melee.mdl"
+SWEP.WorldModel = nil
 SWEP.ViewModelFlip = false
 SWEP.BobScale = 1
 SWEP.SwayScale = 0
@@ -103,6 +103,7 @@ function SWEP:Initialize()
 self:SetWeaponHoldType( self.HoldType )
 self.Idle = 0
 self.IdleTimer = CurTime() + 1
+self.Weapon:SetBodygroup(1, 0)
 end
 
 function SWEP:Deploy()

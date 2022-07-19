@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$color2" 				"{31 176 45}"
+	"$envmap" 				"models/gunman/weapons/rocket/PLAYER_Chrome2"
+	"$envmaptint" 			"[ 0.1 0.1 0.1 ]"
+	
+}

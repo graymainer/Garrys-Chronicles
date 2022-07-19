@@ -68,8 +68,8 @@ SWEP.AdminSpawnable= true
 SWEP.AdminOnly = false
 
 SWEP.ViewModelFOV = 100
-SWEP.ViewModel = "models/gcweapons/combatknife/v_combatknife.mdl"
-SWEP.WorldModel = "models/gcweapons/combatknife/w_combatknife.mdl"
+SWEP.ViewModel = "models/gunman/v_melee.mdl"
+SWEP.WorldModel = "models/gunman/w_melee.mdl"
 SWEP.ViewModelFlip = false
 SWEP.BobScale = 1
 SWEP.SwayScale = 0
