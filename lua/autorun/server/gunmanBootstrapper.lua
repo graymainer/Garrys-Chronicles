@@ -32,6 +32,8 @@ hook.Add("InitPostEntity", "HK_INITPOSTENT", function()
 	include("gunman/gunmanMapLoader.lua") --quick script to load any map passed to it through hammer. (could use a remake!)
 
 	include("gunman/gunmanFiremode.lua") --prototype for integration of a customization system for dopey's sweps into our maps.
+	
+	include("gunman/gunmanOffset.lua") --small script to offset a hammer entity by 5 in the positive z axis.
 
 
 

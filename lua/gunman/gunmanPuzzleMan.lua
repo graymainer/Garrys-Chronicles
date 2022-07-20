@@ -969,11 +969,15 @@ function verify() --finally, the end! begins the final sequence where justinpc e
 					
 					--give the player an audio clue
 					if (!bNearTeleport) then
+						local sndPos = ents.FindByName("soundpos7")[1]
+						if (sndPos == nil or sndPos == NULL) then return end
+						
+						sound.Play("overhere0", sndPos:GetPos())
 						timer.Simple(5, function() 
 							sound.Play("overhere0", tpPos:GetPos())
 							if (!bNearTeleport) then
 								timer.Simple(5, function() 
-									sound.Play("overhere0", tpPos:GetPos())
+									sound.Play("overhere0", sndPos:GetPos())
 									if (!bNearTeleport) then
 										timer.Simple(5, function() sound.Play("overhere0", tpPos:GetPos()) end)
 									end

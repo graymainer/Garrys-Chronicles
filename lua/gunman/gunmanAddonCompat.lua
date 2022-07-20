@@ -5,7 +5,7 @@ gunmanSWEPsID = "2815854365" --this is the workshop id of the addon we need for 
 function tellMapCompat()
 	if (!bGunmanSWEPS) then return end
 
-	local ifs = ents.FindByName("if_gcwpns_installed*")
+	local ifs = ents.FindByName("if_gcwpns*")
 	
 	if (ifs == nil or table.IsEmpty(ifs)) then return end
 

@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/generalstatue/villianhead"
+	"$surfaceprop" "Concrete"
+//Detail
+	"$detail" "gctextures/detail/gcde_rock01"
+	"$detailscale" "2"
+}

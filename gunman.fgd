@@ -146,7 +146,7 @@
 
 
 
-@PointClass base(Weapon) studio("models/gunman/v_melee.mdl") = gunman_weapon_knife : "Standard Issue Combat Knife." []
+@PointClass base(Weapon) studio("models/gunman/w_melee.mdl") = gunman_weapon_knife : "Standard Issue Combat Knife." []
 //@PointClass base(Weapon) studio("models/gunman/v_melee.mdl") = gunman_weapon_fists : "Fisticuffs." []
 @PointClass base(Weapon) studio("models/gunman/w_pistol.mdl") = gunman_weapon_pistol : "Standard Issued Gauss Pistol." []
 @PointClass base(Weapon) studio("models/gunman/w_mechagun.mdl") = gunman_weapon_mechagun : "Mecha-Gun Assault Rifle." []

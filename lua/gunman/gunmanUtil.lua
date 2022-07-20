@@ -216,16 +216,6 @@ return false end
 function isInput(input, name)
 	return isKey(input, name) end
 
---fires an output event. This is what makes the outputs in our fgd have meaning and actually tick. without this, none of the entity's outputs will ever fire.
-function ENT:fireEvent(input) --EXTREME WARNING!! if you pass data into the triggeroutput function (the 3rd argument) IT WILL DISCARD ANY DATA PASSED INTO IT THROUGH PARAMS IN HAMMER!
-
-	if (IsValid(ACTIVATOR)) then
-		self:TriggerOutput(input, ACTIVATOR)--trigger that output baby!
-	else
-		self:TriggerOutput(input, self)
-	end
-end
-
 --**GETITEMFROMTYPE()**--
 --gets an item from ("medkit, armor, melee, pistol, shotgun, sniper, machinegun, launcher, grenade (or grenades)" or 1-9). 
 --If the second argument is true, we'll get its ammo. (if applicable. if not, we'll return nil) 
@@ -378,4 +368,16 @@ function getItemFromType(iType, bAmmo, bForceHL2)
 
 
 	return nil --if we're here, something probably fucked up.
+end
+
+if (ENT == nil or ENT == NULL) then return end
+
+--fires an output event. This is what makes the outputs in our fgd have meaning and actually tick. without this, none of the entity's outputs will ever fire.
+function ENT:fireEvent(input) --EXTREME WARNING!! if you pass data into the triggeroutput function (the 3rd argument) IT WILL DISCARD ANY DATA PASSED INTO IT THROUGH PARAMS IN HAMMER!
+
+	if (IsValid(ACTIVATOR)) then
+		self:TriggerOutput(input, ACTIVATOR)--trigger that output baby!
+	else
+		self:TriggerOutput(input, self)
+	end
 end
