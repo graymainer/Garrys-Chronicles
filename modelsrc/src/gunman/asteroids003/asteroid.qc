@@ -21,21 +21,26 @@ $cdmaterials "models/gunman/asteroids/"
 
 $sequence "idle" {
 	"anims/idle"
+	loop
 	fps 24
 }
 $sequence "spin1" {
 	"anims/spin0"
+	loop
 	fps 60
 }
 $sequence "spin2" {
 	"anims/spin1"
+	loop
 	fps 60
 }
 $sequence "spin3" {
 	"anims/spin2"
+	loop
 	fps 60
 }
 $sequence "spin4" {
 	"anims/spin3"
+	loop
 	fps 60
 }
