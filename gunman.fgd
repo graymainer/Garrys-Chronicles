@@ -1,8 +1,25 @@
+
+@BaseClass = gunmanToggle
+[
+	StartDisabled(choices) 						: "Start Disabled" 							: 	0   						:	 "Should this entity start off and nonfunctional?" =
+	[	
+		0	:	"No"	
+		1	:	"Yes"	
+	]
+	
+	input Toggle(void)							:	"Toggles the entity. Fires onEnabled and onDisabled respectively."
+	input Enable(void)							:	"Enables the entity. Fires onEnabled."
+	input Disable(void)							:	"Disables the entity. Fires onDisabled."
+	
+	output onDisabled(void)						: 	"Fires when we're disabled."
+	output onEnabled(void)						: 	"Fires when we're enabled."
+]
+
 @PointClass base(Targetname) iconsprite("gunman/editor/gunman_equip") = gunman_equip : "This entity is apart of the Garry's Chronicles project. \n" + "This entity will equip the activator with the specified weaponry. \n" + "It will replace these weapons with gunman sweps if they are found in the user's addons. \n" + "Weapons are specified through spawn flags."
 [
 	spawnflags(flags) =
 	[
-		1		:	"Crowbar / Knife"		: 0
+		1		:	"Melee"		: 0
 		2		:	"Pistol"				: 0
 		4		:	"Sniper" 				: 0
 		8		:	"Machinegun"			: 0
@@ -32,7 +49,7 @@
 	
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("gunman/editor/gunman_item_spawner") = gunman_item_spawner : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects."
+@PointClass base(Targetname, Parentname, gunmanToggle) iconsprite("gunman/editor/gunman_item_spawner") = gunman_item_spawner : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects."
 [
 	spawnflags(flags) =
 	[
@@ -79,14 +96,6 @@
 	respawnDistance(float)						:	"Distance to Respawn"					:	"0.0"						:	"The distance that needs to be reached before we can respawn an item. Zero means default respawning behavior. (see help for default respawn behavior definition.)"
 
 	
-
-	StartDisabled(choices) 						: "Start Disabled" 							: 	0   						:	 "Should this spawner start off and not create an item on spawn?" =
-	[	
-		0	:	"No"	
-		1	:	"Yes"	
-	]
-	
-	
 	input spawn(string)							: 	"Tells the spawner to spawn its item. Can override the spawner's set item and spawn the item you give instead if given a classname or a default item type index. (1-8)"
 	input setItem(string)						: 	"Sets the item we should spawn. Enter 1-9 (excluding '3') to specify default item types. If the value given is not a simple number and is not a default item name (health, armor, pistol, shotgun, sniper, machinegun, launcher, grenade or grenades), then we'll assume its a direct classname."
 	input setBeamEntity(target_destination)		: 	"Sets our beam entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
@@ -100,9 +109,6 @@
 	input setSpawnDelay(float)					: 	"Sets the spawning delay."
 	input setRespawnDelay(float)				: 	"Sets the respawning delay."
 	input setRespawnDistance(float)				: 	"Sets distance to respawn an item by."
-	input toggle(void)							:	"Toggles the spawner. Fires onEnabled and onDisabled respectively."
-	input enable(void)							:	"Enables the spawner. Fires onEnabled."
-	input disable(void)							:	"Disables the spawner. Fires onDisabled."
 	input respawn(void)							:	"Deletes the item and creates a new one."
 	input printInfo(void)						:	"Prints the entity's data into console. For debugging."
 	
@@ -111,8 +117,6 @@
 	output onItemDeleted(void)					: 	"Fires when we delete an item."
 	output onItemChanged(void)					: 	"Fires when we change what item we're spawning in."
 	output onItemGot(void)						: 	"Fires when the item we spawned in was picked up. (Or was deleted!)"
-	output onDisabled(void)						: 	"Fires when we're disabled."
-	output onEnabled(void)						: 	"Fires when we're enabled."
 	output onRespawn(void)						: 	"Fires when we begin to respawn our item."
 	output onLifespanEnd(void)					: 	"Fires when this spawner's lifespan has reached its end."
 	
@@ -121,6 +125,39 @@
 @PointClass base(Targetname) iconsprite("gunman/editor/gunman_map_marker") = gunman_map_marker :
 	"This entity is apart of the Garry's Chronicles project. Marks this map as a garry's chronicles map which enables lua systems from that project."
 [
+]
+
+@PointClass base(Targetname, Parentname, gunmanToggle) iconsprite("gunman/editor/gunman_zerog") = gunman_zerog :
+	"An entity that will take another entity and pass it into zero gravity. \n" + "This entity is apart of the Garry's Chronicles project."
+[
+	entity(target_destination)			: "Entity to Enter"	: "" : "If given an entity, it will enter zero gravity as soon as the map starts. (If its enabled.) Supports multiple entites of the same name and the '*' wildcard."
+
+	
+	input enter(target_destination)					: "Forces the entity of the targetname given to enter zero gravity. Supports multiple entites of the same name and the '*' wildcard."
+	input leave(target_destination)					: "Forces the entity of the targetname given to leave zero gravity. Supports multiple entites of the same name and the '*' wildcard."
+
+	// Outputs
+	output onEnter(void) 	: "Fired whenever an entity enters zero gravity."
+	output onExit(void) 	: "Fired whenever an entity leaves zero gravity."
+]
+
+@SolidClass base(Targetname, Parentname, gunmanToggle) = func_gunman_zerog :
+	"A trigger that will put whatever passes through it into zero gravity. \n" + "This entity is apart of the Garry's Chronicles project."
+[
+	
+	spawnflags(flags) =
+	[
+		1	:	"Reset on Exit": 0
+	]
+	
+	
+	input enter(target_destination)					: "Forces the entity of the targetname given to enter zero gravity. Supports multiple entites of the same name and the '*' wildcard."
+	input leave(target_destination)					: "Forces the entity of the targetname given to leave zero gravity. Supports multiple entites of the same name and the '*' wildcard."
+
+	// Outputs
+	output OnTrigger(void) 	: "Fired whenever the trigger is activated."
+	output onEnter(void) 	: "Fired whenever an object enters a zero gravity volume."
+	output onExit(void) 	: "Fired whenever an object leaves the zero gravity volume."
 ]
 
 @PointClass base(Targetname, Parentname, Angles) studioprop() = gunman_test : "This entity is apart of the Garry's Chronicles project. \n" + "This is a testing entity."
@@ -162,7 +199,7 @@
 @PointClass base(Item) studio("models/gunman/item_medkit.mdl")= gunman_item_medkit : "A basic emergency medical kit." []
 
 
-@PointClass base(Targetname, Parentname, Angles) studioprop("models/gunman/digitgod.mdl") = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
+@PointClass base(Targetname, Parentname, Angles, gunmanToggle) studioprop("models/gunman/digitgod.mdl") = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
 [
 	//if you want to change this system to use custom models, you'll want to get rid of the "models/gunman/digitgod.mdl" part and leave it as "studioprop()". 
 	//then make sure that you have a key value here that has the type "studio" set to a default model. otherwise, you'll get the generic hammer entity cube of death.
@@ -205,12 +242,6 @@
 		"grenade" 		: "Grenade"
 	]
 	
-	StartDisabled(choices) 				: "Start Disabled" 	: 0   : "Should this counter be off when spawned in?" =
-	[
-		0 : "No"
-		1 : "Yes"
-	] 
-
 	DisableShadows(choices) 			: "Disable Shadows" : 0   : "Should this counter's model not render shadows?"  =
 	[
 		0 : "No"
@@ -221,9 +252,6 @@
 	input Sub(integer)					: "Subtract this value from the counter."
 	input Increment(void)				: "Increment the counter."
 	input Decrement(void)				: "Decrement the counter."
-	input Toggle(void)					: "Will toggle the counter."
-	input Enable(void)					: "Will enable the counter. Fires the onEnabled output."
-	input Disable(void)					: "Will disable the counter. It will no longer function. Fires the onDisabled output."
 	input Clear(void)					: "Clears the current value of this counter and resets it to 0. \n" + "But if the 'Clear to initial value' flag is set, it will instead reset to whatever the initial value was."
 	//input getValue(void)				: "Will get the current value that this counter is at.\n" + "This works through some lua trickery. basically, if its an entity that can hold values, like a 'logic_case' or a 'math_counter',\n" + "we will fire their respective 'invalue' or 'setvalue' inputs and feed them the value you asked for here.\n" + "This means that the entity you're making the output from should be something that can hold values. Like logic_case.\n" + "\n" + "If the entity isn't recognized as an entity that can hold values, it will then try to add an output with the value inside it.\n" + "It should be findable by searching through the entity that asked for the value's keyvalues.\n" + " This will be the way all of our get inputs will work."
 	input setValue(integer)				: "Will set our value to what you specify. Cannot be negative and cannot pass the max limit."
@@ -252,8 +280,6 @@
 	output onTargetReached(integer)		: "Fired when this counter reaches its target value. Will return it's current value."
 	output onValueChanged(integer)		: "Fired when this counter's value is changed. Returns the new value. You can retrieve the old value through getLastValue()."
 	output onMaxReached(integer)		: "Fired when this counter reaches its max value. Will return it's current value."
-	output onEnabled(void)				: "Fired when this counter is enabled."
-	output onDisabled(void)				: "Fired when this counter is disabled."
 	output onCleared(void)				: "Fired when this counter's value has been cleared."
 	output onMaxSet(integer)			: "Fired when this counter's maximum value has been set to something. Returns what it was set to."
 	output onValueSet(integer)			: "Fired when this counter's value has been set to something. Returns what it was set to."

@@ -1,7 +1,7 @@
 "VertexlitGeneric"
 {
 	"$basetexture" "models/gunman/decore_gibs/labgibs"
-	"$surfaceprop" "metal"
+	"$surfaceprop" "computer"
 //Detail
 	"$detail" "gctextures/detail/gcde_metal01"
 	"$detailscale" "0.50"

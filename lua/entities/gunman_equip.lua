@@ -20,7 +20,7 @@
 [
 	spawnflags(flags) =
 	[
-		1		:	"Crowbar / Knife"		: 0
+		1		:	"Melee"		: 0
 		2		:	"Pistol"				: 0
 		4		:	"Sniper" 				: 0
 		8		:	"Machinegun"			: 0
@@ -134,13 +134,13 @@ end
 function ENT:KeyValue( k, v )
 
 	if ( isKey("nades", k) ) then
-		if (!isKeyValueValid(k, v, true)) then return end
+		if (self:isKeyValueInvalid(k, v, true)) then return end
 		local val = util.StringToType(v, "int")
 		if (!isValValid(val) or val <= 0) then print(self:GetName() .. " was given a bad grenade count. Ignoring.") return end
 		
 		self.nGrenades = val
 	elseif ( isKey("ammomulti", k) ) then
-		if (!isKeyValueValid(k, v, true)) then return end
+		if (self:isKeyValueInvalid(k, v, true)) then return end
 		local val = util.StringToType(v, "float")
 		if (!isValValid(val) or val < 0) then print(self:GetName() .. " was given a bad ammo multiplier. Ignoring.") return end
 		

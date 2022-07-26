@@ -1,4 +1,4 @@
---gunman utility library. Contains a ton of useful functions for different tasks.
+--gmod lua hammer utility library. Contains a ton of useful functions for different tasks. Mostly revolving around interfacing with hammer's i/o system.
 
 
 --checks if the string is valid by making sure it isn't nil and that it isn't just white space or spaces.
@@ -78,23 +78,6 @@ function isValInvalid(val)
 	return !isValValid(val) 
 end
 
---checks if the keyvalue it is fed is actually valid or not. It uses isStrValid to check. You can tell it that you only want numbers by passing true into the 3rd argument.
-function isKeyValueValid(k, v, bOnlyNumber)
-	if (bOnlyNumber == nil) then bOnlyNumber = false end
-
-	if (isStrInvalid(name)) then name = "*Unknown gunman_item_spawner Entity*" end
-
-	if (isStrInvalid(k) ) then print(" gunman_item_spawner recieved a bad key.") return false end
-	if (isStrInvalid(v)) then print(" gunman_item_spawner recieved a bad value from key '" .. k .. "'.") return false end
-
-
-	if (bOnlyNumber) then
-		if (!strIsNum(v)) then print("gunman_item_spawner's number only key ('" .. k .. "') was given a value that did not contain only numerical values. ('" .. v .. "')") return end
-	end
-	
-
-	return true
-end
 
 --gets a string and checks if it will be a valid vector.
 function strIsValidVector(vec, ent, bAng)
@@ -131,12 +114,12 @@ function strIsInvalidVector(vec, ent)
 	return !strIsValidVector(vec, ent)
 end
 
-function strIsValidAngles(ang, ent)
+function strIsValidAngle(ang, ent)
 	return strIsValidVector(ang, ent, true)
 end
 
-function strIsInvalidAngles(ang, ent)
-	return !strIsValidAngles(ang, ent)
+function strIsInvalidAngle(ang, ent)
+	return !strIsValidAngle(ang, ent)
 end
 
 --checks if the string makes for a valid entity. or entities. can take in a classname and filter out entities by that name. Safe for use before entity initialization BUT NOT IF using search mode. Can search for the entity, or attempt to create it using the str as a classname.
@@ -215,6 +198,7 @@ return false end
 --same as isKey(), but for inputs.
 function isInput(input, name)
 	return isKey(input, name) end
+
 
 --**GETITEMFROMTYPE()**--
 --gets an item from ("medkit, armor, melee, pistol, shotgun, sniper, machinegun, launcher, grenade (or grenades)" or 1-9). 
@@ -370,14 +354,61 @@ function getItemFromType(iType, bAmmo, bForceHL2)
 	return nil --if we're here, something probably fucked up.
 end
 
-if (ENT == nil or ENT == NULL) then return end
 
---fires an output event. This is what makes the outputs in our fgd have meaning and actually tick. without this, none of the entity's outputs will ever fire.
-function ENT:fireEvent(input) --EXTREME WARNING!! if you pass data into the triggeroutput function (the 3rd argument) IT WILL DISCARD ANY DATA PASSED INTO IT THROUGH PARAMS IN HAMMER!
+if (ENT != nil and ENT != NULL) then 
 
-	if (IsValid(ACTIVATOR)) then
-		self:TriggerOutput(input, ACTIVATOR)--trigger that output baby!
-	else
-		self:TriggerOutput(input, self)
+	--fires an output event. This is what makes the outputs in our fgd have meaning and actually tick. without this, none of the entity's outputs will ever fire.
+	function ENT:fireEvent(input) --EXTREME WARNING!! if you pass data into the triggeroutput function (the 3rd argument) IT WILL DISCARD ANY DATA PASSED INTO IT THROUGH PARAMS IN HAMMER!
+
+		if (IsValid(ACTIVATOR)) then
+			self:TriggerOutput(input, ACTIVATOR)--trigger that output baby!
+		else
+			self:TriggerOutput(input, self)
+		end
 	end
+
+	--checks if the keyvalue it is fed is actually valid or not. It uses isStrValid to check. You can tell it that you only want numbers by passing true into the 3rd argument.
+	function ENT:isKeyValueValid(k, v, bOnlyNumber)
+		if (bOnlyNumber == nil) then bOnlyNumber = false end
+
+		if (isStrInvalid(k) ) then print(self, "recieved a bad key.") return false end
+		if (isStrInvalid(v)) then print(self, " recieved a bad value from key '" .. k .. "'.") return false end
+
+
+		if (bOnlyNumber) then
+			if (!strIsNum(v)) then print(self, "'s number only key ('" .. k .. "') was given a value that did not contain only numerical values. ('" .. v .. "')") return end
+		end
+		
+
+		return true
+	end
+	
+	function ENT:isKeyValueInvalid(k, v, bOnlyNumber)
+		return !self:isKeyValueValid(k, v, bOnlyNumber)
+	end
+
+else
+
+	--checks if the keyvalue it is fed is actually valid or not. It uses isStrValid to check. You can tell it that you only want numbers by passing true into the 3rd argument.
+	function isKeyValueValid(k, v, bOnlyNumber)
+		if (bOnlyNumber == nil) then bOnlyNumber = false end
+
+		if (isStrInvalid(k) ) then print("Recieved a bad key.") return false end
+		if (isStrInvalid(v)) then print("Recieved a bad value from key '" .. k .. "'.") return false end
+
+
+		if (bOnlyNumber) then
+			if (!strIsNum(v)) then print("A number only key ('" .. k .. "') was given a value that did not contain only numerical values. ('" .. v .. "')") return end
+		end
+		
+
+		return true
+	end
+	
+	function isKeyValueInvalid(k, v, bOnlyNumber)
+		return !isKeyValueValid(k, v, bOnlyNumber)
+	end
+
 end
+
+
