@@ -1,9 +1,11 @@
 // Created by Crowbar 0.49.0.0
 
 $modelname "gunman/decore_gibs.mdl"
-$scale 3.0
+
+$scale 2.0
 
 $surfaceprop "metal"
+$contents "solid"
 
 $bodygroup "body"
 {
@@ -14,14 +16,12 @@ $bodygroup "body"
 
 $cdmaterials "models/gunman/decore_gibs/"
 
+$collisionmodel "decoregibs_labgibs1" {
+	$automass
 
-$cbox 0 0 0 0 0 0
-
-$bbox 0 0 0 0 0 0
-
-$hbox 0 "Line05" -9.93 -16.879999 -1.42 6.79 0 12.28
+}
 
 $sequence "idle" {
-	"decoregibs_anims\base"
+	"decoregibs_labgibs1"
 	fps 10
 }
