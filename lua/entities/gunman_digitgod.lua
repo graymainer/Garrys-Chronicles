@@ -226,12 +226,12 @@ end
 function ENT:KeyValue( k, v )
 
 	if ( isKey("initialvalue", k) ) then
-		if (!isKeyValueValid(k, v, true)) then return end
+		if (self:isKeyValueInvalid(k, v, true)) then return end
 
 		self:setValue(util.StringToType(v, "int")) --dont need to do a isvaluevalid check here because setValue() does that already.
 
 	elseif (isKey("targetvalue", k)) then
-		if (!isKeyValueValid(k, v, true)) then return end
+		if (self:isKeyValueInvalid(k, v, true)) then return end
 
 		local val = util.StringToType(v, "int")
 		if (val == 0) then return end
@@ -239,7 +239,7 @@ function ENT:KeyValue( k, v )
 		self.targetValue = val
 
 	elseif (isKey("maxvalue", k)) then
-		if (!isKeyValueValid(k, v, true)) then return end
+		if (self:isKeyValueInvalid(k, v, true)) then return end
 
 		local val = util.StringToType(v, "int")
 

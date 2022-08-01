@@ -49,7 +49,7 @@
 	
 ]
 
-@PointClass base(Targetname, Parentname, gunmanToggle) iconsprite("gunman/editor/gunman_item_spawner") = gunman_item_spawner : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects."
+@PointClass base(Targetname, Parentname, Angles, gunmanToggle) iconsprite("gunman/editor/gunman_itemgod") = gunman_itemgod : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects."
 [
 	spawnflags(flags) =
 	[
@@ -87,9 +87,8 @@
 	
 	
 	spawnLifespan(integer)						:	"Spawner Lifespan"						:	0							:	"After these many items have been spawned, disable this spawner. If zero, no limit will be applied."
-	spawnPositionOverride(target_destination)	:	"Spawn Position Override"				:	""							:	"Overrides the default position for items to be spawned from. 'From' because all entites unless 'No Surface Alignment' flag is ticked, will spawned onto the nearest surface. If left empty, they are spawned from the position of the gunman_item_spawner entity."
+	spawnPositionOverride(target_destination)	:	"Spawn Position Override"				:	""							:	"Overrides the default position for items to be spawned from. 'From' because all entites unless 'No Surface Alignment' flag is ticked, will spawned onto the nearest surface. If left empty, they are spawned from the position of the gunman_itemgod entity."
 	spawnOffset(vector)							:	"Spawned Item Offset"					:	"0 0 1"						:	"An offset to move the item by when spawning it in."
-	spawnAngles(angle)							:	"Spawned Item Angles"					:	"0 0 0"						:	"The angles that the item should be orientated at when spawned in."
 	spawnSurfaceTraceDirection(vector)			:	"Surface Trace Direction"				:	"0 0 -10000"				:	"An offset to move the item by when spawning it in."
 	spawnDelay(float)							:	"Spawn Delay"							:	"1.0"						:	"The amount of seconds to wait to spawn in an item. Value must be '0.1' or over."
 	respawnDelay(float)							:	"Respawn Delay"							:	"3.0"						:	"The amount of seconds to wait to respawn an item. Value must be '0.1' or over. Only applicable if the 'Respawn Item' flag is ticked. Can be zero to be instantenous. Keep in mind that the spawn delay will add onto this delay."
