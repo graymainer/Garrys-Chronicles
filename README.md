@@ -15,8 +15,9 @@ The project is now hosted here on Github for all the benefeits of version contro
 The project is still by no means continued, it is simply receiving an overhaul. No new content will be ported, the project is still on an in-definite hiatus.
 The source files for this project may be released within the near future, but this is unconfirmed at this time.
 
-The overhaul is aiming for a release date of sometime within either march, april, or at the latest, may 2022.
+The overhaul is aiming for a release date of sometime within either march, april, or at the latest, may 2022. Or that was the release date, the actual date is: Who the bruh knows.
 
 
 
 Major Archer? Major Archer? Major Archer? Major Archer?
+![gctgmlogo](https://user-images.githubusercontent.com/50006274/182285975-b17106fb-4869-4486-a7ac-5f08a923a01e.png)
