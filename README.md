@@ -2,6 +2,7 @@
 Repo for the Gunman to Gmod project, now called Garry's Chronicles.
 
 Gunman to Gmod is a project that started back in November 2017 that aimed to port the entire first chapter of Gunman Chronicles to Garry's Mod. Recently the project has seen a resurgence in March 2022 in the form of an update titled: "The 2022 Overhaul" and has been retitled to "Garry's Chronicles."
+![gc_city01](https://user-images.githubusercontent.com/50006274/182286099-ff834a94-76b8-4053-aed1-11170e9ffce6.png)
 
 Along with being ported to the source engine, the maps received some visual upgrades and contained all scenes and scripting redone for source.
 
