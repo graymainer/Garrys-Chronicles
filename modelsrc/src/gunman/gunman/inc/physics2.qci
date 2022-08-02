@@ -1,12 +1,14 @@
+//ultra flex version for posing.
+
 $contents "solid"
 $surfaceprop "flesh"
 
 $collisionjoints "gunman_phys.smd" {
 
-	$mass 25
-	$inertia 2
-	$damping 0.11
-	$rotdamping 0.11
+	$mass 115
+	$inertia 10
+	$damping 0.01
+	$rotdamping 1.5
 	$rootbone "Bip02"
 	
 	$jointmerge "Bip02" "Bip02 Pelvis"

@@ -18,8 +18,6 @@ GNMN_GUARD_USE gcsfx/vo/city03/gateguard/nag {Len 1.13}
 //dude fixing the computer. i think its a computer
 GNMN_ENGINEER gcsfx/vo/city03/repairguy/line {Len 4.226}
 GNMN_ENGINEER_USE gcsfx/vo/city03/repairguy/nag {Len 2.725}
-GNMN_ENGINEER_CALLOUT0 gunman/club/puz/vo/woah0 {Len 1.00}
-GNMN_ENGINEER_CALLOUT1 gunman/club/puz/vo/woah1 {Len 1.00}
 GNMN_ENGINEER_CALLOUT2 gunman/club/puz/vo/youcrazy {Len 1.00}
 GNMN_ENGINEER_CALLOUT3 gunman/club/puz/vo/thatsit {Len 1.00}
 
@@ -129,7 +127,12 @@ GNMN_TANK7 gcsfx/city05/vo/gunman/tank7 (v150) {Len 6.676}
 GNMN_TANK8 gcsfx/city05/vo/gunman/tank8 (v100) {Len 3.303}
 GNMN_TANK9 gcsfx/city05/vo/gunman/tank9 (v100) {Len 1.225}
 
+//other misc stuff
 
+//the three stages of woah: kind of suprising, didn't expect it, and HOLY SH
+GNMN_WOAH1 gunman/vo/gunman/woah0.wav {Len 2.00}
+GNMN_WOAH2 gunman/vo/gunman/woah1.wav {Len 2.00}
+GNMN_WOAH3 gunman/vo/gunman/woah2.wav {Len 2.00}
 
 
 //obligatory hot female automated voice.

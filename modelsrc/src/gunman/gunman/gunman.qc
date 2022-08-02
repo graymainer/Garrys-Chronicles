@@ -3,7 +3,6 @@
 sort out movement animations. either we go back to goldsrc style, or animate our own directional ones.
 figure out what to do with equipment. Should we keep? or replace with traditional source attachments?
 playermodels? npcs?
-add jiggle bones?
 
 **********************************************************************/
 
@@ -11,8 +10,6 @@ add jiggle bones?
 
 
 $modelname "gunman/gunman.mdl"
-//$modelname "gunman/gunman_posing.mdl"
-
 
 
 $model "Gunman Soldier" "gunman_ref.smd" {

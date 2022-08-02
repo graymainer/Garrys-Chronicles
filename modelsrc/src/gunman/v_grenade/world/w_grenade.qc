@@ -7,7 +7,7 @@ $contents "solid"
 $surfaceprop "weapon"
 
 
-$cdmaterials "models\gunman\items\rocket\"
+$cdmaterials "models\gunman\items\dmlammo\"
 
 $collisionmodel "w_grenade.smd"
 {
