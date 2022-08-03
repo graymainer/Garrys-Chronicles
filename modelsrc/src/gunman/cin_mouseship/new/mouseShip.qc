@@ -6,9 +6,12 @@ $surfaceprop "MetalVehicle"
 $jointsurfaceprop "surfpropbone_cockpit" "glass"
 $contents "solid"
 
-$bodygroup "studio"
+$body "Mouse Ship" "mouseShip_ref"
+
+$bodygroup "Jet Flames"
 {
-	studio "mouseShip_ref"
+	studio "mouseShip_jets_ref"
+	blank
 }
 
 $cdmaterials "models/gunman/mouseShip/"
@@ -51,7 +54,14 @@ $sequence "Takeoff_Idle" {
 }
 $sequence "Crash" {
 	"anims\crash"
+	{ event 1003 120 1 }
+	{ event 1003 860 2 }
 	fps 46
+}
+$sequence "Crashed_Idle" {
+	"anims\crashed_idle"
+	fps 10
+	loop
 }
 $sequence "Crash_Idle" {
 	"anims\crash_idle"

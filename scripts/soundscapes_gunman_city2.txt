@@ -82,12 +82,6 @@
 	"playsoundscape"
 	{
 		"volume" "1.0"
-		"name" "coast.util_metalstress"
-	}
-	
-	"playsoundscape"
-	{
-		"volume" "1.0"
 		"name" "coast.util_shackmetal"
 	}
 	
@@ -146,12 +140,6 @@
 	"playsoundscape"
 	{
 		"volume" "0.45, 0.85"
-		"name" "coast.util_metalstress"
-	}
-	
-	"playsoundscape"
-	{
-		"volume" "0.45, 0.85"
 		"name" "coast.util_shackmetal"
 	}
 	
@@ -197,12 +185,6 @@
 		"volume"	"0.4,1.0"
 		"name" "Gunman.Announcements_weird"
 		
-	}
-	
-	"playsoundscape"
-	{
-		"volume" "0.45, 0.85"
-		"name" "coast.util_metalstress"
 	}
 	
 	"playsoundscape"

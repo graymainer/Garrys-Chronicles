@@ -116,12 +116,6 @@
 	"playsoundscape"
 	{
 		"volume" "1.0"
-		"name" "coast.util_metalstress"
-	}
-	
-	"playsoundscape"
-	{
-		"volume" "1.0"
 		"name" "coast.util_shackmetal"
 	}
 	
