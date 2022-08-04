@@ -1,0 +1,23 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/forcefieldlite001a"
+	//"$selfillum" "1"
+	//"$detail" "gunman/forcefieldlite001a_illum"
+	//"$detailscale" 1
+	//"$detailblendmode" 6
+	"$surfaceprop" "Computer"
+	"%keywords" "gc"
+	
+	
+	// Proxies
+	// {
+	
+		// ToggleTexture //frame 0 is on, 1 is off
+		// {
+		
+			// ToggleTextureVar				$basetexture
+			// ToggleTextureFrameNumVar		$frame
+		// }
+	
+	// }
+}
