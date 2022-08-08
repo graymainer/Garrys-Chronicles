@@ -4,14 +4,14 @@ event section "sync_salutes"
   time 1.000000 -1.000000
   param "noaction"
 }
-event stoppoint "done"
-{
-  time 25.000000 -1.000000
-  param "noaction"
-}
 event section "waitforposition"
 {
   time 0.611111 -1.000000
+  param "noaction"
+}
+event stoppoint "alldone"
+{
+  time 62.777779 -1.000000
   param "noaction"
 }
 actor "soldierguy0"
@@ -21,23 +21,12 @@ actor "soldierguy0"
     event moveto "moveto0"
     {
       time 0.000000 0.493334
-      param "soldierguy_tgt0"
+      param "soldierguy0_seq"
       resumecondition
-    }
-    event sequence "salute"
-    {
-      time 3.500000 5.500000
-      param "salute"
-      fixedlength
-    }
-    event face "face0"
-    {
-      time 2.860000 3.360000
-      param "soldierguy_fwd0"
     }
     event lookat "lookatcommander"
     {
-      time 8.342564 25.000000
+      time 8.342564 52.930550
       param "commanderguy"
     }
     event lookat "lokatply"
@@ -50,6 +39,19 @@ actor "soldierguy0"
       time 5.775898 8.273847
       param "!player"
     }
+    event speak "yesir"
+    {
+      time 50.333332 51.176052
+      param "gcsfx\vo\city03\briefing\line4.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event firetrigger "all_salute"
+    {
+      time 3.500000 -1.000000
+      param "1"
+    }
   }
 }
 
@@ -60,19 +62,8 @@ actor "soldierguy1"
     event moveto "moveto0"
     {
       time 0.000000 0.500000
-      param "soldierguy_tgt1"
+      param "soldierguy1_seq"
       resumecondition
-    }
-    event sequence "salute"
-    {
-      time 3.500000 5.500000
-      param "salute"
-      fixedlength
-    }
-    event face "face0"
-    {
-      time 2.860000 3.360000
-      param "soldierguy_fwd1"
     }
     event lookat "lokatply"
     {
@@ -81,13 +72,31 @@ actor "soldierguy1"
     }
     event lookat "lokatply"
     {
-      time 5.643589 9.012821
+      time 5.662107 9.864673
       param "!player"
     }
     event lookat "lookatcommander"
     {
-      time 9.000000 25.000000
+      time 9.833333 53.111118
       param "commanderguy"
+    }
+    event speak "yesir"
+    {
+      time 50.366665 51.209385
+      param "gcsfx\vo\city03\briefing\line4.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event lookat "lokathero"
+    {
+      time 17.046368 21.410971
+      param "hero"
+    }
+    event firetrigger "atease"
+    {
+      time 52.092262 -1.000000
+      param "3"
     }
     active "0"
   }
@@ -100,23 +109,12 @@ actor "soldierguy2"
     event moveto "moveto0"
     {
       time 0.000000 0.500000
-      param "soldierguy_tgt2"
+      param "soldierguy2_seq"
       resumecondition
-    }
-    event sequence "salute"
-    {
-      time 3.500000 5.500000
-      param "salute"
-      fixedlength
-    }
-    event face "face0"
-    {
-      time 2.860000 3.360000
-      param "soldierguy_fwd2"
     }
     event lookat "lookatcommander"
     {
-      time 8.479487 25.000000
+      time 9.312820 52.680553
       param "commanderguy"
     }
     event lookat "lokatply"
@@ -126,8 +124,21 @@ actor "soldierguy2"
     }
     event lookat "lokatply"
     {
-      time 5.650257 8.512821
+      time 5.650257 9.262821
       param "!player"
+    }
+    event speak "yesir"
+    {
+      time 50.500000 51.342720
+      param "gcsfx\vo\city03\briefing\line4.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event lookat "lokathero"
+    {
+      time 16.877115 20.938753
+      param "hero"
     }
   }
 }
@@ -139,23 +150,12 @@ actor "soldierguy3"
     event moveto "moveto0"
     {
       time 0.000000 0.500000
-      param "soldierguy_tgt3"
+      param "soldierguy3_seq"
       resumecondition
-    }
-    event sequence "salute"
-    {
-      time 3.500000 5.500000
-      param "salute"
-      fixedlength
-    }
-    event face "face0"
-    {
-      time 2.860000 3.360000
-      param "soldierguy_fwd3"
     }
     event lookat "lookatcommander"
     {
-      time 7.945130 25.000000
+      time 8.778463 52.666668
       param "commanderguy"
     }
     event lookat "lokatply"
@@ -165,8 +165,29 @@ actor "soldierguy3"
     }
     event lookat "lokatply"
     {
-      time 5.650255 7.927691
+      time 5.650255 8.802691
       param "!player"
+    }
+    event speak "whats our mission sir"
+    {
+      time 25.000000 26.314920
+      param "gcsfx\vo\city03\briefing\line2.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event speak "yesir"
+    {
+      time 50.466667 51.309387
+      param "gcsfx\vo\city03\briefing\line4.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event lookat "lokathero"
+    {
+      time 17.326181 21.774916
+      param "hero"
     }
   }
 }
@@ -178,23 +199,12 @@ actor "soldierguy4"
     event moveto "moveto0"
     {
       time 0.000000 0.493334
-      param "soldierguy_tgt4"
+      param "soldierguy4_seq"
       resumecondition
-    }
-    event sequence "salute"
-    {
-      time 3.500000 5.500000
-      param "salute"
-      fixedlength
-    }
-    event face "face0"
-    {
-      time 2.860000 3.360000
-      param "soldierguy_fwd4"
     }
     event lookat "lookatcommander"
     {
-      time 8.788204 25.000000
+      time 9.746537 52.361107
       param "commanderguy"
     }
     event lookat "lokatply"
@@ -204,8 +214,21 @@ actor "soldierguy4"
     }
     event lookat "lokatply"
     {
-      time 5.570256 8.769743
+      time 5.570256 9.644743
       param "!player"
+    }
+    event speak "yesir"
+    {
+      time 50.333336 51.176056
+      param "gcsfx\vo\city03\briefing\line4.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event lookat "lokathero"
+    {
+      time 16.959148 21.621597
+      param "hero"
     }
   }
 }
@@ -231,17 +254,100 @@ actor "commanderguy"
     }
     event lookat "lookatplayer0"
     {
-      time 0.033334 16.066668
+      time 0.033334 7.251853
       param "!player"
     }
     event face "faceplayer0"
     {
-      time 0.711112 16.455555
+      time 0.711112 6.899998
+      param "!player"
+    }
+    event lookat "lokatguy3"
+    {
+      time 25.033339 27.233335
+      param "soldierguy3"
+    }
+    event face "faceguy3"
+    {
+      time 25.033337 44.027382
+      param "soldierguy3"
+    }
+    event speak "vo2"
+    {
+      time 27.326389 49.704620
+      param "gcsfx\vo\city03\briefing\line3.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "talking"
+    {
+      time 27.326387 43.267857
+      param "talk"
+    }
+    event lookat "lookatplayer0"
+    {
+      time 43.320377 47.645370
       param "!player"
     }
     event face "faceplayer0"
     {
-      time 22.033335 23.700001
+      time 44.103630 47.112961
+      param "!player"
+    }
+    event face "faceguy3"
+    {
+      time 47.205956 53.319710
+      param "soldierguy3"
+    }
+    event lookat "lookatplayer0"
+    {
+      time 54.516140 57.330551
+      param "!player"
+    }
+    event face "faceplayer0"
+    {
+      time 54.788822 57.094437
+      param "!player"
+    }
+    event speak "practice until we are ready to go"
+    {
+      time 53.814819 58.264435
+      param "gcsfx\vo\city03\briefing\line5.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event firetrigger "beginseq1"
+    {
+      time 57.185188 -1.000000
+      param "4"
+    }
+    event sequence "pointatplayer"
+    {
+      time 3.000000 5.000000
+      param "pointPlayer"
+      fixedlength
+    }
+    event lookat "lookatguys"
+    {
+      time 7.000000 11.224078
+      param "soldierguy4"
+    }
+    event face "faceguys"
+    {
+      time 7.296296 10.524075
+      param "soldierguy4"
+      lockbodyfacing
+    }
+    event lookat "lookatplayer0"
+    {
+      time 10.607409 16.085190
+      param "!player"
+    }
+    event face "faceplayer0"
+    {
+      time 11.303705 20.844444
       param "!player"
     }
   }
@@ -249,27 +355,20 @@ actor "commanderguy"
   {
     event lookat "lookatstatue"
     {
-      time 16.166668 20.815384
+      time 16.166668 24.945015
       param "hero"
     }
-    event face "facestatue"
+    event firetrigger "beginseq0"
     {
-      time 17.466667 20.400000
-      param "hero"
-      lockbodyfacing
-    }
-    event sequence "pointatstatue"
-    {
-      time 16.966667 19.966667
-      param "pointStatue"
-      fixedlength
+      time 16.966667 -1.000000
+      param "2"
     }
   }
 }
 
 scalesettings
 {
-  "CChoreoView" "52"
+  "CChoreoView" "28"
   "RampTool" "100"
   "ExpressionTool" "100"
   "GestureTool" "100"
