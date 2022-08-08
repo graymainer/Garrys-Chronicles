@@ -1,0 +1,74 @@
+// Choreo version 1
+event section "waitforposition"
+{
+  time 0.611111 -1.000000
+  param "noaction"
+}
+actor "commanderguy"
+{
+  channel "statue"
+  {
+    event lookat "lookatstatue"
+    {
+      time 16.166668 21.366667
+      param "hero"
+    }
+    event face "facestatue"
+    {
+      time 17.466667 22.233334
+      param "hero"
+      lockbodyfacing
+    }
+    event sequence "pointatstatue"
+    {
+      time 16.966667 19.966667
+      param "pointStatue"
+      fixedlength
+    }
+  }
+  channel "idk1"
+  {
+    event moveto "walkto0"
+    {
+      time 0.000000 0.555556
+      param "commanderguy_walktarget0"
+      param2 "Walk"
+      resumecondition
+    }
+    event speak "GNMN_BRIEF1"
+    {
+      time 0.006667 23.418186
+      param "gcsfx\vo\city03\briefing\line1.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event lookat "lookatplayer0"
+    {
+      time 0.033334 16.066668
+      param "!player"
+    }
+    event face "faceplayer0"
+    {
+      time 0.711112 16.455555
+      param "!player"
+    }
+    event face "faceplayer0"
+    {
+      time 22.033335 23.700001
+      param "!player"
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "20"
+}
+fps 60
+snap off
+ignorePhonemes off

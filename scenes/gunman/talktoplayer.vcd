@@ -1,0 +1,35 @@
+// Choreo version 1
+event loop "loop"
+{
+  time 1.573334 -1.000000
+  param "0.000000"
+  loopcount "-1"
+}
+actor "!target1"
+{
+  channel "sos"
+  {
+    event lookat "lookatplayer"
+    {
+      time 0.000000 1.593334
+      param "!player"
+    }
+    event face "turntoplayer"
+    {
+      time 0.006666 1.600000
+      param "!player"
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "100"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off

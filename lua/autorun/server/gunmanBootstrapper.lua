@@ -10,6 +10,7 @@ hook.Add("PostGamemodeLoaded", "HK_ADDONCOMPAT", function()
 
 	include("gunman/gunmanAddonCompat.lua") --a script that will check if a specific addon is downloaded and mounted. telling maps requires map entity data, which is why we do so later on in InitPostEntity.
 	PrecacheSentenceFile("data/gunman/gunmanSentences.json") --precaches our sentences file. This is used by all the npcs in the project.
+	include("gunman/gunmanScenes.lua") --our vcd (scenes) library.
 	include("gunman/gunmanSoundLib.lua") --a sound library for various systems and components of the project.
 	--include("gunman/gunmanZeroG.lua") --quick script to make any entity it is passed to it enter zero gravity physics state. mainly used on gunman_city3 --REPLACED
 
@@ -35,7 +36,7 @@ hook.Add("InitPostEntity", "HK_INITPOSTENT", function()
 	
 	include("gunman/gunmanOffset.lua") --small script to offset a hammer entity by 5 in the positive z axis.
 
-
+	
 
 
 	print("\n\n**All Garrys Chronicles systems bootstrapped!**\n\n") --let the user know we're done.

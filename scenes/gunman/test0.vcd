@@ -1,0 +1,37 @@
+// Choreo version 1
+actor "!target1"
+{
+  channel "sos"
+  {
+    event lookat "lookatplayer"
+    {
+      time 0.000000 1.673334
+      param "!player"
+    }
+    event face "turntoplayer"
+    {
+      time 0.006666 1.680000
+      param "!player"
+    }
+    event speak "voice"
+    {
+      time 0.000000 1.595057
+      param "npc_citizen.doingsomething"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "96"
+  "RampTool" "100"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
+ignorePhonemes off
