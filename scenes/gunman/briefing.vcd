@@ -240,7 +240,7 @@ actor "commanderguy"
     event moveto "walkto0"
     {
       time 0.000000 0.555556
-      param "commanderguy_walktarget0"
+      param "commanderguy_seq0"
       param2 "Walk"
       resumecondition
     }

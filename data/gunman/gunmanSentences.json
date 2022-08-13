@@ -9,8 +9,6 @@ GNMN_BRIEF3 gcsfx/vo/city03/briefing/line3 {Len 22.378}
 GNMN_BRIEF4 gcsfx/vo/city03/briefing/line4 {Len 0.843}
 GNMN_BRIEF5 gcsfx/vo/city03/briefing/line5 {Len 4.45}
 
-GNMN_BRIEF gcsfx/vo/city03/briefing/ (v100) line1 line2 line3 line4 line5 {Len 55.5}
-
 //guard at forcefield gate
 GNMN_GUARD gcsfx/vo/city03/gateguard/line {Len 2.183}
 GNMN_GUARD_USE gcsfx/vo/city03/gateguard/nag {Len 1.13}
