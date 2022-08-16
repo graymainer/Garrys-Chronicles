@@ -1,0 +1,69 @@
+// Choreo version 1
+event stoppoint "done"
+{
+  time 11.833336 -1.000000
+  param "noaction"
+}
+event section "waitforseq"
+{
+  time 9.500000 -1.000000
+  param "noaction"
+}
+actor "lazyguy"
+{
+  channel "idk"
+  {
+    event lookat "lookatplayer"
+    {
+      time 0.000000 11.500000
+      param "!player"
+    }
+    event face "faceplayer"
+    {
+      time 1.000000 10.500000
+      param "!player"
+    }
+    event speak "speakvo"
+    {
+      time 0.000000 11.261678
+      param "gcsfx\city05\vo\gunman\tank1.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+    event sequence "wondering"
+    {
+      time 3.400000 6.066667
+      param "wondering"
+      fixedlength
+    }
+    event sequence "talk2"
+    {
+      time 0.000000 3.400000
+      param "talk2"
+    }
+    event sequence "talk2"
+    {
+      time 6.070000 9.200000
+      param "talk2"
+      resumecondition
+    }
+    event firetrigger "sequence"
+    {
+      time 9.200000 -1.000000
+      param "1"
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "72"
+}
+fps 60
+snap off
+ignorePhonemes off

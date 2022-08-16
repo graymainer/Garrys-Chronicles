@@ -314,15 +314,22 @@ $sequence "flashlight_idle" {
 }
 
 $sequence "couch_idle" {
-	"gunman_anims\couch#idle.smd"
+	"gunman_anims\couch.smd"
 	fadein 0.2
 	fadeout 0.2
 	fps 30
 	loop
 }
 
-$sequence "couchStand" {
-	"gunman_anims\couchstand.smd"
+$sequence "couch_to_idle" {
+	"gunman_anims\couch_to_idle.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 30
+}
+
+$sequence "couch_from_idle" {
+	"gunman_anims\couch_from_idle.smd"
 	fadein 0.2
 	fadeout 0.2
 	fps 30
