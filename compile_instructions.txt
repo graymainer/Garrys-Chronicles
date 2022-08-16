@@ -1,0 +1,7 @@
+compile maps with final preset using slammin source tools vrad.
+
+VBSP: -game $gamedir $path\$file
+VVIS: -threads 16 -game $gamedir $path\$file
+VRAD: -game $gamedir $path\$file -ambientocclusion -lights gunman_city*INSERT NUM HERE*.rad -final
+
+Do not use gunman.rad anymore, it is now a base template of sorts.
