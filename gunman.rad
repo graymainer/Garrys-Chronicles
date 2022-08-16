@@ -12,8 +12,6 @@ gctextures/gclight04 0 255 129 115
 gunman/rebarLite004_on 236 224 185 150 //chrome screen lights
 gctextures/gclight06 236 224 185 250 //BIG chrome screen lights
 
-gunman/computers003 0 225 225 65 //blue screens, in graviton
-
 
 gctextures/gcmonitor03 0 255 64 120
 gctextures/gcmonitor02 0 255 64 120

@@ -1363,18 +1363,21 @@ function processCredentials(user, pass)
 return true end
 
 function processAnswers(ans1, ans2, ans3)
+	ans1 = string.lower(ans1)
+	ans2 = string.lower(ans2)
+	ans3 = string.lower(ans3)
 
-	if (ans1 != "2000" and ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian" and ans3 != "Gunmanship 101") then complain(7) return false end
+	if (ans1 != "2000" and ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian" and ans3 != "gunmanship 101") then complain(7) return false end
 
-	if (ans1 != "2000" and ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian") then complain(8) return false end
+	if (ans1 != "2000" and ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian") then complain(8) return false end
 	
-	if (ans1 != "2000" and ans3 != "Gunmanship 101")  then complain(9) return false end
+	if (ans1 != "2000" and ans3 != "gunmanship 101")  then complain(9) return false end
 	
-	if (ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian" and ans3 != "Gunmanship 101") then complain(10) return false end
+	if (ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian" and ans3 != "gunmanship 101") then complain(10) return false end
 
 	if (ans1 != "2000") then complain(4) return false end
-	if (ans2 != "Vargas Kalhorian" and ans2 != "Kalhorian" and ans2 != "dr.Kalhorian" and ans2 != "Doctor Kalhorian") then complain(5) return false end
-	if (ans3 != "Gunmanship 101") then complain(6) return false end
+	if (ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian") then complain(5) return false end
+	if (ans3 != "gunmanship 101") then complain(6) return false end
 
 
 return true end
