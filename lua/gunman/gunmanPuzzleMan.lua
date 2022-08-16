@@ -815,6 +815,12 @@ function verify() --finally, the end! begins the final sequence where justinpc e
 	
 	if (bBad) then return end
 	
+	local repairGuyChoreo0 = ents.FindByName("repairguy_look0")[1] --look at, turn to face it
+	local repairGuyChoreo1 = ents.FindByName("repairguy_look1")[1] --look at player, only head
+	
+	if (repairGuyChoreo0 == nil or repairGuyChoreo0 == NULL) then print("GUNMAN: ~ERROR~ repairGuyChoreo0a reference was bad!") return end
+	if (repairGuyChoreo1 == nil or repairGuyChoreo1 == NULL) then print("GUNMAN: ~ERROR~ repairGuyChoreo1 reference was bad!") return end
+	
 	local repairGuySequences = {
 		ents.FindByName("repairguy_seqb")[1],
 		ents.FindByName("repairguy_seqd")[1],
@@ -900,7 +906,7 @@ function verify() --finally, the end! begins the final sequence where justinpc e
 			smoke2Sound:Play()
 			sound.Play("strain", computerPos)
 			timer.Simple(3, function() sound.Play("strain", computerPos) end)
-			timer.Simple(10, function() smoke3Sound:Play() smoke2[1]:Fire("TurnOn") smoke2[2]:Fire("TurnOn") sparker:Fire("SparkOnce") repairGuySequences[2]:Fire("CancelSequence") repairGuySequences[3]:Fire("BeginSequence") repairGuySentences[1]:Fire("BeginSentence") end)
+			timer.Simple(10, function() smoke3Sound:Play() smoke2[1]:Fire("TurnOn") smoke2[2]:Fire("TurnOn") sparker:Fire("SparkOnce") repairGuySequences[2]:Fire("CancelSequence") repairGuySequences[3]:Fire("BeginSequence") repairGuySentences[1]:Fire("BeginSentence") repairGuyChoreo0:Fire("Start") end)
 			timer.Simple(11, function() 
 				sound.Play("cheer", computerPos)
 				timer.Simple(0.24, function() smoke1[1]:Fire("TurnOff") smoke1[2]:Fire("TurnOff") end)
@@ -954,9 +960,12 @@ function verify() --finally, the end! begins the final sequence where justinpc e
 					electricFires[1]:Fire("StartFire")
 					sound.Play("ignition", computerPos)
 					
-					timer.Simple(2, function() 
+					timer.Simple(2, function()
+						repairGuyChoreo0:Fire("Cancel")
+						repairGuyChoreo1:Fire("Start")
 						repairGuySequences[1]:Fire("BeginSequence")
 						repairGuySentences[4]:Fire("BeginSentence")
+						timer.Simple(1.5, function() repairGuyChoreo1:Fire("Cancel") end)
 					end)
 					
 					timer.Simple(10, function() electricFires[1]:Fire("Extinguish") electricFires[2]:Fire("Extinguish") heat:Fire("TurnOff") fireSound:Stop() sound.Play("extinguish", computerPos) end)
