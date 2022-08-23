@@ -4,11 +4,6 @@ event stoppoint "done"
   time 11.833336 -1.000000
   param "noaction"
 }
-event section "waitforseq"
-{
-  time 9.500000 -1.000000
-  param "noaction"
-}
 actor "lazyguy"
 {
   channel "idk"
@@ -20,7 +15,7 @@ actor "lazyguy"
     }
     event face "faceplayer"
     {
-      time 1.000000 10.500000
+      time 0.000000 9.142857
       param "!player"
     }
     event speak "speakvo"
@@ -42,12 +37,6 @@ actor "lazyguy"
       time 0.000000 3.400000
       param "talk2"
     }
-    event sequence "talk2"
-    {
-      time 6.070000 9.200000
-      param "talk2"
-      resumecondition
-    }
     event firetrigger "sequence"
     {
       time 9.200000 -1.000000
@@ -58,11 +47,11 @@ actor "lazyguy"
 
 scalesettings
 {
-  "SceneRampTool" "100"
-  "GestureTool" "100"
-  "ExpressionTool" "100"
+  "CChoreoView" "28"
   "RampTool" "100"
-  "CChoreoView" "72"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "SceneRampTool" "100"
 }
 fps 60
 snap off
