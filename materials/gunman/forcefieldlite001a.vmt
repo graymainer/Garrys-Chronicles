@@ -1,6 +1,7 @@
 "LightmappedGeneric"
 {
 	"$basetexture" "gunman/forcefieldlite001a"
+	"$bumpmap" "gunman/forcefieldlite001a_n"
 	"$selfillum" "1"
 	//"$detail" "gunman/forcefieldlite001a_illum"
 	//"$detailscale" 1

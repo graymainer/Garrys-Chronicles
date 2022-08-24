@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/jetlite01a"
+	"$selfillum" 1
+	"$surfaceprop" "glass"
+	"%keywords" "gc"
+}

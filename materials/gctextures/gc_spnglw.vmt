@@ -11,7 +11,7 @@
 	
 	Proxies
 	{ 
-		AnimatedTexture
+		"AnimatedTexture"
 		{ 
 			animatedTextureVar $basetexture
 			animatedTextureFrameNumVar $frame

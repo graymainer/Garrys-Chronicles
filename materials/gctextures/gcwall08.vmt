@@ -2,6 +2,7 @@
 {
 	"$basetexture" "gctextures/gcwall08"
 	"$surfaceprop" "Metal"
+	"$bumpmap" "gctextures/gcwall08_n"
 	"%keywords" "gc"
 //Detail
 	"$detail" "gctextures/detail/gcde_metal01"

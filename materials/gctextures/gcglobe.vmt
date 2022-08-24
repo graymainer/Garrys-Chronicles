@@ -1,6 +1,8 @@
 "LightmappedGeneric"
 {
 	"$basetexture" "gctextures/gcglobe"
+	"$bumpmap"		"gctextures/gcglobe_n"
+	"$selfillum" 1
 	"%keywords" "gc"
 	"$surfaceprop" "glass"
 	

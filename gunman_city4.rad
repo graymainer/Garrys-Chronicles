@@ -21,3 +21,7 @@ gctextures/gcmonitor02 0 255 64 120
 gunman/forcefieldlite01a 0 255 96 35
 
 gctextures/gclight08 0 255 128 50
+
+gctextures/gc_forcefield02 53 53 255 25
+
+gctextures/gcglobe 0 255 0 100

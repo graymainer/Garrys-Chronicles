@@ -1,6 +1,8 @@
 "LightmappedGeneric"
 {
 	"$basetexture" "gctextures/gcfloor02"
+	"$bumpmap" "gctextures/gcfloor02_n"
+
 	"$surfaceprop" "metal"
 	"%keywords" "gc"
 //Detail

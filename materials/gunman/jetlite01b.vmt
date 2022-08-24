@@ -1,6 +1,6 @@
-"UnlitGeneric"
+"LightmappedGeneric"
 {
-	"$basetexture" "gctextures/gclight05"
+	"$basetexture" "gunman/jetlite01b"
 	"$selfillum" 1
 	"$surfaceprop" "glass"
 	"%keywords" "gc"
