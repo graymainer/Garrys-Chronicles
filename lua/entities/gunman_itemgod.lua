@@ -76,7 +76,7 @@ function ENT:printInfo()
 	print("\n\n========" .. self:GetClass() .. " - " .. name .. " Info========\n\n")
 	
 	--basic stuff.
-	print("Name:", "", "", "", self:GetName())
+	print("Name:", "", "", "", name)
 	print("Flags:", "", "", "", self:GetSpawnFlags())
 	print("Initialised?", "", "", self.bInit)
 	print("Enabled?", "", "", self.bEnabled)
@@ -231,10 +231,10 @@ end
 --here is where we read in all the keyvalues passed in to our entity. our specific object of this entity class.
 function ENT:KeyValue( k, v )
 
-	if (isKey("spawnitem", k)) then
+	if (isKey("item", k)) then
 		if (isStrInvalid(v)) then return end
 		
-		local item = getItemFromType(v, true, self:HasSpawnFlags(SF_FORCEHL2))
+		local item = getItemFromType(v, string.find(v, "_a"), self:HasSpawnFlags(SF_FORCEHL2))
 		
 		if (item == nil) then
 			if (strIsInvalidEntity(v, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") return end
@@ -366,18 +366,18 @@ end
 --we start main execution here.
 function ENT:Initialize()
 
-	if (isStrInvalid(self:GetName())) then --we cant be unnamed because certain functions (namely the fx) require a name reference to ourselves.
-		self:SetName("itemSpawner" .. tostring(#ents.FindByName("itemSpawner*")))
-	end
+	-- if (isStrInvalid(self:GetName())) then --we cant be unnamed because certain functions (namely the fx) require a name reference to ourselves.
+		-- self:SetName("itemSpawner" .. tostring(#ents.FindByName("itemSpawner*")))
+	-- end
 	
 	--verify some values we couldn't verify at ent:keyvalue
 	if (self.fxBeam != nil) then
-		if (strIsInvalidEntity(self.fxBeam, true, "env_beam")) then print(self:GetName(), "was given a bad beam entity. Resetting.") self.fxBeam = nil end
+		if (strIsInvalidEntity(self.fxBeam, true, "env_beam")) then print(self, "was given a bad beam entity. Resetting.") self.fxBeam = nil end
 	end
 	
 	if (self.fxLite != nil) then
 		if (strIsInvalidEntity(self.fxLite, true, "env_projectedtexture")) then 
-			print(self:GetName(), "was given a bad light entity. Resetting.") 
+			print(self, "was given a bad light entity. Resetting.") 
 			self.fxLite = nil
 		else
 			ents.FindByName(self.fxLite)[1]:Fire("TurnOff") --nasty hack, but a nice qol feature since env_projectedtexture ents ignore the enabled flag.
@@ -428,8 +428,8 @@ end
 --the heart and soul of this entity. This baby reads in hammer i/o input and translates it into LUA calls. This will allow you to use the inputs in the fgd in hammer to actually use this entity in the map with hammer's scripting.
 function ENT:AcceptInput( name, activator, caller, data )
 	if (CLIENT) then self:KillGlobals() return false end --mostly becuase we use getname in our error printouts.
-	if (isStrInvalid(name)) then print(self:GetName() .. " was shot a bad input!") return end --you never know.
-	if (strIsNum(name)) then print(self:GetName() .. " was fired an invalid input. Input name contained numbers.") self:KillGlobals() return false end
+	if (isStrInvalid(name)) then print(tostring(self) .. " was shot a bad input!") return end --you never know.
+	if (strIsNum(name)) then print(tostring(self) .. " was fired an invalid input. Input name contained numbers.") self:KillGlobals() return false end
 
 	self:SetupGlobals(activator, caller)
 
@@ -460,9 +460,9 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("setItem", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		local item = getItemFromType(data, true, self:HasSpawnFlags(SF_FORCEHL2))
+		local item = getItemFromType(data, string.find(data, "_a"), self:HasSpawnFlags(SF_FORCEHL2))
 		
 		if (item == nil) then
 			if (strIsInvalidEntity(data, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") self:KillGlobals() return false end
@@ -485,7 +485,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 		
 		if (isStrInvalid(data) or data == "nil" or data == "null") then self.fxBeam = nil self:KillGlobals() return end
 		
-		if (strIsInvalidEntity(data, true, "env_beam")) then print(self:GetName() .. "'s " .. name .. " found no valid entity.") self:KillGlobals() return end
+		if (strIsInvalidEntity(data, true, "env_beam")) then print(tostring(self) .. "'s " .. name .. " found no valid entity.") self:KillGlobals() return end
 		
 		self.fxBeam = data
 		self:KillGlobals()
@@ -494,14 +494,14 @@ function ENT:AcceptInput( name, activator, caller, data )
 	if (isInput("setLightEntity", name)) then
 		if (isStrInvalid(data) or data == "nil" or data == "null") then self.fxLite = nil self:KillGlobals() return end		
 		
-		if (strIsInvalidEntity(data, true, "env_projectedtexture")) then print(self:GetName() .. "'s " .. name .. " found no valid entity.") self:KillGlobals() return end
+		if (strIsInvalidEntity(data, true, "env_projectedtexture")) then print(tostring(self) .. "'s " .. name .. " found no valid entity.") self:KillGlobals() return end
 		
 		self.fxLite = data
 		self:KillGlobals()
 	return true end
 	
 	if (isInput("setSpawnSprite", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
 		self.fxSprite = data
 		self:KillGlobals()
@@ -516,21 +516,21 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("setSpawnLifespan", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
-		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input tried to set our lifespan to a value with non numeric characters.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (!strIsNum(data)) then print(tostring(self) .. "'s " .. name .. " input tried to set our lifespan to a value with non numeric characters.") self:KillGlobals() return end
 		
 		local val = util.StringToType(data, "int")
 		
-		if (val < 0) then print(self:GetName() .. "'s " .. name .. " input tried to set our lifespan to a negative value.") self:KillGlobals() return end
+		if (val < 0) then print(tostring(self) .. "'s " .. name .. " input tried to set our lifespan to a negative value.") self:KillGlobals() return end
 		
 		self.spawnLifespan = val
 		self:KillGlobals()
 	return true end
 	
 	if (isInput("setSpawnOffset", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		if (strIsInvalidVector(data)) then print(self:GetName() .. "'s " .. name .. " input had an invalid vector.") self:KillGlobals() return end
+		if (strIsInvalidVector(data)) then print(tostring(self) .. "'s " .. name .. " input had an invalid vector.") self:KillGlobals() return end
 		
 		
 		self.spawnOffset = util.StringToType(data, "vector")
@@ -538,9 +538,9 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("setSpawnAngles", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		if (strIsInvalidAngle(data)) then print(self:GetName() .. "'s " .. name .. " input had an invalid angle.") self:KillGlobals() return end
+		if (strIsInvalidAngle(data)) then print(tostring(self) .. "'s " .. name .. " input had an invalid angle.") self:KillGlobals() return end
 		
 		
 		self.spawnAngles = util.StringToType(data, "angle")
@@ -548,45 +548,45 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("setSurfaceTraceDirection", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		if (strIsInvalidVector(data)) then print(self:GetName() .. "'s " .. name .. " input had an invalid vector.") self:KillGlobals() return end
+		if (strIsInvalidVector(data)) then print(tostring(self) .. "'s " .. name .. " input had an invalid vector.") self:KillGlobals() return end
 		
 		self.spawnSurfaceTraceDir = util.StringToType(data, "vector")
 		self:KillGlobals()
 	return true end
 	
 	if (isInput("setSpawnDelay", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
-		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input tried to set our spawn delay to a value with non numeric characters.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (!strIsNum(data)) then print(tostring(self) .. "'s " .. name .. " input tried to set our spawn delay to a value with non numeric characters.") self:KillGlobals() return end
 		
 		local val = util.StringToType(data, "float")
 		
-		if (val < 0.1) then print(self:GetName() .. "'s " .. name .. " input tried to set our spawn delay below the minimum limit.") self:KillGlobals() return end
+		if (val < 0.1) then print(tostring(self) .. "'s " .. name .. " input tried to set our spawn delay below the minimum limit.") self:KillGlobals() return end
 		
 		self.spawnDelay = val
 		self:KillGlobals()
 	return true end
 	
 	if (isInput("setRespawnDelay", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
-		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input tried to set our respawn delay to a value with non numeric characters.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (!strIsNum(data)) then print(tostring(self) .. "'s " .. name .. " input tried to set our respawn delay to a value with non numeric characters.") self:KillGlobals() return end
 		
 		local val = util.StringToType(data, "float")
 		
-		if (val < 0.1) then print(self:GetName() .. "'s " .. name .. " input tried to set our respawn delay below the minimum limit.") self:KillGlobals() return end
+		if (val < 0.1) then print(tostring(self) .. "'s " .. name .. " input tried to set our respawn delay below the minimum limit.") self:KillGlobals() return end
 		
 		self.respawnDelay = val
 		self:KillGlobals()
 	return true end
 	
 	if (isInput("setRespawnDistance", name)) then
-		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
-		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input tried to set our respawn distance to a value with non numeric characters.") self:KillGlobals() return end
+		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
+		if (!strIsNum(data)) then print(tostring(self) .. "'s " .. name .. " input tried to set our respawn distance to a value with non numeric characters.") self:KillGlobals() return end
 		
 		local val = util.StringToType(data, "float")
 		
-		if (val < 0.0) then print(self:GetName() .. "'s " .. name .. " input tried to set our respawn distance to a negative value.") self:KillGlobals() return end
+		if (val < 0.0) then print(tostring(self) .. "'s " .. name .. " input tried to set our respawn distance to a negative value.") self:KillGlobals() return end
 		
 		if (val >= 5.0) then
 			self.bRespawnDistance = true
@@ -642,7 +642,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	
 	
 	
-	print(self:GetName() .. " was shot an unknown input! ('" .. name .. "')") -- by this point, if execution has reached us, we have no earthly idea what this input is.
+	print(tostring(self) .. " was shot an unknown input! ('" .. name .. "')") -- by this point, if execution has reached us, we have no earthly idea what this input is.
 	self:KillGlobals()
 	return false
 
@@ -730,7 +730,7 @@ function ENT:playFXSpawning(item)
 				beams[i] = ents.Create("env_beam")
 				if (!IsValid(beams[i])) then return end
 				
-				beams[i]:SetName(self:GetName() .. "_spawnerfx_beams" .. tostring(i - 1))
+				beams[i]:SetName(tostring(self:EntIndex()) .. "_spawnerfx_beams" .. tostring(i - 1))
 				beams[i]:SetKeyValue("spawnflags", bit.bor(4)) --random strike
 				beams[i]:SetKeyValue("boltwidth", 0.65)
 				beams[i]:SetKeyValue("life", 0.2)
@@ -763,7 +763,7 @@ function ENT:playFXSpawning(item)
 	if (!self:HasSpawnFlags(SF_NOLITES)) then
 		if (self.fxLite != nil) then
 			local lite = ents.FindByName(self.fxLite)[1]
-			if (lite == NULL) then print(self:GetName() .. " tried to create an env_projectedtexture and couldn't.") return end
+			if (lite == NULL) then print(tostring(self) .. " tried to create an env_projectedtexture and couldn't.") return end
 		
 			--positioning, name, and angles.
 			lite:SetPos(self.spawnPos - Vector(0, 0, 5))
@@ -777,11 +777,11 @@ function ENT:playFXSpawning(item)
 			end)
 		else
 			local lite = ents.Create("env_projectedtexture")
-			if (lite == NULL) then print(self:GetName() .. " tried to create an env_projectedtexture and couldn't.") return end
+			if (lite == NULL) then print(tostring(self) .. " tried to create an env_projectedtexture and couldn't.") return end
 			
 	
 			--positioning, name, and angles.
-			lite:SetName(self:GetName() .. "_spawnfx_lite")
+			lite:SetName(tostring(self:EntIndex()) .. "_spawnfx_lite")
 			lite:SetPos(self.spawnPos - Vector(0, 0, 10))
 			lite:SetAngles(self.fxLiteAngles)
 			
@@ -794,7 +794,7 @@ function ENT:playFXSpawning(item)
 				lite:SetKeyValue("enableshadows", 1)
 			end
 			
-			lite:SetKeyValue("targetname", self:GetName() .. "_spawnfx_lite")
+			lite:SetKeyValue("targetname", tostring(self:EntIndex()) .. "_spawnfx_lite")
 			lite:SetKeyValue("lightcolor", "0 255 0 400")
 			lite:SetKeyValue("style", 8)
 			--lite:SetKeyValue("pattern", "dfgsdfadfa") --doesn't function
@@ -953,7 +953,7 @@ function ENT:spawn(classname, bSkipSpawnCheck)
 
 	local ent = ents.Create(item)
 	
-	if (!IsValid(ent)) then print(self:GetName() .. " failed to create an entity. ('" .. tostring(classname) .. "')") return end
+	if (!IsValid(ent)) then print(tostring(self) .. " failed to create an entity. ('" .. tostring(classname) .. "')") return end
 
 	self.bSpawning = true
 	

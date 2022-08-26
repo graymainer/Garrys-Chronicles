@@ -59,7 +59,7 @@
 		8	:	"No Glow FX"														: 	0 //Disable glow effects. Redundant if 'No FX' is enabled.
 		16	:	"No Spark FX"														: 	0 //Disable sparking effects. Redundant if 'No FX' is enabled.
 		32	:	"No Light FX"														: 	0 //Disable lighting effects. Redundant if 'No FX' is enabled.
-		64	:	"Disable Light FX Shadows"											: 	1 //Disable shadows drawn from light effects. Redundant if 'No FX' is enabled.
+		64	:	"Disable Light FX Shadows"											: 	0 //Disable shadows drawn from light effects. Redundant if 'No FX' is enabled.
 		128	:	"No Spawn Sparks"													: 	0 //Disable sparking effects when spawning an item. Spark effects will still play when deleting an item. (i.e if the item reaches the respawnDistance or is replace by another call to spawn()) Redundant if 'No FX' is enabled.
 		256	:	"No FX"																: 	0 //Disables all effects.
 		512	:	"Spawn Frozen"														: 	0 //Spawn items frozen.
@@ -67,15 +67,20 @@
 		2048:	"No Surface Alignment"												: 	0 //Disables automatic surface alignment. Item will spawn right where the entity is placed. 
 	]
 	
-	spawnitem(choices) 							: "Item to Spawn" 							: 	1   						:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
+	item(choices) 							: "Item" 							: 	"health"   						:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
 	[
 		"health"		:	"Medkit"
 		"armor"			:	"Armor"
-		"pistol"		:	"Pistol Ammo"
-		"shotgun"		:	"Shotgun Ammo"
-		"sniper"		:	"Crossbow Ammo" //specifically for hl2 wpns.
-		"machinegun"	:	"Machinegun Ammo"
-		"launcher"		:	"Launcher Ammo"
+		"pistol"		:	"Pistol"
+		"pistol_a"		:	"Pistol Ammo"
+		"shotgun"		:	"Shotgun"
+		"shotgun_a"		:	"Shotgun Ammo"
+		"sniper"		:	"Sniper"
+		"sniper_a"		:	"Sniper Ammo"
+		"machinegun"	:	"Machinegun"
+		"machinegun_a"	:	"Machinegun Ammo"
+		"launcher"		:	"Launcher"
+		"launcher_a"	:	"Launcher Ammo"
 		"grenade"		:	"Grenades"
 	] 
 	
@@ -96,7 +101,7 @@
 
 	
 	input spawn(string)							: 	"Tells the spawner to spawn its item. Can override the spawner's set item and spawn the item you give instead if given a classname or a default item type index. (1-8)"
-	input setItem(string)						: 	"Sets the item we should spawn. Enter 1-9 (excluding '3') to specify default item types. If the value given is not a simple number and is not a default item name (health, armor, pistol, shotgun, sniper, machinegun, launcher, grenade or grenades), then we'll assume its a direct classname."
+	input setItem(string)						: 	"Sets the item we should spawn. Enter 1-9 to specify default item types. If the value given is not a simple number and is not a default item name (health, armor, melee, pistol, shotgun, sniper, machinegun, launcher, grenade), then we'll assume its a direct classname. suffix the input name with '_a' and we'll give you the ammo for that type."
 	input setBeamEntity(target_destination)		: 	"Sets our beam entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setLightEntity(target_destination)	: 	"Sets our light entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setSpawnSprite(string)				: 	"Sets the sprite to play when spawning."

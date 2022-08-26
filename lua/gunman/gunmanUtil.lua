@@ -212,10 +212,14 @@ function getItemFromType(iType, bAmmo, bForceHL2)
 	
 	if (isstring(iType)) then
 		if (isStrInvalid(iType)) then return nil end
+		if (strIsNum(iType)) then
+			local val = util.StringToType(iType, "int")
+			if (val < 1 or val > 9) then return nil end
+		end
 		iType = string.lower(iType)--normalize the input
 	elseif (isnumber(iType)) then
 		if (isValInvalid(iType)) then return nil end
-		if (iType < 0 or iType > 8) then return nil end
+		if (iType < 1 or iType > 9) then return nil end
 		iType = tostring(iType)--normalize the input
 	else
 		return nil
@@ -239,17 +243,9 @@ function getItemFromType(iType, bAmmo, bForceHL2)
 		
 	elseif (iType == "melee" or iType == "3") then
 		if (bGunmanSWEPS and !bForceHL2) then
-			if (bAmmo) then
-				return nil
-			else
-				return "gunman_weapon_knife"
-			end
+			return "gunman_weapon_knife"
 		else
-			if (bAmmo) then
-				return nil
-			else
-				return "weapon_crowbar"
-			end
+			return "weapon_crowbar"
 		end
 		
 	elseif (iType == "pistol" or iType == "4") then
