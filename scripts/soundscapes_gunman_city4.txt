@@ -206,3 +206,45 @@
 		}
 	}
 }
+
+"Gunman.City1_Crash"
+{
+	"dsp" "8"
+	"dsp_volume" "4"
+	
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"ambient/tones/roomtone2.wav"
+		"pitch"		"90"
+		"attenuation"	"0"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_metalstress"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}
