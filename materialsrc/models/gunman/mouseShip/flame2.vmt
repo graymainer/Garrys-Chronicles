@@ -1,7 +1,0 @@
-"unlitGeneric"
-{
-	"$basetexture" "models/gunman/mouseShip/flame2"
-	"$selfillum" 1
-	"$additive" 1
-	"$translucent" 1
-}

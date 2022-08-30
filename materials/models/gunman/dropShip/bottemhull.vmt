@@ -1,6 +1,7 @@
 "VertexlitGeneric"
 {
 	"$basetexture" "models/gunman/dropship/bottemhull"
+	"$bumpmap" "models/gunman/dropship/bottemhull_N"
 //Detail
 	"$detail" "gctextures/detail/gcde_metal01"
 	"$detailscale" "2"

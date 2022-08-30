@@ -1,6 +1,7 @@
 "VertexlitGeneric"
 {
 	"$basetexture" "models/gunman/generalstatue/arm"
+	"$bumpmap" "models/gunman/generalstatue/arm_n"
 	"$surfaceprop" "Concrete"
 //Detail
 	"$detail" "gctextures/detail/gcde_rock01"

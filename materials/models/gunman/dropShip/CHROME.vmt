@@ -3,7 +3,7 @@
 	"$color2" "[1 1 1]"
 	"$envmap" "models/gunman/dropship/CHROME"
 	"$envmapmode" 1
-	"$envmaptint" "[ 0.15 0.15 0.15 ]"
+	"$envmaptint" "[ 0.1 0.1 0.1 ]"
 	//"$bumpmap" "models/gunman/dropship/CHROME_bump"
 	
 	"$multipass" 1

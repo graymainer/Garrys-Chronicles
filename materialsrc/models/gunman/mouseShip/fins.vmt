@@ -1,7 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gunman/mouseShip/fins"
-//Detail
-	"$detail" "gctextures/detail/gcde_metal01"
-	"$detailscale" "4"
-}

@@ -1,6 +1,7 @@
 "VertexlitGeneric"
 {
 	"$basetexture" "models/gunman/batteryBot/batt1top"
+	"$bumpmap" "models/gunman/batteryBot/batt1top_N"
 	"$surfaceprop" "metal"
 //Detail
 	"$detail" "gctextures/detail/gcde_metal01"
