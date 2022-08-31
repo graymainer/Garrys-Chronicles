@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	// original shader: basetimeslightmap
+	"$basetexture" "tools/toolsskybox2d"
+	"%compile2dsky" 1
+	"$surfaceprop" "default_silent"
+	"%keywords" "airexchange,borealis,c17downtown,c17industrial,c17sewers,c17skyscraper,c17trainstation,combine,kraken,wasteland"
+}
