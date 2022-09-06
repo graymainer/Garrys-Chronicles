@@ -23,3 +23,4 @@ release/
 *.lin
 *.bsp
 !maps/*.bsp
+3ds/
