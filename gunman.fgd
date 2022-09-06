@@ -192,6 +192,7 @@
 @PointClass base(Weapon) studio("models/gunman/w_pistol.mdl") = gunman_weapon_pistol : "Standard Issued Gauss Pistol." []
 @PointClass base(Weapon) studio("models/gunman/w_mechagun.mdl") = gunman_weapon_mechagun : "Mecha-Gun Assault Rifle." []
 @PointClass base(Weapon) studio("models/gunman/w_shotgun.mdl") = gunman_weapon_shotgun : "Standard Issue Trooper Scattergun." []
+@PointClass base(Weapon) studio("models/weapons/w_rocket_launcher.mdl") = gunman_weapon_dml : "Dynamic Mule Launch Engine." []
 
 
 @PointClass base(Item) studio("models/gunman/item_ammo_pistol.mdl")= gunman_item_ammo_pistol : "A cannister of gauss energy for the gauss pistol." []

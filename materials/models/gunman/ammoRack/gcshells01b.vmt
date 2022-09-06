@@ -1,0 +1,6 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "gctextures/gcshells01b"
+	"$surfaceprop" "metal_box"
+	"%keywords" "gc"
+}
