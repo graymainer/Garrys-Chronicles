@@ -1,0 +1,49 @@
+versioninfo
+{
+	"editorversion" "400"
+	"editorbuild" "8331"
+	"mapversion" "1"
+	"formatversion" "100"
+	"prefab" "0"
+	"app" "3ds Max"
+	"appVersion" "2020"
+	"appVersionFull" "#(22000, 55, 0, 22, 1, 0, 1249, 2020, .1 Update )"
+	"fgd" "X:/Programs/Steam/steamapps/common/GarrysMod/garrysmod/addons/Garrys-Chronicles/gunman.fgd"
+	"source" "X:\Programs\Steam\steamapps\common\GarrysMod\garrysmod\addons\Garrys-Chronicles"
+	"wallworm" "Wall Worm Free"
+	"wallwormVersion" "4.3.30"
+	"pluginUrl" "https://wallworm.com"
+}
+visgroups
+{
+}
+viewsettings
+{
+	"bSnapToGrid" "1"
+	"bShowGrid" "1"
+	"bShowLogicalGrid" "0"
+	"nGridSpacing" "10"
+	"bShow3DGrid" "0"
+}
+world
+{
+	"id" "1"
+	"mapversion" "1"
+	"classname" "worldspawn"
+	"detailmaterial" "detail/detailsprites"
+	"detailvbsp" ""
+	"maxpropscreenwidth" "-1"
+	"minpropscreenwidth" "0"
+	"skyname" "sky_day01_01"
+}
+
+cameras
+{
+	"activecamera" "0"
+	camera
+	{
+		"position" "[-2385 -5681.53 3559.5]"
+		"look" "[-1443.58 -2181.61 1651.22]"
+	}
+}
+

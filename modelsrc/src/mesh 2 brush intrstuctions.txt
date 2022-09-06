@@ -1,0 +1,12 @@
+scale down to 0.1.
+apply all transforms.
+clear auto smooth.
+delete custom split data.
+shade flat.
+delete all faces that wont become brushes on their own
+triangulate the meshes.
+mark all sharp.
+seperate all faces.
+soldify all by about 20.
+name all using renamescript.
+export to fbx.

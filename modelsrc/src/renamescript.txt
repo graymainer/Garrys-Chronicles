@@ -1,0 +1,5 @@
+import bpy
+
+for i, obj in enumerate(bpy.context.selected_objects, 1):
+    bpy.context.view_layer.objects.active = obj
+    obj.name = "arenaroof_brush_0" + str(i - 1)
