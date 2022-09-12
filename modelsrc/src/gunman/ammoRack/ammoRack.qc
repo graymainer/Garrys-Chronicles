@@ -21,12 +21,23 @@ $collisionmodel "ammoRack_ref"  {
 
 $keyvalues
 {
-	prop_data
+	prop_data 
 	{
-		base				Metal.Medium
-		explosive_damage	250
-		explosive_radius	100
-		physicsmode			1
-		breakable_model		MetalChunks
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"1.0"
+		"dmg.explosive"		"1.0"
+		"health"		"16"
+		"explosive_damage"		"96"
+		"explosive_radius"		"512"
+	}
+	physgun_interactions 
+	{
+		"onfirstimpact"		"break"
+	}
+	fire_interactions 
+	{
+		"flammable"		"yes"
+		"explosive_resist"		"no"
+		"ignite"		"halfhealth"
 	}
 }

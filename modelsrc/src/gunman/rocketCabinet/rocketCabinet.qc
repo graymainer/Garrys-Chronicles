@@ -23,12 +23,23 @@ $collisionmodel "rocketCabinet_ref"  {
 
 $keyvalues
 {
-	prop_data
+	prop_data 
 	{
-		base				Metal.Large
-		explosive_damage	550
-		explosive_radius	200
-		physicsmode			1
-		breakable_model		MetalChunks
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"1.0"
+		"dmg.explosive"		"1.0"
+		"health"		"55"
+		"explosive_damage"		"365"
+		"explosive_radius"		"1024"
+	}
+	physgun_interactions 
+	{
+		"onfirstimpact"		"break"
+	}
+	fire_interactions 
+	{
+		"flammable"		"yes"
+		"explosive_resist"		"no"
+		"ignite"		"halfhealth"
 	}
 }
