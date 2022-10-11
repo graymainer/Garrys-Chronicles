@@ -1,0 +1,207 @@
+// Created by Crowbar 0.72
+====== File Size ======
+	175,664
+====== File Seek Log ======
+	0 - 243 MDL File Header; MDL File Header
+	244 - 915 theMdlFileData.theBones 6
+	916 - 1,011 theMdlFileData.theBoneControllers 4
+	1,012 - 1,363 theMdlFileData.theAttachments 4
+	1,364 - 1,491 aHitboxSet.theHitboxes 4
+	1,492 - 1,503 anAnimation
+	1,504 - 1,515 anAnimation
+	1,516 - 1,527 anAnimation
+	1,528 - 1,539 anAnimation
+	1,540 - 1,551 anAnimation
+	1,552 - 1,563 anAnimation
+	1,564 - 1,567 anAnimation.theAnimationValues
+	1,568 - 1,571 anAnimation.theAnimationValues
+	1,572 - 1,575 anAnimation.theAnimationValues
+	1,576 - 1,579 anAnimation.theAnimationValues
+	1,580 - 1,591 anAnimation
+	1,592 - 1,603 anAnimation
+	1,604 - 1,615 anAnimation
+	1,616 - 1,627 anAnimation
+	1,628 - 1,639 anAnimation
+	1,640 - 1,651 anAnimation
+	1,652 - 1,655 anAnimation.theAnimationValues
+	1,656 - 1,659 anAnimation.theAnimationValues
+	1,660 - 1,663 anAnimation.theAnimationValues
+	1,664 - 1,867 anAnimation.theAnimationValues
+	1,868 - 2,071 anAnimation.theAnimationValues
+	2,072 - 2,275 anAnimation.theAnimationValues
+	2,276 - 2,287 anAnimation
+	2,288 - 2,299 anAnimation
+	2,300 - 2,311 anAnimation
+	2,312 - 2,323 anAnimation
+	2,324 - 2,335 anAnimation
+	2,336 - 2,347 anAnimation
+	2,348 - 2,371 anAnimation.theAnimationValues
+	2,372 - 2,375 anAnimation.theAnimationValues
+	2,376 - 2,399 anAnimation.theAnimationValues
+	2,400 - 2,423 anAnimation.theAnimationValues
+	2,424 - 2,427 anAnimation.theAnimationValues
+	2,428 - 2,439 anAnimation
+	2,440 - 2,451 anAnimation
+	2,452 - 2,463 anAnimation
+	2,464 - 2,475 anAnimation
+	2,476 - 2,487 anAnimation
+	2,488 - 2,499 anAnimation
+	2,500 - 2,523 anAnimation.theAnimationValues
+	2,524 - 2,527 anAnimation.theAnimationValues
+	2,528 - 2,551 anAnimation.theAnimationValues
+	2,552 - 2,575 anAnimation.theAnimationValues
+	2,576 - 2,579 anAnimation.theAnimationValues
+	2,580 - 2,591 anAnimation
+	2,592 - 2,603 anAnimation
+	2,604 - 2,615 anAnimation
+	2,616 - 2,627 anAnimation
+	2,628 - 2,639 anAnimation
+	2,640 - 2,651 anAnimation
+	2,652 - 2,655 anAnimation.theAnimationValues
+	2,656 - 2,679 anAnimation.theAnimationValues
+	2,680 - 2,703 anAnimation.theAnimationValues
+	2,704 - 2,727 anAnimation.theAnimationValues
+	2,728 - 2,731 anAnimation.theAnimationValues
+	2,732 - 2,743 anAnimation
+	2,744 - 2,755 anAnimation
+	2,756 - 2,767 anAnimation
+	2,768 - 2,779 anAnimation
+	2,780 - 2,791 anAnimation
+	2,792 - 2,803 anAnimation
+	2,804 - 2,807 anAnimation.theAnimationValues
+	2,808 - 2,831 anAnimation.theAnimationValues
+	2,832 - 2,855 anAnimation.theAnimationValues
+	2,856 - 2,879 anAnimation.theAnimationValues
+	2,880 - 2,883 anAnimation.theAnimationValues
+	2,884 - 2,895 anAnimation
+	2,896 - 2,907 anAnimation
+	2,908 - 2,919 anAnimation
+	2,920 - 2,931 anAnimation
+	2,932 - 2,943 anAnimation
+	2,944 - 2,955 anAnimation
+	2,956 - 2,959 anAnimation.theAnimationValues
+	2,960 - 2,963 anAnimation.theAnimationValues
+	2,964 - 2,987 anAnimation.theAnimationValues
+	2,988 - 3,011 anAnimation.theAnimationValues
+	3,012 - 3,035 anAnimation.theAnimationValues
+	3,036 - 3,059 anAnimation.theAnimationValues
+	3,060 - 3,071 anAnimation
+	3,072 - 3,083 anAnimation
+	3,084 - 3,095 anAnimation
+	3,096 - 3,107 anAnimation
+	3,108 - 3,119 anAnimation
+	3,120 - 3,131 anAnimation
+	3,132 - 3,135 anAnimation.theAnimationValues
+	3,136 - 3,139 anAnimation.theAnimationValues
+	3,140 - 3,163 anAnimation.theAnimationValues
+	3,164 - 3,183 anAnimation.theAnimationValues
+	3,184 - 3,207 anAnimation.theAnimationValues
+	3,208 - 3,227 anAnimation.theAnimationValues
+	3,228 - 3,239 anAnimation
+	3,240 - 3,251 anAnimation
+	3,252 - 3,263 anAnimation
+	3,264 - 3,275 anAnimation
+	3,276 - 3,287 anAnimation
+	3,288 - 3,299 anAnimation
+	3,300 - 3,303 anAnimation.theAnimationValues
+	3,304 - 3,307 anAnimation.theAnimationValues
+	3,308 - 3,331 anAnimation.theAnimationValues
+	3,332 - 3,355 anAnimation.theAnimationValues
+	3,356 - 3,379 anAnimation.theAnimationValues
+	3,380 - 3,403 anAnimation.theAnimationValues
+	3,404 - 3,415 anAnimation
+	3,416 - 3,427 anAnimation
+	3,428 - 3,439 anAnimation
+	3,440 - 3,451 anAnimation
+	3,452 - 3,463 anAnimation
+	3,464 - 3,475 anAnimation
+	3,476 - 3,479 anAnimation.theAnimationValues
+	3,480 - 3,483 anAnimation.theAnimationValues
+	3,484 - 3,507 anAnimation.theAnimationValues
+	3,508 - 3,531 anAnimation.theAnimationValues
+	3,532 - 3,555 anAnimation.theAnimationValues
+	3,556 - 3,579 anAnimation.theAnimationValues
+	3,580 - 3,591 anAnimation
+	3,592 - 3,603 anAnimation
+	3,604 - 3,615 anAnimation
+	3,616 - 3,627 anAnimation
+	3,628 - 3,639 anAnimation
+	3,640 - 3,651 anAnimation
+	3,652 - 3,655 anAnimation.theAnimationValues
+	3,656 - 3,659 anAnimation.theAnimationValues
+	3,660 - 3,663 anAnimation.theAnimationValues
+	3,664 - 3,687 anAnimation.theAnimationValues
+	3,688 - 3,711 anAnimation.theAnimationValues
+	3,712 - 3,735 anAnimation.theAnimationValues
+	3,736 - 3,747 anAnimation
+	3,748 - 3,759 anAnimation
+	3,760 - 3,771 anAnimation
+	3,772 - 3,783 anAnimation
+	3,784 - 3,795 anAnimation
+	3,796 - 3,807 anAnimation
+	3,808 - 3,811 anAnimation.theAnimationValues
+	3,812 - 3,815 anAnimation.theAnimationValues
+	3,816 - 3,819 anAnimation.theAnimationValues
+	3,820 - 3,843 anAnimation.theAnimationValues
+	3,844 - 3,867 anAnimation.theAnimationValues
+	3,868 - 3,891 anAnimation.theAnimationValues
+	3,892 - 4,067 aSequence [offline]
+	4,068 - 4,243 aSequence [engine]
+	4,244 - 4,419 aSequence [bumpfront]
+	4,420 - 4,595 aSequence [bumpback]
+	4,596 - 4,771 aSequence [bumpleft]
+	4,772 - 4,947 aSequence [bumpright]
+	4,948 - 5,123 aSequence [bumpfrontleft]
+	5,124 - 5,299 aSequence [bumpfrontright]
+	5,300 - 5,475 aSequence [bumpbackleft]
+	5,476 - 5,651 aSequence [bumpbackright]
+	5,652 - 5,827 aSequence [minguns]
+	5,828 - 6,003 aSequence [turret]
+	6,004 - 6,079 anEvent
+	6,080 - 6,155 anEvent
+	6,156 - 6,231 anEvent
+	6,232 - 6,307 anEvent
+	6,308 - 6,383 anEvent
+	6,384 - 6,459 anEvent
+	6,460 - 6,535 anEvent
+	6,536 - 6,611 anEvent
+	6,612 - 6,687 anEvent
+	6,688 - 6,763 anEvent
+	6,764 - 6,839 anEvent
+	6,840 - 6,915 anEvent
+	6,916 - 7,019 theMdlFileData.theSequenceGroups 1
+	7,020 - 7,095 aBodyPart [studio]
+	7,096 - 7,207 aModel [base]
+	7,208 - 7,740 aModel.theVertexBoneInfos 533
+	7,741 - 7,743 aModel.theVertexBoneInfos alignment [ 00 00 00 ]
+	7,744 - 8,275 aModel.theNormalBoneInfos 532
+	8,276 - 14,671 aModel.theVertexes 533
+	14,672 - 21,055 aModel.theNormals 532
+	21,056 - 21,075 aMesh
+	21,076 - 21,095 aMesh
+	21,096 - 21,115 aMesh
+	21,116 - 21,135 aMesh
+	21,136 - 21,155 aMesh
+	21,156 - 23,701 aMesh.theFaces 44
+	23,702 - 23,703 aMesh.theFaces alignment [ 00 00 ]
+	23,704 - 24,757 aMesh.theFaces 14
+	24,758 - 24,759 aMesh.theFaces alignment [ 00 00 ]
+	24,760 - 26,701 aMesh.theFaces 34
+	26,702 - 26,703 aMesh.theFaces alignment [ 00 00 ]
+	26,704 - 30,717 aMesh.theFaces 62
+	30,718 - 30,719 aMesh.theFaces alignment [ 00 00 ]
+	30,720 - 31,891 aMesh.theFaces 17
+	31,892 - 31,971 aTexture [turret.bmp]
+	31,972 - 32,051 aTexture [gatgun.bmp]
+	32,052 - 32,131 aTexture [holder.bmp]
+	32,132 - 32,211 aTexture [body.bmp]
+	32,212 - 32,291 aTexture [track1.bmp]
+	32,292 - 32,301 theMdlFileData.theSkinFamilies 1
+	32,302 - 32,303 theMdlFileData.theSkinFamilies alignment [ 00 00 ]
+	32,304 - 65,839 aTexture.theData
+	65,840 - 74,799 aTexture.theData
+	74,800 - 91,951 aTexture.theData
+	91,952 - 158,511 aTexture.theData
+	158,512 - 175,663 aTexture.theData
+	175,664 - 175,664 END OF FILE + 1 (File size)
+========================

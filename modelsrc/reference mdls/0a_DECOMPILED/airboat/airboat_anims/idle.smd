@@ -1,0 +1,41 @@
+// Created by Crowbar 0.72
+version 1
+nodes
+  0 "Airboat.Hull" -1
+  1 "Airboat.view" 0
+  2 "Airboat.Pontoon_L" 0
+  3 "Airboat.Pontoon_R" 0
+  4 "Airboat.Rudder_L" 0
+  5 "Airboat.Rudder_R" 0
+  6 "Airboat.Steer_Shock" 0
+  7 "Airboat.Steer" 6
+  8 "Airboat.gauge" 7
+  9 "Airboat.Weapon_Yaw" 3
+  10 "Airboat.Weapon_Pitch" 9
+  11 "Airboat.Propeller_Solid" 0
+  12 "Airboat.Propeller_Blur2" 0
+  13 "Airboat" -1
+  14 "Airboat.Hull_Root" 13
+  15 "Airboat.Pontoon_L_Root" 0
+  16 "Airboat.Pontoon_R_Root" 0
+end
+skeleton
+  time 0
+    0 0.000000 0.000000 0.000000 1.570795 0.001728 1.569068   # pos: bone   rot: raw64 (0, 0.70710625309646, 0.70710625309646, 0.00122215537910227)
+    1 0.000000 66.289177 -11.000000 0.000000 -1.570796 -1.570796   # pos: desc_bone   rot: desc_bone
+    2 7.000000 14.149406 -16.639889 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    3 -7.000000 14.149406 -16.639889 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    4 16.299875 49.554871 -80.398781 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    5 -16.299900 49.554871 -80.398781 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    6 0.000000 39.618134 31.722946 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    7 0.049464 11.763841 -9.737561 2.336560 -0.000335 3.141271   # pos: desc_bone   rot: desc_bone
+    8 -0.464172 -3.153945 6.968189 -0.451046 -0.228330 -2.986438   # pos: desc_bone   rot: desc_bone
+    9 -21.034355 23.052378 48.446350 0.000000 -1.570796 -1.570796   # pos: desc_bone   rot: desc_bone
+    10 0.000000 0.000000 0.000001 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    11 0.000000 49.554871 -74.511574 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    12 0.000000 49.554871 -74.511574 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    13 0.000000 0.000000 0.000000 1.570795 0.001728 1.569068   # pos: bone   rot: raw64 (0, 0.70710625309646, 0.70710625309646, 0.00122215537910227)
+    14 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    15 7.000000 14.149406 -16.639889 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+    16 -7.000000 14.149406 -16.639889 0.000000 0.000000 0.000000   # pos: desc_bone   rot: desc_bone
+end

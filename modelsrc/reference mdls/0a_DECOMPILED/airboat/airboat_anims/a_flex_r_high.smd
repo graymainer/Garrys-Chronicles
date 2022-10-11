@@ -1,0 +1,41 @@
+// Created by Crowbar 0.72
+version 1
+nodes
+  0 "Airboat.Hull" -1
+  1 "Airboat.view" 0
+  2 "Airboat.Pontoon_L" 0
+  3 "Airboat.Pontoon_R" 0
+  4 "Airboat.Rudder_L" 0
+  5 "Airboat.Rudder_R" 0
+  6 "Airboat.Steer_Shock" 0
+  7 "Airboat.Steer" 6
+  8 "Airboat.gauge" 7
+  9 "Airboat.Weapon_Yaw" 3
+  10 "Airboat.Weapon_Pitch" 9
+  11 "Airboat.Propeller_Solid" 0
+  12 "Airboat.Propeller_Blur2" 0
+  13 "Airboat" -1
+  14 "Airboat.Hull_Root" 13
+  15 "Airboat.Pontoon_L_Root" 0
+  16 "Airboat.Pontoon_R_Root" 0
+end
+skeleton
+  time 0
+    0 0.000000 0.000000 0.000000 0.000000 0.000000 -1.570796   # pos: desc_delta   rot: desc_delta
+    1 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    2 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    3 0.000000 0.000000 0.000000 0.000000 0.000000 0.109955   # pos: delta   rot: raw64 (0, 0, 0.0549497342349366, 0.998489121977556)
+    4 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    5 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    6 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    7 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    8 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    9 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    10 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    11 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    12 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    13 0.000000 0.000000 0.000000 0.000000 0.000000 -1.570796   # pos: desc_delta   rot: desc_delta
+    14 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    15 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+    16 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000   # pos: desc_delta   rot: desc_delta
+end
