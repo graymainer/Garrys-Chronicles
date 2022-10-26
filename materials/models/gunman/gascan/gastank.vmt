@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/gascan/gastank"
+	"$surfaceprop" "Metal_Barrel"
+}

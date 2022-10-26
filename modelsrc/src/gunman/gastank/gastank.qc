@@ -1,30 +1,20 @@
 // Created by Crowbar 0.49.0.0
 
-$modelname "gc_gastank.mdl"
-$cd "."
-$cliptotextures
-$scale 1.0
+$modelname "gunman\gascan.mdl"
 
 $surfaceprop "metal_barrel"
 $contents "solid"
 $staticprop
 
+$body "Gas Can" "gastank.smd"
+
 $collisionmodel "gastank_phys"
 {
-	$mass "3.85554"
-	$concave
-	$inertia 1
-	$damping 0
-	$rotdamping 0
-	$rootbone " "
+	$automass
 }
 
-$bodygroup "studio"
-{
-	studio "gastank"
-}
 
-$cdmaterials "models/gc_gastank/"
+$cdmaterials "models/gunman/gascan/"
 
 $sequence "idle" {
 	"gastank_anims\idle"

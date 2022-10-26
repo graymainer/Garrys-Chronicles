@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gc_tank/gatgun"
-	"$bumpmap" "models/gc_tank/gatgun_normal"
-	"$normalmap" "models/gc_tank/gatgun_normal"
-}

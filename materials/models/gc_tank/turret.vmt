@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gc_tank/turret"
-	"$bumpmap" "models/gc_tank/turret_normal"
-	"$normalmap" "models/gc_tank/turret_normal"
-}

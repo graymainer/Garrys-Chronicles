@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/vehicle_tank/body"
+	"$bumpmap" "models/gunman/vehicle_tank/body_normal"
+}

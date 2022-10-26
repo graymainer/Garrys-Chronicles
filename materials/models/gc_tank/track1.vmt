@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/gc_tank/track1"
-	"$bumpmap" "models/gc_tank/track1_normal"
-	"$normalmap" "models/gc_tank/track1_normal"
-}
