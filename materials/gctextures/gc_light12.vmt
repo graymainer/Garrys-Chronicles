@@ -1,6 +1,24 @@
 "LightmappedGeneric"
 {
-	"$basetexture" "gctextures/gc_light12"
-	"$surfaceprop" "Glass"
-	"%keywords" "gc"
+	"$basetexture" "gctextures/gclight12"
+	"$selfillum" 1
+	//"$selfillummask" "gunman/rebarLite004_mask" doesn't do shit on brush
+	"$surfaceprop" "glass"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "gctextures/gclight12_env"
+	
+	"$envmaptint" "[0.25 0.25 0.25]"
+	"%keywords" "gc, gunman, light, lite"
+	
+	Proxies
+	{
+	
+		ToggleTexture //frame 0 is on, 1 is off
+		{
+		
+			ToggleTextureVar				$basetexture
+			ToggleTextureFrameNumVar		$frame
+		}
+	
+	}
 }

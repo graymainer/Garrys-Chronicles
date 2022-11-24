@@ -12,6 +12,10 @@ $include "inc/misc.qci"
 
 $include "inc/jiggle.qci"
 
+$attachment "anim_attachment_engine_L" "Root" 320.00 60.00 125.00  rotate 0.00 0.00 0.00
+$attachment "anim_attachment_engine_R" "Root" 320.00 60.00 -125.00  rotate 0.00 0.00 0.00
+$attachment "anim_attachment_engine_B" "Root" 180.00 -58.00 0.0  rotate 0.00 0.00 0.00
+
 $collisionmodel "dropShip_phys.smd"
 {
 	$maxconvexpieces 116

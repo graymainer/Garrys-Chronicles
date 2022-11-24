@@ -13,6 +13,7 @@ function tellMapCompat()
 	for i = 1, table.maxn(ifs), 1 do
 		
 		ifs[i]:Fire("SetValue", "1") --let the maps know.
+		ifs[i]:Fire("Test") --let the maps know.
 		--print("Set " .. ifs[i]:GetName() .. " to true!")
 	end
 
