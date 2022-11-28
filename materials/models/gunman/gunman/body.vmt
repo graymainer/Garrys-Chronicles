@@ -3,7 +3,9 @@
 	"$basetexture" 					"models/gunman/gunman/body"
 	
 	"$selfillum" 					1
-	"$selfillummask"				"models/gunman/gunman/body_illum"
+	
+	// doesn't work with $bumpmap!
+	//"$selfillummask"				"models/gunman/gunman/body_illum"
 	
 	"$bumpmap" 						"models/gunman/gunman/body_n"
 	

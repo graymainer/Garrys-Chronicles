@@ -1,8 +1,12 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "models/gunman/dropship/tophull"
-	"$bumpmap" "models/gunman/dropship/tophull_n"
+	"$basetexture" 					"models/gunman/dropship/tophull"
+	"$bumpmap" 						"models/gunman/dropship/tophull_n"
+	
+	"$selfillum" 					1
+	
+	
 //Detail
-	"$detail" "gctextures/detail/gcde_metal01"
-	"$detailscale" "2"
+	"$detail" 						"gctextures/detail/gcde_metal01"
+	"$detailscale" 					2
 }

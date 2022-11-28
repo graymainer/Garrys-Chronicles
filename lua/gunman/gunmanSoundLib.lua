@@ -22,6 +22,16 @@ sound.Add( {
 	}
 )
 
+sound.Add( {
+	name = "End.Music",
+	channel = CHAN_STREAM,
+	volume = 0.6,
+	level = 0,
+	pitch = 100,
+	sound = "#gcsfx/music/credits.mp3"
+	}
+)
+
 --tram vo players
 function playTramVO0() --needed for some dumbass reason im not sure anyone will ever understand. this same exact code cant just be executed in hammer for who knows what reason. even with the "s replaced with the 's. nope.
 					--6/28/22 this is actually because lua_run (or hammer) doesn't support commas in the param field.
@@ -30,6 +40,10 @@ end
 
 function playTramVO1()
 	sound.Play("Tram.Voice1", Vector(0, 0, 0))
+end
+
+function playEndMusic()
+	sound.Play("End.Music", Vector(0, 0, 0))
 end
 
 --entries for npc footsteps.

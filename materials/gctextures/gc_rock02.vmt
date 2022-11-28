@@ -2,6 +2,7 @@
 {
 	"$basetexture" "gctextures/gc_rock02"
 	"$surfaceprop" "Concrete"
+	"$bumpmap"		"gctextures/gc_rock02_n"
 	"%keywords" "gc"
 //Detail
 	"$detail" "gctextures/detail/gcde_rock01"
