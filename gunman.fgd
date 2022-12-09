@@ -52,7 +52,7 @@
 	
 ]
 
-@PointClass base(Targetname, Parentname, Angles, gunmanToggle) iconsprite("gunman/editor/gunman_itemgod") = gunman_itemgod : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects."
+@PointClass base(Targetname, Parentname, Angles, gunmanToggle) iconsprite("gunman/editor/gunman_itemgod") = gunman_itemgod : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects. \n" + " \n" + "DEFAULT ITEM TYPES: \n" + "health \n" + "armor \n" + "pistol \n" + "shotgun \n" + "sniper \n" + "machinegun \n" + "launcher \n" + "grenade \n" + " \n" + "add '_a' to the end of a gun's name to spawn it's ammo. \n" + "You can also use numbers to quickly specify a type. However ammo can not be specified with numbers."
 [
 	spawnflags(flags) =
 	[
@@ -70,7 +70,7 @@
 		2048:	"No Surface Alignment"												: 	0 //Disables automatic surface alignment. Item will spawn right where the entity is placed. 
 	]
 	
-	item(choices) 							: "Item" 							: 	"health"   						:	"What item this spawner should create. Can be the classname of an entity if you wish to spawn something not listed here. Gunman swep check will have no effect in that case." =
+	item(choices) 							: "Item" 							: 	"health"   						:	"What item this spawner should create. Can also be the classname of an entity you wish to spawn if its not listed here. (Gunman swep check will have no effect in that case.)" =
 	[
 		"health"		:	"Medkit"
 		"armor"			:	"Armor"
@@ -104,7 +104,7 @@
 
 	
 	input spawn(string)							: 	"Tells the spawner to spawn its item. Can override the spawner's set item and spawn the item you give instead if given a classname or a default item type index. (1-8)"
-	input setItem(string)						: 	"Sets the item we should spawn. Enter 1-9 to specify default item types. If the value given is not a simple number and is not a default item name (health, armor, melee, pistol, shotgun, sniper, machinegun, launcher, grenade), then we'll assume its a direct classname. suffix the input name with '_a' and we'll give you the ammo for that type."
+	input setItem(string)						: 	"Sets the item we should spawn. Supports default types, see 'Help' for more info.
 	input setBeamEntity(target_destination)		: 	"Sets our beam entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setLightEntity(target_destination)	: 	"Sets our light entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setSpawnSprite(string)				: 	"Sets the sprite to play when spawning."

@@ -221,7 +221,6 @@ function getItemFromType(iType, bAmmo, bForceHL2)
 		if (bAmmo) then
 			--remove the "_a" tag at the end.
 			iType = string.sub(iType, 1, strlen - 2) -- 2 being the len of "_a"
-			print(iType)
 		end
 	elseif (isnumber(iType)) then
 		if (isValInvalid(iType)) then return nil end

@@ -159,7 +159,7 @@
 	"playlooping"
 	{
 		"volume"	"0.25"
-		"wave"		"ambient/tones/roomtone2.wav"
+		"wave"		"ambient/tones/roomtone1.wav"
 		"pitch"		"90"
 		"attenuation"	"0"
 	}

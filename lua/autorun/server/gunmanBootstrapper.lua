@@ -27,8 +27,9 @@ hook.Add("InitPostEntity", "HK_INITPOSTENT", function()
 	
 	tellMapCompat() --tell the map if we have gunman sweps or not. This is done here so we dont try to find map entities by name before they're init.
 
-
-	include("gunman/gunmanPuzzleMan.lua") --the system behind the puzzle minigame in gunman_city2
+	if (game.GetMap() == "gunman_city2") then
+		include("gunman/gunmanPuzzleMan.lua") --the system behind the puzzle minigame in gunman_city2
+	end
 
 	include("gunman/gunmanMapLoader.lua") --quick script to load any map passed to it through hammer. (could use a remake!)
 
@@ -36,7 +37,10 @@ hook.Add("InitPostEntity", "HK_INITPOSTENT", function()
 	
 	include("gunman/gunmanOffset.lua") --small script to offset a hammer entity by 5 in the positive z axis.
 
-	
+	--Woah! now this is gettin serious!
+	if (game.GetMap() == "gunman_city4") then
+		include("gunman/gunmanSerious.lua")
+	end
 
 
 	print("\n\n**All Garrys Chronicles systems bootstrapped!**\n\n") --let the user know we're done.

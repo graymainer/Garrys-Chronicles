@@ -462,7 +462,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	if (isInput("setItem", name)) then
 		if (isStrInvalid(data)) then print(tostring(self) .. "'s " .. name .. " input requires valid parameter data and was given none.") self:KillGlobals() return end
 		
-		local item = getItemFromType(data, string.find(data, "_a"), self:HasSpawnFlags(SF_FORCEHL2))
+		local item = getItemFromType(data, string.find(data, "_a") != nil, self:HasSpawnFlags(SF_FORCEHL2))
 		
 		if (item == nil) then
 			if (strIsInvalidEntity(data, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") self:KillGlobals() return false end

@@ -61,10 +61,6 @@
 
 
 
-if (!SERVER) then return end
-
-if (game.GetMap() != "gunman_city2") then return end
-
 local computer = ents.FindByName("justinspc")[1]--attempts to load a reference, will be checked when first starting. the only reason we load this is mainly for debugger reasons. when lua refreshes, we dont want to have to go through the cvar again to test, so we try here as well.
 
 local computerPos --the position of the computer. used for a bunch of stuff. needs set if computer is valid.
