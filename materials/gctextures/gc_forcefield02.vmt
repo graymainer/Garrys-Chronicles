@@ -2,7 +2,7 @@
 {
 	"$basetexture" "gctextures/gc_forcefield02"
 	"%keywords" "gc"
-	"$surfaceprop" "flesh"
+	"$surfaceprop" "computer"
 	"$nodecal" 1
 	
 	"Proxies" 

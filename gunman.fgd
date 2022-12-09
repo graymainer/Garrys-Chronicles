@@ -220,6 +220,8 @@
 	]
 
 	initialvalue(integer)				: "Initial Value"	: 0	  : "The value that the counter should be set at when spawned in. \n" + "If 'Clear to initial value' is ticked, when cleared, this value will be what the counter is set back to."
+	
+	valuemulti(float)					: "Value Multiplier": "1.0" : "Our global value multiplier used for all numeric operations."
 
 	targetvalue(integer)				: "Value Target"	: 0   : "The value this counter should aim to achieve. Once reached, the onValueReached output will fire. \n" + "\n" + "A value of 0 will disable."
 	
@@ -265,7 +267,8 @@
 	input setValue(integer)				: "Will set our value to what you specify. Cannot be negative and cannot pass the max limit."
 	//input getLastValue(void)			: "Will get the last value that this counter had. This is only set when the value has previously changed.\n" + "It will return 0 if nothing changed."
 	input setMax(integer)				: "Will set the maximum value of this counter to the parameter value."
-	//input getMax(void)					: "Will get our maximum value."
+	input setMultiplier(float)			: "Will set our global value multiplier."
+	//input getMax(void)				: "Will get our maximum value."
 	input setTarget(integer)			: "Will set the target value of this counter to the parameter value."
 	input setFilter(string)				: "Will set the filter of this counter to the parameter value. Enter (melee, pistol, shotgun, sniper, machinegun, launcher, grenade or grenades) or (3-9) to specify default items. If none of these, we'll assume its a classname."
 	input setDamageEntity(string)		: "Will set the designated damage entity of this counter to the parameter value."

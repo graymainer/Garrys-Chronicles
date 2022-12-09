@@ -18,7 +18,7 @@
 
 	the definition begins now:
 
-@PointClass base(Targetname, Parentname, Angles) studioprop("models/gunman/digitgod.mdl") = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
+@PointClass base(Targetname, Parentname, Angles, gunmanToggle) studioprop("models/gunman/digitgod.mdl") = gunman_digitgod : "This entity is apart of the Garry's Chronicles project. \n" + "It recreates the entity_digitgod entity.\n"+ "\n"+ "\n"+ "An entity that will hold a value and display it visually on a counter. \n" + "Supports only three-digit numbers. \n" + "Does NOT support negative numbers or decimals.\n" + "\n" + "Source is lua/entities/gunman_digitgod.lua"
 [
 	//if you want to change this system to use custom models, you'll want to get rid of the "models/gunman/digitgod.mdl" part and leave it as "studioprop()". 
 	//then make sure that you have a key value here that has the type "studio" set to a default model. otherwise, you'll get the generic hammer entity cube of death.
@@ -31,6 +31,8 @@
 	]
 
 	initialvalue(integer)				: "Initial Value"	: 0	  : "The value that the counter should be set at when spawned in. \n" + "If 'Clear to initial value' is ticked, when cleared, this value will be what the counter is set back to."
+	
+	valuemulti(integer)					: "Value Multiplier": "1.0" : "Our global value multiplier used for all numeric operations."
 
 	targetvalue(integer)				: "Value Target"	: 0   : "The value this counter should aim to achieve. Once reached, the onValueReached output will fire. \n" + "\n" + "A value of 0 will disable."
 	
@@ -47,18 +49,20 @@
 	
 	//sndpitch(integer) 				: "Sound Pitch"		: 100 : "The pitch to play the sound at. Only works if a sound was selected."
 	
-	scaledmg(choices)					: "Scale by Damage" : 0	  : "Should we scale all increments, additions, subtractions, etc by the damage of the player's current weapon?" = 
+	dmgent(target_destination)		: "Damage Entity" 	: 	""	 : "If set, this entity will add to the counter the amount of damage its taken."
+	
+	wpnfilter(choices)				: "Weapon Filter" 	: 	0	 : "We'll only allow this weapon type to affect the counter. (weapon type is defined by the ammo type that the weapon uses.) If empty, or set to 'No', no filter will be used. Supports classnames. If this fails, will fire onFilterFailed, if successful, onFilterPassed." = 
 	[
-		0 : "No"
-		1 : "Yes"
+		0 				: "No"
+		"melee"  		: "Melee"
+		"pistol" 		: "Pistol"
+		"shotgun" 		: "Shotgun"
+		"sniper" 		: "Sniper"
+		"machinegun"	: "Machinegun"
+		"launcher" 		: "Launcher"
+		"grenade" 		: "Grenade"
 	]
 	
-	StartDisabled(choices) 				: "Start Disabled" 	: 0   : "Should this counter be off when spawned in?" =
-	[
-		0 : "No"
-		1 : "Yes"
-	] 
-
 	DisableShadows(choices) 			: "Disable Shadows" : 0   : "Should this counter's model not render shadows?"  =
 	[
 		0 : "No"
@@ -69,16 +73,16 @@
 	input Sub(integer)					: "Subtract this value from the counter."
 	input Increment(void)				: "Increment the counter."
 	input Decrement(void)				: "Decrement the counter."
-	input Toggle(void)					: "Will toggle the counter."
-	input Enable(void)					: "Will enable the counter. Fires the onEnabled output."
-	input Disable(void)					: "Will disable the counter. It will no longer function. Fires the onDisabled output."
 	input Clear(void)					: "Clears the current value of this counter and resets it to 0. \n" + "But if the 'Clear to initial value' flag is set, it will instead reset to whatever the initial value was."
 	//input getValue(void)				: "Will get the current value that this counter is at.\n" + "This works through some lua trickery. basically, if its an entity that can hold values, like a 'logic_case' or a 'math_counter',\n" + "we will fire their respective 'invalue' or 'setvalue' inputs and feed them the value you asked for here.\n" + "This means that the entity you're making the output from should be something that can hold values. Like logic_case.\n" + "\n" + "If the entity isn't recognized as an entity that can hold values, it will then try to add an output with the value inside it.\n" + "It should be findable by searching through the entity that asked for the value's keyvalues.\n" + " This will be the way all of our get inputs will work."
 	input setValue(integer)				: "Will set our value to what you specify. Cannot be negative and cannot pass the max limit."
 	//input getLastValue(void)			: "Will get the last value that this counter had. This is only set when the value has previously changed.\n" + "It will return 0 if nothing changed."
 	input setMax(integer)				: "Will set the maximum value of this counter to the parameter value."
-	//input getMax(void)					: "Will get our maximum value."
+	input setMultiplier(float)			: "Will set our global value multiplier."
+	//input getMax(void)				: "Will get our maximum value."
 	input setTarget(integer)			: "Will set the target value of this counter to the parameter value."
+	input setFilter(string)				: "Will set the filter of this counter to the parameter value. Enter (melee, pistol, shotgun, sniper, machinegun, launcher, grenade or grenades) or (3-9) to specify default items. If none of these, we'll assume its a classname."
+	input setDamageEntity(string)		: "Will set the designated damage entity of this counter to the parameter value."
 	//input getTarget(void)				: "Will get our target value."
 	//input setSound(integer)				: "Will change the sound to play to whatever you give us. Does not support gamesound entries."
 	//input setSoundVolume(integer)		: "Will change the volume of the sound to whatever you give us."
@@ -98,12 +102,12 @@
 	output onTargetReached(integer)		: "Fired when this counter reaches its target value. Will return it's current value."
 	output onValueChanged(integer)		: "Fired when this counter's value is changed. Returns the new value. You can retrieve the old value through getLastValue()."
 	output onMaxReached(integer)		: "Fired when this counter reaches its max value. Will return it's current value."
-	output onEnabled(void)				: "Fired when this counter is enabled."
-	output onDisabled(void)				: "Fired when this counter is disabled."
 	output onCleared(void)				: "Fired when this counter's value has been cleared."
 	output onMaxSet(integer)			: "Fired when this counter's maximum value has been set to something. Returns what it was set to."
 	output onValueSet(integer)			: "Fired when this counter's value has been set to something. Returns what it was set to."
 	output onTargetSet(integer)			: "Fired when this counter's target value has been set to something. Returns what it was set to."
+	output onFilterFailed(void)			: "Fires when an instigator fails this counter's filter."
+	output onFilterPassed(void)			: "Fires when an instigator passes through this counter's filter."
 	//output onSoundChanged(string)		: "Fired when our sound is changed. Returns the new sound file."
 	//output onModelChanged(string)		: "Fired when our model is changed. Returns the new model file."
 ]
@@ -138,6 +142,7 @@ SF_INVISIBLE = 4
 --core
 ENT.bInit = false --somethings in here need to know when we've initialised. (We consider us in this state when our keyvalues are verified and our panels are properly spawned in.)
 ENT.value = 0 --the heart of this entity. this is what value we currently need to represent on the counter.
+ENT.valueMultiplier = 1 -- multiplier for all numeric operations.
 ENT.targetValue = 0 --target value. when value is equal to this targetvalue or greater than (only equal to for subtractions), it will trigger the "onTargetReached" output.
 ENT.maxValue = 0 --our maximum value. targetvalue cannot be higher than this, but can be equal. value cannot be higher than this.
 ENT.mdl = "models/gunman/digitgod.mdl" -- the model we're going to use. If you change this, keep in mind that the system expects a model with 10 skins to represent all 10 digits. You also have to change the PANEL_OFFSET variable to match the size of your new model.
@@ -176,6 +181,7 @@ function ENT:printInfo()
 	
 	--implementation
 	print("Value:", "", "", self.value)
+	print("Value Multiplier:", "", "", self.valueMultiplier)
 	print("Target Value:", "", self.targetValue)
 	print("Max Value:", "", self.maxValue)
 	print("Model:", "", "", self.mdl)
@@ -234,16 +240,24 @@ function ENT:KeyValue( k, v )
 		if (self:isKeyValueInvalid(k, v, true)) then return end
 
 		local val = util.StringToType(v, "int")
-		if (val == 0) then return end
+		if (val == nil) then return end
 
 		self.targetValue = val
+
+	elseif (isKey("valuemulti", k)) then
+		if (self:isKeyValueInvalid(k, v, true)) then return end
+
+		local val = util.StringToType(v, "float")
+		if (val == nil) then return end
+
+		self.valueMultiplier = val
 
 	elseif (isKey("maxvalue", k)) then
 		if (self:isKeyValueInvalid(k, v, true)) then return end
 
 		local val = util.StringToType(v, "int")
 
-		if (val == 0) then return end
+		if (val == nil) then return end
 
 		self.maxValue = val
 	
@@ -553,8 +567,21 @@ function ENT:AcceptInput( name, activator, caller, data )
 	if (isInput("setValue", name)) then
 		if (!self.bEnabled) then self:KillGlobals() return false end
 		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
-		self:setValue(util.StringToType(data, "int"))
+		local val = util.StringToType(data, "int")
+		if (val == nil) then print(self:GetName() .. "'s " .. name .. " input could not translate to an integer.") self:KillGlobals() return false end
+		
+		self:setValue(val)
+		self:KillGlobals()
 
+	return true end
+	
+	if (isInput("setMultiplier", name)) then
+		if (!self.bEnabled) then self:KillGlobals() return false end
+		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
+		local val = util.StringToType(data, "float")
+		if (val == nil) then print(self:GetName() .. "'s " .. name .. " input could not translate to a float.") self:KillGlobals() return false end
+		
+		self.valueMultiplier = val
 		self:KillGlobals()
 
 	return true end
@@ -690,7 +717,7 @@ function ENT:add(value)
 
 
 	--set that value baby
-	self.value = self.value + value
+	self.value = self.value + (value * self.valueMultiplier)
 
 
 	--if we dont have a maxvalue
@@ -756,7 +783,7 @@ function ENT:sub(value)
 	if (!isValValid(value) or value == 0) then return end
 	
 
-	self.value = self.value - value
+	self.value = self.value - (value * self.valueMultiplier)
 
 	if (self.value < 0) then self.value = 0 end --if we went into the negative, clamp to zero.
 		
