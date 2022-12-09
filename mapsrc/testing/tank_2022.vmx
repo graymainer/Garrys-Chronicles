@@ -1,8 +1,8 @@
 versioninfo
 {
 	"editorversion" "400"
-	"editorbuild" "8862"
-	"mapversion" "174"
+	"editorbuild" "8864"
+	"mapversion" "178"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -72,7 +72,7 @@ bgimages_plus
 world
 {
 	"id" "1"
-	"mapversion" "174"
+	"mapversion" "178"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -7381,22 +7381,27 @@ entity
 }
 entity
 {
-	"id" "2442"
-	"classname" "logic_auto"
-	"spawnflags" "1"
-	connections
-	{
-		"OnMapSpawn" "pickmus,PickRandom,,0,-1"
-		"OnMapSpawn" "ve_tank_fx_turret_muzzlelight,TurnOff,,0,-1"
-	}
-	"origin" "130.525 -289.201 9"
+	"id" "9238"
+	"classname" "prop_vehicle"
+	"actionScale" "1"
+	"angles" "0 0 0"
+	"fademindist" "-1"
+	"fadescale" "1"
+	"gmod_allowphysgun" "1"
+	"lightmapresolutionx" "32"
+	"lightmapresolutiony" "32"
+	"model" "models/gunman/vehicle_tank_003.mdl"
+	"origin" "-266.03 210.01 48"
+	"skin" "0"
+	"solid" "6"
+	"spawnflags" "0"
+	"vehiclescript" "scripts/vehicles/tank.txt"
 	editor
 	{
 		"color" "220 30 220"
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
-		"comments" "play dem phat rf2 beats."
-		"logicalpos" "[0 9000]"
+		"logicalpos" "[0 0]"
 	}
 }
 entity
@@ -7484,30 +7489,6 @@ entity
 		"visgroupshown" "1"
 		"visgroupautoshown" "1"
 		"logicalpos" "[0 -15768]"
-	}
-}
-entity
-{
-	"id" "9238"
-	"classname" "prop_vehicle_driveable"
-	"actionScale" "1"
-	"angles" "0 0 0"
-	"fademindist" "-1"
-	"fadescale" "1"
-	"gmod_allowphysgun" "1"
-	"lightmapresolutionx" "32"
-	"lightmapresolutiony" "32"
-	"model" "models/gc_tank_base.mdl"
-	"origin" "-266.03 210.01 48"
-	"skin" "0"
-	"solid" "6"
-	"vehiclescript" "scripts/vehicles/tank.txt"
-	editor
-	{
-		"color" "220 30 220"
-		"visgroupshown" "1"
-		"visgroupautoshown" "1"
-		"logicalpos" "[0 0]"
 	}
 }
 cameras

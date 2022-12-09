@@ -1196,7 +1196,7 @@ end
 
 function createNETmail1() --a daily news article for the player to read some lore. it also contains hints to security questions.
 
-	local page = file.Open("gunman/inbox/HYper-caST Daily Hyper-Cast News.txt", "w", "DATA")
+	local page = file.Open("gunman/inbox/HYper-caST Daily News.txt", "w", "DATA")
 	
 	if (page == nil) then print("GUNMAN: ~ERROR~ couldn't create the text file!") return end
 

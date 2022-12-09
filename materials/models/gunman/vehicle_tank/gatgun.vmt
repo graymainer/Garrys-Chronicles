@@ -2,4 +2,11 @@
 {
 	"$basetexture" "models/gunman/vehicle_tank/gatgun"
 	"$bumpmap" "models/gunman/vehicle_tank/gatgun_normal"
+	
+	//"$phong" 						1
+	////"$phongexponenttexture"			"models/gunman/gunman/body_e"
+	//"$phongboost"					1
+	//"$phongfresnelranges"			"[0.5 0.5 0.5]"
+	//"$phongtint" 					"[1 1 1]"
+	//"$phongexponent" 		3
 }

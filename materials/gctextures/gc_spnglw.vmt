@@ -17,6 +17,6 @@
 			animatedTextureFrameNumVar $frame
 			animatedTextureFrameRate 12
 		}
-	{
+	}
 }
 

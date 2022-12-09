@@ -3,47 +3,52 @@
 
 	Feel free to use this code and upload entites based on this code to the workshop however you please. 
 	I'd only ask that you credit me as the original coder.
-	Of course if you dont, i wont send a legal team after you. 
-	But just dont be an ass and credit the original author. I spent a ton of time figuring this garbage fire out and coding this.
+	Of course i cant force you to. 
+	But just dont be an ass. credit the original author. I spent a ton of time figuring this garbage fire out and coding this.
 
-	This entity will equip a entity with the chosen weapons (through spawn flags in hammer). 
+	This entity will allow a level designer to equip a player with the created loadout of weapons (through spawn flags in hammer). 
 	It will switch between gunman weapons and half life 2 weapons depending on if the 
 	addon for gunman sweps is installed and mounted or not. 
 
 
-	my fgd file is hosted here: https://github.com/graymainer/Garrys-Chronicles/blob/main/gunman.fgd
+	the fgd is hosted here: https://github.com/graymainer/Garrys-Chronicles/blob/main/gunman.fgd
 
 
 	the definition begins now:
 
-@PointClass base(Targetname) iconsprite("gunman/editor/gunman_equip") = gunman_equip : "This entity is apart of the Garry's Chronicles project. \n" + "This entity will equip the activator with the specified weaponry. \n" + "It will replace these weapons with gunman sweps if they are found in the user's addons. \n" + "Weapons are specified through spawn flags."
+//Uses a loadout system to allow a map designer to control what weapons the player will have by adding and removing weapons from a loadout.
+// Could use a table based redesign...
+@PointClass base(Targetname) iconsprite("gunman/editor/gunman_equip") = gunman_equip : "This entity is apart of the Garry's Chronicles project. \n" + "This entity will equip the activator with the specified weaponry. \n" + "It will replace these weapons with gunman sweps if they are found in the user's addons. \n" + "Weapons are specified through spawn flags. \n" + "Default weapon types: (melee, pistol, shotgun, sniper, machinegun, launcher, grenade(s))"
 [
 	spawnflags(flags) =
 	[
-		1		:	"Melee"		: 0
-		2		:	"Pistol"				: 0
-		4		:	"Sniper" 				: 0
-		8		:	"Machinegun"			: 0
-		16		:	"Shotgun"				: 0
-		32		:	"Rocket Launcher"		: 0
-		64		:	"Grenades"				: 0
-		128		:	"Strip Before Equip"	: 1
-		256		:	"Force Vanilla Weapons"	: 0
-		512		:	"Equip All Players"		: 1
-		1024	:	"Equip on Spawn"		: 1
+		1		:	"Melee"							: 0
+		2		:	"Pistol"						: 0
+		4		:	"Sniper" 						: 0
+		8		:	"Machinegun"					: 0
+		16		:	"Shotgun"						: 0
+		32		:	"Rocket Launcher"				: 0
+		64		:	"Grenades"						: 0
+		128		:	"Strip Before Equip"			: 1
+		256		:	"Force Vanilla Weapons"			: 0
+		512		:	"Equip All Players"				: 1
+		1024	:	"Equip on Spawn"				: 1
 	]
 	
 	nades(integer)										: "Grenades" 			: 		2 		: "How many grenades should we give? (If any)"
 	ammomulti(float)									: "Ammo Amount" 	: 	"1.0" 	: "How much ammo should we give generally? Acts as a mutliplier. Can be set to zero to avoid giving any ammo. (based on default amount of ammo recieved when SWEP is given.)"
 
-	input equip(void)									: "Equips the entity. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
-	input setAmmoMultiplier(float)						: "Sets our ammo multiplier."
-	input toggleGun(string)								: "Enter Melee, Pistol, Sniper, Machinegun, Shotgun, Launcher, or Grenades to toggle if you have that weapon type or not. For example, if you got the crowbar, input us: 'toggleGun melee (caps dont matter)' and if we didn't think you had melee already, then we'll set melee to true."
-	input clearAllGuns(void)							: "Clears all guns. No weapons will be given."
-	input giveAll(void)									: "Enables all guns. All weapons will be given."
+	input equipLoadout(void)							: "Equips the player(s) with whatever weapons are in our loadout. If activator is null, it will equip player 1. If 'Equip All Players' is ticked, all players will be equipped."
+	input add(string)									: "Will add the given weapon to the loadout. Choose from one of the default weapon types. (refer to help)"
+	input remove(string)								: "Will remove the given weapon from the loadout. Will also remove it from the player. If not given a weapon, it will remove all. Choose from one of the default weapon types. (refer to help) If 'Equip All Players' is ticked, all players will be stripped of the weapon. If the activator is null, we will go for player 1."
+	input setAmmoMultiplier(float)						: "Sets the ammo multiplier."
+	input toggle(string)								: "Toggles whether a weapon is in our loadout or not. Choose from one of the default weapon types. (refer to help) "
+	input clearLoadout(void)							: "Removes all guns from the loadout. All the current weapons will be stripped from the player. If 'Equip All Players' is ticked, all players will be stripped. "
+	input giveAll(void)									: "Adds all weapons to the loadout."
 	
 	output onEquipped(void)								: "Fires when we equipped something."
 	output onCleared(void)								: "Fires when we cleared all guns."
+	output onGiveAll(void)								: "Fires when we gave all guns."
 	output onGunsChanged(void)							: "Fires when our catalogue of collected guns have changed."
 	
 ]
@@ -61,17 +66,21 @@ ENT.DisableDuplicator = true
 
 --your flags
 
+-- what guns we got?
 SF_MELEE = 1
 SF_PISTOL = 2
-SF_SNIPER = 4 --this one is gunman specific.
+SF_SNIPER = 4
 SF_MACHINEGUN = 8
 SF_SHOTGUN = 16
 SF_LAUNCHER = 32
 SF_FRAGS = 64
+
+--other misc stuff
 SF_STRIP = 128 --should we strip the player before equipping them?
 SF_FORCEHL2WPNS = 256 --should we skip the check for gunman weapons and just equip with hl2 weapons?
 SF_ALLPLAYERS = 512 --should we say fuck it and go for all players instead of activator or player 1? (if activator is null)
 SF_AUTOEQUIP = 1024 --should we equip whenever a player spawns/respawns?
+--SF_UPDATEEQUIP = 2048 --should we equip whenever the loadout changes?
 
 --
 
@@ -209,36 +218,36 @@ function ENT:SetupGlobals( activator, caller )
 
 end
 
-function ENT:stripPlayer(activator, itemToTake)
-	if (!self:HasSpawnFlags(SF_STRIP)) then return end
+function ENT:stripPlayer(ent, itemToTake)
+	--if (!self:HasSpawnFlags(SF_STRIP)) then return end --What?
 	
 	
 
-	if (activator != nil and activator != NULL and activator:IsPlayer()) then
-		if (itemToTake != nil or itemToTake != NULL) then
-			activator:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
-		else
-			activator:StripWeapon()
-		end
-	else
+	if (self:HasSpawnFlags(SF_ALLPLAYERS)) then
+
 		local plys = player.GetAll()
-		if (self:HasSpawnFlags(SF_ALLPLAYERS)) then
-			for i = 1, #plys, 1 do
-				if (itemToTake == nil or itemToTake == NULL) then
-					plys[i]:StripWeapons()
-				else
-					plys[i]:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
-				end
-				
-			end
-		else
+		for i = 1, #plys, 1 do
 			if (itemToTake == nil or itemToTake == NULL) then
-				plys[1]:StripWeapons()
+				plys[i]:StripWeapons()
 			else
-				plys[1]:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
+				plys[i]:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
 			end
+			
 		end
 		
+	elseif (ent != nil and ent != NULL and ent:IsPlayer()) then
+			
+		if (itemToTake != nil and itemToTake != NULL) then
+			ent:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
+		else
+			ent:StripWeapons()
+		end
+	else
+		if (itemToTake == nil or itemToTake == NULL) then
+			plys[1]:StripWeapons()
+		else
+			plys[1]:StripWeapon(getItemFromType(itemToTake, false, self:HasSpawnFlags(SF_FORCEHL2WPNS)))
+		end		
 	end
 end
 
@@ -272,24 +281,88 @@ function ENT:AcceptInput( name, activator, caller, data )
 
 	--for every input we have in the fgd, we make an if statement for it. then we return true if we found our input, false if we didn't or something failed. (dont ask me why, im honestly not sure, just do it.)
 	--caps dont matter
-	if (isInput("equip", name)) then
-		--if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
-		--local val = util.StringToType(data, "int")
-		--if (!isValValid(val)) then self:KillGlobals() return false end 
+	
+	-- gives the player whatever we got in our loadout.
+	if (isInput("equipLoadout", name)) then
+		self:equipPlayer(activator)
+		
+		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
+	return true end
+	
+	-- adds a gun to the loadout. Note, that this alone will not give the player anything. To do so, you must call equipLoadout or have the 'Auto Equip on Loadout Change' flag on.
+	if (isInput("add", name)) then
+		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input wasn't given a weapon name.") self:KillGlobals() return false end
+		if (strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given bad data.") self:KillGlobals() return false end
+
+		--we use iskey because it just works
+		--and yes, im aware this is lookin like yandere code, but fuck it, its the only way i know how damnit
+		if (isKey("melee", data)) then
+			self.bMelee = true
+		elseif (isKey("pistol", data)) then
+			self.bPistol = true
+		elseif (isKey("sniper", data)) then
+			self.bSniper = true
+		elseif (isKey("machinegun", data)) then
+			self.bMachineGun = true
+		elseif (isKey("shotgun", data)) then
+			self.bShotgun = true
+		elseif (isKey("launcher", data)) then
+			self.bLauncher = true
+		elseif (isKey("grenades", data)) then
+			self.bFrags = true
+		end
+		
+		self:fireEvent("onGunsChanged")
 
 		self:equipPlayer(activator)
 		
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
 	
-	if (isInput("strip", name)) then
-		self:stripPlayer(activator, data) --if data is nil, it will strip all.
+	-- removes a gun from our loadout. Removes all if nothing is given. takes away the weapon(s) from the player.
+	if (isInput("remove", name)) then
+	
+		if (isStrInvalid(data)) then
+			self.bMelee = false
+			self.bPistol = false
+			self.bSniper = false
+			self.bMachineGun = false
+			self.bShotgun = false
+			self.bLauncher = false
+			self.bFrags = false
+			
+			self:fireEvent("onGunsChanged")
+			self:fireEvent("onCleared")
+		else
+			--we use iskey because it just works
+			--and yes, im aware this is lookin like yandere code, but fuck it, its the only way i know how damnit
+			if (isKey("melee", data)) then
+				self.bMelee = false
+			elseif (isKey("pistol", data)) then
+				self.bPistol = false
+			elseif (isKey("sniper", data)) then
+				self.bSniper = false
+			elseif (isKey("machinegun", data)) then
+				self.bMachineGun = false
+			elseif (isKey("shotgun", data)) then
+				self.bShotgun = false
+			elseif (isKey("launcher", data)) then
+				self.bLauncher = false
+			elseif (isKey("grenades", data)) then
+				self.bFrags = false
+			end
+			
+			self:fireEvent("onGunsChanged") -- acts as an update.
+		end
+		
+		self:equipPlayer(activator)
 		
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
 
-	if (isInput("toggleGun", name)) then
-		if (isStrInvalid(data)) then self:KillGlobals() return end
+	--adds a gun to or removes a gun from our loadout. will take away the gun if removing.
+	if (isInput("toggle", name)) then
+		if (isStrInvalid(data)) then print(self:GetName() .. "'s " .. name .. " input wasn't given a weapon name.") self:KillGlobals() return end
 		
 		--we use iskey because it just works
 		--and yes, im aware this is lookin like yandere code, but fuck it, its the only way i know how damnit
@@ -311,10 +384,13 @@ function ENT:AcceptInput( name, activator, caller, data )
 		
 		self:fireEvent("onGunsChanged")
 		
+		self:equipPlayer(activator)
+		
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
 	
-	if (isInput("clear", name)) then
+	-- empties the loadout and removes all the player's weaponry.
+	if (isInput("clearLoadout", name)) then
 				
 		self.bMelee = false
 		self.bPistol = false
@@ -326,11 +402,21 @@ function ENT:AcceptInput( name, activator, caller, data )
 		
 		self:fireEvent("onGunsChanged")
 		self:fireEvent("onCleared")
-		self:stripPlayer(activator)
+		
+		
+		self:equipPlayer(activator)
+		
+		-- shouldn't we just say fuck it and strip everyone here?
+		-- if (activator != nil and activator:IsPlayer()) then
+		-- 	self:stripPlayer(activator)
+		-- elseif (caller != nil and caller:IsPlayer()) then
+		-- 	self:stripPlayer(caller)
+		-- end
 		
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
 	
+	-- Adds all weapons to the loadout. Doesn't actually give the player squat though
 	if (isInput("giveAll", name)) then
 		
 		self.bMelee = true
@@ -365,7 +451,7 @@ function ENT:KillGlobals()
 end
 
 --
-function ENT:equip(ent) --TODO LATER: fix these to use dopey's class names for the gunman weapons.
+function ENT:equip(ent) -- TODO: finalize the class names.
 
 	if (!IsValid(ent)) then return end
 	
@@ -379,7 +465,7 @@ function ENT:equip(ent) --TODO LATER: fix these to use dopey's class names for t
 			ent:Give("weapon_crowbar", true)
 		else
 			ent:Give("gunman_weapon_knife", true) 
-			--ent:Give("gunman_weapon_fists", true) --knife gives fists automatically.
+			
 		end
 	end
 

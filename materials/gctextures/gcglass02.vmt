@@ -6,5 +6,5 @@
 	//"$envmapmask" "gctextures/gcglass_spec"
 	"%keywords" "gc"
 	"$additive" 1
-	"$alpha" 0.8
+	"$alpha" 0.4
 }

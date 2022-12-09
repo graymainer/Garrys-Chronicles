@@ -2,4 +2,9 @@
 {
 	"$basetexture" "models/gunman/vehicle_tank/body"
 	"$bumpmap" "models/gunman/vehicle_tank/body_normal"
+	
+	"$envmap" 						"env_cubemap"
+	"$normalmapalphaenvmapmask" 	1
+	"$envmaptint"					"[0.35 1 0.85]"
+	
 }

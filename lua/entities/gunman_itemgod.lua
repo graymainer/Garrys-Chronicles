@@ -232,13 +232,13 @@ end
 function ENT:KeyValue( k, v )
 
 	if (isKey("item", k)) then
-		if (isStrInvalid(v)) then return end
+		if (isStrInvalid(v)) then return end		
+		local item = getItemFromType(v, string.find(v, "_a") != nil, self:HasSpawnFlags(SF_FORCEHL2))
 		
-		local item = getItemFromType(v, string.find(v, "_a"), self:HasSpawnFlags(SF_FORCEHL2))
-		
+		-- if we couldn't get a default item from it, then maybe its a classname?
 		if (item == nil) then
-			if (strIsInvalidEntity(v, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") return end
-			self.item = v
+			if (strIsInvalidEntity(v, false)) then return end -- nope, its just bad.
+			self.item = v -- it was, pass the str in.
 			return
 		end
 		
@@ -617,6 +617,18 @@ function ENT:AcceptInput( name, activator, caller, data )
 		self.bEnabled = true
 		self:fireEvent("onEnabled")
 
+		-- the respawn method. Not responsive enough...
+		--if (!self.bRespawning) then
+		--	self:deleteOldItem()
+		--	self:respawn()
+		--end
+		
+		if (!self.bSpawning) then
+			self:deleteOldItem()
+			self.bRespawning = false
+			self:spawn(self.item)
+		end
+
 		self:KillGlobals()
 	return true end
 
@@ -850,7 +862,7 @@ function ENT:respawn()
 	self.bRespawning = true
 	
 	timer.Simple(self.respawnDelay, function() 
-		if (self == nil or self == NULL or !IsValid(self)) then return end
+		if (self == nil or self == NULL or !IsValid(self)) or !self.bRespawning then return end
 		self:spawn(nil, true)
 		self.bRespawning = false
 		self:fireEvent("onRespawn")
