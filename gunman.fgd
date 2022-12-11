@@ -52,7 +52,7 @@
 	
 ]
 
-@PointClass base(Targetname, Parentname, Angles, gunmanToggle) iconsprite("gunman/editor/gunman_itemgod") = gunman_itemgod : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects. \n" + " \n" + "DEFAULT ITEM TYPES: \n" + "health \n" + "armor \n" + "pistol \n" + "shotgun \n" + "sniper \n" + "machinegun \n" + "launcher \n" + "grenade \n" + " \n" + "add '_a' to the end of a gun's name to spawn it's ammo. \n" + "You can also use numbers to quickly specify a type. However ammo can not be specified with numbers."
+@PointClass base(Targetname, Parentname, Angles, gunmanToggle) sphere(respawnDistance) iconsprite("gunman/editor/gunman_itemgod") = gunman_itemgod : "This entity is apart of the Garry's Chronicles project. \n" + "It will spawn the specified item into the world. \n" + "If the 'Respawn Item' flag is ticked, the item will respawn once it's picked up. This is the default respawn behavior. \n" + "It will replace its items with gunman items if they are found in the user's addons. \n" + "If you wish to customize the beam effects that play on spawn, you will need to create an env_beam entity that will act as a template for our beam effects. \n" + " \n" + "DEFAULT ITEM TYPES: \n" + "health \n" + "armor \n" + "pistol \n" + "shotgun \n" + "sniper \n" + "machinegun \n" + "launcher \n" + "grenade \n" + " \n" + "add '_a' to the end of a gun's name to spawn it's ammo. \n" + "You can also use numbers to quickly specify a type. However ammo can not be specified with numbers."
 [
 	spawnflags(flags) =
 	[
@@ -62,7 +62,7 @@
 		8	:	"No Glow FX"														: 	0 //Disable glow effects. Redundant if 'No FX' is enabled.
 		16	:	"No Spark FX"														: 	0 //Disable sparking effects. Redundant if 'No FX' is enabled.
 		32	:	"No Light FX"														: 	0 //Disable lighting effects. Redundant if 'No FX' is enabled.
-		64	:	"Disable Light FX Shadows"											: 	0 //Disable shadows drawn from light effects. Redundant if 'No FX' is enabled.
+		64	:	"Disable Light FX Shadows"											: 	1 //Disable shadows drawn from light effects. Redundant if 'No FX' is enabled.
 		128	:	"No Spawn Sparks"													: 	0 //Disable sparking effects when spawning an item. Spark effects will still play when deleting an item. (i.e if the item reaches the respawnDistance or is replace by another call to spawn()) Redundant if 'No FX' is enabled.
 		256	:	"No FX"																: 	0 //Disables all effects.
 		512	:	"Spawn Frozen"														: 	0 //Spawn items frozen.
@@ -104,7 +104,7 @@
 
 	
 	input spawn(string)							: 	"Tells the spawner to spawn its item. Can override the spawner's set item and spawn the item you give instead if given a classname or a default item type index. (1-8)"
-	input setItem(string)						: 	"Sets the item we should spawn. Supports default types, see 'Help' for more info.
+	input setItem(string)						: 	"Sets the item we should spawn. Supports default types, see 'Help' for more info."
 	input setBeamEntity(target_destination)		: 	"Sets our beam entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setLightEntity(target_destination)	: 	"Sets our light entity. Pass us either nothing, 'nil', or 'null' (no caps) to reset this setting to default."
 	input setSpawnSprite(string)				: 	"Sets the sprite to play when spawning."

@@ -869,8 +869,23 @@ function ENT:respawn()
 	end)
 end
 
+-- deletes our item.
 function ENT:deleteOldItem()
 	if (!self.bEnabled or (self.spawnedItem == nil or self.spawnedItem == NULL or !IsValid(self.spawnedItem))) then return end
+	local owner = self.spawnedItem:GetOwner()
+	
+	-- check if its owned by a player. if it is, then its likely a gun that they now have equipped. 
+	-- In such a case, do not actually delete that item, but simply forget it and let it know
+	-- that it's no longer apart of the spawner.
+	if (owner != nil and owner != NULL and owner:IsPlayer()) then
+		self.spawnedItem.bRemovedBySpawner = true -- tells callonremove that we deleted it and dont want anything to do with it anymore.
+		self.spawnedItem:RemoveCallOnRemove("ItemGot")
+		self.spawnedItem = nil
+		
+		self:respawn()
+		
+		self:fireEvent("onItemDeleted")
+	return end -- end it early.
 	
 	if (!self:HasSpawnFlags(SF_NOFX) and !self:HasSpawnFlags(SF_NOSPARKS)) then
 		local sparker = ents.Create("env_spark")
@@ -879,7 +894,7 @@ function ENT:deleteOldItem()
 		sparker:SetKeyValue("Magnitude", "1")
 		sparker:SetKeyValue("TrailLength", "1")
 		sparker:SetPos(self.spawnedItem:GetPos())
-		sparker:SetKeyValue("spawnflags", bit.bor(256)) --256: silent
+		sparker:SetKeyValue("spawnflags", bit.bor(256)) -- 256: silent
 		sparker:Spawn()
 		sparker:Fire("SparkOnce")
 
@@ -887,8 +902,9 @@ function ENT:deleteOldItem()
 		sparker:Fire("Kill")
 	end
 
-	self.spawnedItem.bRemovedBySpawner = true --tells callonremove that we deleted it and dont want anything to do with it anymore.
+	self.spawnedItem.bRemovedBySpawner = true -- tells callonremove that we deleted it and dont want anything to do with it anymore.
 	self.spawnedItem:Remove()
+	-- dont need to call RemoveCallOnRemove, the ent will be deleted after this.
 	self.spawnedItem = nil
 	
 	self:fireEvent("onItemDeleted")
@@ -899,7 +915,7 @@ function ENT:createItem(ent)
 	if (self == nil or self == NULL or !IsValid(self)) then return end
 	if (!self.bInit) then return end
 	
-	ent:Spawn() --spawn the entity in. Not to be confused with our spawn function, Spawn capitalized is source engine's spawn method.
+	ent:Spawn() -- spawn the entity in. Not to be confused with our spawn function, Spawn capitalized is source engine's spawn method.
 
 	ent:SetAngles(self.spawnAngles)
 	
@@ -930,7 +946,6 @@ function ENT:createItem(ent)
 		if (ent.bRemovedBySpawner) then return end
 		self:fireEvent("onItemGot")
 		self:respawn()
-		
 	end)
 	
 	if (self.spawnLifespan > 0 and self.nSpawnedItems < self.spawnLifespan) then

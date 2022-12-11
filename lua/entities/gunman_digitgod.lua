@@ -500,6 +500,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 
 	--for every input we have in the fgd, we make an if statement for it. then we return true if we found our input, false if we didn't. (dont ask me why, im honestly not sure, just do it.)
 	if (isInput("add", name)) then
+		if (!self.bEnabled) then self:KillGlobals() return false end
 		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
 		if (!isValValid(val)) then self:KillGlobals() return false end
@@ -509,6 +510,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("sub", name)) then
+		if (!self.bEnabled) then self:KillGlobals() return false end
 		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
 		if (!isValValid(val)) then self:KillGlobals() return false end
@@ -576,7 +578,6 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("setMultiplier", name)) then
-		if (!self.bEnabled) then self:KillGlobals() return false end
 		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "float")
 		if (val == nil) then print(self:GetName() .. "'s " .. name .. " input could not translate to a float.") self:KillGlobals() return false end
@@ -587,7 +588,6 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 
 	if (isInput("setMax", name)) then
-		if (!self.bEnabled) then self:KillGlobals() return false end
 		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
 		if (isStrInvalid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
@@ -608,7 +608,6 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 
 	if (isInput("setTarget", name)) then
-		if (!self.bEnabled) then self:KillGlobals() return false end
 		if (!strIsNum(data)) then print(self:GetName() .. "'s " .. name .. " input was given non numerical data.") self:KillGlobals() return false end
 		local val = util.StringToType(data, "int")
 		if (isStrInvalid(data)) then print(self:GetName() .. " was fired a bad input." .. name .. " requires a valid parameter value.") self:KillGlobals() return false end
