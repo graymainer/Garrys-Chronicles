@@ -20,7 +20,7 @@ $cdmaterials "models/gunman/mouseShip/"
 $attachment engineR "Bone02" 0 50 0 rotate 0 0 0
 $attachment engineL "Bone05" 0 50 0 rotate 0 0 0
 $attachment shipHull "Bone07" 0 0 0 rotate 0 0 0
-
+$attachment mousemiddle "Bone07" 0 -0.369862 120.916733 rotate 0 0 0 
 
 $cbox 0 0 0 0 0 0
 
@@ -31,6 +31,10 @@ $hbox 0 "Bone04" -43.34 -0.42 -43.360001 43.380001 47.600296 43.360001
 $hbox 0 "Bone05" -17.030001 0 -17.049999 17.07 121.129997 17.049999
 $hbox 0 "Bone01" -43.259998 -0.42 -43.360001 43.459999 47.600296 43.360001
 $hbox 0 "Bone02" -16.950001 0 -17.049999 17.15 121.129997 17.049999
+
+
+
+
 
 $collisionmodel	"mouseShip_phys.smd"
 {
@@ -77,4 +81,9 @@ $sequence "Flyby_Idle" {
 	fps 10
 	loop
 }
-
+$sequence "land" {
+	"anims\land.smd"
+	fadein 0.2
+	fadeout 0.2
+	fps 25
+}
