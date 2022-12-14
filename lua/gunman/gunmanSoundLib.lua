@@ -52,6 +52,22 @@ sound.Add( {
 	}
 )
 
+
+sound.Add( 
+{
+	name = "maya.Eggs_Crack",
+	channel = CHAN_AUTO,
+	volume = 1.0,
+	level = SNDLVL_75dB,
+	pitch = 100,
+	sound = 
+	{
+		"gunman/object/eggs_crack1.wav",
+		"gunman/object/eggs_crack2.wav"
+	}	
+}
+)
+
 --tram vo players
 function playTramVO0() --needed for some dumbass reason im not sure anyone will ever understand. this same exact code cant just be executed in hammer for who knows what reason. even with the "s replaced with the 's. nope.
 					--6/28/22 this is actually because lua_run (or hammer) doesn't support commas in the param field.
