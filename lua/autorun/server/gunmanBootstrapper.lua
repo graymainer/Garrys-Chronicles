@@ -38,7 +38,7 @@ hook.Add("InitPostEntity", "HK_INITPOSTENT", function()
 	include("gunman/gunmanOffset.lua") --small script to offset a hammer entity by 5 in the positive z axis.
 
 	--Woah! now this is gettin serious!
-	if (game.GetMap() == "gunman_city4") then
+	if (game.GetMap() == "gunman_mayan") then
 		include("gunman/gunmanSerious.lua")
 	end
 
