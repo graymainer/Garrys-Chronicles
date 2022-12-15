@@ -1139,9 +1139,12 @@ end
 
 function createNETmail0() --creates the NETmail from hyper-cast regarding your request, gives instructions on logging in.
 
-	
+	-- If the directory dont exist, then create it.
+	if (!file.Exists("gunman/inbox", "DATA")) then
+		file.CreateDir("gunman/inbox")
+	end
 
-	local msg = file.Open( "gunman/inbox/HYper-caST - Request for Passage to the Valkyrie System.txt", "w", "DATA")
+	local msg = file.Open( "gunman/inbox/HYper-caST - Valkyrie Passage Request.txt", "w", "DATA")
 	
 	
 	if (msg == nil) then print("GUNMAN: ~ERROR~ couldn't create the text file!") return end
@@ -1192,7 +1195,12 @@ end
 
 function createNETmail1() --a daily news article for the player to read some lore. it also contains hints to security questions.
 
-	local page = file.Open("gunman/inbox/HYper-caST Daily News.txt", "w", "DATA")
+	-- If the directory dont exist, then create it.
+	if (!file.Exists("gunman/inbox", "DATA")) then
+		file.CreateDir("gunman/inbox")
+	end
+
+	local page = file.Open("gunman/inbox/HYper-caST - Daily News.txt", "w", "DATA")
 	
 	if (page == nil) then print("GUNMAN: ~ERROR~ couldn't create the text file!") return end
 
@@ -1310,7 +1318,12 @@ end
 
 function createNETmail2() --letter containing the security questions
 
-	local page = file.Open("gunman/inbox/HYper-caST Verify Identity.txt", "w", "DATA")
+	-- If the directory dont exist, then create it.
+	if (!file.Exists("gunman/inbox", "DATA")) then
+		file.CreateDir("gunman/inbox")
+	end
+
+	local page = file.Open("gunman/inbox/HYper-caST - Verify Identity.txt", "w", "DATA")
 	
 	if (page == nil) then print("GUNMAN: ~ERROR~ couldn't create the text file!") return end
 
@@ -1372,17 +1385,17 @@ function processAnswers(ans1, ans2, ans3)
 	ans2 = string.lower(ans2)
 	ans3 = string.lower(ans3)
 
-	if (ans1 != "2000" and ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian" and ans3 != "gunmanship 101") then complain(7) return false end
+	if (ans1 != "2000" and ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian" and ans3 != "gunmanship 101" and ans3 != "gunmanship101") then complain(7) return false end
 
 	if (ans1 != "2000" and ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian") then complain(8) return false end
 	
-	if (ans1 != "2000" and ans3 != "gunmanship 101")  then complain(9) return false end
+	if (ans1 != "2000" and ans3 != "gunmanship 101" and ans3 != "gunmanship101")  then complain(9) return false end
 	
-	if (ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian" and ans3 != "gunmanship 101") then complain(10) return false end
+	if (ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian" and ans3 != "gunmanship 101" and ans3 != "gunmanship101") then complain(10) return false end
 
 	if (ans1 != "2000") then complain(4) return false end
 	if (ans2 != "vargas kalhorian" and ans2 != "kalhorian" and ans2 != "dr.kalhorian" and ans2 != "doctor kalhorian") then complain(5) return false end
-	if (ans3 != "gunmanship 101") then complain(6) return false end
+	if (ans3 != "gunmanship 101" and ans3 != "gunmanship101") then complain(6) return false end
 
 
 return true end

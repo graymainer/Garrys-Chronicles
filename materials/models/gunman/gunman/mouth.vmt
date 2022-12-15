@@ -5,11 +5,11 @@
 	"$bumpmap" 						"models/gunman/gunman/mouth_n"
 	
 	"$envmap" 						"env_cubemap"
-	"$envmaptint"					"[0.65 0.65 0.65]"
+	"$envmaptint"					"[0.075 0.075 0.075]"
 	
 	"$phong" 						1
 	"$phongexponenttexture"			"models/gunman/gunman/mouth_e"
-	"$phongboost"					15
+	"$phongboost"					7
 	"$phongfresnelranges"			"[0 0.5 1]"
 	"$phongtint" 					"[1 1 1]"
 	
