@@ -467,7 +467,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 		if (item == nil) then
 			if (strIsInvalidEntity(data, false)) then print(self, "Entity class does not exist or couldn't create an entity. Ignoring.") self:KillGlobals() return false end
 			self.item = data
-			self:deleteOldItem()
+			--self:deleteOldItem()
 			self:respawn()
 			self:KillGlobals()
 			return true
@@ -475,7 +475,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 		
 		self.item = item
 		
-		self:deleteOldItem()
+		--self:deleteOldItem()
 		self:respawn()
 		self:fireEvent("onItemChanged")
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
@@ -624,7 +624,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 		--end
 		
 		if (!self.bSpawning) then
-			self:deleteOldItem()
+			--self:deleteOldItem()
 			self.bRespawning = false
 			self:spawn(self.item)
 		end
@@ -641,7 +641,7 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true end
 	
 	if (isInput("respawn", name)) then		
-		self:deleteOldItem()
+		--self:deleteOldItem()
 		self:respawn()
 		self:KillGlobals() --every if statement should end with this. Kill globals, including in return end statements.
 	return true end
@@ -677,7 +677,7 @@ function ENT:Think()
 		if (IsValid(self.spawnedItem)) then
 			if (self.spawnedItem:GetVelocity():LengthSqr() > 0) then
 				if ((self.spawnedItem:GetPos() - self.spawnPos):LengthSqr() / 20 >= self.respawnDistance) then
-					self:deleteOldItem()
+					--self:deleteOldItem()
 					self:respawn()
 				end
 			end
@@ -869,7 +869,8 @@ function ENT:respawn()
 	end)
 end
 
--- deletes our item.
+-- deletes our item. DO NOT CALL BEFORE CALLING RESPAWN OR SPAWN!!! 
+-- Item deletion is already handled! And doing so anyway WILL cause an infinite loop crash!!
 function ENT:deleteOldItem()
 	if (!self.bEnabled or (self.spawnedItem == nil or self.spawnedItem == NULL or !IsValid(self.spawnedItem))) then return end
 	local owner = self.spawnedItem:GetOwner()
