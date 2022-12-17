@@ -128,7 +128,23 @@ for %%f in (%~dp0\compile\*.vmf) do (
 	echo.
 
 	@echo on
-	vrad %radcmdline% -lights %%~nf.rad "%~dp0compile\%%~nf.bsp"
+	
+	if %final%==1 echo RAD PARAMS: %radcmdline% -ambientocclusion -lights %%~nf.rad -final "%~dp0compile\%%~nf.bsp"
+
+	if %final%==0 echo RAD PARAMS: %radcmdline% -lights %%~nf.rad "%~dp0compile\%%~nf.bsp"
+	
+	@echo off
+
+	echo.
+	echo.
+	
+	@echo on
+
+	
+	if %final%==1 vrad %radcmdline% -ambientocclusion -lights %%~nf.rad -final "%~dp0compile\%%~nf.bsp"
+
+	if %final%==0 vrad %radcmdline% -lights %%~nf.rad "%~dp0compile\%%~nf.bsp"
+	
 	@echo off
 	
 	echo.
