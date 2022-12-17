@@ -15,6 +15,7 @@
 
 Prefabs/
 release/
+mapsrc/batch/compile/
 *.lnk
 *.blend1
 *.vmf_autosave
