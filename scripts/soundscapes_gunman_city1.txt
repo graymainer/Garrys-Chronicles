@@ -4,7 +4,7 @@
 "Gunman.Elevator"
 {
 	"dsp" "2"
-	"dsp_volume" "1.5"
+	"dsp_volume" "0.7"
 
 	"playlooping"
 	{

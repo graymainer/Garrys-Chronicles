@@ -23,7 +23,7 @@
 ::YOUR OPTIONS::
 set fastvis=0
 set fastrad=0
-set final=1
+set final=0
 set buildcubemaps=0
 set bounces=2
 set threads=16
