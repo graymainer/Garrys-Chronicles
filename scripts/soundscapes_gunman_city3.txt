@@ -1,3 +1,26 @@
+
+// Announcements that play in the city. Picks random specific positions (0-7)
+"Gunman.Announcements"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"98,103"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
+
+// Announcements that play in the city. Picks a completely random spot.
 "Gunman.Announcements_NonPositional"
 {
 
@@ -6,7 +29,6 @@
 		"time"		"8, 16"
 		"volume"	"1"
 		"pitch"		"98,103"
-		"position"	"random"
 		"soundlevel"	"SNDLVL_140db"
 		"rndwave"
 		{
@@ -18,8 +40,8 @@
 	}
 }
 
-
-"Gunman.City3End"
+// No announcements, just the base city ambience.
+"Gunman.City_Base"
 {
 	"dsp" "8"
 	"dsp_volume" "4"
@@ -30,28 +52,6 @@
 		"wave"		"gunman/atmosphere/cityhall.wav"
 		"pitch"		"100"
 		"attenuation"	"0"
-	}
-
-	"playrandom"
-	{
-		"time"		"8, 16"
-		"volume"	"1"
-		"pitch"		"98,103"
-		"position"	"0"
-		"soundlevel"	"SNDLVL_140db"
-		"rndwave"
-		{
-			"wave"	"gunman/atmosphere/pa1.wav"
-			"wave"	"gunman/atmosphere/pa2.wav"
-			"wave"	"gunman/atmosphere/pa3.wav"
-			"wave"	"gunman/atmosphere/pa4.wav"
-		}
-	}
-	
-	"playsoundscape"
-	{
-		"volume" "1.0"
-		"name" "coast.util_metalstress"
 	}
 	
 	"playsoundscape"
@@ -65,7 +65,6 @@
 		"time"		"1, 15"
 		"volume"	"0.25, 0.6"
 		"pitch"		"95,105"
-		"position"	"random"
 		"soundlevel"	"SNDLVL_70dB"
 		"rndwave"
 		{
@@ -80,7 +79,6 @@
 		"time"		"3, 45"
 		"volume"	"0.25, 0.6"
 		"pitch"		"95,105"
-		"position"	"random"
 		"soundlevel"	"SNDLVL_70dB"
 		"rndwave"
 		{
@@ -92,66 +90,50 @@
 	}
 }
 
-//no positional PA announcements.
-"Gunman.City1_NoPosPA"
+// city ambience with announcements that play at randomly generated positions.
+"Gunman.City_Random"
 {
-	"dsp" "8"
-	"dsp_volume" "4"
-
-	"playlooping"
-	{
-		"volume"	"0.25"
-		"wave"		"gunman/atmosphere/cityhall.wav"
-		"pitch"		"100"
-		"attenuation"	"0"
-	}
-
 	"playsoundscape"
 	{
 		"volume"	"1.0"
-		"name" "Gunman.Announcements_NonPositional"
+		"name" "Gunman.City_Base"
 		
 	}
-	
+
 	"playsoundscape"
 	{
-		"volume" "1.0"
-		"name" "coast.util_shackmetal"
-	}
-	
-	"playrandom"
-	{
-		"time"		"1, 15"
-		"volume"	"0.25, 0.6"
-		"pitch"		"95,105"
-		"position"	"random"
-		"soundlevel"	"SNDLVL_70dB"
-		"rndwave"
-		{
-			"wave"	"ambient/atmosphere/metallic1.wav"
-			"wave"	"ambient/atmosphere/metallic2.wav"
-
-		}
-	}
-	
-	"playrandom"
-	{
-		"time"		"3, 45"
-		"volume"	"0.25, 0.6"
-		"pitch"		"95,105"
-		"position"	"random"
-		"soundlevel"	"SNDLVL_70dB"
-		"rndwave"
-		{
-			"wave"	"ambient/atmosphere/cave_hit1.wav"
-			"wave"	"ambient/atmosphere/cave_hit2.wav"
-			"wave"	"ambient/atmosphere/cave_hit3.wav"
-
-		}
+		"volume"	"0.8,1.4"
+		"name" "Gunman.Announcements_Random"
+		
 	}
 }
 
-"Gunman.City1_Crash"
+// city ambience with announcements that play at random soundscape positions. (0-7)
+"Gunman.City"
+{
+	"playsoundscape"
+	{
+		"volume"	"1.0"
+		"name" "Gunman.City_Base"
+		
+	}
+
+	"playsoundscape"
+	{
+		"volume"	"0.8,1.4"
+		"name" "Gunman.Announcements"
+		
+	}
+}
+
+
+
+
+
+//*****CITY 3 STUFF*****
+
+// Quiet city ambience. No buzzing or talking. Just quiet rumbling with occasional creaks and settling. Also groans from time to time.
+"Gunman.City_Crash"
 {
 	"dsp" "8"
 	"dsp_volume" "4"
@@ -181,14 +163,12 @@
 		"time"		"3, 45"
 		"volume"	"0.25, 0.6"
 		"pitch"		"95,105"
-		"position"	"random"
 		"soundlevel"	"SNDLVL_70dB"
 		"rndwave"
 		{
 			"wave"	"ambient/atmosphere/cave_hit1.wav"
 			"wave"	"ambient/atmosphere/cave_hit2.wav"
 			"wave"	"ambient/atmosphere/cave_hit3.wav"
-
 		}
 	}
 }

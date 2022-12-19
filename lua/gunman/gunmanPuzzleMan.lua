@@ -95,23 +95,19 @@ hook.Add("OnCleanup", "HK_CLEANUP", function(ply, model, entity) --to fix the so
 	for i = 1, table.maxn(soundscapesNormal), 1 do
 	
 		if (!IsValid(soundscapesNormal[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesNormal reference was nil!") break end
-	
+		soundscapesNormal[i]:Fire("Enable")
 	end
 	
 	if (bBad) then return end
 	
-	for i = 1, table.maxn(soundscapesNormal), 1 do
+	local soundscapesWeird = ents.FindByName("tproom_soundscape1")
+	for i = 1, table.maxn(soundscapesWeird), 1 do
 	
-		soundscapesNormal[i]:Fire("Disable")
-	
+		if (!IsValid(soundscapesWeird[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesWeird reference was nil!") break end
+		soundscapesWeird[i]:Fire("Disable")	
 	end
 	
-	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
-	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
-	
-	
-	soundscapeWeird:Fire("Enable")			
-	
+	if (bBad) then return end
 end)
 
 hook.Add("PlayerSpawnedEffect", "HK_SPAWNEDEFFECT", function(ply, model, entity) 
@@ -1571,29 +1567,23 @@ function createTeleport() --acutally creates the teleporter scene. GLOBAL
 	local tpPos = ents.FindByName("exit")[1]
 	if (!IsValid(tpPos)) then print("GUNMAN: ~ERROR~ tpPos reference was nil!") return end
 	
-	
-	
 	local soundscapesNormal = ents.FindByName("tproom_soundscape0")
 	for i = 1, table.maxn(soundscapesNormal), 1 do
 	
 		if (!IsValid(soundscapesNormal[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesNormal reference was nil!") break end
-	
+		soundscapesNormal[i]:Fire("Disable")
 	end
 	
 	if (bBad) then return end
 	
-	for i = 1, table.maxn(soundscapesNormal), 1 do
+	local soundscapesWeird = ents.FindByName("tproom_soundscape1")
+	for i = 1, table.maxn(soundscapesWeird), 1 do
 	
-		soundscapesNormal[i]:Fire("Disable")
-	
+		if (!IsValid(soundscapesWeird[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesWeird reference was nil!") break end
+		soundscapesWeird[i]:Fire("Enable")	
 	end
 	
-	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1]
-	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
-	
-	
-	soundscapeWeird:Fire("Enable")	
-	
+	if (bBad) then return end
 	
 	for i = 1, table.maxn(tpLites), 1 do
 		
@@ -1767,25 +1757,23 @@ function teleportToReality() --teleport us back to the main map. also resets all
 	
 	end
 	
-	local soundscapesNormal = ents.FindByName("tproom_soundscape0") --normal soundscape noises is the real shit
+	local soundscapesNormal = ents.FindByName("tproom_soundscape0")
 	for i = 1, table.maxn(soundscapesNormal), 1 do
 	
 		if (!IsValid(soundscapesNormal[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesNormal reference was nil!") break end
-	
+		soundscapesNormal[i]:Fire("Enable")
 	end
 	
 	if (bBad) then return end
 	
-	for i = 1, table.maxn(soundscapesNormal), 1 do
+	local soundscapesWeird = ents.FindByName("tproom_soundscape1")
+	for i = 1, table.maxn(soundscapesWeird), 1 do
 	
-		soundscapesNormal[i]:Fire("Enable")
-	
+		if (!IsValid(soundscapesWeird[i])) then bBad = true print("GUNMAN: ~ERROR~ a soundscapesWeird reference was nil!") break end
+		soundscapesWeird[i]:Fire("Disable")	
 	end
 	
-	local soundscapeWeird = ents.FindByName("tproom_soundscape1")[1] --fuck all the weird soundscape noises.
-	if (!IsValid(soundscapeWeird)) then print("GUNMAN: ~ERROR~ soundscapeWeird reference was nil!") return end
-	
-	soundscapeWeird:Fire("Disable")	
+	if (bBad) then return end
 	
 	local stopClub = ents.FindByName("club_stop")[1]
 	if (!IsValid(stopClub)) then print("GUNMAN: ~ERROR~ stopClub reference was nil!") return end

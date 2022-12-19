@@ -1,0 +1,16 @@
+//*****CITY 4 STUFF*****
+
+// Quiet tone. Shuts everything up.
+"Gunman.Elevator"
+{
+	"dsp" "2"
+	"dsp_volume" "1.5"
+
+	"playlooping"
+	{
+		"volume"	"0.55"
+		"wave"		"ambient/tones/roomtone2.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+}
