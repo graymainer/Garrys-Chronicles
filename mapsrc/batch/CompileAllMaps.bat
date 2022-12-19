@@ -21,8 +21,8 @@
 
 
 ::YOUR OPTIONS::
-set fastvis=0
-set fastrad=0
+set fastvis=1
+set fastrad=1
 set final=0
 set buildcubemaps=0
 set bounces=2
