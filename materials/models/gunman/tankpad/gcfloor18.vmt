@@ -1,0 +1,10 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "gctextures/gcfloor18"
+	"$bumpmap" "gctextures/gcfloor18_n"
+	"$surfaceprop" "dirt"
+	"%keywords" "gc"
+//detail
+	"$detail" "gctextures/detail/gcde_concrete02"
+	"$detailscale" "0.50"
+}
