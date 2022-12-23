@@ -5,3 +5,7 @@ $body "Body" "asteroid016_ref"
 $cdmaterials "models/gunman/asteroids"
 $sequence idle "asteroid016_ref"
 $surfaceprop "boulder"
+$collisionmodel "asteroid016_ref" {
+
+	$automass
+}

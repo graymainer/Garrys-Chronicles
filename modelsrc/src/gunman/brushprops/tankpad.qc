@@ -5,3 +5,8 @@ $body "Body" "tankpad_ref"
 $cdmaterials "models/gunman/tankpad"
 $sequence idle "tankpad_ref"
 $surfaceprop "dirt"
+$collisionmodel "tankpad_phys" {
+
+	$automass
+	$concave
+}
