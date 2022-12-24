@@ -1,0 +1,742 @@
+
+// Announcements that play in the city. Picks random specific positions (0-7)
+"Gunman.Announcements"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"98,103"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
+
+// Announcements that play in the city. Picks a completely random spot.
+"Gunman.Announcements_NonPositional"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"98,103"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
+
+// No announcements, just the base city ambience.
+"Gunman.City_Base"
+{
+	"dsp" "8"
+	"dsp_volume" "4"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"1, 15"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/metallic2.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}
+
+// city ambience with announcements that play at randomly generated positions.
+"Gunman.City_Random"
+{
+	"playsoundscape"
+	{
+		"volume"	"1.0"
+		"name" "Gunman.City_Base"
+		
+	}
+
+	"playsoundscape"
+	{
+		"volume"	"0.8,1.4"
+		"name" "Gunman.Announcements_Random"
+		
+	}
+}
+
+// city ambience with announcements that play at random soundscape positions. (0-7)
+"Gunman.City"
+{
+	"playsoundscape"
+	{
+		"volume"	"1.0"
+		"name" "Gunman.City_Base"
+		
+	}
+
+	"playsoundscape"
+	{
+		"volume"	"0.8,1.4"
+		"name" "Gunman.Announcements"
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+//******CITY 2 STUFF*******
+
+"Gunman.City_BriefingRoom"
+{
+	"dsp" "4"
+	"dsp_volume" "3"
+
+	"playsoundscape"
+	{
+		"volume"	"1.0"
+		"name" "Gunman.City"
+		
+	}
+}
+
+"Gunman.City_GuardRoom"
+{
+	"dsp" "18"
+	"dsp_volume" "4"
+
+	"playsoundscape"
+	{
+		"volume"	"1.0"
+		"name" "Gunman.City"
+		
+	}
+}
+
+
+
+
+//**SECRET CLUB STUFF**
+
+
+"GunmanClub.DanceFloor"
+{
+	"dsp" "0"
+	"dsp_volume" "0"
+
+}
+
+"GunmanClub.Spawn"
+{
+	"playsoundscape"
+	{
+		"volume"	"2"
+		"name" "Gunman.City_Base"
+		
+	}
+}
+
+"GunmanClub.Other"
+{
+	"dsp" "3"
+	"dsp_volume" "2"
+
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+}
+
+"GunmanClub.Restrooms"
+{
+	"dsp" "12"
+	"dsp_volume" "1.5"
+	
+	"playlooping"
+	{
+		"volume"	"0.33"
+		"wave"		"gunman/atmosphere/cityhall.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"		"ambient/water/corridor_water.wav"
+		"pitch"		"90, 95"
+		"attenuation"	"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/water/drip_loop1.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"wave"		")ambient/levels/canals/waterleak_loop1.wav"
+		"pitch"		"90, 95"
+		"soundlevel"	"SNDLVL_30dB"
+		"position" "2, 3"
+		"attenuation"	"0"
+	}
+	
+	"playrandom" //drips from sinks and toilets
+	{
+		"time"		"1, 15"
+		"volume"	"0.05, 0.45"
+		"pitch"		"95,105"
+		"position"	"0, 3"
+		"soundlevel"	"SNDLVL_30dB"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/canals/drip1.wav"
+			"wave"	"ambient/levels/canals/drip2.wav"
+			"wave"	"ambient/levels/canals/drip3.wav"
+			"wave"	"ambient/levels/canals/drip4.wav"
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+			"wave"	"ambient/water/rain_drip1.wav"
+			"wave"	"ambient/water/rain_drip2.wav"
+			"wave"	"ambient/water/rain_drip3.wav"
+			"wave"	"ambient/water/rain_drip4.wav"
+			"wave"	"ambient/weather/drip1.wav"
+			"wave"	"ambient/weather/drip2.wav"
+			"wave"	"ambient/weather/drip3.wav"
+			"wave"	"ambient/weather/drip4.wav"
+
+		}
+	}
+	
+	"playrandom" //drips
+	{
+		"time"		"1, 15"
+		"volume"	"0.05, 0.45"
+		"pitch"		"95,105"
+		"soundlevel"	"SNDLVL_30dB"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/canals/drip1.wav"
+			"wave"	"ambient/levels/canals/drip2.wav"
+			"wave"	"ambient/levels/canals/drip3.wav"
+			"wave"	"ambient/levels/canals/drip4.wav"
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+			"wave"	"ambient/water/rain_drip1.wav"
+			"wave"	"ambient/water/rain_drip2.wav"
+			"wave"	"ambient/water/rain_drip3.wav"
+			"wave"	"ambient/water/rain_drip4.wav"
+			"wave"	"ambient/weather/drip1.wav"
+			"wave"	"ambient/weather/drip2.wav"
+			"wave"	"ambient/weather/drip3.wav"
+			"wave"	"ambient/weather/drip4.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+	
+	"playrandom" //flushes
+	{
+		"time"		"15, 125"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"position"	"0, 1"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/machines/usetoilet_flush1.wav"
+			"wave"	"ambient/materials/flush1.wav"
+			"wave"	"ambient/materials/flush2.wav"
+
+		}
+	}
+	
+	"playrandom" //rats & flies
+	{
+		"time"		"5, 88"
+		"volume"	"0.05 0.22"
+		"pitch"		"90,110"
+		"soundlevel"	"SNDLVL_20dB"
+		"rndwave"
+		{
+			"wave"	"ambient\creatures\flies1.wav"
+			"wave"	"ambient\creatures\flies2.wav"
+			"wave"	"ambient\creatures\flies3.wav"
+			"wave"	"ambient\creatures\flies4.wav"
+			"wave"	"ambient\creatures\flies5.wav"
+			"wave"	"ambient\creatures\rats1.wav"
+			"wave"	"ambient\creatures\rats2.wav"
+			"wave"	"ambient\creatures\rats3.wav"
+			"wave"	"ambient\creatures\rats4.wav"
+		}
+	}
+	
+	"playrandom" //groans
+	{
+		"time"		"3, 96"
+		"volume"	"0.05 0.32"
+		"pitch"		"90,110"
+		"soundlevel"	"SNDLVL_30dB"
+		"rndwave"
+		{
+			"wave"	"ambient\materials\rustypipes1.wav"
+			"wave"	"ambient\materials\rustypipes2.wav"
+			"wave"	"ambient\materials\rustypipes3.wav"
+		}
+	}
+	
+	"playrandom" //that drunk dude in the corner
+	{
+		"time"		"65, 225"
+		"volume"	"0.1 0.62"
+		"pitch"		"98,102"
+		"position"	"4"
+		"soundlevel"	"SNDLVL_25dB"
+		"rndwave"
+		{
+			"wave"	"vo\npc\male01\moan01.wav"
+			"wave"	"vo\npc\male01\moan02.wav"
+			"wave"	"vo\npc\male01\moan03.wav"
+			"wave"	"vo\npc\male01\moan04.wav"
+			"wave"	"vo\npc\male01\moan05.wav"
+
+		}
+	}
+	
+}
+
+//**
+
+
+
+
+
+//**WEIRD STUFF**
+"Gunman.Announcements_weird"
+{
+
+	"playrandom"
+	{
+		"time"		"8, 16"
+		"volume"	"1"
+		"pitch"		"35,65"
+		"position"	"4, 7"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"gunman/atmosphere/pa1.wav"
+			"wave"	"gunman/atmosphere/pa2.wav"
+			"wave"	"gunman/atmosphere/pa3.wav"
+			"wave"	"gunman/atmosphere/pa4.wav"
+		}
+	}
+}
+
+"Gunman.util_weird_hits_random"
+{
+	"playrandom"
+	{
+		"time"		"8, 30"
+		"volume"	"0.5,0.75"
+		"pitch"		"90,110"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"0, 3"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/citadel/strange_talk1.wav"
+			"wave"	"ambient/levels/citadel/strange_talk3.wav"
+			"wave"	"ambient/levels/citadel/strange_talk4.wav"
+			"wave"	"ambient/levels/citadel/strange_talk5.wav"
+			"wave"	"ambient/levels/citadel/strange_talk6.wav"
+			"wave"	"ambient/levels/citadel/strange_talk7.wav"
+			"wave"	"ambient/levels/citadel/strange_talk8.wav"
+			"wave"	"ambient/levels/citadel/strange_talk9.wav"
+			"wave"	"ambient/levels/citadel/strange_talk10.wav"
+			"wave"	"ambient/levels/citadel/strange_talk11.wav"
+
+		}
+	}
+}
+
+"Gunman.util_weird_hits"
+{
+	"playrandom"
+	{
+		"time"		"8, 30"
+		"volume"	"0.5,0.75"
+		"pitch"		"90,110"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"0, 3"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/citadel/strange_talk1.wav"
+			"wave"	"ambient/levels/citadel/strange_talk3.wav"
+			"wave"	"ambient/levels/citadel/strange_talk4.wav"
+			"wave"	"ambient/levels/citadel/strange_talk5.wav"
+			"wave"	"ambient/levels/citadel/strange_talk6.wav"
+			"wave"	"ambient/levels/citadel/strange_talk7.wav"
+			"wave"	"ambient/levels/citadel/strange_talk8.wav"
+			"wave"	"ambient/levels/citadel/strange_talk9.wav"
+			"wave"	"ambient/levels/citadel/strange_talk10.wav"
+			"wave"	"ambient/levels/citadel/strange_talk11.wav"
+
+		}
+	}
+}
+
+"Gunman.City_Weird"
+{
+	"dsp" "28"
+	"dsp_volume" "7"
+	
+	"playsoundscape"
+	{
+		"volume"	"0.4,1.0"
+		"name" "Gunman.Announcements_weird"
+		
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.75"
+		"name" "Gunman.util_weird_hits_random"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "0.45, 0.85"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"1, 15"
+		"volume"	"0.25, 0.6"
+		"pitch"		"25,64"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/metallic2.wav"
+
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"36,64"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+
+		}
+	}
+}
+
+"Gunman.City_GuardRoom_Weird"
+{
+	"dsp" "28"
+	"dsp_volume" "7"
+
+	"playsoundscape"
+	{
+		"volume"	"1.25"
+		"name" "Gunman.City1c"
+		
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.75"
+		"name" "Gunman.util_weird_hits"
+	}
+	
+	"playlooping"
+	{
+	
+		"volume"	"5.76"
+		"wave"		")ambient/levels/citadel/citadel_drone_loop1.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_100dB"
+	
+	}
+	"playlooping"
+	{
+	
+		"volume"	"10.87"
+		"wave"		")ambient/levels/citadel/citadel_drone_loop3.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_75dB"
+	
+	}
+	"playlooping"
+	{
+	
+		"volume"	"10.75"
+		"wave"		")ambient/machines/wall_ambient_loop1.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_75dB"
+	
+	}
+	
+	"playlooping"
+	{
+	
+		"volume"	"1.54"
+		"wave"		"gunman\club\puz\teleport_amb.wav"
+		"pitch"		"100"
+		"position" "0"
+		"soundlevel"	"SNDLVL_200dB"
+	
+	}
+}
+
+//**
+
+
+
+//*****CITY 3 STUFF*****
+
+// Quiet city ambience. No buzzing or talking. Just quiet rumbling with occasional creaks and settling. Also groans from time to time.
+"Gunman.City_Crash"
+{
+	"dsp" "8"
+	"dsp_volume" "4"
+	
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"ambient/tones/roomtone1.wav"
+		"pitch"		"90"
+		"attenuation"	"0"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_metalstress"
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"95,105"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+		}
+	}
+}
+
+
+
+//*****CITY 4 STUFF*****
+
+// Quiet tone. Shuts everything up.
+"Gunman.Elevator"
+{
+	"dsp" "2"
+	"dsp_volume" "1.5"
+
+	"playlooping"
+	{
+		"volume"	"0.55"
+		"wave"		"ambient/tones/roomtone2.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+}
+
+// Occasional air gusts, constant sound of wind, rocks crumbling, and metal creaking.
+"Gunman.Arena_Base"
+{
+	"dsp" "25"
+	"dsp_volume" "4"
+	
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"gcsfx/test/caveamb01.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+	
+	"playrandom"
+	{
+		"time"		"3, 45"
+		"volume"	"0.25, 0.6"
+		"pitch"		"84,122"
+		"soundlevel"	"SNDLVL_35dB"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/rock1.wav"
+			"wave"	"ambient/materials/rock2.wav"
+			"wave"	"ambient/materials/rock3.wav"
+			"wave"	"ambient/materials/rock4.wav"
+			"wave"	"ambient/materials/rock5.wav"
+		}
+	}
+	
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_shackmetal"
+	}
+	
+	"playrandom"
+	{
+		"time"		"16, 173"
+		"volume"	"0.25, 1.0"
+		"pitch"		"95,105"
+		"soundlevel"	"SNDLVL_70dB"
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/cave_hit1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit3.wav"
+			"wave"	"ambient/atmosphere/cave_hit4.wav"
+			"wave"	"ambient/atmosphere/cave_hit5.wav"
+			"wave"	"ambient/levels/caves/rumble1.wav"
+			"wave"	"ambient/levels/caves/rumble2.wav"
+			"wave"	"ambient/levels/caves/rumble3.wav"
+			"wave"	"ambient/wind/smallgust.wav"
+			"wave"	"ambient\wind\wind_snippet1.wav"
+			"wave"	"ambient\wind\wind_snippet2.wav"
+		}
+	}
+}
+
+// includes a sound for the explosives range deathpit.
+"Gunman.Arena"
+{	
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"wave"		"gcsfx/hl2btasfx/power_machine1.wav"
+		"pitch"		"100"
+		"soundlevel"	"SNDLVL_85dB"
+		"position"	"0"
+	}
+	
+	
+	"playsoundscape"
+	{
+		"name"	"Gunman.Arena_Base"
+		"volume" "1.0"
+	}
+}
+
+// For the room between the armory and hangar in city6.
+"Gunman.City_ConcreteRoom"
+{
+	"dsp" "18"
+	"dsp_volume" "1.5"
+
+
+	"playlooping"
+	{
+		"volume"	"0.35"
+		"wave"		"ambient/tones/roomtone1.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"volume" "1.0"
+		"name" "coast.util_shackmetal"
+	}
+}
