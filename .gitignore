@@ -25,3 +25,4 @@ mapsrc/batch/compile/
 *.bsp
 !maps/*.bsp
 3ds/
+*.bsp
