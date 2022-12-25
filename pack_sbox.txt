@@ -1,0 +1,5 @@
+data/gunman/gunmanSentences.json
+X:/Programs/Steam/steamapps/common/GarrysMod/garrysmod/addons/Garrys-Chronicles/data/gunman/gunmanSentences.json
+
+scripts/soundscapes_gm_gunman.txt
+X:\Programs\Steam\steamapps\common\GarrysMod\garrysmod\addons\Garrys-Chronicles\scripts\soundscapes_gm_gunman.txt
