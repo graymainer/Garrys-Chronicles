@@ -1,0 +1,8 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/plainceiling"
+	"$normalmap" "gunman/plainceiling_nm"
+	"$bumpmap" "gunman/plainceiling_nm"
+	"$surfaceprop" "Dirt"
+	"%keywords" "gunman"
+}

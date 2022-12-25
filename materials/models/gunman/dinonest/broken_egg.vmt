@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/dinonest/broken_egg"
+	"$nodecal" 1
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/gunman/dinonest/broken_egg_env"
+}

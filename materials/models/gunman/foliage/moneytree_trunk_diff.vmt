@@ -1,0 +1,10 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models/gunman/foliage/MoneyTree_Diff"
+	"$bumpmap" "models/gunman/foliage/MoneyTree_norm"
+
+	"$halflambert" 1
+	"$nodecal" "1"
+	"$model" "1"
+
+}

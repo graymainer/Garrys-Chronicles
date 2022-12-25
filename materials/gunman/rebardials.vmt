@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/rebardials"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.8 0.8 0.8 ]"
+	"$envmapmask" "gunman/rebardials_env"
+	"$surfaceprop" "Computer"
+	"%keywords" "gunman"
+}

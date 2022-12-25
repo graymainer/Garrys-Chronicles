@@ -1,0 +1,12 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models/gunman/foliage/Rock_ALL_01_Diff"
+	"$bumpmap" "models/gunman/foliage/Rock_ALL_01_norm"
+
+	"$halflambert" 1
+	"$nodecal" "1"
+	"$model" "1"
+
+
+	$phong 1
+}

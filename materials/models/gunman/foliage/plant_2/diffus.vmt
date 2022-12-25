@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/gunman/foliage/plant_2/diffus"
+	"$bumpmap" "models/gunman/foliage/plant_2/normal"
+	"$phong" "1"
+	"$phongexponenttexture" "models/gunman/foliage/plant_2/specular"
+	"$phongboost" "0.1"	
+	"$phongfresnelranges"	"[.1 0.2 1]"
+	"$halflambert" "1"
+//	"$alphatest" "1"
+	"$alphatest" "1"
+	"$nocull" "1"
+//	"$detail" "models/gunman/foliage/1/1_emi"
+//	$detailscale 1
+//	$detailblendfactor "3"
+//	$detailblendmode 5
+	$allowalphatocoverage "1"
+	$alphatestreference "0.8"
+
+}

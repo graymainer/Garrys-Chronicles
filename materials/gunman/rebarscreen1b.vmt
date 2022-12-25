@@ -1,0 +1,21 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/rebarscreen1b"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.5 0.5 0.5 ]"
+	"$envmapmask" "gunman/rebarscreen1b_env"
+	"$surfaceprop" "Glass"
+	"%keywords" "gunman"
+
+	//animation
+	Proxies
+	{
+		"AnimatedTexture" 
+		{ 
+			"animatedTextureVar" "$basetexture" 
+			"animatedTextureFrameNumVar" "$frame" 
+			"animatedTextureFrameRate" "12"
+		}
+		
+	}
+}

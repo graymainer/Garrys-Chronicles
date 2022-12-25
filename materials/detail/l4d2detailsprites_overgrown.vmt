@@ -1,0 +1,16 @@
+"UnlitGeneric"
+{
+	"$translucent" "1"
+	"$baseTexture" "detail\l4d2detailsprites_overgrown"
+	"$nocull" "1"
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$receiveflashlight" "1"
+	"$singlepassflashlight" "1"
+
+
+
+
+
+
+}

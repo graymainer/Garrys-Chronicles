@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "skybox/sky_mayanup"
+	"%keywords" "gunman"
+	"$hdrcompressedtexture" "skybox\sky_mayanup"
+	"$nofog" "1"
+	"$ignorez" "1"
+}

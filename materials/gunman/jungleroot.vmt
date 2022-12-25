@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/jungleroot"
+	"$surfaceprop" "Grass"
+	"%keywords" "gunman"
+	"$normalmap" "gunman/jungleroot_nm"
+	"$bumpmap" "gunman/jungleroot_nm"
+//detail
+	"%detailtype" "urban_overgrown"
+}

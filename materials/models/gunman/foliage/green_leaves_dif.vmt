@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/gunman/foliage/green_leaves_dif"
+	"$treesway" 2
+	"$treeswaystatic" 1
+	"$treeswaystartheight" 2
+	"$halflambert" "1"
+	"$alphatest" "1"
+		$allowalphatocoverage "1"
+	$alphatestreference "0.8"
+//	"$detail" "models/gunman/foliage/1_emi"
+//	$detailscale 1
+//	$detailblendfactor "3"
+//	$detailblendmode 5
+	$nocull 1
+}

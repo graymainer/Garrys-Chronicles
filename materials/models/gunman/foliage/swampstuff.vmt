@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/foliage/swampstuff"
+	"$surfaceprop" "Dirt"
+}

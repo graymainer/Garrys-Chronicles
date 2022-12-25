@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/rebarpanel"
+	"$bumpmap" "gunman/rebarpanel_nm"
+	"$surfaceprop" "Metal"
+	"%keywords" "gunman"
+//detail
+	"$detail" "detail/metal_detail_01"
+	"$detailscale" "5"
+}

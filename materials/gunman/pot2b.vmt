@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/pot2b"
+	"$normalmap" "gunman/pot_nm"
+	"$bumpmap" "gunman/pot_nm"
+	"$surfaceprop" "Concrete"
+	"%keywords" "gunman"
+//Detail
+	"$detail" "detail/rock_detail_01"
+	"$detailscale" "4"
+}

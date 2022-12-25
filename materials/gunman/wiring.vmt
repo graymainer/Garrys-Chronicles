@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/wiring"
+	"$bumpmap" "gunman/wiring_nm"
+	"$surfaceprop" "Metal"
+	"%keywords" "gunman"
+}

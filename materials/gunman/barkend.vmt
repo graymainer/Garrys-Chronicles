@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/barkend"
+	"$bumpmap" "gunman/barkend_nm"
+	"$surfaceprop" "Wood_Solid"
+	"%keywords" "gunman"
+}

@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/gunman/torch/torchglow"
+	"$nodecal" 1
+//detail
+	"$detail" "detail/noise_detail_01"
+	"$detailscale" "0.3"
+}

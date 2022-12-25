@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/vines"
+	"$surfaceprop" "Wood_Solid"
+	"%keywords" "gunman"
+	"$nodecal" 1
+	"$AlphaTest" "1"
+	"$AlphaTestReference" "0.70"
+	"%compilepassbullets" 1
+}

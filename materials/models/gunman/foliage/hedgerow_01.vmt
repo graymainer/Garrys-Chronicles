@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/gunman/foliage/hedgerow_01"
+	"$treesway" 2
+	"$treeswaystatic" 1
+	"$nocull" 1
+	"$alphatest" 1
+	"$model" 1
+	"$surfaceprop" "foliage"
+	"$nodecal" 1
+	"%keywords" "rnl"
+}

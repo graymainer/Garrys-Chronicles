@@ -1,0 +1,16 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/gouged"
+	"$bumpmap" "gunman/gouged_nm"
+	"$surfaceprop" "Metal"
+	"%keywords" "gunman"
+
+//Reflection
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.1 0.1 0.1 ]"
+
+//Detail
+	"$detail" "detail/metal_detail_01"
+	"$detailscale" "5"
+
+}

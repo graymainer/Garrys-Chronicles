@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/torch/torch"
+	"$bumpmap" "models/gunman/torch/torch_nm"
+	"$normalmap" "models/gunman/torch/torch_nm"
+//detail
+	"$detail" "detail/wood_detail_01"
+	"$detailscale" "1"
+}

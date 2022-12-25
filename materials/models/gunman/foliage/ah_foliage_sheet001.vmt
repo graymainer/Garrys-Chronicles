@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/gunman/foliage/ah_foliage_sheet001"
+	"$treesway" 2
+	"$treeswaystatic" 1
+	"$treeswayheight" 33
+	"$alphatest" 1
+	"$surfaceprop" "foliage"
+	"$nocull" 1
+	"model" 1
+}

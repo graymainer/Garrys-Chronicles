@@ -1,0 +1,15 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models/gunman/foliage/NPC_SSC_Flower_D_Diff"
+//	"$bumpmap" "models/gunman/foliage/NPC_SSC_Flower_C_norm"
+	"$treesway" 2
+	"$treeswaystatic" 1
+	"$treeswayheight" 33
+	"$halflambert" 1
+	"$nodecal" "1"
+	"$model" "1"
+	"$nocull" "1"
+	"$alphatest" 1
+	"$alphatestreference" "0.2"
+	"$allowalphatocoverage" "1"
+}

@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "gunman/vines_middle"
+	"$surfaceprop" "Concrete"
+	"%keywords" "gunman"
+	"$normalmap" "gunman/vines_middle_nm"
+	"$bumpmap" "gunman/vines_middle_nm"
+//Detail
+	"$detail" "detail/noise_detail_01"
+	"$detailscale" "5"
+}

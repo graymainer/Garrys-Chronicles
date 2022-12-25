@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/gunman/dinonest/nest"
+	"$bumpmap" "models/gunman/dinonest/nest_n"
+}

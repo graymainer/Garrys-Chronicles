@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/gunman/foliage/ash_bark"
+	"model" 1
+	"$surfaceprop" "wood"
+	"$detailscale" "4"
+	"$detailblendfactor" .8
+	"$detailblendmode" "0"
+
+//	"$envmapmode" 1
+		
+}
