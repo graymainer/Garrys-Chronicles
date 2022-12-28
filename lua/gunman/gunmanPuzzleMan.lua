@@ -1214,7 +1214,7 @@ function createNETmail1() --a daily news article for the player to read some lor
 	
 	page:Write("\nEarlier today, Dr.Vargas Kalhorian requested a press conference with the Department of Colonisation(D.O.C) at 11:30 AM to discuss his views on the Xenome Infestation crisis taking place.")
 	page:Write("\nVargas believes that the xenomes found on our inhabited planets have been, quote 'genetically modified' end quote; by a group whose identity is of yet to be known.'")
-	page:Write("\nHe belives foul play to be involved somehow. Though the details are.. pretty vauge. People originally wrote off his claims as 'nonsense'.")
+	page:Write("\nHe belives foul play to be involved somehow. Though the details are.. pretty vague. People originally wrote off his claims as 'nonsense'.")
 	page:Write("\nA reasonable response, given the amount of fearful conjucture and rumors to go around, all of which now spread like wildfire thanks to the net recently blasting off into outer space.")
 	
 	page:Write("\n\nHowever this conference was never to be, having been declined right after arriving at their office. The reason for the rejection, not publicly disclosed.")

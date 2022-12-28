@@ -1,6 +1,8 @@
 data/gunman/gunmanSentences.json
-X:/Programs/Steam/steamapps/common/GarrysMod/garrysmod/addons/Garrys-Chronicles/data/gunman/gunmanSentences.json
-
+X:/Programs/Steam/steamapps/common/GarrysMod/garrysmod/addons/Garrys-Chronicles_release/data/gunman/gunmanSentences.json
 scripts/soundscapes_gunman_mayan.txt
-X:\Programs\Steam\steamapps\common\GarrysMod\garrysmod\addons\Garrys-Chronicles\scripts\soundscapes_gunman_mayan.txt
-
+X:\Programs\Steam\steamapps\common\GarrysMod\garrysmod\addons\Garrys-Chronicles_release\scripts\soundscapes_gunman_mayan.txt
+materials/gunman/colorcorrection/jungleatmos.raw
+X:\Programs\Steam\steamapps\common\GarrysMod\garrysmod\addons\Garrys-Chronicles_release\materials\gunman\colorcorrection\jungleatmos.raw
+materials/gunman/colorcorrection/jungletombatmos.raw
+X:\Programs\Steam\steamapps\common\GarrysMod\garrysmod\addons\Garrys-Chronicles_release\materials\gunman\colorcorrection\jungletombatmos.raw
