@@ -1,29 +1,38 @@
 # Garrys-Chronicles
-Repo for the Gunman to Gmod project, now called Garry's Chronicles.
-
-Gunman to Gmod is a project that started back in November 2017 that aimed to port the entire first chapter of Gunman Chronicles to Garry's Mod. Recently the project has seen a resurgence in March 2022 in the form of an update titled: "The 2022 Overhaul" and has been retitled to "Garry's Chronicles."
-![gc_banner0](https://user-images.githubusercontent.com/50006274/182286275-e9cfcfb5-d604-42c7-987e-137947a355f2.png)
-
-
-Along with being ported to the source engine, the maps received some visual upgrades and contained all scenes and scripting redone for source.
-
-The 2022 Overhaul will bring a massive visual and performance overhaul to the project.
-![vacuum](https://user-images.githubusercontent.com/50006274/182289118-8ccf0919-5626-4cd3-892f-d1cce03cebcd.png)
 
 
 
-It will also make use of LUA to help facilitate previously impossible to port entities, and make already existing entities better. 
-There will also be new scripted sequences on top of overhauled previously existing sequences.
-A sandbox map including all maps merged together with all scripting removed will also come included.
-
-The project is now hosted here on Github for all the benefeits of version control, issue tracking, easier collaboration, cleaner organization, and an easy way to track goals.
-
-The project is still by no means continued, it is simply receiving an overhaul. No new content will be ported, the project is still on an in-definite hiatus.
-The source files for this project may be released within the near future, but this is unconfirmed at this time.
-
-The overhaul is aiming for a release date of sometime within either march, april, or at the latest, may 2022. Or that was the release date, the actual date is: Who the bruh knows.
+Repo for Garry's Chronicles.
 
 
 
-Major Archer? Major Archer? Major Archer? Major Archer?
-![gctgmlogo](https://user-images.githubusercontent.com/50006274/182285975-b17106fb-4869-4486-a7ac-5f08a923a01e.png)
+![thumb](https://user-images.githubusercontent.com/50006274/209900123-074d519e-0e62-4db6-94dc-212782f93517.gif)
+
+
+
+Garry's Chronicles, (originally titled "Gunman to Gmod") is a project that started back in November 2017 that aimed to port Gunman Chronicles maps to Garry's Mod. Unfortunately, the projected died shortly after its release, but the first chapter remained fully ported.
+
+
+
+This update is essentially the end of at least my work on the project. I have no desire currently to continue. However the files for others to use to continue my work are here and are for everyone. I only ask that I (graymainer) am credited as the original port materials author. 
+
+
+
+Here you will find the lua code for all the entities i recreated like the digitgod entity and the itemgod entity.
+You'll also find the FGD that will allow you to create scripts in maps using these entities.
+
+
+
+I'm not available to provide reliable support for these materials, nor projects made on them. So if you use them, know that you're pretty much on your own. But if you post any questions on the garry's chronicles workshop page, I may or may not get around to answering them. (Please, dont take this personal, im simply tired of working on this project and wish to move on to others.)
+
+
+
+#### GLHF!
+
+
+
+## Major Archer? Major Archer? Major Archer? Major Archer?
+
+
+
+![title_banner](https://user-images.githubusercontent.com/50006274/209899879-f86b2ce0-5373-4787-a3d0-5af024500132.jpg)
