@@ -10,7 +10,7 @@ Repo for Garry's Chronicles.
 
 
 
-Garry's Chronicles, (originally titled "Gunman to Gmod") is a project that started back in November 2017 that aimed to port Gunman Chronicles maps to Garry's Mod. Unfortunately, the projected died shortly after its release, but the first chapter remained fully ported.
+Garry's Chronicles, (originally titled "Gunman to Gmod") is a project that started back in November 2017 that aimed to port Gunman Chronicles maps to Garry's Mod. Unfortunately, the project died shortly after its release, but the first chapter remained fully ported.
 
 
 
@@ -18,16 +18,16 @@ This update is essentially the end of at least my work on the project. I have no
 
 
 
-Here you will find the lua code for all the entities i recreated like the digitgod entity and the itemgod entity.
-You'll also find the FGD that will allow you to create scripts in maps using these entities.
+Here you will also find the lua code for all the entities I recreated like the digitgod entity and the itemgod entity.
+You'll also find the FGD that will allow you to use these entities in your maps.
 
 
 
-I'm not available to provide reliable support for these materials, nor projects made on them. So if you use them, know that you're pretty much on your own. But if you post any questions on the garry's chronicles workshop page, I may or may not get around to answering them. (Please, dont take this personal, im simply tired of working on this project and wish to move on to others.)
+I'm not available to provide reliable support for these materials, nor projects made on them. So if you use them, know that you're pretty much on your own. If you post any questions or whatnot on the Garry's Chronicles workshop page or in it's discussions, I may or may not get around to responding to them. (Please, dont take this personal, i'm just tired of working on this project and wish to move on to others.)
 
 
 
-#### GLHF!
+#### Well anyway, GLHF!
 
 
 
